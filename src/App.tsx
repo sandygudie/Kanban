@@ -5,6 +5,9 @@ import NotFound from "page/notFound";
 import Workspace from "page/workspace";
 import Dashboard from "page/dashboard";
 import Home from "page/home";
+import Login from "page/login";
+import Signup from "page/signup";
+import AuthLayout from "components/AuthLayout";
 
 function App() {
   useEffect(() => {
@@ -33,6 +36,11 @@ function App() {
     >
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
         <Route path="/workspace" element={<Workspace />} />
         <Route path="/dashboard" element={<Dashboard />} />

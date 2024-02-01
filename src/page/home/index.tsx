@@ -83,7 +83,7 @@ export default function Index() {
             </Link>
             <span> | </span>
             <Link
-              to="/login"
+              to="/signup"
               className="hover:scale-110 p-2 rounded-lg transition ease-in-out delay-100 duration-300"
             >
               Sign Up
