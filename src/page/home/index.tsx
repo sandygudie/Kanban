@@ -46,57 +46,72 @@ export default function Index() {
   );
 
   const navItems = [
+    { title: "Why Track?", link: "features" },
     { title: "Features", link: "features" },
     { title: "Technologies", link: "technologies" },
-    { title: "Contact", link: "connect" },
+    { title: "Support", link: "connect" },
   ];
   return (
-    <div
-      style={{
-        background: "url(./background.svg)",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
-      className="home-container h-screen overflow-y-auto relative w-full"
-    >
+    <div className="home-container h-screen bg-white overflow-y-auto relative w-full">
       <div ref={hero} className="h-full w-full relative z-20 text-black">
-        <header className="header flex items-center justify-between px-4 lg:px-16 py-8">
-          <Link to="/">
+        <header className="header shadow-lg flex items-center justify-between px-4 lg:px-16 py-4">
+          <Link className="hidden md:inline" to="/">
             <Icon type="kanban_logo" />
           </Link>
-          <div className="hidden md:flex items-center gap-x-12 w-4/6 justify-end">
+          <Link className="inline md:hidden" to="/">
+            <Icon type="logo_mobile" />
+          </Link>
+          <div className="hidden md:flex items-center gap-x-12 w-3/6 justify-end">
             {navItems.map((ele) => {
               return (
                 <a
                   key={ele.title}
                   href={`#${ele.link}`}
-                  className="hover:text-primary text-lg"
+                  className="hover:text-primary text-md"
                 >
                   {ele.title}
                 </a>
               );
             })}
           </div>
-          <div className="hover:scale-110 transition ease-in-out delay-100 duration-300"></div>
+          <div className="flex items-center ">
+            <Link
+              to="/login"
+              className="hover:scale-110 p-2 rounded-lg transition ease-in-out delay-100 duration-300"
+            >
+              Log In
+            </Link>
+            <span> | </span>
+            <Link
+              to="/login"
+              className="hover:scale-110 p-2 rounded-lg transition ease-in-out delay-100 duration-300"
+            >
+              Sign Up
+            </Link>
+          </div>
         </header>
         <main>
           <div>
-            <div className="px-3 lg:px-0 lg:w-3/6 mx-auto my-16 lg:my-36 text-center">
+            <div className="px-3 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
               <h1 className="font-bold text-[2rem] md:text-6xl">
                 <p className="title-left"> Effortlessly Manage </p>
                 <p className="title-right">Your Projects.</p>
               </h1>
-              <div className="description">
-                <p className="text-lg md:text-[25px] my-8 font-normal leading-[2.5rem]">
-                  Kanban offers a visual view for teams to manage tasks, quickly
-                  shift priorities, track project progress, and stay on top of
-                  deadlines.
+              <div className="description ">
+                <p className="md:px-8 lg:p-0 md:text-[20px] my-8 font-normal leading-[2.5rem]">
+                  <span className="font-bold">Kanban</span> offers a visual view
+                  for teams to manage tasks, quickly shift priorities, track
+                  project progress, and stay on top of deadlines.
                 </p>
 
-                <div className=" w-fit mx-auto ">
+                <div className="w-auto md:w-fit mx-auto relative">
+                  <input
+                    placeholder="Email"
+                    className="rounded-full w-full md:w-[30rem] py-4 px-6"
+                  />
                   <Link
-                    to="/dashboard"
-                    className="bg-primary/70 hover:bg-primary rounded-lg text-white text-lg px-10 py-4 font-medium"
+                    to="/signup"
+                    className="bg-primary absolute top-[0.4rem] right-3 transition ease-in-out delay-100 duration-300 hover:scale-110 text-white rounded-full hover:bg-primary px-4 py-2.5 font-medium"
                   >
                     Get Started
                   </Link>

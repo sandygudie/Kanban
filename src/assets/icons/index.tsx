@@ -14,6 +14,15 @@ const icons = {
       </g>
     </svg>
   ),
+  logo_mobile: (props: any) => (
+    <svg width="24" height="25" xmlns="http://www.w3.org/2000/svg"  {...props}>
+      <g fill="#635FC7">
+        <rect width="6" height="25" rx="2" />
+        <rect opacity=".75" x="9" width="6" height="25" rx="2" />
+        <rect opacity=".5" x="18" width="6" height="25" rx="2" />
+      </g>
+    </svg>
+  ),
   board: (props: any) => (
     <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
