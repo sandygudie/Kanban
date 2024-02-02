@@ -1,5 +1,53 @@
 import { Link } from "react-router-dom";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { ChangeEvent, useState } from "react";
+import { login } from "services/api/auth";
+import { IoAlertCircleOutline } from "react-icons/io5";
+
 export default function Index() {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [inputError, setInputError] = useState("");
+  const [loginError, setLoginError] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setLoginError(false);
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+    if (formData.email.length && formData.password === "") {
+      setInputError("passwordError");
+    } else if (formData.password.length && formData.email === "") {
+      setInputError("emailError");
+    } else {
+      setInputError("");
+    }
+  };
+
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (formData.email === "" && formData.password === "") {
+      setInputError("error");
+    } else if (formData.email === "") {
+      setInputError("emailError");
+    } else if (formData.password === "") {
+      setInputError("passwordError");
+    } else {
+      try {
+        const response = await login(formData);
+        console.log(response);
+      } catch (error) {
+        setInputError("error");
+        setLoginError(true);
+      }
+    }
+  };
+
   return (
     <main className="h-full">
       <div className="h-full">
@@ -8,7 +56,10 @@ export default function Index() {
             Log In
           </h1>
           <div className="">
-            <form className="w-full flex items-center md:border border-solid py-10 px-4 sm:px-12 md:shadow-lg flex-col gap-y-4 justify-center ">
+            <form
+              onSubmit={handleSubmit}
+              className="w-full flex items-center md:border border-solid py-10 px-4 sm:px-12 md:shadow-lg flex-col gap-y-4 justify-center "
+            >
               <div className="">
                 <button
                   onClick={() => {}}
@@ -29,13 +80,52 @@ export default function Index() {
               <p className="text-sm text-gray">OR</p>
 
               <input
-                className="py-3 px-4 rounded-lg w-full"
+                type="email"
+                name="email"
+                required
+                value={formData.email}
+                className={` ${
+                  inputError === "error" || inputError === "emailError"
+                    ? "border-error"
+                    : "border"
+                } py-3 px-4 rounded-lg w-full`}
                 placeholder="Email Address"
+                onChange={(e) => handleInputChange(e)}
               />
-              <input
-                className="py-3 px-4 rounded-lg w-full"
-                placeholder="Password"
-              />
+              <div className="relative w-full">
+                <input
+                  required
+                  name="password"
+                  value={formData.password}
+                  type={showPassword ? "text" : "password"}
+                  className={` ${
+                    inputError === "error" || inputError === "passwordError"
+                      ? "border-error"
+                      : "border"
+                  } py-3 px-4 rounded-lg w-full`}
+                  placeholder="Password"
+                  onChange={(e) => handleInputChange(e)}
+                />
+                <button type="button" className="absolute top-4 right-5">
+                  {showPassword ? (
+                    <AiOutlineEye
+                      className="text-xl"
+                      onClick={() => setShowPassword(false)}
+                    />
+                  ) : (
+                    <AiOutlineEyeInvisible
+                      className="text-xl"
+                      onClick={() => setShowPassword(true)}
+                    />
+                  )}
+                </button>
+                {loginError ? (
+                  <p className="text-sm absolute -bottom-7 flex items-center text-error gap-x-2">
+                    {" "}
+                    <IoAlertCircleOutline size={16} /> Invalid credientials{" "}
+                  </p>
+                ) : null}
+              </div>
               <div className="w-full mt-6">
                 <button
                   className="bg-primary w-full font-medium rounded-md text-white p-3"
@@ -44,7 +134,10 @@ export default function Index() {
                   Continue
                 </button>
                 <div className="flex items-center justify-between pt-3">
-                <Link className="text-sm text-primary underline " to="/signup">
+                  <Link
+                    className="text-sm text-primary underline "
+                    to="/signup"
+                  >
                     Create account
                   </Link>
                   <Link className="text-sm underline text-gray" to="/">

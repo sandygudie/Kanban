@@ -12,7 +12,7 @@ module.exports = {
       dark: "#212529",
       "sky-blue": "hsla(193, 75%, 59%,1)",
       purple: "hsla(249, 83% ,70%, 1)",
-      "sea-green": "hsla(155, 68% ,65%, 1)",
+      "sea-green": "#44b774",
       white: "#ffffff",
       black: "#000",
       offwhite: "hsla(220, 69%, 97%, 1)",
