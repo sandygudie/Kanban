@@ -94,7 +94,9 @@ export default function Index() {
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
         <div className="md:w-8/12 mx-auto">
-          <h1 className="font-bold text-3xl  md:pb-12 text-center">Sign Up</h1>
+          <h1 className="font-bold text-3xl md:mt-8 md:pb-12 text-center">
+            Sign Up
+          </h1>
           <div className="md:flex items-center justify-between">
             <form
               onSubmit={handleSubmit}
@@ -200,43 +202,6 @@ export default function Index() {
                       ) : null}
                     </>
                   )}
-                  {/* {!signupError.length ? (
-                    <>
-                      {password.length
-                        ? passwordValidation.map((ele, index) => (
-                            <p key={index}>
-                              <span
-                                className={` ${
-                                  validatePassword.includes(ele)
-                                    ? "text-sea-green"
-                                    : "text-error"
-                                } text-sm flex items-center gap-x-2`}
-                              >
-                                {validatePassword.includes(ele) ? (
-                                  <IoCheckmarkCircleOutline size={16} />
-                                ) : (
-                                  <IoAlertCircleOutline size={16} />
-                                )}
-                                {ele}
-                              </span>
-                            </p>
-                          ))
-                        : null}
-                      {validatePassword.includes("No space") ? (
-                        <p className="text-error text-sm flex items-center gap-x-2">
-                          {" "}
-                          <IoAlertCircleOutline size={16} />
-                          No spaces
-                        </p>
-                      ) : null}
-                    </>
-                  ) : signupSuccess.length ? (
-                    <p className="text-sea-green text-center">
-                      {signupSuccess} Check your inbox for verification link.
-                    </p>
-                  ) : (
-                    <p className="text-error text-center">{signupError}</p>
-                  )} */}
                 </div>
               </div>
 
