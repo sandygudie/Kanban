@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import LoadingSpinner from "components/LoadingSpinner";
+import Spinner from "components/Spinner";
 import NotFound from "page/notFound";
 import Workspace from "page/workspace";
 import Dashboard from "page/dashboard";
 import Home from "page/home";
 import Login from "page/login";
 import Signup from "page/signup";
+import VerifyEmail from "page/verifyEmail";
 import AuthLayout from "components/AuthLayout";
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
     <React.Suspense
       fallback={
         <div className="flex flex-col items-center justify-center h-screen bg-skin-fill">
-          <LoadingSpinner />
+          <Spinner />
         </div>
       }
     >
@@ -39,11 +40,14 @@ function App() {
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/email-verify/:confirmationCode"
+            element={<VerifyEmail />}
+          />
         </Route>
-
-        <Route path="*" element={<NotFound />} />
         <Route path="/workspace" element={<Workspace />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </React.Suspense>
   );

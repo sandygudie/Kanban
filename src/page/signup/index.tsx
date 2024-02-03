@@ -4,14 +4,17 @@ import { ChangeEvent, useState } from "react";
 import { signUp } from "services/api/auth";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import Spinner from "components/Spinner";
 
 export default function Index() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [signupError, setSignupError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState("");
   const [validatePassword, setValidatePassword] = useState<string[]>([]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,6 +25,7 @@ export default function Index() {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSignupError("");
     setSignupSuccess("");
+
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -79,11 +83,13 @@ export default function Index() {
       setPassword(password);
       const newFormdata = { ...formData, password };
       try {
+        setLoading(true);
         const response = await signUp(newFormdata);
-        console.log(response);
         setSignupSuccess(response.message);
       } catch (error: any) {
         setSignupError(error.message);
+      } finally {
+        setLoading(false);
       }
     } else {
       setError(true);
@@ -167,10 +173,17 @@ export default function Index() {
                 <div className="mt-2 text-sm ">
                   {signupSuccess.length > 0 ? (
                     <p className="text-sea-green text-center">
-                      {signupSuccess} Check your inbox for verification link.
+                      {signupSuccess}
+                      <span className="block">
+                        {" "}
+                        Check your inbox for verification link.
+                      </span>
                     </p>
                   ) : signupError.length > 0 ? (
-                    <p className="text-error text-center">{signupError}</p>
+                    <p className="text-error text-center flex items-center gap-x-2">
+                      {" "}
+                      <IoAlertCircleOutline size={16} /> {signupError}
+                    </p>
                   ) : (
                     <>
                       {password.length
@@ -205,12 +218,12 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="w-full">
+              <div className="w-full mt-4">
                 <button
-                  className="bg-primary w-full font-medium rounded-md text-white p-3"
+                  className="bg-primary flex justify-center w-full h-12 font-medium rounded-md text-white p-3"
                   type="submit"
                 >
-                  Continue with Email
+                  {loading ? <Spinner /> : "Continue with Email"}
                 </button>
                 <div className="text-right pt-2">
                   {" "}

@@ -3,9 +3,11 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
 import { login } from "services/api/auth";
 import { IoAlertCircleOutline } from "react-icons/io5";
+import Spinner from "components/Spinner";
 
 export default function Index() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState(false);
   const [formData, setFormData] = useState({
@@ -39,11 +41,14 @@ export default function Index() {
       setInputError("passwordError");
     } else {
       try {
+        setLoading(true)
         const response = await login(formData);
         console.log(response);
       } catch (error) {
         setInputError("error");
         setLoginError(true);
+      }finally{
+        setLoading(false)
       }
     }
   };
@@ -128,10 +133,10 @@ export default function Index() {
               </div>
               <div className="w-full mt-6">
                 <button
-                  className="bg-primary w-full font-medium rounded-md text-white p-3"
+                  className="bg-primary flex justify-center h-12 w-full font-medium rounded-md text-white p-3"
                   type="submit"
                 >
-                  Continue
+                 {loading?<Spinner/>: 'Continue with Email'}
                 </button>
                 <div className="flex items-center justify-between pt-3">
                   <Link
