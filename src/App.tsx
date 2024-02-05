@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect,lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import Spinner from "components/Spinner";
 import NotFound from "page/notFound";
-import Workspace from "page/workspace";
-import Dashboard from "page/dashboard";
-import Home from "page/home";
-import Login from "page/login";
-import Signup from "page/signup";
-import VerifyEmail from "page/verifyEmail";
 import AuthLayout from "components/AuthLayout";
+import ProtectedRoutes from "components/ProtectedRoutes";
+const Login= lazy(() => import('page/login'));
+const Signup= lazy(() => import('page/signup'));
+const VerifyEmail= lazy(() => import('page/verifyEmail'));
+const Dashboard = lazy(() => import('page/dashboard/dashboard'));
+const Workspace= lazy(() => import('page/workspace/workspace'));
+const Home = lazy(() => import('page/home'));
 
 function App() {
   useEffect(() => {
@@ -45,8 +46,24 @@ function App() {
             element={<VerifyEmail />}
           />
         </Route>
-        <Route path="/workspace" element={<Workspace />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route
+          path="/workspace"
+          element={
+            <ProtectedRoutes>
+              <Workspace />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoutes>
+              <Dashboard />{" "}
+            </ProtectedRoutes>
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </React.Suspense>

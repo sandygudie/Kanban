@@ -50,7 +50,7 @@ export default function Index() {
     dispatch(addWorkspace(values));
     navigate("/dashboard");
   };
-  console.log(isCreateWorkspace);
+
   return (
     <div className={`w-full ${isCreateWorkspace ? "h-full" : "h-screen"}`}>
       <header className="bg-white h-[65px] dark:bg-secondary flex items-center w-full border-b-[1px] border-gray/20">

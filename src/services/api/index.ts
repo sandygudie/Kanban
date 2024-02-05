@@ -17,17 +17,19 @@ async function makeApiCall<T = any>(
       method,
       data: payload,
       baseURL,
+      withCredentials: true,
       ...axiosRequestConfig,
     });
 
     return data;
   } catch (error: any) {
     if (error.response) {
-      if ( error.response.status === 401) {
+      if (error.response.status === 401) {
         window.location.replace("/login");
       }
     }
-    throw new Error( error.response.data.message);
+
+    throw new Error(error.response?.data?.message || error.message);
   }
 }
 

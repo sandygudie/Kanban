@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
 import { login } from "services/api/auth";
@@ -6,17 +6,18 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 import Spinner from "components/Spinner";
 
 export default function Index() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState("");
-  const [loginError, setLoginError] = useState(false);
+  const [loginError, setLoginError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLoginError(false);
+    setLoginError("");
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -41,14 +42,15 @@ export default function Index() {
       setInputError("passwordError");
     } else {
       try {
-        setLoading(true)
+        setLoading(true);
         const response = await login(formData);
-        console.log(response);
-      } catch (error) {
+        if (response) {
+          navigate("/workspace");
+        }
+      } catch (error: any) {
+        setLoading(false);
         setInputError("error");
-        setLoginError(true);
-      }finally{
-        setLoading(false)
+        setLoginError(error.message);
       }
     }
   };
@@ -127,7 +129,7 @@ export default function Index() {
                 {loginError ? (
                   <p className="text-sm absolute -bottom-7 flex items-center text-error gap-x-2">
                     {" "}
-                    <IoAlertCircleOutline size={16} /> Invalid credientials{" "}
+                    <IoAlertCircleOutline size={16} /> {loginError}{" "}
                   </p>
                 ) : null}
               </div>
@@ -136,7 +138,7 @@ export default function Index() {
                   className="bg-primary flex justify-center h-12 w-full font-medium rounded-md text-white p-3"
                   type="submit"
                 >
-                 {loading?<Spinner/>: 'Continue with Email'}
+                  {loading ? <Spinner /> : "Continue with Email"}
                 </button>
                 <div className="flex items-center justify-between pt-3">
                   <Link
