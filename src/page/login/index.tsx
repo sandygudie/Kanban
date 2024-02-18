@@ -1,14 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
-import { login } from "services/api/auth";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import Spinner from "components/Spinner";
+import  { Loader } from "components/Spinner";
+import { loadWorkspaceData } from "utilis";
+import { useLoginUserMutation } from "redux/apiSlice";
 
 export default function Index() {
+  const [login, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState("");
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ export default function Index() {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginError("");
+    setInputError("");
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -34,6 +36,7 @@ export default function Index() {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    const currentWorkspace = loadWorkspaceData();
     if (formData.email === "" && formData.password === "") {
       setInputError("error");
     } else if (formData.email === "") {
@@ -42,13 +45,24 @@ export default function Index() {
       setInputError("passwordError");
     } else {
       try {
-        setLoading(true);
-        const response = await login(formData);
-        if (response) {
+        const response = await login(formData).unwrap();
+        const { workspace } = response.userdetails;
+        if (!workspace.length) {
+          navigate("/workspace/new");
+        } else if (workspace.length && !currentWorkspace) {
           navigate("/workspace");
+        } else {
+          const exisitngWorkspace = workspace.includes(
+            currentWorkspace.workspaceId
+          );
+          if (exisitngWorkspace) {
+            navigate(`/workspace/${currentWorkspace.workspaceId}`);
+          } else {
+            localStorage.removeItem("currentWorkspace");
+            navigate("/workspace");
+          }
         }
       } catch (error: any) {
-        setLoading(false);
         setInputError("error");
         setLoginError(error.message);
       }
@@ -70,7 +84,7 @@ export default function Index() {
               <div className="">
                 <button
                   onClick={() => {}}
-                  className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
+                  className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
                 >
                   <div className="w-10 h-10">
                     <img
@@ -126,28 +140,30 @@ export default function Index() {
                     />
                   )}
                 </button>
-                {loginError ? (
-                  <p className="text-sm absolute -bottom-7 flex items-center text-error gap-x-2">
-                    {" "}
-                    <IoAlertCircleOutline size={16} /> {loginError}{" "}
-                  </p>
-                ) : null}
+                <div className="pt-3 relative">
+                  {loginError ? (
+                    <p className="text-xs absolute  flex items-center text-error gap-x-2">
+                      {" "}
+                      <IoAlertCircleOutline size={16} /> {loginError}{" "}
+                    </p>
+                  ) : null}
+                </div>
               </div>
-              <div className="w-full mt-6">
+              <div className="w-full mt-4">
                 <button
-                  className="bg-primary flex justify-center h-12 w-full font-medium rounded-md text-white p-3"
+                  className="bg-primary flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
                   type="submit"
                 >
-                  {loading ? <Spinner /> : "Continue with Email"}
+                  {isLoading ? <Loader /> : "Continue with Email"}
                 </button>
                 <div className="flex items-center justify-between pt-3">
                   <Link
-                    className="text-sm text-primary underline "
+                    className="text-xs text-primary underline "
                     to="/signup"
                   >
                     Create account
                   </Link>
-                  <Link className="text-sm underline text-gray" to="/">
+                  <Link className="text-xs underline text-gray" to="/">
                     forgot password?
                   </Link>
                 </div>

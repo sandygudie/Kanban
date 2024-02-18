@@ -3,12 +3,21 @@ import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import SelectBox from "components/SelectBox";
 import { TextInput, TextArea, SubtaskInput } from "../InputField";
-import { AppState, IBoard, IColumn, ISubTask, ITask } from "types";
+import {
+  AppState,
+  IBoard,
+  IColumn,
+  ISubTask,
+  ITask,
+  IWorkspaceProfile,
+} from "types";
 import { appData, addTask, editTask, deleteTask } from "redux/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedTask } from "utilis";
 import { useToast } from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
+import { useCreateTaskMutation } from "redux/apiSlice";
+import{ Loader } from "components/Spinner";
 
 interface Props {
   handleClose: () => void;
@@ -17,9 +26,11 @@ interface Props {
   activeColumn?: IColumn;
 }
 export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
+  const [createTask, { isLoading }] = useCreateTaskMutation();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const active: IBoard = data.active;
+  const workspace: IWorkspaceProfile = data.workspace;
   const toast = useToast();
   const [selectedColumn, setSelectedColumn] = useState<string | any>(
     tasks
@@ -45,14 +56,38 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
       .min(1, "Add a substask."),
   });
 
-  const addTaskHandler = (values: ITask) => {
+  const addTaskHandler = async (values: ITask) => {
     values.status = selectedColumn;
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === false) {
-      dispatch(addTask({ updatedTasks: values, position: 0 }));
+      try {
+        const updatedSubstasks = values.subtasks.map((ele) => {
+          return {
+            title: ele.title,
+            isCompleted: ele.isCompleted,
+          };
+        });
+        const payload = {
+          formdata: {
+            title: values.title,
+            description: values.description,
+            subtasks: updatedSubstasks,
+          },
+          workspaceId: workspace.id,
+          columnId: activeColumn?._id,
+        };
+
+        const response = await createTask(payload).unwrap();
+        if (response) {
+          dispatch(addTask({ updatedTasks: values, position: 0 }));
+        }
+      } catch (error) {
+        console.log(error);
+
+      }
     } else {
       toast({
-        title: "Task already exist.",
+        title: "Task name already exist.",
         position: "top",
         status: "error",
         duration: 2000,
@@ -96,14 +131,14 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
           initialValues={
             tasks
               ? {
-                  id: tasks.id,
+                  _id: tasks._id,
                   title: tasks.title,
                   description: tasks.description,
                   status: tasks.status,
                   subtasks: tasks.subtasks,
                 }
               : {
-                  id: uuidv4(),
+                  _id: uuidv4(),
                   title: "",
                   description: "",
                   status: selectedColumn,
@@ -145,7 +180,7 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
                         values.subtasks.length > 0 &&
                         values.subtasks.map((task: ISubTask, index: number) => (
                           <SubtaskInput
-                            key={task.id}
+                            key={task._id}
                             index={index}
                             name={`subtasks.${index}.title`}
                             arrayHelpers={arrayHelpers}
@@ -158,7 +193,7 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
-                            id: uuidv4(),
+                            _id: uuidv4(),
                             title: "",
                             isCompleted: false,
                           });
@@ -218,10 +253,10 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
               <div className="my-8">
                 <button
                   aria-label="Create Task"
-                  className="text-white bg-primary/70 hover:bg-primary px-2 py-3 w-full font-bold text-sm dark:hover:text-white rounded-full"
+                  className="text-white bg-primary/70 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
-                  {tasks ? "Update" : "Create"} Task
+                  {isLoading ? <Loader /> : tasks ? "Update Task" : "Create Task"} 
                 </button>
               </div>
             </Form>

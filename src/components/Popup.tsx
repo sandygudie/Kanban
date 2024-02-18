@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useRef } from "react";
 
 interface Props {
   items: {
-    title: string;
+    title:ReactElement|string;
     handler: () => void;
     status?: boolean;
   }[];
@@ -30,8 +30,8 @@ function Popup({ items, style, handleOpenMenu, description }: Props) {
       style={style}
       className={`${
         description ? "py-1" : "py-0"
-      }  absolute rounded-md shadow-3xl dark:shadow-gray/20 shadow-gray/30 
-      dark:bg-[#20212c] bg-offwhite text-white w-fit right-0 top-6`}
+      }  absolute bg-offwhite dark:bg-secondary rounded-md shadow-3xl dark:shadow-gray/20 shadow-gray/30 
+     text-white w-fit right-0 top-6`}
     >
       <div className={`${description ? "w-auto" : "w-max"}`}>
         {description ? description : null}
@@ -42,14 +42,14 @@ function Popup({ items, style, handleOpenMenu, description }: Props) {
                 key={i}
                 disabled={list.status === false}
                 onClick={list.handler}
-                className={`block w-full text-left font-semiBold dark:text-white text-black hover:text-primary text-[0.95rem] ${
+                className={`block w-full text-left font-semiBold dark:text-white text-black hover:bg-gray/20 text-[0.8rem] ${
                   description
                     ? `${
                         list.status === false
                           ? "bg-gray/10 !text-gray hover:!text-gray  cursor-not-allowed"
                           : "dark:text-white text-black hover:bg-primary hover:text-white"
                       } py-3 text-[0.9rem]`
-                    : " py-2 text-[13px]"
+                    : "py-2 "
                 }  px-4
                ${i < items.length - 1 && `border-b-[1px] border-gray/20`}`}
               >

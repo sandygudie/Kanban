@@ -1,36 +1,58 @@
-import axios, { type AxiosRequestConfig } from "axios";
+import type { BaseQueryFn } from "@reduxjs/toolkit/query";
+import axios from "axios";
+import type { AxiosError, AxiosRequestConfig } from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASEURL;
+const axiosBaseQuery =
+  (
+    { baseUrl }: { baseUrl: string } = { baseUrl: "" }
+  ): BaseQueryFn<
+    {
+      url: string;
+      method?: AxiosRequestConfig["method"];
+      data?: AxiosRequestConfig["data"];
+      params?: AxiosRequestConfig["params"];
+      headers?: AxiosRequestConfig["headers"];
+    },
+    unknown,
+    unknown
+  > =>
+    async ({ url, method, data, params, headers }) => {
+      try {
+        const result = await axios({
+          url: baseUrl + url,
+          method,
+          data,
+          params,
+          headers,
+          withCredentials: true,
+        });
 
-async function makeApiCall<T = any>(
-  url: string,
-  method: AxiosRequestConfig["method"] = "get",
-  payload?: AxiosRequestConfig["data"],
-  axiosRequestConfig?: Omit<AxiosRequestConfig, "url" | "method" | "data">
-): Promise<T> {
-  try {
-    if (!baseURL || typeof baseURL !== "string") {
-      throw new Error("BASEURL is not defined");
-    }
-    const { data } = await axios({
-      url,
-      method,
-      data: payload,
-      baseURL,
-      withCredentials: true,
-      ...axiosRequestConfig,
-    });
+        return { data: result.data };
 
-    return data;
-  } catch (error: any) {
-    if (error.response) {
-      if (error.response.status === 401) {
-        window.location.replace("/login");
+      } catch (axiosError) {
+        const err = axiosError as AxiosError;
+        if (err.response) {
+          if (err.response.status === 401) {
+            window.location.replace("/login");
+          }
+        }
+        return {
+          error: err.response?.data || err.message,
+        };
       }
-    }
+    };
 
-    throw new Error(error.response?.data?.message || error.message);
-  }
-}
+export default axiosBaseQuery;
 
-export default makeApiCall;
+// } catch (err: any) {
+//   // const err = axiosError as AxiosError
+//   console.log(err.response?.data.message);
+//   if (err.response) {
+//     if (err.response.status === 401) {
+//       window.location.replace("/login");
+//     }
+//   }
+
+//   throw new Error(err.response?.data.message || err.message);
+// }
+// };

@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
-import { signUp } from "services/api/auth";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
-import Spinner from "components/Spinner";
+import { Loader } from "components/Spinner";
+import { useCreateUserMutation } from "redux/apiSlice";
 
 export default function Index() {
+  const [signUp, { isLoading }] = useCreateUserMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [signupError, setSignupError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState("");
   const [validatePassword, setValidatePassword] = useState<string[]>([]);
 
@@ -83,13 +83,10 @@ export default function Index() {
       setPassword(password);
       const newFormdata = { ...formData, password };
       try {
-        setLoading(true);
-        const response = await signUp(newFormdata);
+        const response = await signUp(newFormdata).unwrap();
         setSignupSuccess(response.message);
       } catch (error: any) {
         setSignupError(error.message);
-      } finally {
-        setLoading(false);
       }
     } else {
       setError(true);
@@ -111,7 +108,7 @@ export default function Index() {
               <div className="block md:hidden">
                 <button
                   onClick={() => {}}
-                  className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
+                  className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
                 >
                   <div className="w-10 h-10">
                     <img
@@ -172,7 +169,7 @@ export default function Index() {
                 </button>
                 <div className="mt-2 text-sm ">
                   {signupSuccess.length > 0 ? (
-                    <p className="text-sea-green text-center">
+                    <p className="text-success text-center">
                       {signupSuccess}
                       <span className="block">
                         {" "}
@@ -180,7 +177,7 @@ export default function Index() {
                       </span>
                     </p>
                   ) : signupError.length > 0 ? (
-                    <p className="text-error text-center flex items-center gap-x-2">
+                    <p className="text-error flex items-center gap-x-2">
                       {" "}
                       <IoAlertCircleOutline size={16} /> {signupError}
                     </p>
@@ -192,7 +189,7 @@ export default function Index() {
                               <span
                                 className={` ${
                                   validatePassword.includes(ele)
-                                    ? "text-sea-green"
+                                    ? "text-success"
                                     : "text-error"
                                 } text-sm flex items-center gap-x-2`}
                               >
@@ -220,14 +217,14 @@ export default function Index() {
 
               <div className="w-full mt-4">
                 <button
-                  className="bg-primary flex justify-center w-full h-12 font-medium rounded-md text-white p-3"
+                  className="bg-primary flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
                   type="submit"
                 >
-                  {loading ? <Spinner /> : "Continue with Email"}
+                  {isLoading ? <Loader/> : "Continue with Email"}
                 </button>
                 <div className="text-right pt-2">
                   {" "}
-                  <Link className="text-sm underline text-gray" to="/login">
+                  <Link className="text-xs underline text-gray" to="/login">
                     You have an account? log in
                   </Link>
                 </div>
@@ -235,9 +232,7 @@ export default function Index() {
             </form>
             <hr className="border-r-[1px] border-solid hidden md:block h-96" />
             <div className="hidden md:block">
-              <p className="pb-4 text-sm text-center text-gray">
-                With existing account
-              </p>
+              <p className="pb-4 text-sm text-gray">With existing account</p>
               <button
                 onClick={() => {}}
                 className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-8 items-center rounded-full pl-4 pr-10 py-2"

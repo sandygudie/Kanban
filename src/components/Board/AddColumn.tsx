@@ -1,35 +1,29 @@
+import { useState } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
-import { SubtaskInput, TextInput } from "components/InputField";
+import { SubtaskInput } from "components/InputField";
 import { AppState, IBoard, IColumn, IWorkspaceProfile } from "types";
-import { appData, addBoard } from "redux/boardSlice";
+import { addColumn, appData } from "redux/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { checkDuplicatedBoard, saveloadWorkspaceData } from "utilis";
-import { useToast } from "@chakra-ui/react";
+import { checkDuplicatedColumn } from "utilis";
 import { v4 as uuidv4 } from "uuid";
-import { useCreateBoardMutation } from "redux/apiSlice";
+import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
+import { useCreateColumnMutation } from "redux/apiSlice";
+
 interface Props {
   handleClose: () => void;
 }
-function AddBoard({ handleClose }: Props) {
-  const [createBoard, { isLoading }] = useCreateBoardMutation();
 
+export default function AddColumn({ handleClose }: Props) {
+  const [createColumn, { isLoading }] = useCreateColumnMutation();
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
-  const board: IBoard[] = data.board;
   const workspace: IWorkspaceProfile = data.workspace;
-  const toast = useToast();
+  const active: IBoard = data.active;
 
-  const BoardSchema = Yup.object().shape({
-    name: Yup.string()
-      .required("Required")
-      .test("len", "At least 5 characters and not more than 15", (val) => {
-        if (val == undefined) {
-          return false;
-        }
-        return val.length >= 5 && val.length <= 15;
-      }),
+  const ColumnSchema = Yup.object().shape({
     columns: Yup.array()
       .of(
         Yup.object().shape({
@@ -40,74 +34,58 @@ function AddBoard({ handleClose }: Props) {
       .min(1, "Add a column."),
   });
 
-  const addBoardHandler = async (values: IBoard) => {
-    const foundDuplicate = checkDuplicatedBoard(values, board);
-    const column = values.columns.map((ele) => ele.name);
-    const name = values.name;
+  const addColumnHandler = async (values: any) => {
+    const foundDuplicate = checkDuplicatedColumn(
+      values.columns,
+      active.columns
+    );
+
     if (foundDuplicate === false) {
       try {
+        const columnArray = values.columns.map((ele: IColumn) => {
+          return ele.name;
+        });
         const payload = {
+          boardId: active._id,
           workspaceId: workspace.id,
-          formData: { name, column },
+         formData: { column: columnArray },
         };
-        const response = await createBoard(payload).unwrap();
+        console.log(payload);
+        const response = await createColumn(payload).unwrap();
         if (response) {
-          dispatch(addBoard(values));
-          saveloadWorkspaceData({
-            workspaceId: workspace.id,
-            activeBoard: response.data.boardId,
-          });
+          dispatch(addColumn(values.columns));
         }
-      } catch (error) {
+        handleClose();
+      } catch (error: any) {
         console.log(error);
+        setError(error.message);
       }
     } else {
-      toast({
-        title: "Board already exist.",
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-      });
+      setError("Duplicated column name");
     }
-    handleClose();
   };
-
-  // const editBoardHandler = (values: IBoard) => {
-  //   dispatch(editBoard(values));
-  //   handleClose();
-  // };
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-2 px-4">New Board</h1>
+      <h1 className="font-bold text-lg pb-2 px-4">Add Column</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem] px-4">
         <Formik
-          initialValues={{ _id: uuidv4(), name: "", columns: [] }}
-          validationSchema={BoardSchema}
+          initialValues={{ columns: [{ _id: uuidv4(), name: "", tasks: [] }] }}
+          validationSchema={ColumnSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={addBoardHandler}
+          onSubmit={addColumnHandler}
         >
           {({ values, errors }) => (
             <Form>
-              <div className="mb-6">
-                <TextInput
-                  label="Name"
-                  name="name"
-                  type="text"
-                  placeholder="E.g  Development, Marketing"
-                />
-              </div>
               <div className="mb-6">
                 <label className="text-sm font-bold">Columns</label>
                 <FieldArray
                   name="columns"
                   render={(arrayHelpers) => (
                     <div>
-                      {values.columns &&
-                        values.columns.length > 0 &&
-                        values.columns.map((task: IColumn, index: number) => (
+                      {values.columns.length > 0 &&
+                        values.columns.map((task: any, index: number) => (
                           <SubtaskInput
                             key={task._id}
                             index={index}
@@ -128,7 +106,7 @@ function AddBoard({ handleClose }: Props) {
                           });
                         }}
                       >
-                        + Add New Column
+                        + Add Column
                       </button>
 
                       {values.columns.length >= 0 ? (
@@ -145,14 +123,22 @@ function AddBoard({ handleClose }: Props) {
                 />
               </div>
 
-              <div className="my-8">
+              <div className="my-8 relative ">
                 <button
                   aria-label="Board"
                   className="px-2 text-white bg-primary/70 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
                   type="submit"
                 >
-                  {isLoading ? <Loader /> : "Create Board"}
+                  {isLoading ? <Loader /> : "Submit"}
                 </button>
+                {error.length ? (
+                  <p className="text-error absolute  text-xs flex items-center mt-2 gap-x-2">
+                    <IoAlertCircleOutline />
+                    {error}
+                  </p>
+                ) : (
+                  ""
+                )}
               </div>
             </Form>
           )}
@@ -161,5 +147,3 @@ function AddBoard({ handleClose }: Props) {
     </div>
   );
 }
-
-export default AddBoard;

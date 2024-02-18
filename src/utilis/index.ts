@@ -1,37 +1,53 @@
-import { AppState, IBoard, ITask } from "types";
+import { AppState, IBoard, IColumn, ITask } from "types";
 const data: IBoard[] = [];
+
 export const loadState = () => {
   const initialState: AppState = {
     board: data,
     active: data.find((item: IBoard, index: number) => index === 0)!,
-    profile: { id: "", name: "", email: "" },
+    workspace: { id: "", name: "" },
   };
+  return initialState;
+};
 
+export const loadWorkspaceData = () => {
   try {
-    const serializedState = localStorage.getItem("kanban");
+    const serializedState = localStorage.getItem("currentWorkspace");
     if (serializedState === null) {
-      return initialState;
+      return null;
     }
-    return JSON.parse(serializedState).boarddata;
+    return JSON.parse(serializedState);
   } catch (err) {
     return undefined;
   }
 };
 
-export const saveState = (state: any) => {
+export const saveloadWorkspaceData = (state: any) => {
   try {
     const serializesState = JSON.stringify(state);
-    localStorage.setItem("kanban", serializesState);
+    localStorage.setItem("currentWorkspace", serializesState);
   } catch (err) {
     return err;
   }
 };
 
 export const checkDuplicatedBoard = (values: IBoard, board: IBoard[]) => {
-  return board.some((el: IBoard) => el.name === values.name);
+  return board.some((ele: IBoard) => ele.name === values.name);
 };
 
-export const checkDuplicatedColumn = () => {};
+export const checkDuplicatedColumn = (
+  values: any,
+  activeColumns: IColumn[]
+) => {
+  const mergedArray = activeColumns.concat(values);
+  const columns = mergedArray.map((ele) => {
+    return ele.name.toUpperCase();
+  });
+
+  return columns.some(
+    (ele: string, index: number) => columns.indexOf(ele) !== index
+  );
+};
 
 export const checkDuplicatedTask = (values: ITask, active: IBoard) => {
   let foundTask;

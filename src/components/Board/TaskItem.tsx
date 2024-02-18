@@ -4,7 +4,7 @@ import { ISubTask, ITask } from "types";
 import AddTask from "./AddTask";
 import TaskDetails from "./TaskDetails";
 import { Draggable } from "@hello-pangea/dnd";
-import { colorSelection } from "utilis";
+// import { colorSelection } from "utilis";
 interface Props {
   tasks: ITask;
   filtered: ISubTask[];
@@ -15,11 +15,11 @@ export default function TaskItem({ tasks, filtered, index }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenModal, setOpenModal] = useState(false);
 
-  const handleOpenModal = () => setOpenModal(true);
+  // const handleOpenModal = () => setOpenModal(true);
 
   return (
     <>
-      <Draggable key={tasks.id} draggableId={tasks.id.toString()} index={index}>
+      <Draggable key={tasks._id} draggableId={tasks._id} index={index}>
         {(provided, snapshot) => {
           return (
             <div
@@ -35,11 +35,12 @@ export default function TaskItem({ tasks, filtered, index }: Props) {
               onClick={() => {
                 setIsOpen(true);
               }}
+              
             >
               <div
-                style={{
-                  borderColor: colorSelection(),
-                }}
+                // style={{
+                //   borderColor: colorSelection(),
+                // }}
                 className="shadow-lg hover:bg-gray/20
               cursor-pointer rounded-lg border-l-2 mb-4 py-6 px-4"
               >
@@ -60,7 +61,7 @@ export default function TaskItem({ tasks, filtered, index }: Props) {
           tasks={tasks}
           handleClose={() => setIsOpen(false)}
           index={index}
-          handleOpenModal={handleOpenModal}
+          // handleOpenModal={handleOpenModal}
         />
       </Modal>
       <Modal open={isOpenModal} handleClose={() => setOpenModal(false)}>

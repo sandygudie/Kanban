@@ -1,11 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  useDeleteBoardMutation,
+  useDeleteColumnMutation,
+  useDeleteTaskMutation,
+} from "redux/apiSlice";
+import {
   appData,
   deleteBoard,
   deleteTask,
   deleteColumn,
 } from "redux/boardSlice";
+
 import { AppState, IColumn, ITask } from "types";
+import { Loader } from "./Spinner";
 
 interface Props {
   handleClose: () => void;
@@ -22,33 +29,60 @@ export default function Delete({
   name,
   selectedColumn,
 }: Props) {
+  const [deleteAColumn, { isLoading: isDeletingColumn }] =
+    useDeleteColumnMutation();
+  const [deleteATask, { isLoading: isDeletingTask }] = useDeleteTaskMutation();
+  const [deleteABoard, { isLoading: isDeletingBoard }] =
+    useDeleteBoardMutation();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
-  const { active } = data;
+  const { active, workspace } = data;
 
-  const deleteBoardHandler = () => {
-    dispatch(deleteBoard(active));
-    handleClose();
+  const deleteBoardHandler = async () => {
+    const response = await deleteABoard({
+      boardId: active._id,
+      workspaceId: workspace.id,
+    }).unwrap();
+    if (response) {
+      dispatch(deleteBoard(active));
+      handleClose();
+    }
   };
-  const deleteTaskHandler = () => {
-    dispatch(deleteTask(tasks));
-    handleClose();
+
+  const deleteTaskHandler = async () => {
+    const response = await deleteATask({
+      taskId: tasks?._id,
+      columnId: tasks?.columnId,
+      workspaceId: workspace.id,
+    }).unwrap();
+    if (response) {
+      dispatch(deleteTask(tasks));
+      handleClose();
+    }
   };
-  const deleteColumnHandler = () => {
-    dispatch(deleteColumn(selectedColumn));
-    handleClose();
+
+  const deleteColumnHandler = async () => {
+    const response = await deleteAColumn({
+      columnId: selectedColumn?._id,
+      workspaceId: workspace.id,
+    }).unwrap();
+    if (response) {
+      dispatch(deleteColumn(selectedColumn));
+      handleClose();
+    }
   };
 
   return (
     <div className="p-4">
       <h1 className="text-left text-xl text-error font-bold mb-4">
         {" "}
-       <span className="dark:text-white text-black"> Delete</span> {isDeleteBoard ? name : selectedColumn ? selectedColumn.name : name}
+        <span className="dark:text-white text-black"> Delete</span>{" "}
+        {isDeleteBoard ? name : selectedColumn ? selectedColumn.name : name}
       </h1>
       <p className="text-base">
-        Are you sure you want to delete this{" "} 
+        Are you sure you want to delete this{" "}
         <span className="font-bold text-lg ">
-          {selectedColumn ? "column" :isDeleteBoard?"board":"task"}
+          {selectedColumn ? "column" : isDeleteBoard ? "board" : "task"}
         </span>{" "}
         ?{" "}
         <span className="ml-1">
@@ -62,8 +96,7 @@ export default function Delete({
 
       <div className="text-center flex items-center justify-around mt-8">
         <button
-
-          className="py-2 w-fit md:w-40 text-white hover:bg-error px-4 rounded-md bg-error/70 font-bold"
+          className="py-2 w-fit md:w-40 text-white h-12 flex justify-center items-center flex-col hover:bg-error px-4 rounded-md bg-error/70 font-bold"
           type="button"
           onClick={
             isDeleteBoard
@@ -74,11 +107,14 @@ export default function Delete({
           }
         >
           {" "}
-          Delete
+          {isDeletingColumn || isDeletingTask || isDeletingBoard ? (
+            <Loader />
+          ) : (
+            "Delete"
+          )}
         </button>
         <button
-       
-          className="py-2 w-fit md:w-40 font-bold hover:bg-gray bg-gray/70 duration-300 px-4 rounded-md"
+          className="py-2 w-fit md:w-40 font-bold hover:bg-gray h-12 bg-gray/70 duration-300 px-4 rounded-md"
           type="button"
           onClick={handleClose}
         >

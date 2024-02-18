@@ -14,3 +14,4 @@ export async function joinWorkspace(payload: IJoinWorkspace) {
   );
   return response;
 }
+

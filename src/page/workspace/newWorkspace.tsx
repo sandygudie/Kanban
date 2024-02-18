@@ -5,14 +5,19 @@ import ToggleBtn from "components/ToggleBtn";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput, TextArea } from "components/InputField";
-import { createWorkspace, joinWorkspace } from "services/api/workspace";
-import Spinner from "components/Spinner";
+import Spinner, { Loader } from "components/Spinner";
 import { useNavigate } from "react-router-dom";
+import { saveloadWorkspaceData, loadWorkspaceData } from "utilis";
+import {
+  useCreateWorkspaceMutation,
+  useJoinWorkspaceMutation,
+} from "redux/apiSlice";
 
 const CreateWorkspaceForm = () => {
+  const [createWorkspace, { isLoading, error, isError }] =
+    useCreateWorkspaceMutation();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+
   const createWorkspaceSchema = Yup.object().shape({
     workspaceName: Yup.string()
       .required("Required")
@@ -26,17 +31,16 @@ const CreateWorkspaceForm = () => {
   });
 
   const createNewWorksapce = async (values: any) => {
-    console.log(values);
-    setLoading(true);
     try {
-      const response = await createWorkspace(values);
+      const response = await createWorkspace(values).unwrap();
       if (response) {
-        navigate("/dashboard");
+        saveloadWorkspaceData({
+          workspaceId: response.data.workspaceId,
+        });
+        navigate(`/workspace/${response.data.workspaceId}`);
       }
     } catch (error: any) {
-      console.log(error);
-      setLoading(false);
-      setError(error.message);
+      // setResponseError(error.message);
     }
   };
   return (
@@ -63,13 +67,15 @@ const CreateWorkspaceForm = () => {
             label="Description"
           />
         </div>
-        {error ? <p className="text-sm text-error">{error}</p> : null}
+        {isError && error ? (
+          <p className="text-sm text-error">{error.toString()}</p>
+        ) : null}
         <div className="my-8">
           <button
             className=" px-2 flex justify-center text-white bg-primary h-14 font-bold py-4 w-full rounded-full"
             type="submit"
           >
-            {loading ? <Spinner /> : "Continue"}
+            {isLoading ? <Spinner /> : "Continue"}
           </button>
         </div>
       </Form>
@@ -78,8 +84,8 @@ const CreateWorkspaceForm = () => {
 };
 
 const JoinWorkspaceForm = () => {
+  const [joinWorkspace, { isLoading }] = useJoinWorkspaceMutation();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const joinWorkspaceSchema = Yup.object().shape({
     workspaceName: Yup.string().required("Required"),
@@ -87,16 +93,15 @@ const JoinWorkspaceForm = () => {
   });
 
   const joinWorkspaceHandler = async (values: any) => {
-    console.log(values);
-    setLoading(true);
     try {
-      const response = await joinWorkspace(values);
+      const response = await joinWorkspace(values).unwrap();
       if (response) {
-        navigate("/dashboard");
+        saveloadWorkspaceData({ workspaceId: response.data.workspaceId });
+        navigate(`/workspace/${response.data.workspaceId}`);
       }
     } catch (error: any) {
       console.log(error);
-      setLoading(false);
+
       setError(error.message);
     }
   };
@@ -133,7 +138,7 @@ const JoinWorkspaceForm = () => {
             className=" px-2 text-white bg-primary font-bold py-4 w-full text-sm rounded-full"
             type="submit"
           >
-            {loading ? <Spinner /> : "Continue"}
+            {isLoading ? <Loader /> : "Continue"}
           </button>
         </div>
       </Form>
@@ -141,29 +146,36 @@ const JoinWorkspaceForm = () => {
   );
 };
 
-export default function Workspace() {
+export default function NewWorkspace() {
+  const navigate = useNavigate();
   const currentTheme = localStorage.getItem("theme")!;
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const [toggle, setToggle] = useState(true);
-
+  const currentWorkspace = loadWorkspaceData();
   const updateThemehandler = (theme: string) => setTheme(theme);
 
   return (
     <div className={`w-full h-full `}>
       <header className="bg-white h-[65px] dark:bg-secondary flex items-center w-full border-b-[1px] border-gray/20">
         <div
-          className={`border-r-[1px] border-gray/20 py-6 px-4 min-w-[14rem] cursor-pointer hidden md:block`}
+          className={`border-r-[1px] border-gray/20 h-[65px] flex-col justify-center item-center px-4 min-w-[14rem] cursor-pointer hidden md:flex`}
         >
           <Icon type="kanban_logo" />
         </div>
         <div className="block md:hidden border-gray/20 p-3 cursor-pointer">
           <img src={logoMobile} alt="logo" className="w-8 h-8" />
         </div>
-        <div className="flex items-center justify-between w-full pr-2 md:px-4">
-          <h1 className="font-bold text-gray text-lg">
-            {/* {profile.id.length > 0 ? "Workspace" : "No Workspace"}  */}
-            No Workspace
-          </h1>
+        <div className="flex items-center font-bold text-gray justify-between w-full pr-2 md:px-4">
+          {currentWorkspace.workspaceId ? (
+            <button
+              onClick={() => navigate(`/workspace`)}
+              
+            >
+              Available Workspace(s)
+            </button>
+          ) : (
+            <p>No Workspace</p>
+          )}
           <ToggleBtn updateThemehandler={updateThemehandler} theme={theme} />
         </div>
       </header>
@@ -203,7 +215,6 @@ export default function Workspace() {
               </button>
             </div>
             {toggle ? <CreateWorkspaceForm /> : <JoinWorkspaceForm />}
-            {/* */}
           </div>
         </div>
       </main>

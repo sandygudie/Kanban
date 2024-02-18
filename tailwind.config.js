@@ -6,15 +6,12 @@ module.exports = {
   theme: {
     colors: {
       primary: "hsla(242, 48% ,58%,1)",
-      secondary: "hsla(235, 12% ,19%,1)",
+      secondary: "hsla(0 ,0% ,12.55%,1)",
       "secondary-dark": "hsla(235, 16%, 15%,1)",
       gray: "hsla(216, 15%, 57%, 1)",
-      dark: "#212529",
-      "sky-blue": "hsla(193, 75%, 59%,1)",
-      purple: "hsla(249, 83% ,70%, 1)",
-      "sea-green": "#44b774",
+      success: "#44b774",
       white: "#ffffff",
-      black: "#000",
+      black: "hsla(0, 0% ,9.8%,1)",
       offwhite: "hsla(220, 69%, 97%, 1)",
       error: "#ea5555",
     },
@@ -25,11 +22,11 @@ module.exports = {
       },
     },
     screens: {
-      'xs':'100px',
-      'sm': '300px',
-      'md':'991px',
-      'lg': '1200px',
-    }
+      xs: "100px",
+      sm: "300px",
+      md: "991px",
+      lg: "1200px",
+    },
   },
   plugins: [],
 };

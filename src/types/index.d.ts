@@ -1,36 +1,36 @@
 export interface IBoard {
-  id: string;
+  _id: string;
   name: string;
   columns: IColumn[];
 }
 
 export interface IColumn {
   name: string;
-  id: string;
+  _id: string;
   tasks: ITask[];
 }
 
 export interface ITask {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   status: string;
   subtasks: ISubTask[];
+  columnId:string
 }
 
 export interface ISubTask {
-  id: string;
+  _id: string;
   title: string;
   isCompleted: boolean;
 }
-export interface IProfile {
+export interface IWorkspaceProfile {
   id: string;
   name: string;
-  email: string;
 }
 
 type AppState = {
   board: IBoard[];
-  active: IBoard;
-  profile: IProfile;
+  active: IBoard | any;
+  workspace: IWorkspaceProfile;
 };

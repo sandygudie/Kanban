@@ -1,15 +1,16 @@
-import React, { useEffect,lazy } from "react";
+import React, { useEffect, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import Spinner from "components/Spinner";
 import NotFound from "page/notFound";
 import AuthLayout from "components/AuthLayout";
 import ProtectedRoutes from "components/ProtectedRoutes";
-const Login= lazy(() => import('page/login'));
-const Signup= lazy(() => import('page/signup'));
-const VerifyEmail= lazy(() => import('page/verifyEmail'));
-const Dashboard = lazy(() => import('page/dashboard/dashboard'));
-const Workspace= lazy(() => import('page/workspace/workspace'));
-const Home = lazy(() => import('page/home'));
+const Login = lazy(() => import("page/login"));
+const Signup = lazy(() => import("page/signup"));
+const VerifyEmail = lazy(() => import("page/verifyEmail"));
+const Board = lazy(() => import("page/board"));
+const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
+const AvailableWorkspace = lazy(() => import("page/workspace"));
+const Home = lazy(() => import("page/home"));
 
 function App() {
   useEffect(() => {
@@ -48,18 +49,26 @@ function App() {
         </Route>
 
         <Route
-          path="/workspace"
+          path="/workspace/new"
           element={
             <ProtectedRoutes>
-              <Workspace />
+              <NewWorkspace />
             </ProtectedRoutes>
           }
         />
         <Route
-          path="/dashboard"
+          path="/workspace"
           element={
             <ProtectedRoutes>
-              <Dashboard />{" "}
+              <AvailableWorkspace />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/workspace/:workspaceId"
+          element={
+            <ProtectedRoutes>
+              <Board />{" "}
             </ProtectedRoutes>
           }
         />

@@ -10,7 +10,11 @@ import Modal from "components/Modal";
 import { CgMoreVerticalO } from "react-icons/cg";
 import AddBoard from "components/Board/AddBoard";
 import Popup from "components/Popup";
+import { FiEdit } from "react-icons/fi";
+import { ImBin, ImLink } from "react-icons/im";
+
 import DeleteItem from "components/DeleteItem";
+import { saveloadWorkspaceData } from "utilis";
 interface Props {
   showSidebar: boolean;
   setShowSidebar?: Dispatch<SetStateAction<boolean>>;
@@ -27,7 +31,7 @@ export default function Index({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
-  const { active, board, profile } = data;
+  const { active, board, workspace } = data;
   const isMobile = useMediaQuery({ query: "(min-width: 700px)" });
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isDeleteBoard, setDeleteBoard] = useState(false);
@@ -36,12 +40,14 @@ export default function Index({
     setOpenBoard(true);
     setOpenMenu(false);
   };
+  // console.log(active)
   const handleOpenMenu = () => setOpenMenu(false);
+
   return (
     <>
       <>
         <div
-          className={`h-screen fixed z-20 w-56 transition duration-700 ease-in-out ${
+          className={`h-screen fixed z-20 w-[220px]  transition duration-700 ease-in-out ${
             showSidebar ? "translate-x-0" : "-translate-x-64"
           }`}
         >
@@ -61,9 +67,9 @@ export default function Index({
                     {board.map((options: IBoard) => {
                       return (
                         <button
-                          key={options.id}
-                          className={`py-3 w-[14rem] px-4 relative flex items-center group justify-between font-bold cursor-pointer ${`${
-                            active.id === options.id
+                          key={options._id}
+                          className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-bold cursor-pointer ${`${
+                            active?._id === options._id
                               ? "bg-primary rounded-r-full text-white"
                               : `${
                                   isOpenMenu
@@ -73,6 +79,10 @@ export default function Index({
                           } `} `}
                           onClick={() => {
                             dispatch(activeItem(options));
+                            saveloadWorkspaceData({
+                              workspaceId: workspace.id,
+                              activeBoard: options._id,
+                            });
                             if (handleClose) {
                               handleClose();
                             }
@@ -80,11 +90,19 @@ export default function Index({
                         >
                           <div className="flex items-center gap-x-2 justify-between">
                             <Icon type="board" />
-                            <span>
+                            <span className="text-sm flex items-center">
                               {" "}
-                              {options.name}
+                              <span
+                                className={`${
+                                  options.name.length > 12
+                                    ? "truncate w-[11ch]"
+                                    : "w-auto"
+                                } block `}
+                              >
+                                {options.name}
+                              </span>
                               <span className="text-sm font-bold pl-1">
-                                ({options.columns.length})
+                                ({options.columns?.length})
                               </span>
                             </span>
                           </div>
@@ -94,23 +112,45 @@ export default function Index({
                                 size={15}
                                 className={`${
                                   isOpenMenu
-                                    ? `${active.id !== options.id && `hidden`}`
+                                    ? `${active.id !== options._id && `hidden`}`
                                     : "hidden group-hover:inline"
                                 } `}
                               />
                             </div>
                           </span>
-                          {active.id === options.id && isOpenMenu && (
+                          {active?._id === options._id && isOpenMenu && (
                             <Popup
                               style={{ top: 20, left: 170, zIndex: 20 }}
                               handleOpenMenu={handleOpenMenu}
                               items={[
                                 {
-                                  title: "Edit Board",
+                                  title: (
+                                    <p className="text-[13px] flex items-center gap-x-3">
+                                      <FiEdit /> Edit Board
+                                    </p>
+                                  ),
                                   handler: editBoard,
                                 },
                                 {
-                                  title: "Delete Board",
+                                  title: (
+                                    <p className="text-[13px] flex items-center gap-x-3">
+                                      <ImBin />
+                                      Delete Board
+                                    </p>
+                                  ),
+
+                                  handler: () => {
+                                    setDeleteBoard(true), handleOpenMenu();
+                                  },
+                                },
+                                {
+                                  title: (
+                                    <p className="text-[13px] flex items-center gap-x-3">
+                                      <ImLink />
+                                      Copy link
+                                    </p>
+                                  ),
+
                                   handler: () => {
                                     setDeleteBoard(true), handleOpenMenu();
                                   },
@@ -124,7 +164,7 @@ export default function Index({
                   </>
                 )}
 
-                {profile.id.length ? (
+                {workspace.id ? (
                   <button
                     onClick={() => {
                       handleaddBoardMobile
@@ -139,7 +179,7 @@ export default function Index({
                         {" "}
                         <IoIosAdd size={20} />{" "}
                       </span>{" "}
-                      <p> Add New Board</p>
+                      <p> New Board</p>
                     </div>
                   </button>
                 ) : null}
@@ -167,7 +207,7 @@ export default function Index({
         }}
       >
         {isOpenBoard ? (
-          <AddBoard active={active} handleClose={() => setOpenBoard(false)} />
+          <AddBoard handleClose={() => setOpenBoard(false)} />
         ) : isDeleteBoard ? (
           <DeleteItem
             handleClose={() => setDeleteBoard(false)}

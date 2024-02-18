@@ -1,8 +1,7 @@
 export default function Spinner() {
-    return (
+  return <div className="loading-spinner"></div>;
+}
 
-        <div className="loading-spinner">
-
-      </div>
-    );
-  }
+export const Loader = () => {
+  return <div className="loader"></div>;
+};

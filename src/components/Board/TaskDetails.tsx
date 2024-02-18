@@ -13,7 +13,7 @@ interface Props {
   filtered: ISubTask[];
   index: number;
   handleClose: () => void;
-  handleOpenModal: () => void;
+  // handleOpenModal: () => void;
 }
 
 export default function TaskDetails({
@@ -21,7 +21,7 @@ export default function TaskDetails({
   tasks,
   filtered,
   handleClose,
-  handleOpenModal,
+  // handleOpenModal,
 }: Props) {
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
@@ -53,7 +53,7 @@ export default function TaskDetails({
   };
 
   const editTaskHandler = () => {
-    handleOpenModal();
+    // handleOpenModal();
     handleClose();
   };
 
@@ -69,7 +69,7 @@ export default function TaskDetails({
               </button>
               {isOpenMenu && (
                 <Popup
-                style={{}}
+                  style={{}}
                   items={[
                     {
                       title: "Edit Task",
@@ -136,6 +136,7 @@ export default function TaskDetails({
           handleClose={() => {
             setDeleteTask(false), handleClose();
           }}
+    
           tasks={tasks}
           name={tasks.title}
         />

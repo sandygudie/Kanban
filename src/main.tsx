@@ -6,7 +6,7 @@ import "styles/global.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import { saveState } from "utilis";
+// import { saveState } from "utilis";
 
 const theme = extendTheme({
   styles: {
@@ -21,9 +21,9 @@ const theme = extendTheme({
   }
 });
 
-store.subscribe(() => {
-  saveState(store.getState());
-});
+// store.subscribe(() => {
+//   // saveState(store.getState());
+// });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
