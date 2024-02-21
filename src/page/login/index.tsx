@@ -7,8 +7,8 @@ import { loadWorkspaceData } from "utilis";
 import { useLoginUserMutation } from "redux/apiSlice";
 
 export default function Index() {
-  const [login, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginUserMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState("");

@@ -10,6 +10,7 @@ export const loadState = () => {
   return initialState;
 };
 
+
 export const loadWorkspaceData = () => {
   try {
     const serializedState = localStorage.getItem("currentWorkspace");

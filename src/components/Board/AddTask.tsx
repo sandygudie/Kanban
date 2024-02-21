@@ -17,7 +17,7 @@ import { checkDuplicatedTask } from "utilis";
 import { useToast } from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
 import { useCreateTaskMutation } from "redux/apiSlice";
-import{ Loader } from "components/Spinner";
+import { Loader } from "components/Spinner";
 
 interface Props {
   handleClose: () => void;
@@ -56,12 +56,12 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
       .min(1, "Add a substask."),
   });
 
-  const addTaskHandler = async (values: ITask) => {
+  const addTaskHandler = async (values: ITask | any) => {
     values.status = selectedColumn;
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === false) {
       try {
-        const updatedSubstasks = values.subtasks.map((ele) => {
+        const updatedSubstasks = values.subtasks.map((ele: ISubTask) => {
           return {
             title: ele.title,
             isCompleted: ele.isCompleted,
@@ -83,7 +83,6 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
         }
       } catch (error) {
         console.log(error);
-
       }
     } else {
       toast({
@@ -97,7 +96,7 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
     handleClose();
   };
 
-  const editTaskHandler = (values: ITask) => {
+  const editTaskHandler = (values: ITask | any) => {
     if (values.status === selectedColumn) {
       dispatch(editTask({ values, tasks }));
     } else {
@@ -256,7 +255,13 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
                   className="text-white bg-primary/70 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
-                  {isLoading ? <Loader /> : tasks ? "Update Task" : "Create Task"} 
+                  {isLoading ? (
+                    <Loader />
+                  ) : tasks ? (
+                    "Update Task"
+                  ) : (
+                    "Create Task"
+                  )}
                 </button>
               </div>
             </Form>

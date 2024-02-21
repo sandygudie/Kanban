@@ -47,7 +47,9 @@ const boardSlice = createSlice({
       );
       state.workspace;
     },
+
     editBoard: (state, action) => {
+      console.log();
       const updatedBoard: IBoard[] = state.board.map((item: IBoard) =>
         item._id === state.active._id ? { ...item, ...action.payload } : item
       );
@@ -119,7 +121,7 @@ const boardSlice = createSlice({
     },
 
     deleteTask: (state, action) => {
-      console.log(action.payload)
+      console.log(action.payload);
       state.board.find((item: IBoard) =>
         item.name === state.active.name
           ? item.columns.find((o: IColumn) =>
@@ -187,14 +189,14 @@ const boardSlice = createSlice({
     builder.addMatcher(
       apiSlice.endpoints.getWorkspaceBoard.matchFulfilled,
       (state, { payload }) => {
-        const { boards, _id, name } = payload.data;
+        const { boards, _id, name, createdAt } = payload.data;
         state.board = boards;
         state.active = currentWorkspace.activeBoard
           ? state.board.find(
               (item: IBoard) => item._id === currentWorkspace.activeBoard
             )
           : state.board.find((item: IBoard, index: number) => index === 0);
-        state.workspace = { id: _id, name };
+        state.workspace = { id: _id, name, createdAt };
       }
     );
   },
@@ -212,7 +214,7 @@ export const {
   addWorkspace,
   deleteColumn,
   editColumnName,
-  addColumn
+  addColumn,
 } = boardSlice.actions;
 export const appData = (state: RootState) => state.boarddata;
 export default boardSlice.reducer;

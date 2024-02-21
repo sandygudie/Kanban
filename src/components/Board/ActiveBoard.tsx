@@ -11,9 +11,7 @@ import { IoIosAdd } from "react-icons/io";
 import Modal from "components/Modal";
 import { AppState, IColumn, ITask } from "types";
 import DeleteItem from "components/DeleteItem";
-
 import { PiDotsThreeBold } from "react-icons/pi";
-
 import { IoPencil } from "react-icons/io5";
 import { FcCheckmark } from "react-icons/fc";
 import IconButton from "components/IconButton";
@@ -54,7 +52,6 @@ export default function ActiveBoard() {
     };
     const position = result.destination.index;
     dispatch(addTask({ updatedTasks, position }));
-    // the only one that is required
   }, []);
 
   const addCard = () => {

@@ -11,6 +11,8 @@ const Board = lazy(() => import("page/board"));
 const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
 const AvailableWorkspace = lazy(() => import("page/workspace"));
 const Home = lazy(() => import("page/home"));
+const Settings = lazy(() => import("page/workspace/settings"));
+const Task= lazy(() => import("page/task"));
 
 function App() {
   useEffect(() => {
@@ -69,6 +71,22 @@ function App() {
           element={
             <ProtectedRoutes>
               <Board />{" "}
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/workspace/:workspaceId/:taskId"
+          element={
+            <ProtectedRoutes>
+              <Task />{" "}
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/workspace/settings"
+          element={
+            <ProtectedRoutes>
+              <Settings />{" "}
             </ProtectedRoutes>
           }
         />

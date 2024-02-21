@@ -16,17 +16,15 @@ import { Loader } from "./Spinner";
 
 interface Props {
   handleClose: () => void;
-  isDeleteBoard?: boolean;
   tasks?: ITask;
-  name?: string;
+  boardname?: string;
   selectedColumn?: IColumn;
 }
 
 export default function Delete({
   handleClose,
   tasks,
-  isDeleteBoard,
-  name,
+  boardname,
   selectedColumn,
 }: Props) {
   const [deleteAColumn, { isLoading: isDeletingColumn }] =
@@ -77,16 +75,20 @@ export default function Delete({
       <h1 className="text-left text-xl text-error font-bold mb-4">
         {" "}
         <span className="dark:text-white text-black"> Delete</span>{" "}
-        {isDeleteBoard ? name : selectedColumn ? selectedColumn.name : name}
+        {boardname
+          ? boardname
+          : selectedColumn
+          ? selectedColumn.name
+          : tasks?.title}
       </h1>
       <p className="text-base">
         Are you sure you want to delete this{" "}
         <span className="font-bold text-lg ">
-          {selectedColumn ? "column" : isDeleteBoard ? "board" : "task"}
+          {selectedColumn ? "column" : boardname ? "board" : "task"}
         </span>{" "}
         ?{" "}
         <span className="ml-1">
-          {isDeleteBoard
+          {boardname
             ? "This action will remove all columns and tasks in this board."
             : selectedColumn
             ? "This action will remove all tasks from this column."
@@ -94,12 +96,12 @@ export default function Delete({
         </span>
       </p>
 
-      <div className="text-center flex items-center justify-around mt-8">
+      <div className="text-center flex items-center justify-end gap-x-8 mt-8">
         <button
-          className="py-2 w-fit md:w-40 text-white h-12 flex justify-center items-center flex-col hover:bg-error px-4 rounded-md bg-error/70 font-bold"
+          className="p-2 text-sm md:w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-error rounded-md bg-error/80 font-bold"
           type="button"
           onClick={
-            isDeleteBoard
+            boardname
               ? deleteBoardHandler
               : selectedColumn
               ? deleteColumnHandler
@@ -114,7 +116,7 @@ export default function Delete({
           )}
         </button>
         <button
-          className="py-2 w-fit md:w-40 font-bold hover:bg-gray h-12 bg-gray/70 duration-300 px-4 rounded-md"
+          className="p-2 text-sm md:w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
           type="button"
           onClick={handleClose}
         >

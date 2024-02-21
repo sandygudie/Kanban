@@ -7,14 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { appData, activeItem } from "redux/boardSlice";
 import { IoIosAdd } from "react-icons/io";
 import Modal from "components/Modal";
-import { CgMoreVerticalO } from "react-icons/cg";
 import AddBoard from "components/Board/AddBoard";
-import Popup from "components/Popup";
-import { FiEdit } from "react-icons/fi";
-import { ImBin, ImLink } from "react-icons/im";
 
-import DeleteItem from "components/DeleteItem";
 import { saveloadWorkspaceData } from "utilis";
+
 interface Props {
   showSidebar: boolean;
   setShowSidebar?: Dispatch<SetStateAction<boolean>>;
@@ -33,28 +29,21 @@ export default function Index({
   const data: AppState = useSelector(appData);
   const { active, board, workspace } = data;
   const isMobile = useMediaQuery({ query: "(min-width: 700px)" });
-  const [isOpenMenu, setOpenMenu] = useState(false);
-  const [isDeleteBoard, setDeleteBoard] = useState(false);
+
   const [isOpenBoard, setOpenBoard] = useState(false);
-  const editBoard = () => {
-    setOpenBoard(true);
-    setOpenMenu(false);
-  };
-  // console.log(active)
-  const handleOpenMenu = () => setOpenMenu(false);
 
   return (
     <>
       <>
         <div
-          className={`h-screen fixed z-20 w-[220px]  transition duration-700 ease-in-out ${
+          className={`h-screen fixed z-20 w-[220px] transition duration-700 ease-in-out ${
             showSidebar ? "translate-x-0" : "-translate-x-64"
           }`}
         >
           <div
             className={`z-40 text-gray bg-white dark:bg-secondary ${
               isMobile && "pr-2 pb-24 border-r-[1px] border-gray/20"
-            } pt-2 flex flex-col justify-between h-full left-0 `}
+            } pt-2 flex flex-col justify-between h-full left-0`}
           >
             <div>
               <p className="pl-4 pt-2 pb-4 text-xs">
@@ -71,11 +60,7 @@ export default function Index({
                           className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-bold cursor-pointer ${`${
                             active?._id === options._id
                               ? "bg-primary rounded-r-full text-white"
-                              : `${
-                                  isOpenMenu
-                                    ? ""
-                                    : "rounded-r-full hover:bg-primary/20"
-                                } `
+                              : "rounded-r-full hover:bg-primary/20"
                           } `} `}
                           onClick={() => {
                             dispatch(activeItem(options));
@@ -106,58 +91,6 @@ export default function Index({
                               </span>
                             </span>
                           </div>
-                          <span onClick={() => setOpenMenu(true)}>
-                            <div className="relative">
-                              <CgMoreVerticalO
-                                size={15}
-                                className={`${
-                                  isOpenMenu
-                                    ? `${active.id !== options._id && `hidden`}`
-                                    : "hidden group-hover:inline"
-                                } `}
-                              />
-                            </div>
-                          </span>
-                          {active?._id === options._id && isOpenMenu && (
-                            <Popup
-                              style={{ top: 20, left: 170, zIndex: 20 }}
-                              handleOpenMenu={handleOpenMenu}
-                              items={[
-                                {
-                                  title: (
-                                    <p className="text-[13px] flex items-center gap-x-3">
-                                      <FiEdit /> Edit Board
-                                    </p>
-                                  ),
-                                  handler: editBoard,
-                                },
-                                {
-                                  title: (
-                                    <p className="text-[13px] flex items-center gap-x-3">
-                                      <ImBin />
-                                      Delete Board
-                                    </p>
-                                  ),
-
-                                  handler: () => {
-                                    setDeleteBoard(true), handleOpenMenu();
-                                  },
-                                },
-                                {
-                                  title: (
-                                    <p className="text-[13px] flex items-center gap-x-3">
-                                      <ImLink />
-                                      Copy link
-                                    </p>
-                                  ),
-
-                                  handler: () => {
-                                    setDeleteBoard(true), handleOpenMenu();
-                                  },
-                                },
-                              ]}
-                            />
-                          )}
                         </button>
                       );
                     })}
@@ -201,19 +134,13 @@ export default function Index({
         </div>
       </>
       <Modal
-        open={isOpen || isOpenBoard || isDeleteBoard}
+        open={isOpen || isOpenBoard}
         handleClose={() => {
-          setIsOpen(false), setDeleteBoard(false), setOpenBoard(false);
+          setIsOpen(false), setOpenBoard(false);
         }}
       >
         {isOpenBoard ? (
           <AddBoard handleClose={() => setOpenBoard(false)} />
-        ) : isDeleteBoard ? (
-          <DeleteItem
-            handleClose={() => setDeleteBoard(false)}
-            isDeleteBoard={isDeleteBoard}
-            name={active.name}
-          />
         ) : (
           <AddBoard handleClose={() => setIsOpen(false)} />
         )}

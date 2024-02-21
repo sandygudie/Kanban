@@ -40,9 +40,9 @@ function AddBoard({ handleClose }: Props) {
       .min(1, "Add a column."),
   });
 
-  const addBoardHandler = async (values: IBoard) => {
+  const addBoardHandler = async (values: IBoard | any) => {
     const foundDuplicate = checkDuplicatedBoard(values, board);
-    const column = values.columns.map((ele) => ele.name);
+    const column = values.columns.map((ele: IColumn) => ele.name);
     const name = values.name;
     if (foundDuplicate === false) {
       try {
@@ -72,11 +72,6 @@ function AddBoard({ handleClose }: Props) {
     }
     handleClose();
   };
-
-  // const editBoardHandler = (values: IBoard) => {
-  //   dispatch(editBoard(values));
-  //   handleClose();
-  // };
 
   return (
     <div>
@@ -148,7 +143,7 @@ function AddBoard({ handleClose }: Props) {
               <div className="my-8">
                 <button
                   aria-label="Board"
-                  className="px-2 text-white bg-primary/70 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
+                  className="px-2 text-white h-12 bg-primary/70 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Create Board"}

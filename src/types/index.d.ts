@@ -1,7 +1,11 @@
 export interface IBoard {
   _id: string;
   name: string;
+  description: string;
   columns: IColumn[];
+  
+createdAt:Date
+
 }
 
 export interface IColumn {
@@ -16,7 +20,8 @@ export interface ITask {
   description: string;
   status: string;
   subtasks: ISubTask[];
-  columnId:string
+  columnId: string;
+  createdAt:Date
 }
 
 export interface ISubTask {
@@ -27,6 +32,7 @@ export interface ISubTask {
 export interface IWorkspaceProfile {
   id: string;
   name: string;
+  createdAt:Date
 }
 
 type AppState = {

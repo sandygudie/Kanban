@@ -1,31 +1,26 @@
 import { AppState, IBoard, IColumn, ISubTask, ITask } from "types";
 import { FiMoreVertical } from "react-icons/fi";
-import SelectBox from "../SelectBox";
 import { useState } from "react";
 import Popup from "components/Popup";
 import DeleteItem from "components/DeleteItem";
 import { useDispatch, useSelector } from "react-redux";
 import { appData, isCompletedToggle } from "redux/boardSlice";
+import SelectBox from "components/SelectBox";
 
-interface Props {
-  subtasks: ISubTask[];
-  tasks: ITask;
-  filtered: ISubTask[];
-  index: number;
-  handleClose: () => void;
+// interface Props {
+//   subtasks: ISubTask[];
+//   tasks: ITask;
+//   filtered: ISubTask[];
+//   index: number;
+//   handleClose: () => void;
 
-}
+// }
 
-export default function TaskDetails({
-  subtasks,
-  tasks,
-  filtered,
-  handleClose,
-}: // handleOpenModal,
-Props) {
+export default function TaskDetails() {
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const active: IBoard = data.active;
+
 
   const [selectedColumn, setSelectedColumn] = useState<string | any>(
     tasks

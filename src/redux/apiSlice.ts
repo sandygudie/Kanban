@@ -53,9 +53,18 @@ export const apiSlice = createApi({
     getWorkspaceBoard: builder.query({
       query: (workspaceId: string) => ({
         url: `/board/${workspaceId}`,
-        method: "get",
+        method: "GET",
       }),
       providesTags: ["Workspace"],
+    }),
+
+    workspaceInvite: builder.mutation({
+      query: (payload) => ({
+        url: `/workspace/addmember/${payload.workspaceId}`,
+        method: "PATCH",
+        data: payload.formData,
+      }),
+      invalidatesTags: ["Workspace"],
     }),
 
     // Board
@@ -68,6 +77,15 @@ export const apiSlice = createApi({
       invalidatesTags: ["Board"],
     }),
 
+    editBoard: builder.mutation({
+      query: (payload) => ({
+        url: `/board/${payload.workspaceId}/${payload.boardId}`,
+        method: "PATCH",
+        data: payload.formData,
+      }),
+      invalidatesTags: ["Board"],
+    }),
+
     deleteBoard: builder.mutation({
       query: (payload) => ({
         url: `/board/${payload.workspaceId}/${payload.boardId}`,
@@ -75,7 +93,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Board"],
     }),
-    
+
     // Column
     createColumn: builder.mutation({
       query: (payload) => ({
@@ -104,6 +122,14 @@ export const apiSlice = createApi({
       invalidatesTags: ["Task"],
     }),
 
+    getTask: builder.query<any, void>({
+      query: (payload: any) => ({
+        url: `/workspace/${payload.workspaceId}/${payload.taskId}`,
+        method: "GET",
+      }),
+      providesTags: ["Task"],
+    }),
+
     deleteTask: builder.mutation({
       query: (payload) => ({
         url: `/task/${payload.workspaceId}/${payload.columnId}/${payload.taskId}`,
@@ -126,5 +152,7 @@ export const {
   useDeleteColumnMutation,
   useDeleteTaskMutation,
   useDeleteBoardMutation,
-  useJoinWorkspaceMutation
+  useJoinWorkspaceMutation,
+  useEditBoardMutation,
+  useWorkspaceInviteMutation,
 } = apiSlice;
