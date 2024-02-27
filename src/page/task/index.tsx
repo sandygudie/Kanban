@@ -1,63 +1,80 @@
-import { AppState, IBoard, IColumn, ISubTask, ITask } from "types";
 import { FiMoreVertical } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Popup from "components/Popup";
-import DeleteItem from "components/DeleteItem";
-import { useDispatch, useSelector } from "react-redux";
-import { appData, isCompletedToggle } from "redux/boardSlice";
+import { useDispatch } from "react-redux";
 import SelectBox from "components/SelectBox";
-
-// interface Props {
-//   subtasks: ISubTask[];
-//   tasks: ITask;
-//   filtered: ISubTask[];
-//   index: number;
-//   handleClose: () => void;
-
-// }
+import { useGetBoardQuery, useGetTaskQuery } from "redux/apiSlice";
+import Spinner from "components/Spinner";
+import { ISubTask } from "types";
+import { isCompletedToggle } from "redux/boardSlice";
+import IconButton from "components/IconButton";
+import { BiArrowBack } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
+import Modal from "components/Modal";
+import DeleteItem from "components/DeleteItem";
+import AddTask from "components/Board/AddTask";
 
 export default function TaskDetails() {
   const dispatch = useDispatch();
-  const data: AppState = useSelector(appData);
-  const active: IBoard = data.active;
-
-
-  const [selectedColumn, setSelectedColumn] = useState<string | any>(
-    tasks
-      ? active.columns.find((item: IColumn) =>
-          item.tasks.find((o) => o == tasks)
-        )?.name
-      : active.columns.find((item: IColumn) =>
-          item.tasks.find((o, index) => index === 0)
-        )?.name
-  );
+  const navigate = useNavigate();
   const [isOpenMenu, setOpenMenu] = useState(false);
-  const [isDeleteTask, setDeleteTask] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
+  const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
+  const { workspaceId, boardId, taskId }: string | any = useParams();
+  const { data: tasks, isLoading } = useGetTaskQuery({ workspaceId, taskId });
+  const { data: active, isLoading: isLoadingActiveBoard } = useGetBoardQuery({
+    workspaceId,
+    boardId,
+  });
   const [checkedState, setCheckedState] = useState(
-    subtasks.map((o) => o.isCompleted === true)
+    tasks?.data
+      ? tasks?.data.subtasks.map((o: ISubTask) => o.isCompleted)
+      : false
   );
-  const handleOpenMenu = () => setOpenMenu(false);
+
+  const [selectedColumn, setSelectedColumn] = useState<string>();
+
+  useEffect(() => {
+    if (tasks?.data) {
+      setSelectedColumn(tasks?.data.status);
+    }
+  }, [tasks]);
+
+  const handleSelectedColumn = (selectedColumn: string) =>
+    setSelectedColumn(selectedColumn);
   const handleOnChange = (id: number) => {
     if (id >= 0) {
-      const updatedCheckedState = checkedState.map((item, index) =>
+      const updatedCheckedState = checkedState.map((item: any, index: number) =>
         index === id ? !item : item
       );
       setCheckedState(updatedCheckedState);
       dispatch(isCompletedToggle({ updatedCheckedState, id, tasks }));
     }
   };
-
-  const editTaskHandler = () => {
-    // handleOpenModal();
-    handleClose();
-  };
-
+  const handleOpenMenu = () => setOpenMenu(false);
+  const filtered = tasks?.data?.subtasks.filter(
+    (item: ISubTask) => item.isCompleted
+  );
   return (
     <>
-      {!isDeleteTask ? (
-        <>
-          <div className="text-lg font-bold flex items-center justify-between">
-            <p className=""> {tasks.title}</p>{" "}
+      {tasks ? (
+        <div className="">
+          <div className="absolute top-3 left-14">
+            <IconButton
+              handleClick={() => {
+                navigate(`/workspace/${workspaceId}`);
+              }}
+            >
+              <div className="flex text-gray items-center gap-x-2">
+                <BiArrowBack className="font-bold text-lg" />{" "}
+                <span className="text-xs">Board</span>
+              </div>
+            </IconButton>
+          </div>
+          <div className="text-lg font-bold flex mt-6 items-center justify-between">
+            <p className="text-3xl"> {tasks?.data.title}</p>{" "}
             <div className="relative">
               <button className="text-3xl hover:text-primary">
                 <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
@@ -67,13 +84,23 @@ export default function TaskDetails() {
                   style={{}}
                   items={[
                     {
-                      title: "Edit Task",
-                      handler: editTaskHandler,
+                      title: (
+                        <p className="flex items-center  gap-x-2.5 dark:text-white/80">
+                          <CiEdit className="text-gray text-sm" /> Edit
+                        </p>
+                      ),
+                      handler: () => {
+                        setIsOpenEdit(true);
+                      },
                     },
                     {
-                      title: "Delete Task",
+                      title: (
+                        <p className="flex items-center gap-x-2.5 dark:text-white/80">
+                          <MdDelete className="text-error" /> Delete
+                        </p>
+                      ),
                       handler: () => {
-                        setDeleteTask(true);
+                        setIsOpenDelete(true);
                       },
                     },
                   ]}
@@ -82,58 +109,84 @@ export default function TaskDetails() {
               )}
             </div>
           </div>
-          <div>
-            <p className="text-sm text-gray my-6">
-              {tasks.description ? tasks.description : "No description"}
+          <div className="mt-8 w-96">
+            <p className="text-gray my-10">
+              {tasks.data.description
+                ? tasks.data.description
+                : "No description"}
             </p>
-            <p className=" text-sm font-bold mb-2 ">{`Subtasks (${filtered.length} of ${tasks.subtasks.length})`}</p>
-            <div
-              className={`overflow-y-auto ${
-                tasks.subtasks.length >= 4 && "h-[10rem] pr-4"
-              }`}
-            >
-              {subtasks.map((subtask: ISubTask, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="dark:bg-secondary-dark bg-offwhite flex items-center gap-x-4 rounded-sm p-3 mt-2"
-                  >
-                    <input
-                      type="checkbox"
-                      value={subtask.title}
-                      checked={checkedState[index]}
-                      onChange={() => handleOnChange(index)}
-                    />
-                    <p
-                      className={`${
-                        checkedState[index] && "line-through"
-                      } text-xs`}
-                    >
-                      {subtask.title}
-                    </p>
-                  </div>
-                );
-              })}
+            <div className="my-3">
+              <p className="font-bold mb-2 text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
+              <div
+                className={`overflow-y-auto ${
+                  tasks.data.subtasks.length >= 4 && "h-[10rem] pr-4"
+                }`}
+              >
+                {tasks?.data.subtasks.map(
+                  (subtask: ISubTask, index: number) => {
+                    return (
+                      <div
+                        key={subtask._id}
+                        className="dark:bg-secondary bg-offwhite flex items-center gap-x-4 rounded-sm p-4 mt-2"
+                      >
+                        <input
+                          type="checkbox"
+                          value={subtask.title}
+                          checked={checkedState[index]!}
+                          onChange={() => handleOnChange(index)}
+                        />
+                        <p
+                          className={`${
+                            checkedState[index]! && "line-through"
+                          } text-xs`}
+                        >
+                          {subtask.title}
+                        </p>
+                      </div>
+                    );
+                  }
+                )}
+              </div>
+            </div>
+            <div className="mt-10 pb-6">
+              <p className="text-sm font-bold mb-1">Columns</p>
+              <SelectBox
+                selectedColumn={selectedColumn}
+                active={active?.data}
+                handleSelectedColumn={handleSelectedColumn}
+                tasks={tasks?.data}
+                isOpenEdit ={isOpenEdit}
+                workspaceId={workspaceId}
+              />
             </div>
           </div>
-          <div className="mt-6 pb-6">
-            <p className="text-sm font-bold mb-1">Column</p>
-            <SelectBox
-              selectedColumn={selectedColumn}
-              handleClose={handleClose}
-              setSelectedColumn={setSelectedColumn}
-              tasks={tasks}
-            />
-          </div>
-        </>
-      ) : (
-        <DeleteItem
-          handleClose={() => {
-            setDeleteTask(false), handleClose();
-          }}
-          tasks={tasks}
-        />
-      )}
+        </div>
+      ) : isLoading || isLoadingActiveBoard || !tasks ? (
+        <Spinner />
+      ) : null}
+
+      <Modal
+        open={isOpenEdit || isOpenDelete}
+        handleClose={() => {
+          setIsOpenEdit(false), setIsOpenDelete(false);
+        }}
+      >
+        {isOpenEdit ? (
+          <AddTask
+            // active={active?.data}
+            selectedColumn={selectedColumn}
+            handleSelectedColumn={handleSelectedColumn}
+            tasks={tasks?.data}
+            handleClose={() => setIsOpenEdit(false)}
+          />
+        ) : (
+          <DeleteItem
+            handleClose={() => setIsOpenDelete(false)}
+            tasks={tasks?.data}
+            workspaceId={workspaceId}
+          />
+        )}
+      </Modal>
     </>
   );
 }

@@ -22,6 +22,7 @@ export default function EditBoard({
 }: Props) {
   const [editABoard, { isLoading }] = useEditBoardMutation();
   const dispatch = useDispatch();
+  
   const nameSchema = Yup.object().shape({
     name: Yup.string()
       .required("Required")
@@ -36,6 +37,7 @@ export default function EditBoard({
   const descriptionSchema = Yup.object().shape({
     description: Yup.string(),
   });
+  
   const editBoardHandler = async (values: any) => {
     try {
       const response = await editABoard({
@@ -73,7 +75,7 @@ export default function EditBoard({
           {isEdit === "description" ? (
             <div className="mb-6">
               <TextArea
-                label="Topic"
+                label=""
                 name="description"
                 placeholder="Tell us more about the board"
               />
@@ -81,7 +83,7 @@ export default function EditBoard({
           ) : (
             <div className="mb-6">
               <TextInput
-                label="Edit Board"
+                label=""
                 name="name"
                 type="text"
                 placeholder="E.g  Development, Marketing"

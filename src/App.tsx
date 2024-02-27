@@ -4,6 +4,7 @@ import Spinner from "components/Spinner";
 import NotFound from "page/notFound";
 import AuthLayout from "components/AuthLayout";
 import ProtectedRoutes from "components/ProtectedRoutes";
+import BoardLayout from "components/BoardLayout";
 const Login = lazy(() => import("page/login"));
 const Signup = lazy(() => import("page/signup"));
 const VerifyEmail = lazy(() => import("page/verifyEmail"));
@@ -12,7 +13,7 @@ const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
 const AvailableWorkspace = lazy(() => import("page/workspace"));
 const Home = lazy(() => import("page/home"));
 const Settings = lazy(() => import("page/workspace/settings"));
-const Task= lazy(() => import("page/task"));
+const Task = lazy(() => import("page/task"));
 
 function App() {
   useEffect(() => {
@@ -50,6 +51,35 @@ function App() {
           />
         </Route>
 
+      
+        <Route element={<BoardLayout />}>
+          <Route
+            path="/workspace/settings"
+            element={
+              <ProtectedRoutes>
+                <Settings />{" "}
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/workspace/:workspaceId"
+            element={
+              <ProtectedRoutes>
+                <Board />{" "}
+              </ProtectedRoutes>
+            }
+          />
+
+          <Route
+            path="/workspace/:workspaceId/:boardId/:taskId"
+            element={
+              <ProtectedRoutes>
+                <Task />{" "}
+              </ProtectedRoutes>
+            }
+          />
+        </Route>
+
         <Route
           path="/workspace/new"
           element={
@@ -59,38 +89,13 @@ function App() {
           }
         />
         <Route
-          path="/workspace"
+          path="/workspaces"
           element={
             <ProtectedRoutes>
               <AvailableWorkspace />
             </ProtectedRoutes>
           }
         />
-        <Route
-          path="/workspace/:workspaceId"
-          element={
-            <ProtectedRoutes>
-              <Board />{" "}
-            </ProtectedRoutes>
-          }
-        />
-        <Route
-          path="/workspace/:workspaceId/:taskId"
-          element={
-            <ProtectedRoutes>
-              <Task />{" "}
-            </ProtectedRoutes>
-          }
-        />
-        <Route
-          path="/workspace/settings"
-          element={
-            <ProtectedRoutes>
-              <Settings />{" "}
-            </ProtectedRoutes>
-          }
-        />
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </React.Suspense>

@@ -3,9 +3,7 @@ export interface IBoard {
   name: string;
   description: string;
   columns: IColumn[];
-  
-createdAt:Date
-
+  createdAt: Date;
 }
 
 export interface IColumn {
@@ -21,7 +19,9 @@ export interface ITask {
   status: string;
   subtasks: ISubTask[];
   columnId: string;
-  createdAt:Date
+  createdAt: Date;
+  assignTo: string;
+  deadline: string | Date;
 }
 
 export interface ISubTask {
@@ -29,10 +29,13 @@ export interface ISubTask {
   title: string;
   isCompleted: boolean;
 }
+
 export interface IWorkspaceProfile {
   id: string;
   name: string;
-  createdAt:Date
+  createdAt: Date | any;
+  profilepics:string
+  createdBy:string
 }
 
 type AppState = {

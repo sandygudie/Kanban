@@ -1,3 +1,4 @@
+import moment from "moment";
 import IconButton from "components/IconButton";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
@@ -7,7 +8,7 @@ import Modal from "components/Modal";
 import { useState } from "react";
 import EditBoard from "./EditBoard";
 import DeleteItem from "components/DeleteItem";
-import moment from "moment";
+import { CiEdit } from "react-icons/ci";
 
 interface Props {
   handleClose: () => void;
@@ -19,7 +20,22 @@ export default function BoardDetails({ handleClose }: Props) {
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState("");
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
-  
+  const [toggle, setToggle] = useState("About");
+
+  const linkitems = [
+    {
+      name: "About",
+      handler: () => {
+        setToggle("About");
+      },
+    },
+    {
+      name: "Members",
+      handler: () => {
+        setToggle("Members");
+      },
+    },
+  ];
 
   return (
     <>
@@ -34,14 +50,26 @@ export default function BoardDetails({ handleClose }: Props) {
             <IoClose className="font-bold text-2xl" />
           </IconButton>
         </div>
-        <div className="flex items-center px-3 mt-8 text-sm gap-x-10 ">
-          <button>About</button>
-          <button>Members</button>
+
+        <div className="flex items-center justify-start gap-x-6 mt-5 p-2 ">
+          {linkitems.map((ele: any) => {
+            return (
+              <button
+                onClick={() => setToggle(ele.name)}
+                key={ele.name}
+                className={`${
+                  toggle === ele.name && "border-b-[1px] py-2 border-solid"
+                } py-2 text-sm font-bold`}
+              >
+                {ele.name}
+              </button>
+            );
+          })}
         </div>
-        <div className="border-[1px] border-gray/10 rounded-xl mt-5">
+        <div className="border-[1px] border-gray/10 rounded-md mt-1">
           {[
             {
-              title: <p className="text-sm">{active.name}</p>,
+              title: <p className="text-base py-4 font-bold">{active.name}</p>,
               label: `Name`,
               handler: () => {
                 setIsOpenEdit(true);
@@ -50,11 +78,15 @@ export default function BoardDetails({ handleClose }: Props) {
             },
             {
               title: (
-                <p className="text-sm">
-                  {active?.description
-                    ? active?.description
-                    : "Write a brief details about the board."}
-                </p>
+                <>
+                  {active?.description ? (
+                    <p className="text-sm py-4 ">{active?.description}</p>
+                  ) : (
+                    <p className="text-sm py-4 text-gray/40">
+                      ** A brief details about the board.
+                    </p>
+                  )}
+                </>
               ),
               label: `Description`,
               handler: () => {
@@ -64,22 +96,18 @@ export default function BoardDetails({ handleClose }: Props) {
             },
             {
               title: (
-                <div className="text-sm ">
-                  <p className="text-gray text-sm">Created by Mark on {moment(active.createdAt).format('MMMM Do YYYY')}</p>
-                  {/* <p className=""></p> */}
+                <div className="text-sm py-4">
+                  <p className="text-gray text-xs">
+                    Created by {workspace.createdBy} on{" "}
+                    {moment(active.createdAt).format("MMM Do , YYYY")}
+                  </p>
                 </div>
               ),
             },
-            // {
-            //   label: "",
-            //   title: <p className="text-sm text-error">Leave Board</p>,
-            //   handler: () => {
-            //     setIsOpenDelete(true);
-            //   },
-            // },
+
             {
               label: "",
-              title: <p className="text-sm text-error">Delete Board</p>,
+              title: <p className="text-xs text-error py-4">Delete Board</p>,
               handler: () => {
                 setIsOpenDelete(true); //admin
               },
@@ -91,21 +119,18 @@ export default function BoardDetails({ handleClose }: Props) {
                 onClick={() => (ele.label === "" ? ele.handler() : "")}
                 className={`${
                   index > 2
-                    ? "border-none rounded-b-xl"
-                    : `border-b border-gray/10 ${index === 0 && "rounded-t-xl"}`
+                    ? "border-none rounded-b-md"
+                    : `border-b border-gray/10 ${index === 0 && "rounded-t-md"}`
                 } w-full border-x-0 border-t-0 border hover:bg-gray/20`}
               >
-                <div className="justify-between flex items-center p-5">
+                <div className="justify-between flex items-center py-2 px-5">
                   <div className="text-left">
-                    <span className="text-sm text-gray/80">{ele.label}</span>
+                    <span className="text-xs text-gray/80 ">{ele.label}</span>
                     {ele.title}
                   </div>
                   {ele.label ? (
-                    <span
-                      onClick={() => ele.handler()}
-                      className="text-xs text-gray/80"
-                    >
-                      Edit
+                    <span onClick={() => ele.handler()}>
+                      <CiEdit className="text-gray/80 text-lg" />
                     </span>
                   ) : null}
                 </div>

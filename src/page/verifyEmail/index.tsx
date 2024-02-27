@@ -27,9 +27,12 @@ export default function Index() {
     <div className="flex bg-white text-black items-center justify-center h-[36rem]">
       {isVerify ? (
         <div>
-          < IoIosCheckmarkCircleOutline className="text-8xl  mx-auto text-primary"/>
-          <p className="mb-8 text-primary text-xl font-semiBold">{isVerify}</p>
-          <Link className="p-4 rounded-lg w-full block text-center font-bold bg-black text-white" to="/workspace/new">
+          <IoIosCheckmarkCircleOutline className="text-8xl  mx-auto text-primary" />
+          <p className="mb-8 text-secondary text-xl font-semiBold">{isVerify}</p>
+          <Link
+            className="p-4 rounded-lg w-full block text-center font-bold bg-black text-white"
+            to="/workspace/new"
+          >
             Continue{" "}
           </Link>
         </div>

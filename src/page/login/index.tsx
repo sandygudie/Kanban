@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import  { Loader } from "components/Spinner";
 import { loadWorkspaceData } from "utilis";
-import { useLoginUserMutation } from "redux/apiSlice";
+import { useLoginUserMutation } from "redux/authSlice";
 
 export default function Index() {
   const navigate = useNavigate();
@@ -16,7 +16,9 @@ export default function Index() {
     email: "",
     password: "",
   });
-
+useEffect(()=>{
+  localStorage.removeItem("currentWorkspace");
+})
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginError("");
     setInputError("");
@@ -50,7 +52,7 @@ export default function Index() {
         if (!workspace.length) {
           navigate("/workspace/new");
         } else if (workspace.length && !currentWorkspace) {
-          navigate("/workspace");
+          navigate("/workspaces");
         } else {
           const exisitngWorkspace = workspace.includes(
             currentWorkspace.workspaceId
@@ -59,7 +61,7 @@ export default function Index() {
             navigate(`/workspace/${currentWorkspace.workspaceId}`);
           } else {
             localStorage.removeItem("currentWorkspace");
-            navigate("/workspace");
+            navigate("/workspaces");
           }
         }
       } catch (error: any) {

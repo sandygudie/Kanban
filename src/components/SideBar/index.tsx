@@ -8,11 +8,12 @@ import { appData, activeItem } from "redux/boardSlice";
 import { IoIosAdd } from "react-icons/io";
 import Modal from "components/Modal";
 import AddBoard from "components/Board/AddBoard";
-
 import { saveloadWorkspaceData } from "utilis";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   showSidebar: boolean;
+
   setShowSidebar?: Dispatch<SetStateAction<boolean>>;
   handleClose?: () => void;
   handleaddBoardMobile?: () => void;
@@ -23,13 +24,14 @@ export default function Index({
   setShowSidebar,
   handleClose,
   showSidebar,
+  // workspaceId,
 }: Props) {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const { active, board, workspace } = data;
   const isMobile = useMediaQuery({ query: "(min-width: 700px)" });
-
   const [isOpenBoard, setOpenBoard] = useState(false);
 
   return (
@@ -63,6 +65,7 @@ export default function Index({
                               : "rounded-r-full hover:bg-primary/20"
                           } `} `}
                           onClick={() => {
+                            navigate(`/workspace/${workspace.id}`);
                             dispatch(activeItem(options));
                             saveloadWorkspaceData({
                               workspaceId: workspace.id,
@@ -106,7 +109,7 @@ export default function Index({
                     }}
                     className="pl-4 mt-4 font-bold cursor-pointer text-primary/80 hover:text-primary"
                   >
-                    <div className="flex items-center ">
+                    <div className="flex items-center">
                       {" "}
                       <span>
                         {" "}

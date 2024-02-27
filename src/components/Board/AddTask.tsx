@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import SelectBox from "components/SelectBox";
@@ -16,31 +15,38 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedTask } from "utilis";
 import { useToast } from "@chakra-ui/react";
 import { v4 as uuidv4 } from "uuid";
-import { useCreateTaskMutation } from "redux/apiSlice";
+import {
+  useCreateTaskMutation,
+  useDeleteTaskMutation,
+  useEditTaskMutation,
+} from "redux/apiSlice";
 import { Loader } from "components/Spinner";
 
 interface Props {
   handleClose: () => void;
   tasks?: ITask;
+  isOpenEdit?: boolean;
   index?: number;
   activeColumn?: IColumn;
+  selectedColumn?: string;
+  handleSelectedColumn?: (selectedColumn: string) => void;
 }
-export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
+export default function AddTask({
+  handleClose,
+  activeColumn,
+  tasks,
+  selectedColumn,
+  handleSelectedColumn,
+}: Props) {
   const [createTask, { isLoading }] = useCreateTaskMutation();
+  const [deleteATask] = useDeleteTaskMutation();
+  const [editATask, { isLoading: isLoadingEdit }] = useEditTaskMutation();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const active: IBoard = data.active;
   const workspace: IWorkspaceProfile = data.workspace;
   const toast = useToast();
-  const [selectedColumn, setSelectedColumn] = useState<string | any>(
-    tasks
-      ? active.columns.find((item: IColumn) =>
-          item.tasks.find((o) => o == tasks)
-        )?.name
-      : activeColumn
-      ? activeColumn.name
-      : active.columns[0]?.name
-  );
+
 
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
@@ -57,7 +63,6 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
   });
 
   const addTaskHandler = async (values: ITask | any) => {
-    values.status = selectedColumn;
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === false) {
       try {
@@ -76,10 +81,19 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
           workspaceId: workspace.id,
           columnId: activeColumn?._id,
         };
-
         const response = await createTask(payload).unwrap();
+      
         if (response) {
-          dispatch(addTask({ updatedTasks: values, position: 0 }));
+          dispatch(
+            addTask({
+              updatedTasks: {
+                _id: response.data.taskId,
+                columnId:response.data.columnId,
+                ...values,
+              },
+              position: 0,
+            })
+          );
         }
       } catch (error) {
         console.log(error);
@@ -96,16 +110,84 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
     handleClose();
   };
 
-  const editTaskHandler = (values: ITask | any) => {
-    if (values.status === selectedColumn) {
-      dispatch(editTask({ values, tasks }));
+  const editTaskHandler = async (values: ITask | any) => {
+    const foundDuplicate = checkDuplicatedTask(values, active);
+    if (foundDuplicate === true && values._id !== tasks?._id) {
+      toast({
+        title: "Task name already exist.",
+        position: "top",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     } else {
-      const updatedTasks = {
-        ...values,
-        status: selectedColumn,
-      };
-      dispatch(addTask({ updatedTasks, position: 0 }));
-      dispatch(deleteTask(tasks));
+      try {
+        const updatedSubstasks = values.subtasks.map((ele: ISubTask) => {
+          return {
+            title: ele.title,
+            isCompleted: ele.isCompleted,
+          };
+        });
+
+        if (values.status !== selectedColumn) {
+
+          const columnId = active.columns.find(
+            (ele) => ele.name === selectedColumn
+          )?._id;
+
+          const payload = {
+            formdata: {
+              title: values.title,
+              description: values.description,
+              subtasks: updatedSubstasks,
+            },
+            workspaceId: workspace.id,
+            columnId: columnId,
+          };
+
+          const response = await createTask(payload).unwrap();
+          const result = await deleteATask({
+            taskId: tasks?._id,
+            columnId: tasks?.columnId,
+            workspaceId: workspace.id,
+          }).unwrap();
+
+          if (response && result) {
+            dispatch(
+              addTask({
+                updatedTasks: {
+                  ...values,
+                  _id: response.data.taskId,
+                  status: selectedColumn,
+                  // columnId:response.data.columnId,
+                  
+                },
+                position: 0,
+              })
+            );
+            dispatch(deleteTask(tasks));
+          }
+        } else {
+          const payload = {
+            formdata: {
+              title: values.title,
+              description: values.description,
+              subtasks: updatedSubstasks,
+              status: selectedColumn,
+            },
+            workspaceId: workspace.id,
+            columnId: tasks?.columnId,
+            taskId: tasks?._id,
+          };
+
+          const response = await editATask(payload).unwrap();
+          if (response) {
+            dispatch(editTask({ values, tasks }));
+          }
+        }
+      } catch (error: any) {
+        console.log(error);
+      }
     }
     handleClose();
   };
@@ -133,15 +215,16 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
                   _id: tasks._id,
                   title: tasks.title,
                   description: tasks.description,
-                  status: tasks.status,
+                  status: selectedColumn ? selectedColumn : tasks.status,
                   subtasks: tasks.subtasks,
+                  columnid:tasks.columnId
                 }
               : {
-                  _id: uuidv4(),
                   title: "",
                   description: "",
-                  status: selectedColumn,
+                  status: activeColumn?.name,
                   subtasks: [],
+              
                 }
           }
           validationSchema={TaskSchema}
@@ -216,8 +299,9 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
               </div>
               <div className="relative flex items-center my-6 gap-x-8 justify-between ">
                 <div className="w-1/2">
+                  {/* set time and date */}
                   <TextInput
-                    label="Deadline"
+                    label="Due Date"
                     name="deadline"
                     type="date"
                     placeholder="E.g Pending design task"
@@ -225,26 +309,21 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
                 </div>
                 <div className="w-1/2">
                   <TextInput
-                    label="Time"
-                    name="time"
+                    label="Assigned to"
+                    name="assigned"
                     type="time"
                     placeholder="E.g Pending design task"
                   />
                 </div>
               </div>
               <div className="mb-6">
-                <label className="text-sm font-bold">Column</label>
-                {activeColumn ? (
-                  <input
-                    type="text"
-                    disabled
-                    value={activeColumn.name}
-                    className="border-[1px] mt-2 rounded-lg block outline-none py-2 px-4 text-sm w-full"
-                  />
-                ) : (
+                {tasks && (
                   <SelectBox
+                  isOpenEdit ={true}
                     selectedColumn={selectedColumn}
-                    setSelectedColumn={setSelectedColumn}
+                    handleSelectedColumn={handleSelectedColumn!}
+                    tasks={tasks}
+                    active={active}
                   />
                 )}
               </div>
@@ -255,7 +334,7 @@ export default function AddTask({ handleClose, activeColumn, tasks }: Props) {
                   className="text-white bg-primary/70 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
-                  {isLoading ? (
+                  {isLoading || isLoadingEdit ? (
                     <Loader />
                   ) : tasks ? (
                     "Update Task"

@@ -49,7 +49,6 @@ const boardSlice = createSlice({
     },
 
     editBoard: (state, action) => {
-      console.log();
       const updatedBoard: IBoard[] = state.board.map((item: IBoard) =>
         item._id === state.active._id ? { ...item, ...action.payload } : item
       );
@@ -61,6 +60,7 @@ const boardSlice = createSlice({
         ),
       };
     },
+
     addTask: (state, action) => {
       state.board.find((item: IBoard) =>
         item._id === state.active._id
@@ -103,6 +103,7 @@ const boardSlice = createSlice({
         (item: IBoard) => item._id === state.active._id
       );
     },
+
     deleteColumn: (state, action) => {
       state.board.find((ele: IBoard) =>
         ele._id === state.active._id
@@ -121,7 +122,6 @@ const boardSlice = createSlice({
     },
 
     deleteTask: (state, action) => {
-      console.log(action.payload);
       state.board.find((item: IBoard) =>
         item.name === state.active.name
           ? item.columns.find((o: IColumn) =>
@@ -137,11 +137,12 @@ const boardSlice = createSlice({
         (item: IBoard) => item._id === state.active._id
       );
     },
+
     editTask: (state, action) => {
       state.board.find((item: IBoard) =>
         item.name === state.active.name
           ? item.columns.find((o: IColumn) =>
-              o.name === action.payload.tasks.status
+              o._id === action.payload.tasks.columnId
                 ? o.tasks.map((s: ITask) =>
                     s._id === action.payload.values._id
                       ? ((s.title = action.payload.values.title),
@@ -158,6 +159,7 @@ const boardSlice = createSlice({
         (item: IBoard) => item._id === state.active._id
       );
     },
+
     isCompletedToggle: (state, action) => {
       state.board.find((item: IBoard) =>
         item.name === state.active.name
@@ -187,16 +189,16 @@ const boardSlice = createSlice({
   extraReducers: (builder) => {
     const currentWorkspace = loadWorkspaceData();
     builder.addMatcher(
-      apiSlice.endpoints.getWorkspaceBoard.matchFulfilled,
+      apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
-        const { boards, _id, name, createdAt } = payload.data;
+        const { boards, _id, name, createdAt , profilepics,createdBy} = payload.data;
         state.board = boards;
-        state.active = currentWorkspace.activeBoard
+        state.active = currentWorkspace?.activeBoard
           ? state.board.find(
-              (item: IBoard) => item._id === currentWorkspace.activeBoard
+              (item: IBoard) => item._id === currentWorkspace?.activeBoard
             )
           : state.board.find((item: IBoard, index: number) => index === 0);
-        state.workspace = { id: _id, name, createdAt };
+        state.workspace = { id: _id, name, createdAt,profilepics,createdBy };
       }
     );
   },

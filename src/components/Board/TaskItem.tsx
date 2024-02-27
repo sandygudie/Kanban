@@ -2,17 +2,28 @@ import Modal from "components/Modal";
 import { useState } from "react";
 import { ISubTask, ITask } from "types";
 import AddTask from "./AddTask";
-import TaskDetails from "./TaskDetails";
+
 import { Draggable } from "@hello-pangea/dnd";
-// import { colorSelection } from "utilis";
+import { useNavigate } from "react-router-dom";
+import { colorSelection } from "utilis";
+
 interface Props {
   tasks: ITask;
   filtered: ISubTask[];
   index: number;
+  workspaceId: string;
+ boardId:string
 }
 
-export default function TaskItem({ tasks, filtered, index }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function TaskItem({
+  tasks,
+  filtered,
+  index,
+  workspaceId,
+  boardId
+}: Props) {
+  const navigate = useNavigate();
+
   const [isOpenModal, setOpenModal] = useState(false);
 
   // const handleOpenModal = () => setOpenModal(true);
@@ -33,19 +44,20 @@ export default function TaskItem({ tasks, filtered, index }: Props) {
               } select-none rounded-lg`}
               data-id={index}
               onClick={() => {
-                setIsOpen(true);
+                navigate(
+                  `/workspace/${workspaceId}/${boardId}/${tasks._id}`
+                );
               }}
-              
             >
               <div
-                // style={{
-                //   borderColor: colorSelection(),
-                // }}
-                className="shadow-lg hover:bg-gray/20
+                style={{
+                  borderColor: colorSelection(),
+                }}
+                className="shadow-lg hover:bg-gray/10
               cursor-pointer rounded-lg border-l-2 mb-4 py-6 px-4"
               >
                 <p className="font-bold text-sm">{tasks.title} </p>
-                <p className="pt-2 text-xs text-gray font-bold">
+                <p className="pt-2 text-xs text-white/50 font-bold">
                   {" "}
                   {filtered.length} of {tasks.subtasks.length} subtasks
                 </p>
@@ -54,16 +66,7 @@ export default function TaskItem({ tasks, filtered, index }: Props) {
           );
         }}
       </Draggable>
-      <Modal open={isOpen} handleClose={() => setIsOpen(false)}>
-        <TaskDetails
-          filtered={filtered}
-          subtasks={tasks.subtasks}
-          tasks={tasks}
-          handleClose={() => setIsOpen(false)}
-          index={index}
-          // handleOpenModal={handleOpenModal}
-        />
-      </Modal>
+
       <Modal open={isOpenModal} handleClose={() => setOpenModal(false)}>
         <AddTask
           tasks={tasks}

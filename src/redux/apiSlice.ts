@@ -1,31 +1,14 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import axiosBaseQuery from "services/api";
+
 const baseURL = import.meta.env.VITE_API_BASEURL;
 
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery({ baseUrl: baseURL }),
   tagTypes: ["User", "Workspace", "Board", "Column", "Task"],
+
   endpoints: (builder) => ({
-    // User
-    createUser: builder.mutation({
-      query: (payload) => ({
-        url: `/auth/signup`,
-        method: "POST",
-        data: payload,
-      }),
-      invalidatesTags: ["User"],
-    }),
-
-    loginUser: builder.mutation({
-      query: (payload) => ({
-        url: `/auth/login`,
-        method: "POST",
-        data: payload,
-      }),
-      invalidatesTags: ["User"],
-    }),
-
     // Workspace
     createWorkspace: builder.mutation({
       query: (payload) => ({
@@ -50,9 +33,17 @@ export const apiSlice = createApi({
       providesTags: ["Workspace"],
     }),
 
-    getWorkspaceBoard: builder.query({
-      query: (workspaceId: string) => ({
+    getWorkspaceBoards: builder.query({
+      query: (workspaceId) => ({
         url: `/board/${workspaceId}`,
+        method: "GET",
+      }),
+      providesTags: ["Workspace"],
+    }),
+
+    getWorkspace: builder.query({
+      query: (workspaceId) => ({
+        url: `/workspace/${workspaceId}`,
         method: "GET",
       }),
       providesTags: ["Workspace"],
@@ -66,7 +57,15 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Workspace"],
     }),
-
+  
+   removeWorkspaceMember: builder.mutation({
+      query: (payload) => ({
+        url: `/workspace/delete-member/${payload.workspaceId}/${payload.userId}`,
+        method: "DELETE",
+        data: payload.formData,
+      }),
+      invalidatesTags: ["Workspace"],
+    }),
     // Board
     createBoard: builder.mutation({
       query: (payload) => ({
@@ -75,6 +74,14 @@ export const apiSlice = createApi({
         data: payload.formData,
       }),
       invalidatesTags: ["Board"],
+    }),
+
+    getBoard: builder.query({
+      query: (payload) => ({
+        url: `/board/${payload.workspaceId}/${payload.boardId}`,
+        method: "GET",
+      }),
+      providesTags: ["Board"],
     }),
 
     editBoard: builder.mutation({
@@ -104,6 +111,15 @@ export const apiSlice = createApi({
       invalidatesTags: ["Column"],
     }),
 
+    editColumn: builder.mutation({
+      query: (payload) => ({
+        url: `/column/${payload.workspaceId}/${payload.columnId}`,
+        data: payload.formData,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Column"],
+    }),
+
     deleteColumn: builder.mutation({
       query: (payload) => ({
         url: `/column/${payload.workspaceId}/${payload.columnId}`,
@@ -122,12 +138,21 @@ export const apiSlice = createApi({
       invalidatesTags: ["Task"],
     }),
 
-    getTask: builder.query<any, void>({
-      query: (payload: any) => ({
-        url: `/workspace/${payload.workspaceId}/${payload.taskId}`,
-        method: "GET",
+    getTask: builder.query({
+      query: (payload) => ({
+        url: `/task/${payload.workspaceId}/${payload.taskId}`,
+        method: "get",
       }),
       providesTags: ["Task"],
+    }),
+
+    editTask: builder.mutation({
+      query: (payload) => ({
+        url: `/task/${payload.workspaceId}/${payload.columnId}/${payload.taskId}`,
+        method: "PATCH",
+        data: payload.formdata,
+      }),
+      invalidatesTags: ["Task"],
     }),
 
     deleteTask: builder.mutation({
@@ -141,12 +166,12 @@ export const apiSlice = createApi({
 });
 
 export const {
-  useGetWorkspaceBoardQuery,
+  useGetWorkspaceBoardsQuery,
+  useGetWorkspaceQuery,
   useCreateWorkspaceMutation,
   useGetAllWorkspacesQuery,
   useCreateTaskMutation,
-  useCreateUserMutation,
-  useLoginUserMutation,
+  useEditColumnMutation,
   useCreateBoardMutation,
   useCreateColumnMutation,
   useDeleteColumnMutation,
@@ -155,4 +180,8 @@ export const {
   useJoinWorkspaceMutation,
   useEditBoardMutation,
   useWorkspaceInviteMutation,
+  useGetTaskQuery,
+  useGetBoardQuery,
+  useEditTaskMutation,
+  useRemoveWorkspaceMemberMutation
 } = apiSlice;

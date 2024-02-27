@@ -13,6 +13,12 @@ interface OtherProps {
   index: number;
   arrayHelpers: FieldArrayRenderProps;
 }
+interface DisplayProps {
+  label: string;
+  value: string;
+  style?:any
+
+}
 
 export const TextInput = ({
   label,
@@ -21,7 +27,10 @@ export const TextInput = ({
   const [field, meta] = useField(props);
   return (
     <div className="relative py-1">
-      <label className="font-bold  text-[15px]" htmlFor={props.id || props.name}>
+      <label
+        className="font-bold text-[15px]"
+        htmlFor={props.id || props.name}
+      >
         {label}
       </label>
       <Field
@@ -44,7 +53,7 @@ export const TextArea = (
   props: (LabelProps & FieldHookConfig<string>) | any
 ) => {
   const [field, meta] = useField(props);
- 
+
   return (
     <div className="relative py-1">
       <label className="font-bold text-[15px]" htmlFor={props.id || props.name}>
@@ -72,7 +81,7 @@ export const SubtaskInput = ({
   const [field, meta] = useField(props);
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <div className="flex gap-2 my-2 items-center">
         <Field
           {...field}
@@ -85,6 +94,15 @@ export const SubtaskInput = ({
           <MdClose className="text-lg hover:text-primary font-bold" />
         </button>
       </div>
+    </div>
+  );
+};
+
+export const DisplayText = ({ label, value,style }: DisplayProps) => {
+  return (
+    <div className="relative py-1">
+      <h3 className="font-bold text-[15px]">{label}</h3>
+      <p  style={style} className="text-gray w-full leading-loose rounded-md">{value}</p>
     </div>
   );
 };

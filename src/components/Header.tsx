@@ -6,11 +6,15 @@ import { appData } from "redux/boardSlice";
 import { AppState } from "types";
 import ToggleBtn from "./ToggleBtn";
 import { HiOutlineChevronDown } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoScreenFull } from "react-icons/go";
 import { MdZoomInMap } from "react-icons/md";
 import BoardDetails from "./Board/BoardDetails";
 import WorkspaceInvite from "./WorkspaceInvite";
+import { TbUsersPlus } from "react-icons/tb";
+import { IoSettingsOutline } from "react-icons/io5";
+import { GoArrowSwitch } from "react-icons/go";
+import { GrNewWindow } from "react-icons/gr";
 
 export default function Header() {
   const [isOpenBoardDetails, setIsOpenBoardDetails] = useState(false);
@@ -41,75 +45,106 @@ export default function Header() {
           <div
             className={`relative border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer hidden md:flex`}
           >
-            <button
-              onClick={() => {
-                setWorkspaceMenu(!isWorkspaceMenu);
-              }}
-              className="flex items-center relative"
-            >
-              <h3
-                className={`${
-                  workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
-                } font-bold sm:text-base md:text-xl`}
+            <div className="flex items-center justify-center gap-x-2">
+              <div className="w-8 h-8">
+                <img
+                  src={
+                    workspace.profilepics
+                      ? workspace.profilepics
+                      : "/workspace-placeholder.webp"
+                  }
+                  className="w-8 h-8 object-fit"
+                  alt=""
+                />
+              </div>
+              <button
+                onClick={() => {
+                  setWorkspaceMenu(!isWorkspaceMenu);
+                }}
+                className="flex items-center rounded-sm relative"
               >
-                {workspace.name}
-              </h3>{" "}
-              <HiOutlineChevronDown className="mt-1 text-sm" />
-            </button>
+                <h3
+                  className={`${
+                    workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
+                  } font-bold sm:text-base md:text-xl `}
+                >
+                  {workspace.name}
+                </h3>{" "}
+                <HiOutlineChevronDown className="mt-1 text-sm" />
+              </button>
+            </div>
             {isWorkspaceMenu && (
               <Popup
                 description={
-                  <div className="flex gap-x-6 items-center border-b-[1px] border-gray/30 py-4 dark:text-white text-gray font-medium px-4 justify-center ">
+                  <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 dark:text-white text-gray font-medium px-6 justify-start">
                     <div className="w-8 h-8">
                       <img
-                        src="./workspace-placeholder.webp"
+                        src={
+                          workspace.profilepics
+                            ? workspace.profilepics
+                            : "/workspace-placeholder.webp"
+                        }
                         className="w-8 h-8 object-fit"
                         alt=""
                       />
                     </div>
-                    <div className="dark:text-white text-black ">
-                      <h2 className="font-bold">
-                        {workspace.name}&apos;s Workspace
-                      </h2>
+                    <div className="dark:text-white text-black">
+                      <h2 className="font-bold text-base">{workspace.name} Workspace</h2>
                     </div>
                   </div>
                 }
-                style={{ top: 45, right: "-7rem" }}
+                style={{ top: 55, right: "-4rem" }}
                 handleOpenMenu={() => setWorkspaceMenu(false)}
                 items={[
                   {
-                    title: `Invite people to ${workspace.name}`,
-                    handler: () => {setIsOpenInvite(true)},
-                   
-                  },
-                  {
-                    title: "Workspace settings",
+                    title: (
+                      <p className="flex gap-x-4 items-center">
+                        <TbUsersPlus /> Invite people to {workspace.name}
+                      </p>
+                    ),
                     handler: () => {
-                      navigate("/workspace/settings");
+                      setIsOpenInvite(true);
                     },
-                  },
-                  {
-                    title: "Switch workspace",
-                    handler: () => {
-                      navigate("/workspace");
-                    },
-                    status: true,
-                  },
-                  {
-                    title: "New workspace",
-                    handler: () => {
-                      navigate("/workspace/new");
-                    },
-                    status: true,
                   },
                   {
                     title: (
-                      <p className="text-error text-sm"> Exit workspace</p>
+                      <p className="flex gap-x-4 items-center">
+                        <IoSettingsOutline />
+                        Settings
+                      </p>
+                    ),
+                    handler: () => {
+                      navigate("/workspace/settings"), setWorkspaceMenu(false)
+                    },
+                  },
+                  {
+                    title: (
+                      <p className="flex gap-x-4 items-center">
+                        <GoArrowSwitch /> Available workspace
+                      </p>
+                    ),
+                    handler: () => {
+                      navigate("/workspaces");
+                    },
+               
+                  },
+                  {
+                    title: (
+                      <p className="flex gap-x-4 items-center">
+                        <GrNewWindow /> New workspace
+                      </p>
                     ),
                     handler: () => {
                       navigate("/workspace/new");
                     },
-                    status: true,
+                    
+                  },
+                  {
+                    title: <p className="text-error text-sm"> Sign out</p>,
+                    handler: () => {
+                      navigate("/login");
+                    },
+                 
                   },
                 ]}
               />
@@ -128,7 +163,7 @@ export default function Header() {
                 <HiOutlineChevronDown className="mt-1 text-sm" />
               </button>
             ) : (
-              <h3 className="text-gray text-sm font-bold">No Board yet</h3>
+              <Link to={`/workspace/${workspace.id}`} className="text-gray/50 font-bold">Board</Link>
             )}
 
             <div className="flex items-center gap-x-6">
@@ -148,15 +183,20 @@ export default function Header() {
       </header>
 
       <Modal
-        open={isOpenBoardDetails||isOpenInvite}
+        open={isOpenBoardDetails || isOpenInvite}
         handleClose={() => {
-          setIsOpenBoardDetails(false),setIsOpenInvite(false);
+          setIsOpenBoardDetails(false), setIsOpenInvite(false);
         }}
       >
         {isOpenBoardDetails ? (
           <BoardDetails handleClose={() => setIsOpenBoardDetails(false)} />
         ) : (
-          <WorkspaceInvite handleClose={() => setIsOpenInvite(false)} workspaceId ={workspace.id}/>
+          <WorkspaceInvite
+            handleClose={() => {
+              setIsOpenInvite(false), setWorkspaceMenu(true);
+            }}
+            workspaceId={workspace.id}
+          />
         )}
       </Modal>
     </>

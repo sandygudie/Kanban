@@ -4,12 +4,16 @@ import { TextArea, TextInput } from "components/InputField";
 import { Loader } from "components/Spinner";
 import { useWorkspaceInviteMutation } from "redux/apiSlice";
 
+import { useToast } from "@chakra-ui/react";
+
 interface Props {
   handleClose: () => void;
   workspaceId: string;
 }
 export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
-  const [sendInvite, { isLoading }] = useWorkspaceInviteMutation();
+  const toast = useToast();
+   const [sendInvite, { isLoading }] = useWorkspaceInviteMutation();
+
   const inviteSchema = Yup.object().shape({
     email: Yup.string().email().required().lowercase().trim().label("Email"),
     inviteNote: Yup.string(),
@@ -17,10 +21,20 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
 
   const sendInviteHandler = async (values: any) => {
     try {
-      await sendInvite({
+      const response = await sendInvite({
         workspaceId: workspaceId,
         formData: values,
       }).unwrap();
+      if (response) {
+        toast({
+          title: "Invite Sent!",
+          position: "top",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+      handleClose()
     } catch (error) {
       console.log(error);
     }
@@ -48,28 +62,30 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
           </div>
           <div className="mb-6">
             <TextArea
-              label="Add Notes(optional)"
+              label="Add Note(optional)"
               name="inviteNote"
-              placeholder="Add an invite note"
+              placeholder="Send invite note"
             />
           </div>
+         
 
-          <div className="mt-8 flex items-center justify-end gap-x-4">
-            <button
-              aria-label="Save"
-              className="p-2 text-sm md:w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
-              type="submit"
-            >
-              {isLoading ? <Loader /> : "Send"}
-            </button>
-            <button
-              aria-label="cancel"
-              onClick={handleClose}
-              className="p-2 text-sm md:w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
-              type="button"
-            >
-              Cancel
-            </button>
+            <div className="flex items-center justify-end gap-x-4">
+              <button
+                aria-label="Save"
+                className="p-2 text-sm md:w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
+                type="submit"
+              >
+                {isLoading ? <Loader /> : "Send"}
+              </button>
+              <button
+                aria-label="cancel"
+                onClick={handleClose}
+                className="p-2 text-sm md:w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
+                type="button"
+              >
+                Cancel
+              </button>
+      
           </div>
         </Form>
       </Formik>

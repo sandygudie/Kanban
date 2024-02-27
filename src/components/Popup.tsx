@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useRef } from "react";
 
 interface Props {
   items: {
-    title:ReactElement|string;
+    title: ReactElement | string;
     handler: () => void;
     status?: boolean;
   }[];
@@ -28,36 +28,32 @@ function Popup({ items, style, handleOpenMenu, description }: Props) {
     <div
       ref={domRef}
       style={style}
-      className={`${
-        description ? "py-1" : "py-0"
-      }  absolute bg-offwhite dark:bg-secondary rounded-md shadow-3xl dark:shadow-gray/20 shadow-gray/30 
-     text-white w-fit right-0 top-6`}
+      className={`absolute bg-offwhite dark:bg-secondary rounded-md shadow-3xl dark:shadow-gray/10 shadow-gray/60 
+     text-white w-fit right-6 top-5`}
     >
-      <div className={`${description ? "w-auto" : "w-max"}`}>
+      <div className={`${description ? "w-64" : "w-max"}`}>
         {description ? description : null}
-        <div className="">
-          {items.map((list, i) => {
-            return (
-              <button
-                key={i}
-                disabled={list.status === false}
-                onClick={list.handler}
-                className={`block w-full text-left font-semiBold dark:text-white text-black hover:bg-gray/20 text-[0.8rem] ${
-                  description
-                    ? `${
-                        list.status === false
-                          ? "bg-gray/10 !text-gray hover:!text-gray  cursor-not-allowed"
-                          : "dark:text-white text-black hover:bg-primary hover:text-white"
-                      } py-3 text-[0.9rem]`
-                    : "py-2 "
-                }  px-4
-               ${i < items.length - 1 && `border-b-[1px] border-gray/20`}`}
-              >
-                {list.title}
-              </button>
-            );
-          })}
-        </div>
+
+        {items.map((list, i) => {
+          return (
+            <button
+              key={i}
+              disabled={list.status === false}
+              onClick={list.handler}
+              className={`block w-full text-left font-semiBold dark:text-white text-black hover:bg-gray/20 text-[13.5px] 
+              ${
+                description
+                  ? ` py-2.5 px-4 text-[0.91rem] dark:text-white/80 text-black hover:bg-primary hover:text-white ${i === items.length-1  && `rounded-b-md`}`
+                  : `py-1  ${i === 0 && `rounded-t-md`} ${i === items.length-1  && `rounded-b-md`} px-3`
+              }  
+               ${i < items.length - 1 && `border-b-[1px] border-gray/10`}
+              `}
+            >
+              {list.title}
+            </button>
+          );
+        })}
+        {/* </div> */}
       </div>
     </div>
   );

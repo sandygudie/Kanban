@@ -5,11 +5,18 @@ export const loadState = () => {
   const initialState: AppState = {
     board: data,
     active: data.find((item: IBoard, index: number) => index === 0)!,
-    workspace: { id: "", name: "" },
+    workspace: {
+      id: "",
+      name: "",
+      createdAt: null,
+      profilepics:"",
+      createdBy:""
+
+    },
+ 
   };
   return initialState;
 };
-
 
 export const loadWorkspaceData = () => {
   try {
@@ -55,11 +62,13 @@ export const checkDuplicatedTask = (values: ITask, active: IBoard) => {
   active.columns.find((item) =>
     item.name === values.status
       ? item.tasks.find((t: ITask) =>
-          t.title === values.title ? (foundTask = t) : null
+          t.title === values.title 
+            ? (foundTask = t)
+            : null
         )
       : null
   );
-  return foundTask !== undefined ? true : false;
+  return foundTask !== undefined  ? true : false;
 };
 
 export const colorSelection = () => {

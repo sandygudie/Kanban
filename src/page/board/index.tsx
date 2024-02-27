@@ -1,68 +1,61 @@
-import {  useState } from "react";
-import Header from "components/Header";
-import { GoSidebarCollapse } from "react-icons/go";
-import SideBar from "components/SideBar";
-import Board from "components/Board";
-import { useParams } from "react-router-dom";
-import { useGetWorkspaceBoardQuery } from "redux/apiSlice";
-import BoardSkeleton from "components/BoardSkeleton";
+import { useSelector } from "react-redux";
+import { AppState } from "../../types";
+import { IoIosAdd } from "react-icons/io";
+import { appData } from "redux/boardSlice";
+import { useState } from "react";
+import Modal from "components/Modal";
+import AddBoard from "components/Board/AddBoard";
+import ActiveBoard from "components/Board/ActiveBoard";
 
 export default function Index() {
-  const { workspaceId } = useParams();
-  const [showSidebar, setShowSidebar] = useState<boolean>(true);
+  const [isOpenBoard, setOpenBoard] = useState(false);
+  const data: AppState = useSelector(appData);
+  const { active } = data;
 
-  const {
-    data: workspaceDetails,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useGetWorkspaceBoardQuery(workspaceId!);
-
- 
   return (
     <>
-      {isLoading ? (
-        <BoardSkeleton />
-      ) : isSuccess ? (
-        <div className="w-full h-full relative">
-          <Header />
-          <div className="w-full h-screen">
-            <div
-              className={`absolute top-[65px] ${
-                workspaceDetails.data.boards?.length
-                  ? "h-[90vh] overflow-auto"
-                  : "h-full"
-              }  w-full`}
-            >
-              {/* {workspaceDetails.data.boards?.length ?( */}
-              <SideBar
-                setShowSidebar={setShowSidebar}
-                showSidebar={showSidebar}
+      {active ? (
+        <ActiveBoard />
+      ) : (
+        <div className="h-full flex flex-col items-center justify-center">
+          <div className="md:p-8 mx-auto text-center">
+            <div className="w-52 md:w-72 mx-auto h-auto">
+              <img
+                src="/startproject.png"
+                alt="start project"
+                loading="eager"
+                className=""
               />
-              {/* ):null} */}
-              <Board showSidebar={showSidebar} />
+            </div>
+            <div className="">
+              <h2 className="font-bold md:text-xl text-gray ">
+                Create your first board
+              </h2>
+              <p className="mt-1 text-gray text-base mb-5">
+                You don&apos;t have any board for this workspace
+              </p>
+              <button
+                onClick={() => {
+                  setOpenBoard(true);
+                }}
+                className="font-bold bg-primary rounded-full px-6 py-3 cursor-pointer text-white transition ease-in-out delay-100 duration-500 bg-blue-500 hover:-translate-y-1 hover:scale-110
+      "
+              >
+                <div className="flex items-center justify-center gap-x-2">
+                  <span>
+                    <IoIosAdd />
+                  </span>{" "}
+                  Add Board
+                </div>
+              </button>
             </div>
           </div>
+        </div>
+      )}
 
-          <button
-            aria-label="Visibilityoff"
-            onClick={() => {
-              setShowSidebar(true);
-            }}
-            className={` ${
-              showSidebar ? "opacity-0 delay-100 " : "opacity-100 delay-500"
-            } cursor-pointer z-20 fixed top-16 text-white rounded-r-full bg-primary p-2 transition ease-in-out`}
-          >
-            {" "}
-            <GoSidebarCollapse size={20} />{" "}
-          </button>
-        </div>
-      ) : isError ? (
-        <div className="">
-          <p className="text-error text-sm">Error fetching workspace...</p>
-          <button>Try Again</button>
-        </div>
-      ) : null}
+      <Modal open={isOpenBoard} handleClose={() => setOpenBoard(false)}>
+        <AddBoard handleClose={() => setOpenBoard(false)} />
+      </Modal>
     </>
   );
 }

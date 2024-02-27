@@ -10,23 +10,26 @@ import {
   deleteTask,
   deleteColumn,
 } from "redux/boardSlice";
-
 import { AppState, IColumn, ITask } from "types";
 import { Loader } from "./Spinner";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   handleClose: () => void;
   tasks?: ITask;
   boardname?: string;
   selectedColumn?: IColumn;
+  workspaceId?:string
 }
 
 export default function Delete({
+  workspaceId,
   handleClose,
   tasks,
   boardname,
   selectedColumn,
 }: Props) {
+  const navigate = useNavigate();
   const [deleteAColumn, { isLoading: isDeletingColumn }] =
     useDeleteColumnMutation();
   const [deleteATask, { isLoading: isDeletingTask }] = useDeleteTaskMutation();
@@ -56,6 +59,7 @@ export default function Delete({
     if (response) {
       dispatch(deleteTask(tasks));
       handleClose();
+      navigate(`/workspace/${workspaceId}`)
     }
   };
 

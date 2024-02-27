@@ -95,6 +95,7 @@ const JoinWorkspaceForm = () => {
   const joinWorkspaceHandler = async (values: any) => {
     try {
       const response = await joinWorkspace(values).unwrap();
+      console.log(response)
       if (response) {
         saveloadWorkspaceData({ workspaceId: response.data.workspaceId });
         navigate(`/workspace/${response.data.workspaceId}`);
@@ -135,7 +136,7 @@ const JoinWorkspaceForm = () => {
         <div className="my-8">
           <button
             aria-label="Board"
-            className=" px-2 text-white bg-primary font-bold py-4 w-full text-sm rounded-full"
+            className=" px-2 text-white bg-primary h-14 font-bold py-4 w-full text-sm rounded-full"
             type="submit"
           >
             {isLoading ? <Loader /> : "Continue"}
@@ -166,7 +167,7 @@ export default function NewWorkspace() {
           <img src={logoMobile} alt="logo" className="w-8 h-8" />
         </div>
         <div className="flex items-center font-bold text-gray justify-between w-full pr-2 md:px-4">
-          {currentWorkspace.workspaceId ? (
+          {currentWorkspace?.workspaceId ? (
             <button
               onClick={() => navigate(`/workspace`)}
               

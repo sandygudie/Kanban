@@ -1,9 +1,8 @@
 import { useState } from "react";
-
 import logoMobile from "../../assets/logo-mobile.svg";
 import Icon from "components/Icon";
 import ToggleBtn from "components/ToggleBtn";
-import { Link,} from "react-router-dom";
+import { Link, useNavigate,} from "react-router-dom";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useGetAllWorkspacesQuery } from "redux/apiSlice";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -11,7 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { saveloadWorkspaceData } from "utilis";
 
 export default function Index() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const currentTheme = localStorage.getItem("theme")!;
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const updateThemehandler = (theme: string) => setTheme(theme);
@@ -30,9 +29,9 @@ export default function Index() {
             <img src={logoMobile} alt="logo" className="w-8 h-8" />
           </div>
           <div className="flex items-center justify-between w-full pr-2 md:px-4">
-            <h1 className="font-bold text-gray text-lg">
+            <h1 className="font-bold text-gray/50 text-lg">
               {response?.data?.workspace.length > 0
-                ? "Workspace"
+                ? "Workspace(s)"
                 : "No Workspace"}
             </h1>
             <ToggleBtn updateThemehandler={updateThemehandler} theme={theme} />
@@ -51,7 +50,7 @@ export default function Index() {
                 <Skeleton width={200} height={10} />
               </h2>
               <div className="flex items-center gap-x-4 mt-2">
-                {/* <Skeleton width={10} height={10} /> */}
+      
                 <Skeleton width={400} height={10} />
                 <Skeleton width={100} height={10} />
               </div>
@@ -72,10 +71,10 @@ export default function Index() {
                         saveloadWorkspaceData({
                           workspaceId: ele._id,
                         });
-                        // navigate(`${ele._id}`);
-                        window.location.href=`workspace/${ele._id}`
+                        navigate(`/workspace/${ele._id}`);
+                        // window.location.href=`workspace/${ele._id}`
                       }}
-                      className="px-3 py-5 mt-4 font-semiBold w-full md:w-[36rem] rounded-lg border-[1px] border-solid border-gray/50  flex hover:bg-primary/50 gap-x-4  items-center justify-between"
+                      className="px-3 py-5 mt-4 font-semiBold w-full md:w-[36rem] rounded-lg border-[1px] border-solid border-gray/60 flex hover:bg-primary/50 gap-x-4  items-center justify-between"
                     >
                       <div className="flex items-center gap-x-5">
                         <img

@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
-import { useCreateUserMutation } from "redux/apiSlice";
+import { useCreateUserMutation } from "redux/authSlice";
 
 export default function Index() {
   const [signUp, { isLoading }] = useCreateUserMutation();
