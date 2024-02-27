@@ -3,7 +3,6 @@ import logoMobile from "../../assets/logo-mobile.svg";
 import Icon from "components/Icon";
 import ToggleBtn from "components/ToggleBtn";
 import { Link, useNavigate,} from "react-router-dom";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { useGetAllWorkspacesQuery } from "redux/apiSlice";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -86,11 +85,11 @@ export default function Index() {
                           <h2 className="">{ele.name}</h2>
                         </div>
                       </div>
-                      <div className="flex items-center gap-x-2 w-10">
+                      <div className="img_container">
                         {ele.members.map((ele: any) => {
                           return (
-                            <div key={ele.userId}>
-                              <FaRegCircleUser />
+                            <div className="avatar" key={ele.userId}>
+                              <img src="" alt="" className="img"/>
                             </div>
                           );
                         })}

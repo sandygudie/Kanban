@@ -33,7 +33,7 @@ export default function Index() {
     isSuccess,
     isError,
   } = useGetWorkspaceBoardsQuery(Id);
-  console.log(workspaceDetails);
+
  
   return (
     <>

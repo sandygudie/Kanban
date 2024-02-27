@@ -18,6 +18,7 @@
     "@reduxjs/toolkit": "^1.9.0",
     "@types/react": "^18.2.45",
     "axios": "^1.6.7",
+    "cloudinary-react": "^1.8.1",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.7",
     "gsap": "^3.12.3",

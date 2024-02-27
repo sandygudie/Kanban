@@ -23,7 +23,9 @@ export default function Index() {
   const [selectedImage, setSelectedImage] = useState<any>();
   const [editWorkspaceProfile, { isLoading }] =
     useUpdateWorkspaceProfileMutation();
-  console.log(workspace);
+  const upload_preset = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
+  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
+
   const linkitems = [
     {
       name: "About",
@@ -52,13 +54,28 @@ export default function Index() {
 
   const UpdateWorkSpace = async (values: any) => {
 
+    const data = new FormData();
+    data.append("file", values.profilePics);
+    data.append("upload_preset", upload_preset);
+    data.append("cloud_name", cloud_name);
+    data.append("folder", "Cloudinary-React");
+
     try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const res = await response.json();
       const payload = {
         workspaceId: workspace.id,
-        formData: values,
+        formData: { name: values.name, profilePics: res?.url },
       };
-      const response = await editWorkspaceProfile(payload);
-      if (response) {
+
+      const result = await editWorkspaceProfile(payload);
+      if (result) {
         dispatch(updateWorkspace({ name: values.name }));
       }
     } catch (error) {
@@ -74,8 +91,6 @@ export default function Index() {
             <img
               src={
                 workspace.profilePics
-                  ? workspace.profilePics
-                  : "/workspace-placeholder.webp"
               }
               alt="image"
               className="rounded-full border-solid p-3 h-20 w-20"
@@ -151,7 +166,7 @@ export default function Index() {
                                   src={
                                     selectedImage
                                       ? selectedImage
-                                      : "/workspace-placeholder.webp"
+                                      : workspace.profilePics
                                   }
                                   className="p-2 "
                                 />
@@ -168,7 +183,7 @@ export default function Index() {
                                   if (e.currentTarget.files) {
                                     setFieldValue(
                                       "profilePics",
-                                      e.currentTarget.files[0].name
+                                      e.currentTarget.files[0]
                                     );
                                     setSelectedImage(
                                       URL.createObjectURL(

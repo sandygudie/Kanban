@@ -49,9 +49,7 @@ export default function Header() {
               <div className="w-8 h-8">
                 <img
                   src={
-                    workspace.profilepics
-                      ? workspace.profilepics
-                      : "/workspace-placeholder.webp"
+                    workspace.profilePics
                   }
                   className="w-8 h-8 object-fit"
                   alt=""
@@ -80,9 +78,7 @@ export default function Header() {
                     <div className="w-8 h-8">
                       <img
                         src={
-                          workspace.profilepics
-                            ? workspace.profilepics
-                            : "/workspace-placeholder.webp"
+                          workspace.profilePics
                         }
                         className="w-8 h-8 object-fit"
                         alt=""
