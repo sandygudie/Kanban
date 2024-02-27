@@ -88,15 +88,6 @@ export const colorMarker = [
   "#03A9F4",
 ];
 export const taskColorMarker = [
-  // "#FFEB3B",
-  // "#44c3c3",
-  // "#03A9F4",
-  // "#8bc34a",
-  // "#ed8936",
-  // "#9c27b0",
-  // "#8bc34a",
-  // "#3b61ff",
-  // "#03A9F4",
   " #ed8936",
   "#48bb78",
   "#9c27b0",

@@ -43,16 +43,3 @@ const axiosBaseQuery =
     };
 
 export default axiosBaseQuery;
-
-// } catch (err: any) {
-//   // const err = axiosError as AxiosError
-//   console.log(err.response?.data.message);
-//   if (err.response) {
-//     if (err.response.status === 401) {
-//       window.location.replace("/login");
-//     }
-//   }
-
-//   throw new Error(err.response?.data.message || err.message);
-// }
-// };
