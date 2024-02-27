@@ -169,7 +169,7 @@ export default function NewWorkspace() {
         <div className="flex items-center font-bold text-gray justify-between w-full pr-2 md:px-4">
           {currentWorkspace?.workspaceId ? (
             <button
-              onClick={() => navigate(`/workspace`)}
+              onClick={() => navigate(`/workspaces`)}
               
             >
               Available Workspace(s)

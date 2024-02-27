@@ -86,7 +86,7 @@ export default function Index() {
                           <h2 className="">{ele.name}</h2>
                         </div>
                       </div>
-                      <div>
+                      <div className="flex items-center gap-x-2 w-10">
                         {ele.members.map((ele: any) => {
                           return (
                             <div key={ele.userId}>

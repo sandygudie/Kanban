@@ -9,11 +9,9 @@ export const loadState = () => {
       id: "",
       name: "",
       createdAt: null,
-      profilepics:"",
-      createdBy:""
-
+      profilePics: "",
+      createdBy: "",
     },
- 
   };
   return initialState;
 };
@@ -62,19 +60,22 @@ export const checkDuplicatedTask = (values: ITask, active: IBoard) => {
   active.columns.find((item) =>
     item.name === values.status
       ? item.tasks.find((t: ITask) =>
-          t.title === values.title 
-            ? (foundTask = t)
-            : null
+          t.title === values.title ? (foundTask = t) : null
         )
       : null
   );
-  return foundTask !== undefined  ? true : false;
+  return foundTask !== undefined ? true : false;
 };
 
 export const colorSelection = () => {
   const randomNumber = Math.floor(Math.random() * 16777215).toString(16);
   return `#${randomNumber}`;
 };
+
+export function TitleCase(str: string) {
+  str.toLowerCase().split(" ");
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 export const colorMarker = [
   "#FFEB3B",

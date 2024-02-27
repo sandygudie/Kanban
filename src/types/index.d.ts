@@ -34,7 +34,7 @@ export interface IWorkspaceProfile {
   id: string;
   name: string;
   createdAt: Date | any;
-  profilepics:string
+  profilePics:string
   createdBy:string
 }
 

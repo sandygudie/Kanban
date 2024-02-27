@@ -3,6 +3,7 @@ import {
   useDeleteBoardMutation,
   useDeleteColumnMutation,
   useDeleteTaskMutation,
+  useDeleteWorkspaceMutation,
 } from "redux/apiSlice";
 import {
   appData,
@@ -19,11 +20,9 @@ interface Props {
   tasks?: ITask;
   boardname?: string;
   selectedColumn?: IColumn;
-  workspaceId?:string
 }
 
 export default function Delete({
-  workspaceId,
   handleClose,
   tasks,
   boardname,
@@ -33,6 +32,8 @@ export default function Delete({
   const [deleteAColumn, { isLoading: isDeletingColumn }] =
     useDeleteColumnMutation();
   const [deleteATask, { isLoading: isDeletingTask }] = useDeleteTaskMutation();
+  const [deleteAWorkspace, { isLoading: isDeletingWorkspace }] =
+    useDeleteWorkspaceMutation();
   const [deleteABoard, { isLoading: isDeletingBoard }] =
     useDeleteBoardMutation();
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ export default function Delete({
     if (response) {
       dispatch(deleteTask(tasks));
       handleClose();
-      navigate(`/workspace/${workspaceId}`)
+      navigate(`/workspace/${workspace.id}`);
     }
   };
 
@@ -73,7 +74,15 @@ export default function Delete({
       handleClose();
     }
   };
-
+  const deleteWorkspaceHandler = async () => {
+    const response = await deleteAWorkspace({
+      workspaceId: workspace.id,
+    }).unwrap();
+    if (response) {
+      dispatch(deleteColumn(selectedColumn));
+      handleClose();
+    }
+  };
   return (
     <div className="p-4">
       <h1 className="text-left text-xl text-error font-bold mb-4">
@@ -83,12 +92,20 @@ export default function Delete({
           ? boardname
           : selectedColumn
           ? selectedColumn.name
-          : tasks?.title}
+          : tasks
+          ? tasks?.title
+          : `${workspace.name}` }
       </h1>
       <p className="text-base">
         Are you sure you want to delete this{" "}
         <span className="font-bold text-lg ">
-          {selectedColumn ? "column" : boardname ? "board" : "task"}
+          {selectedColumn
+            ? "column"
+            : boardname
+            ? "board"
+            : tasks
+            ? "task"
+            : "workspace"}
         </span>{" "}
         ?{" "}
         <span className="ml-1">
@@ -109,11 +126,16 @@ export default function Delete({
               ? deleteBoardHandler
               : selectedColumn
               ? deleteColumnHandler
-              : deleteTaskHandler
+              : tasks
+              ? deleteTaskHandler
+              : deleteWorkspaceHandler
           }
         >
           {" "}
-          {isDeletingColumn || isDeletingTask || isDeletingBoard ? (
+          {isDeletingColumn ||
+          isDeletingTask ||
+          isDeletingBoard ||
+          isDeletingWorkspace ? (
             <Loader />
           ) : (
             "Delete"

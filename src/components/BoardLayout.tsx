@@ -26,15 +26,15 @@ export default function Index() {
     }
     setLoadingBoard(false);
   }, [workspaceId]);
-  console.log(workspaceId);
-  console.log(Id);
+
   const {
     data: workspaceDetails,
     isLoading,
     isSuccess,
     isError,
   } = useGetWorkspaceBoardsQuery(Id);
-
+  console.log(workspaceDetails);
+ 
   return (
     <>
       {isLoading || isLoadingBoard ? (
