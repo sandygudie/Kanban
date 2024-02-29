@@ -100,10 +100,11 @@ export default function Index() {
           <h1 className="font-bold text-3xl md:mt-8 md:pb-12 text-center">
             Sign Up
           </h1>
-          <div className="md:flex items-center justify-between">
+          <div className=" relative">
+            <div className="flex gap-x-24 items-center">
             <form
               onSubmit={handleSubmit}
-              className="w-full md:w-1/2 flex items-center md:border border-solid py-10 px-4 sm:px-12 md:shadow-lg flex-col gap-y-4 justify-center "
+              className="w-full md:w-1/2 relative flex items-center md:border border-solid py-10 px-4 sm:px-12 md:shadow-lg flex-col gap-y-4 justify-center "
             >
               <div className="block md:hidden">
                 <button
@@ -157,21 +158,21 @@ export default function Index() {
                 <button type="button" className="absolute top-4 right-5">
                   {showPassword ? (
                     <AiOutlineEye
-                      className="text-xl"
+                      className="text-xl text-gray/80"
                       onClick={() => setShowPassword(false)}
                     />
                   ) : (
                     <AiOutlineEyeInvisible
-                      className="text-xl"
+                      className="text-xl text-gray/80"
                       onClick={() => setShowPassword(true)}
                     />
                   )}
                 </button>
-                <div className="mt-2 text-sm ">
+                <div className="mt-2 text-[13px] absolute ">
                   {signupSuccess.length > 0 ? (
                     <p className="text-success text-center">
                       {signupSuccess}
-                      <span className="block">
+                      <span>
                         {" "}
                         Check your inbox for verification link.
                       </span>
@@ -191,7 +192,7 @@ export default function Index() {
                                   validatePassword.includes(ele)
                                     ? "text-success"
                                     : "text-error"
-                                } text-sm flex items-center gap-x-2`}
+                                } text-[13px] flex items-center gap-x-2`}
                               >
                                 {validatePassword.includes(ele) ? (
                                   <IoCheckmarkCircleOutline size={16} />
@@ -204,7 +205,7 @@ export default function Index() {
                           ))
                         : null}
                       {validatePassword.includes("No space") ? (
-                        <p className="text-error text-sm flex items-center gap-x-2">
+                        <p className="text-error text-[13px] flex items-center gap-x-2">
                           {" "}
                           <IoAlertCircleOutline size={16} />
                           No spaces
@@ -215,12 +216,12 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="w-full mt-4">
+              <div className="w-full mt-10">
                 <button
                   className="bg-primary flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
                   type="submit"
                 >
-                  {isLoading ? <Loader/> : "Continue with Email"}
+                  {isLoading ? <Loader /> : "Continue with Email"}
                 </button>
                 <div className="text-right pt-2">
                   {" "}
@@ -229,9 +230,11 @@ export default function Index() {
                   </Link>
                 </div>
               </div>
+              
             </form>
             <hr className="border-r-[1px] border-solid hidden md:block h-96" />
-            <div className="hidden md:block">
+            </div>
+            <div className="hidden md:block absolute right-0 top-36">
               <p className="pb-4 text-sm text-gray">With existing account</p>
               <button
                 onClick={() => {}}

@@ -30,7 +30,7 @@ export default function Index({
   const [createTask] = useCreateTaskMutation();
   const [deleteATask] = useDeleteTaskMutation();
 
-  console.log(isOpenEdit)
+
   const handleItemClick = async (title: string, columnId: string) => {
     handleSelectedColumn(title);
 

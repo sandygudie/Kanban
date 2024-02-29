@@ -89,8 +89,6 @@ export default function ActiveBoard() {
     }).unwrap();
   };
 
- 
-
   const editColumnChangeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     setInputError(false);
     const editedText = e.target.value;
@@ -98,7 +96,7 @@ export default function ActiveBoard() {
       const response = await editAColumn({
         columnId: selectedColumn?._id,
         workspaceId: workspace.id,
-        formData: {editedText},
+        formData: { editedText },
       }).unwrap();
       if (response) {
         dispatch(editColumnName({ editedText, selectedColumn }));
@@ -111,7 +109,7 @@ export default function ActiveBoard() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="mb-10">
+        <div className=" overflow-x-auto overflow-y-hidden">
           <div className="z-10 h-full flex gap-x-10 w-full">
             {active.columns?.map((item: IColumn, index: number) => {
               return (
@@ -188,8 +186,8 @@ export default function ActiveBoard() {
                               {
                                 title: (
                                   <p className="flex p-1.5 items-center gap-x-2.5 dark:text-white/80">
-                                    <CiEdit className="text-gray text-sm" />{" "}
-                                   Add card
+                                    <CiEdit className="text-gray text-sm" /> Add
+                                    card
                                   </p>
                                 ),
                                 handler: () => {

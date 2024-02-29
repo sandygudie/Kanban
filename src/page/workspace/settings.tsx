@@ -113,7 +113,7 @@ export default function Index() {
                     key={ele.name}
                     className={`${
                       toggle === ele.name && "bg-secondary"
-                    } border-none px-4 py-2 rounded-md text-sm font-bold w-full`}
+                    } border-none px-4 py-2 rounded-md text-sm font-bold w-full text-left`}
                   >
                     {ele.name}
                   </button>

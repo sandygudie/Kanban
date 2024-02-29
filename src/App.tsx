@@ -13,7 +13,7 @@ const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
 const AvailableWorkspace = lazy(() => import("page/workspace"));
 const Home = lazy(() => import("page/home"));
 const Settings = lazy(() => import("page/workspace/settings"));
-const Task = lazy(() => import("page/task"));
+import Task from "page/task"
 
 function App() {
   useEffect(() => {

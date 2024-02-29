@@ -50,10 +50,10 @@ export default function AddColumn({ handleClose }: Props) {
           workspaceId: workspace.id,
          formData: { column: columnArray },
         };
-        console.log(payload);
         const response = await createColumn(payload).unwrap();
+        console.log(response.data)
         if (response) {
-          dispatch(addColumn(values.columns));
+          dispatch(addColumn(response.data));
         }
         handleClose();
       } catch (error: any) {
@@ -76,7 +76,7 @@ export default function AddColumn({ handleClose }: Props) {
           validateOnBlur={false}
           onSubmit={addColumnHandler}
         >
-          {({ values, errors }) => (
+          {({ values, errors, }) => (
             <Form>
               <div className="mb-6">
                 <label className="text-sm font-bold">Columns</label>
@@ -126,13 +126,13 @@ export default function AddColumn({ handleClose }: Props) {
               <div className="my-8 relative ">
                 <button
                   aria-label="Board"
-                  className="px-2 text-white bg-primary/70 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
+                  className="px-2 text-white bg-primary/70 hover:bg-primary font-bold py-4 flex justify-center items-center h-14 flex-col w-full rounded-full"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Submit"}
                 </button>
                 {error.length ? (
-                  <p className="text-error absolute  text-xs flex items-center mt-2 gap-x-2">
+                  <p className="text-error absolute text-xs flex items-center mt-2 gap-x-2">
                     <IoAlertCircleOutline />
                     {error}
                   </p>

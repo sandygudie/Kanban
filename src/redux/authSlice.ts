@@ -27,7 +27,23 @@ export const authSlice = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+
+    verifyEmail: builder.mutation({
+      query: (confirmationCode) => ({
+        url: `/auth//email-verify/${confirmationCode}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useCreateUserMutation, useLoginUserMutation } = authSlice;
+export const {
+  useCreateUserMutation,
+  useLoginUserMutation,
+  useVerifyEmailMutation,
+} = authSlice;
+
+// export async function verifyEmail(confirmationCode: string) {
+//   const response = await makeApiCall(`auth/email-verify/${confirmationCode}`);
+//   return response;

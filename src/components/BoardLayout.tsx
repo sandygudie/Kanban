@@ -34,7 +34,6 @@ export default function Index() {
     isError,
   } = useGetWorkspaceBoardsQuery(Id);
 
- 
   return (
     <>
       {isLoading || isLoadingBoard ? (
@@ -54,7 +53,7 @@ export default function Index() {
               />
               <div
                 className={`${
-                  showSidebar ? "translate-x-[220px] w-[80vw]" : "translate-x-0"
+                  showSidebar ? "translate-x-[220px] w-[85vw]" : "translate-x-0"
                 } max-w-screen-2xl h-full transition duration-700 ease-in-out pt-8 pb-28 px-14`}
               >
                 <Outlet />

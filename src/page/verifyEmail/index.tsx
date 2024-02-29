@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { verifyEmail } from "services/api/auth";
 import { Link, useParams } from "react-router-dom";
 import Spinner from "components/Spinner";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { useVerifyEmailMutation } from "redux/authSlice";
 
 export default function Index() {
   const [isVerify, setVerify] = useState("");
   const [error, setError] = useState(false);
   const { confirmationCode }: any = useParams();
+  const [verifyEmail] = useVerifyEmailMutation();
 
   useEffect(() => {
     emailVerify();
@@ -16,7 +17,7 @@ export default function Index() {
 
   const emailVerify = async () => {
     try {
-      const response = await verifyEmail(confirmationCode);
+      const response = await verifyEmail(confirmationCode).unwrap();
       setVerify(response.message);
     } catch (error: any) {
       console.log(error);
@@ -28,7 +29,9 @@ export default function Index() {
       {isVerify ? (
         <div>
           <IoIosCheckmarkCircleOutline className="text-8xl  mx-auto text-primary" />
-          <p className="mb-8 text-secondary text-xl font-semiBold">{isVerify}</p>
+          <p className="mb-8 text-secondary text-xl font-semiBold">
+            {isVerify}
+          </p>
           <Link
             className="p-4 rounded-lg w-full block text-center font-bold bg-black text-white"
             to="/workspace/new"

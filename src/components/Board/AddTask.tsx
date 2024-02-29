@@ -1,6 +1,5 @@
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
-import SelectBox from "components/SelectBox";
 import { TextInput, TextArea, SubtaskInput } from "../InputField";
 import {
   AppState,
@@ -36,7 +35,6 @@ export default function AddTask({
   activeColumn,
   tasks,
   selectedColumn,
-  handleSelectedColumn,
 }: Props) {
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const [deleteATask] = useDeleteTaskMutation();
@@ -46,7 +44,6 @@ export default function AddTask({
   const active: IBoard = data.active;
   const workspace: IWorkspaceProfile = data.workspace;
   const toast = useToast();
-
 
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
@@ -82,13 +79,13 @@ export default function AddTask({
           columnId: activeColumn?._id,
         };
         const response = await createTask(payload).unwrap();
-      
+
         if (response) {
           dispatch(
             addTask({
               updatedTasks: {
                 _id: response.data.taskId,
-                columnId:response.data.columnId,
+                columnId: response.data.columnId,
                 ...values,
               },
               position: 0,
@@ -130,7 +127,6 @@ export default function AddTask({
         });
 
         if (values.status !== selectedColumn) {
-
           const columnId = active.columns.find(
             (ele) => ele.name === selectedColumn
           )?._id;
@@ -144,14 +140,12 @@ export default function AddTask({
             workspaceId: workspace.id,
             columnId: columnId,
           };
-
           const response = await createTask(payload).unwrap();
           const result = await deleteATask({
             taskId: tasks?._id,
             columnId: tasks?.columnId,
             workspaceId: workspace.id,
           }).unwrap();
-
           if (response && result) {
             dispatch(
               addTask({
@@ -159,8 +153,6 @@ export default function AddTask({
                   ...values,
                   _id: response.data.taskId,
                   status: selectedColumn,
-                  // columnId:response.data.columnId,
-                  
                 },
                 position: 0,
               })
@@ -217,14 +209,13 @@ export default function AddTask({
                   description: tasks.description,
                   status: selectedColumn ? selectedColumn : tasks.status,
                   subtasks: tasks.subtasks,
-                  columnid:tasks.columnId
+                  columnid: tasks.columnId,
                 }
               : {
                   title: "",
                   description: "",
                   status: activeColumn?.name,
                   subtasks: [],
-              
                 }
           }
           validationSchema={TaskSchema}
@@ -296,36 +287,6 @@ export default function AddTask({
                     </div>
                   )}
                 />
-              </div>
-              <div className="relative flex items-center my-6 gap-x-8 justify-between ">
-                <div className="w-1/2">
-                  {/* set time and date */}
-                  <TextInput
-                    label="Due Date"
-                    name="deadline"
-                    type="date"
-                    placeholder="E.g Pending design task"
-                  />
-                </div>
-                <div className="w-1/2">
-                  <TextInput
-                    label="Assigned to"
-                    name="assigned"
-                    type="time"
-                    placeholder="E.g Pending design task"
-                  />
-                </div>
-              </div>
-              <div className="mb-6">
-                {tasks && (
-                  <SelectBox
-                  isOpenEdit ={true}
-                    selectedColumn={selectedColumn}
-                    handleSelectedColumn={handleSelectedColumn!}
-                    tasks={tasks}
-                    active={active}
-                  />
-                )}
               </div>
 
               <div className="my-8">

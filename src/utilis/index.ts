@@ -11,6 +11,7 @@ export const loadState = () => {
       createdAt: null,
       profilePics: "",
       createdBy: "",
+      description:""
     },
   };
   return initialState;

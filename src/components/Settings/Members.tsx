@@ -4,6 +4,7 @@ import {
   useGetWorkspaceQuery,
   useRemoveWorkspaceMemberMutation,
 } from "redux/apiSlice";
+import { TitleCase } from "utilis";
 
 interface Props {
   workspaceId: string;
@@ -49,12 +50,12 @@ export default function Members({ workspaceId }: Props) {
                   </div>
                   <div className="flex gap-x-3 items-center mt-4">
                     {" "}
-                    <p>{ele.role}</p>
+                    <p>{TitleCase(ele.role)}</p>
                     <button
                       onClick={() => {
                         deletemember(ele.userId);
                       }}
-                      className="bg-error rounded-md w-20 h-10 text-xs p-2"
+                      className="bg-error font-bold rounded-md w-20 h-8 text-xs p-2"
                     >
                       {isRemovingMember && memberId === ele.userId ? (
                         <Spinner />
@@ -72,16 +73,20 @@ export default function Members({ workspaceId }: Props) {
             <h1 className="font-bold text-base border-b-[1px] border-gray/20 pb-2 ">
               Pending Members
             </h1>
-            {workspace?.data.pendingMembers.map((ele: string) => {
-              return (
-                <div
-                  className="flex bg-secondary p-8 rounded-md items-center justify-between mt-6 text-sm"
-                  key={ele}
-                >
-                  <p>{ele}</p>
-                </div>
-              );
-            })}
+            {workspace?.data.pendingMembers.length ? (
+              workspace?.data.pendingMembers.map((ele: string) => {
+                return (
+                  <div
+                    className="flex bg-secondary p-8 rounded-md items-center justify-between mt-6 text-sm"
+                    key={ele}
+                  >
+                    <p>{ele}</p>
+                  </div>
+                );
+              })
+            ) : (
+              <p className="text-gray/50 text-sm mt-3">No pending request</p>
+            )}
           </div>
         </>
       )}

@@ -6,14 +6,12 @@ import { appData, addBoard } from "redux/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedBoard, saveloadWorkspaceData } from "utilis";
 import { useToast } from "@chakra-ui/react";
-import { v4 as uuidv4 } from "uuid";
 import { useCreateBoardMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
 interface Props {
   handleClose: () => void;
 }
 function AddBoard({ handleClose }: Props) {
-  
   const [createBoard, { isLoading }] = useCreateBoardMutation();
 
   const dispatch = useDispatch();
@@ -53,7 +51,7 @@ function AddBoard({ handleClose }: Props) {
         };
         const response = await createBoard(payload).unwrap();
         if (response) {
-          dispatch(addBoard(values));
+          dispatch(addBoard({ _id: response.data.boardId, ...values }));
           saveloadWorkspaceData({
             workspaceId: workspace.id,
             activeBoard: response.data.boardId,
@@ -79,7 +77,7 @@ function AddBoard({ handleClose }: Props) {
       <h1 className="font-bold text-lg pb-2 px-4">New Board</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem] px-4">
         <Formik
-          initialValues={{ _id: uuidv4(), name: "", columns: [] }}
+          initialValues={{ name: "", columns: [] }}
           validationSchema={BoardSchema}
           validateOnChange={false}
           validateOnBlur={false}
@@ -118,7 +116,7 @@ function AddBoard({ handleClose }: Props) {
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
-                            _id: uuidv4(),
+                            // _id: uuidv4(),
                             name: "",
                             tasks: [],
                           });

@@ -74,6 +74,7 @@ export default function BoardDetails({ handleClose }: Props) {
               handler: () => {
                 setIsOpenEdit(true);
                 setIsEdit("name");
+
               },
             },
             {
@@ -110,6 +111,7 @@ export default function BoardDetails({ handleClose }: Props) {
               title: <p className="text-xs text-error py-4">Delete Board</p>,
               handler: () => {
                 setIsOpenDelete(true); //admin
+            
               },
             },
           ].map((ele, index) => {
@@ -154,7 +156,7 @@ export default function BoardDetails({ handleClose }: Props) {
           />
         ) : (
           <DeleteItem
-            handleClose={() => setIsOpenDelete(false)}
+            handleClose={() => {setIsOpenDelete(false), handleClose()}}
             boardname={active.name}
           />
         )}

@@ -5,7 +5,7 @@ import ToggleBtn from "components/ToggleBtn";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput, TextArea } from "components/InputField";
-import Spinner, { Loader } from "components/Spinner";
+import { Loader } from "components/Spinner";
 import { useNavigate } from "react-router-dom";
 import { saveloadWorkspaceData, loadWorkspaceData } from "utilis";
 import {
@@ -40,7 +40,7 @@ const CreateWorkspaceForm = () => {
         navigate(`/workspace/${response.data.workspaceId}`);
       }
     } catch (error: any) {
-      // setResponseError(error.message);
+      console.log(error);
     }
   };
   return (
@@ -75,7 +75,7 @@ const CreateWorkspaceForm = () => {
             className=" px-2 flex justify-center text-white bg-primary h-14 font-bold py-4 w-full rounded-full"
             type="submit"
           >
-            {isLoading ? <Spinner /> : "Continue"}
+            {isLoading ? <Loader /> : "Continue"}
           </button>
         </div>
       </Form>
@@ -95,7 +95,7 @@ const JoinWorkspaceForm = () => {
   const joinWorkspaceHandler = async (values: any) => {
     try {
       const response = await joinWorkspace(values).unwrap();
-      console.log(response)
+      console.log(response);
       if (response) {
         saveloadWorkspaceData({ workspaceId: response.data.workspaceId });
         navigate(`/workspace/${response.data.workspaceId}`);
@@ -168,10 +168,7 @@ export default function NewWorkspace() {
         </div>
         <div className="flex items-center font-bold text-gray justify-between w-full pr-2 md:px-4">
           {currentWorkspace?.workspaceId ? (
-            <button
-              onClick={() => navigate(`/workspaces`)}
-              
-            >
+            <button onClick={() => navigate(`/workspaces`)}>
               Available Workspace(s)
             </button>
           ) : (
@@ -200,7 +197,7 @@ export default function NewWorkspace() {
             <div className="flex mt-2 items-center gap-x-6">
               <button
                 className={`${
-                  toggle ? "bg-primary text-white" : " bg-gray/30    text-base"
+                  toggle ? "bg-primary text-white" : "bg-gray/30 text-base"
                 }  w-full rounded-full text-xs md:text-sm p-2.5`}
                 onClick={() => setToggle(true)}
               >
@@ -208,7 +205,7 @@ export default function NewWorkspace() {
               </button>
               <button
                 className={`${
-                  !toggle ? "bg-primary text-white" : "text-base  bg-gray/30"
+                  !toggle ? "bg-primary text-white" : "text-base bg-gray/30"
                 }  w-full rounded-full text-xs md:text-sm p-2.5`}
                 onClick={() => setToggle(false)}
               >

@@ -36,6 +36,7 @@ export interface IWorkspaceProfile {
   createdAt: Date | any;
   profilePics:string
   createdBy:string
+  description:string
 }
 
 type AppState = {

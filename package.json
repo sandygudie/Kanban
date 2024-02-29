@@ -17,6 +17,7 @@
     "@hello-pangea/dnd": "^16.0.1",
     "@reduxjs/toolkit": "^1.9.0",
     "@types/react": "^18.2.45",
+    "antd": "^5.14.2",
     "axios": "^1.6.7",
     "cloudinary-react": "^1.8.1",
     "formik": "^2.2.9",
