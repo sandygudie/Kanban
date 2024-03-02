@@ -11,7 +11,13 @@ export const loadState = () => {
       createdAt: null,
       profilePics: "",
       createdBy: "",
-      description:""
+      description: "",
+    },
+    user: {
+      id: "",
+      name: "",
+      profilePics: "",
+      email:""
     },
   };
   return initialState;
@@ -78,6 +84,10 @@ export function TitleCase(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+export function DefaultImage(str: string) {
+  str.toLowerCase().split(" ");
+  return str.charAt(0).toUpperCase() + str.charAt(1).toUpperCase()
+}
 export const colorMarker = [
   "#FFEB3B",
   "#44c3c3",

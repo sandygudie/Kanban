@@ -5,14 +5,16 @@ import type { RootState } from "./store";
 import { apiSlice } from "./apiSlice";
 
 const workspaceData = loadState();
-const { board, active, workspace } = workspaceData;
+const { board, active, workspace, user } = workspaceData;
 const boardSlice = createSlice({
   name: "boarddata",
   initialState: {
     board,
     active,
     workspace,
+    user,
   },
+
   reducers: {
     activeItem: (state, action) => {
       return {
@@ -38,6 +40,13 @@ const boardSlice = createSlice({
       return {
         ...state,
         workspace: action.payload,
+      };
+    },
+
+    updateUserProfile: (state, action) => {
+      return {
+        ...state,
+        user: { ...state.user, ...action.payload },
       };
     },
 
@@ -199,6 +208,8 @@ const boardSlice = createSlice({
     builder.addMatcher(
       apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
+        const { workspace, userDetails } = payload.data;
+
         const {
           boards,
           _id,
@@ -207,7 +218,14 @@ const boardSlice = createSlice({
           profilePics,
           createdBy,
           description,
-        } = payload.data;
+        } = workspace;
+        const {
+          userid,
+          username,
+
+          profilePics: userProfileImage,
+          email,
+        } = userDetails;
         state.board = boards;
         state.active = currentWorkspace?.activeBoard
           ? state.board.find(
@@ -221,6 +239,13 @@ const boardSlice = createSlice({
           profilePics,
           createdBy,
           description,
+        };
+
+        state.user = {
+          id: userid,
+          name: username,
+          profilePics: userProfileImage,
+          email: email,
         };
       }
     );
@@ -241,6 +266,7 @@ export const {
   editColumnName,
   addColumn,
   updateWorkspace,
+  updateUserProfile,
 } = boardSlice.actions;
 export const appData = (state: RootState) => state.boarddata;
 export default boardSlice.reducer;

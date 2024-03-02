@@ -16,30 +16,29 @@ const axiosBaseQuery =
     unknown,
     unknown
   > =>
-    async ({ url, method, data, params, headers }) => {
-      try {
-        const result = await axios({
-          url: baseUrl + url,
-          method,
-          data,
-          params,
-          headers,
-          withCredentials: true,
-        });
+  async ({ url, method, data, params, headers }) => {
+    try {
+      const result = await axios({
+        url: baseUrl + url,
+        method,
+        data,
+        params,
+        headers,
+        withCredentials: true,
+      });
 
-        return { data: result.data };
-
-      } catch (axiosError) {
-        const err = axiosError as AxiosError;
-        if (err.response) {
-          if (err.response.status === 401) {
-            window.location.replace("/login");
-          }
+      return { data: result.data };
+    } catch (axiosError) {
+      const err = axiosError as AxiosError;
+      if (err.response) {
+        if (err.response.status === 401) {
+          window.location.replace("/login");
         }
-        return {
-          error: err.response?.data || err.message,
-        };
       }
-    };
+      return {
+        error: err.response?.data || err.message,
+      };
+    }
+  };
 
 export default axiosBaseQuery;

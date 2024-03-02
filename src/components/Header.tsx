@@ -15,18 +15,20 @@ import { TbUsersPlus } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GoArrowSwitch } from "react-icons/go";
 import { GrNewWindow } from "react-icons/gr";
+import { DefaultImage} from "utilis";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const data: AppState = useSelector(appData);
+  const { active, workspace, user } = data;
   const [isOpenBoardDetails, setIsOpenBoardDetails] = useState(false);
   const [isOpenInvite, setIsOpenInvite] = useState<boolean>(false);
   const [isWorkspaceMenu, setWorkspaceMenu] = useState(false);
-  const data: AppState = useSelector(appData);
-  const { active, workspace } = data;
+  const [isOpenUser, setOpenUser] = useState(false);
   const currentTheme = localStorage.getItem("theme")!;
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const updateThemehandler = (theme: string) => setTheme(theme);
   const [isFullscreen, setFullScreen] = useState(false);
-  const navigate = useNavigate();
 
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
@@ -48,9 +50,7 @@ export default function Header() {
             <div className="flex items-center justify-center gap-x-2">
               <div className="w-8 h-8">
                 <img
-                  src={
-                    workspace.profilePics
-                  }
+                  src={workspace.profilePics}
                   className="w-8 h-8 object-fit"
                   alt=""
                 />
@@ -62,9 +62,8 @@ export default function Header() {
                 className="flex items-center rounded-sm relative"
               >
                 <h3
-                  className={`${
-                    workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
-                  } font-bold sm:text-base md:text-xl `}
+                  className={`${workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
+                    } font-bold sm:text-base md:text-xl `}
                 >
                   {workspace.name}
                 </h3>{" "}
@@ -77,15 +76,15 @@ export default function Header() {
                   <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 dark:text-white text-gray font-medium px-6 justify-start">
                     <div className="w-8 h-8">
                       <img
-                        src={
-                          workspace.profilePics
-                        }
+                        src={workspace.profilePics}
                         className="w-8 h-8 object-fit"
                         alt=""
                       />
                     </div>
                     <div className="dark:text-white text-black">
-                      <h2 className="font-bold text-base">{workspace.name} Workspace</h2>
+                      <h2 className="font-bold text-base">
+                        {workspace.name} Workspace
+                      </h2>
                     </div>
                   </div>
                 }
@@ -110,7 +109,7 @@ export default function Header() {
                       </p>
                     ),
                     handler: () => {
-                      navigate("/workspace/settings"), setWorkspaceMenu(false)
+                      navigate("/workspace/settings"), setWorkspaceMenu(false);
                     },
                   },
                   {
@@ -122,7 +121,6 @@ export default function Header() {
                     handler: () => {
                       navigate("/workspaces");
                     },
-               
                   },
                   {
                     title: (
@@ -133,14 +131,6 @@ export default function Header() {
                     handler: () => {
                       navigate("/workspace/new");
                     },
-                    
-                  },
-                  {
-                    title: <p className="text-error text-sm"> Sign out</p>,
-                    handler: () => {
-                      navigate("/login");
-                    },
-                 
                   },
                 ]}
               />
@@ -148,7 +138,7 @@ export default function Header() {
           </div>
 
           <div
-            className={`flex items-center justify-between w-5/6 px-4 md:px-6`}
+            className={`flex items-center w-full justify-between px-4 md:px-6`}
           >
             {active ? (
               <button
@@ -159,7 +149,12 @@ export default function Header() {
                 <HiOutlineChevronDown className="mt-1 text-sm" />
               </button>
             ) : (
-              <Link to={`/workspace/${workspace.id}`} className="text-gray/50 font-bold">Board</Link>
+              <Link
+                to={`/workspace/${workspace.id}`}
+                className="text-gray/50 font-bold"
+              >
+                Board
+              </Link>
             )}
 
             <div className="flex items-center gap-x-6">
@@ -173,6 +168,64 @@ export default function Header() {
                 updateThemehandler={updateThemehandler}
                 theme={theme}
               />
+              <div className="">
+                <button
+               
+                  onClick={() => setOpenUser(true)}
+                  className="h-10 w-10 border-gray rounded-full border-[2px] hover:border-primary"
+                >
+                  {user.profilePics ? (
+                    <img
+                      className="h-8 w-8"
+                      src="https://res.cloudinary.com/dvpoiwd0t/image/upload/v1709189257/person_10100279_1_l4cgfc.png"
+                      alt="user profile"
+                    />
+                  ) : (
+                    <span className="h-full w-full text-lg font-bold">
+                      {DefaultImage(user.name)}
+                    </span>
+                  )}
+                </button>
+                {isOpenUser && (
+                  <Popup
+                    style={{ top: 56, right: 20 }}
+                    handleOpenMenu={() => setOpenUser(false)}
+                    items={[
+                      {
+                        title: (
+                          <div className="px-2 py-3">
+                            <p className="font-bold text-xl">{user.name}</p>
+                            <span className="text-gray/50 text-sm">
+                              {user.email}
+                            </span>
+                          </div>
+                        ),
+                        handler: () => {
+                          setOpenUser(false);
+                        },
+                      },
+                      {
+                        title: <p className="px-2 py-1.5">User settings</p>,
+                        handler: () => {
+                          navigate("/workspace/user"), setOpenUser(false);
+                        },
+                      },
+                      {
+                        title: (
+                          <p className="px-2 py-1.5 text-error font-semibold">
+                            Sign out
+                          </p>
+                        ),
+                        handler: () => {
+                          navigate("/login"),
+                            setWorkspaceMenu(false),
+                            setOpenUser(false);
+                        },
+                      },
+                    ]}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

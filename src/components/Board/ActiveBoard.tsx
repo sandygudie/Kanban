@@ -34,11 +34,10 @@ export default function ActiveBoard() {
   const [isDeleteColumn, setDeleteColumn] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState<IColumn>();
   const [createTask] = useCreateTaskMutation();
+  const [editAColumn] = useEditColumnMutation();
   const [deleteATask] = useDeleteTaskMutation();
   const data: AppState = useSelector(appData);
   const { active, workspace } = data;
-
-  const [editAColumn] = useEditColumnMutation();
 
   const onDragEnd = async (result: any) => {
     if (!result.destination) {
@@ -109,8 +108,8 @@ export default function ActiveBoard() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className=" overflow-x-auto overflow-y-hidden">
-          <div className="z-10 h-full flex gap-x-10 w-full">
+        <div className=" overflow-x-auto settings_scroll overflow-y-hidden">
+          <div className="z-10 h-full flex gap-x-10 w-full pt-8 px-14">
             {active.columns?.map((item: IColumn, index: number) => {
               return (
                 <div
@@ -185,7 +184,7 @@ export default function ActiveBoard() {
                             items={[
                               {
                                 title: (
-                                  <p className="flex p-1.5 items-center gap-x-2.5 dark:text-white/80">
+                                  <p className="flex py-1 items-center gap-x-2.5 dark:text-white/80">
                                     <CiEdit className="text-gray text-sm" /> Add
                                     card
                                   </p>
@@ -196,7 +195,7 @@ export default function ActiveBoard() {
                               },
                               {
                                 title: (
-                                  <p className="flex items-center p-1.5  gap-x-2.5 dark:text-white/80">
+                                  <p className="flex py-1 items-center gap-x-2.5 dark:text-white/80">
                                     <MdDelete className="text-error" /> Delete
                                   </p>
                                 ),

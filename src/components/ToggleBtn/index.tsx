@@ -21,9 +21,9 @@ export default function Index({ theme, updateThemehandler }: Props) {
       }}
     >
       {theme !== "dark" ? (
-        <MdLightMode size={25} className="text-primary" />
+        <MdLightMode size={22} className="text-primary" />
       ) : (
-        <BsMoonStarsFill size={20} className="text-primary" />
+        <BsMoonStarsFill size={18} className="text-primary" />
       )}
     </button>
   );

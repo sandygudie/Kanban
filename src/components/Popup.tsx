@@ -43,7 +43,7 @@ function Popup({ items, style, handleOpenMenu, description }: Props) {
               className={`block w-full text-left font-semiBold dark:text-white text-black hover:bg-gray/20 text-[13.5px] 
               ${
                 description
-                  ? ` py-2.5 px-4 text-[0.91rem] dark:text-white/80 text-black hover:bg-primary hover:text-white ${i === items.length-1  && `rounded-b-md`}`
+                  ? ` py-2.5 px-4 text-[0.91rem] dark:text-white/80 text-black hover:bg-gray/20 hover:text-white ${i === items.length-1  && `rounded-b-md`}`
                   : `py-1  ${i === 0 && `rounded-t-md`} ${i === items.length-1  && `rounded-b-md`} px-3`
               }  
                ${i < items.length - 1 && `border-b-[1px] border-gray/10`}
@@ -53,7 +53,7 @@ function Popup({ items, style, handleOpenMenu, description }: Props) {
             </button>
           );
         })}
-        {/* </div> */}
+
       </div>
     </div>
   );

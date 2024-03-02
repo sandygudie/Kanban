@@ -44,7 +44,7 @@ export default function Index() {
           <div className="w-full h-screen">
             <div
               className={`absolute top-[65px] ${
-                workspaceDetails.data.boards?.length ? "h-screen" : "h-full"
+                workspaceDetails.data.workspace.boards?.length ? "h-screen" : "h-full"
               }  w-full`}
             >
               <SideBar
@@ -54,7 +54,7 @@ export default function Index() {
               <div
                 className={`${
                   showSidebar ? "translate-x-[220px] w-[85vw]" : "translate-x-0"
-                } max-w-screen-2xl h-full transition duration-700 ease-in-out pt-8 pb-28 px-14`}
+                } max-w-screen-2xl h-full transition duration-700 ease-in-out pr-10`}
               >
                 <Outlet />
               </div>

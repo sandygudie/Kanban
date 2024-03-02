@@ -38,9 +38,18 @@ export interface IWorkspaceProfile {
   createdBy:string
   description:string
 }
+export interface IUser {
+  id: string;
+  name: string;
+ email:string
+  profilePics:string
+  
+}
+
 
 type AppState = {
   board: IBoard[];
   active: IBoard | any;
   workspace: IWorkspaceProfile;
+  user:IUser
 };

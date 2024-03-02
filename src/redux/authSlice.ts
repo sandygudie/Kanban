@@ -1,6 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import axiosBaseQuery from "services/api";
-
 const baseURL = import.meta.env.VITE_API_BASEURL;
 
 export const authSlice = createApi({
@@ -30,8 +29,17 @@ export const authSlice = createApi({
 
     verifyEmail: builder.mutation({
       query: (confirmationCode) => ({
-        url: `/auth//email-verify/${confirmationCode}`,
+        url: `/auth/email-verify/${confirmationCode}`,
         method: "GET",
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    UpdateUser: builder.mutation({
+      query: (payload) => ({
+        url: `/user/${payload.userId}`,
+        method: "PATCH",
+        data: payload.formData,
       }),
       invalidatesTags: ["User"],
     }),
@@ -42,8 +50,5 @@ export const {
   useCreateUserMutation,
   useLoginUserMutation,
   useVerifyEmailMutation,
+  useUpdateUserMutation
 } = authSlice;
-
-// export async function verifyEmail(confirmationCode: string) {
-//   const response = await makeApiCall(`auth/email-verify/${confirmationCode}`);
-//   return response;

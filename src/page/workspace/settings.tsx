@@ -53,7 +53,6 @@ export default function Index() {
   });
 
   const UpdateWorkSpace = async (values: any) => {
-
     const data = new FormData();
     data.append("file", values.profilePics);
     data.append("upload_preset", upload_preset);
@@ -85,13 +84,11 @@ export default function Index() {
 
   return (
     <>
-      <div className="h-full">
+      <div className="h-full pb-24 pt-8 px-14">
         <div className="flex gap-x-4 items-center">
           <div>
             <img
-              src={
-                workspace.profilePics
-              }
+              src={workspace.profilePics}
               alt="image"
               className="rounded-full border-solid p-3 h-20 w-20"
             />
@@ -161,7 +158,7 @@ export default function Index() {
                               className="text-white cursor-pointer h-full"
                               htmlFor="file_input"
                             >
-                              <div className="relative w-36 h-auto rounded-md border-[1px] border-solid border-gray">
+                              <div className="relative w-36 h-auto rounded-full border-[1px] border-solid border-gray">
                                 <img
                                   src={
                                     selectedImage
@@ -170,7 +167,7 @@ export default function Index() {
                                   }
                                   className="p-2 "
                                 />
-                                <IoPencilOutline className="absolute -right-20 w-40 bottom-0 text-xl" />
+                                <IoPencilOutline className="absolute -right-10 w-40 bottom-0 text-xl" />
                               </div>
 
                               <input

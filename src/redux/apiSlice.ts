@@ -6,7 +6,7 @@ const baseURL = import.meta.env.VITE_API_BASEURL;
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery({ baseUrl: baseURL }),
-  tagTypes: ["User", "Workspace", "Board", "Column", "Task"],
+  tagTypes: ["Workspace", "Board", "Column", "Task"],
 
   endpoints: (builder) => ({
     // Workspace
