@@ -53,6 +53,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
         validateOnChange={false}
         validateOnBlur={false}
         onSubmit={sendInviteHandler}
+        
       >
         <Form>
           <div className="mb-6">
@@ -76,7 +77,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
             <div className="flex items-center justify-end gap-x-4">
               <button
                 aria-label="Save"
-                className="py-2 px-3 text-sm md:w-fit text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
+                className="py-2 px-3 text-sm md:w-[100px] text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
                 type="submit"
               >
                 {isLoading ? <Loader /> : "Send Invite"}

@@ -36,6 +36,7 @@ export const TextInput = ({
       <Field
         {...field}
         {...props}
+        
         className={`${
           meta.error ? "border-error/70 border-solid" : null
         } px-4 py-3 w-full border-[1px] mt-2 rounded-md outline-none text-sm placeholder:text-xs`}

@@ -35,10 +35,15 @@ export default function Members({ workspaceId }: Props) {
 
   return (
     <>
-      <div className="">
+      <div className="h-screen">
         <div className="flex items-center pb-2 justify-between border-b-[1px] border-gray/20">
           <h1 className="font-bold text-base ">Workspace Members</h1>
-          <button onClick={()=>{ setIsOpenInvite(true)}} className="px-2 py-2 bg-success font-bold rounded-md">
+          <button
+            onClick={() => {
+              setIsOpenInvite(true);
+            }}
+            className="px-2 py-2 bg-success font-bold rounded-md"
+          >
             Invite members
           </button>
         </div>
@@ -124,16 +129,23 @@ export default function Members({ workspaceId }: Props) {
                 Pending Members
               </h1>
               {workspace?.data.pendingMembers.length ? (
-                workspace?.data.pendingMembers.map((ele: string) => {
-                  return (
-                    <div
-                      className="flex bg-secondary p-8 rounded-md items-center justify-between mt-6 text-sm"
-                      key={ele}
-                    >
-                      <p>{ele}</p>
-                    </div>
-                  );
-                })
+                workspace?.data.pendingMembers.map(
+                  (ele: string, index: number) => {
+                    return (
+                      <div
+                        className={`${
+                          index % 2 && "bg-secondary"
+                        } flex px-4 py-5 rounded-md items-center justify-between text-sm`}
+                        key={ele}
+                      >
+                        <p>{ele}</p>
+                        <button className="text-error rounded-md font-bold">
+                          Remove
+                        </button>
+                      </div>
+                    );
+                  }
+                )
               ) : (
                 <p className="text-gray/50 text-sm mt-3">No pending request</p>
               )}
@@ -151,7 +163,7 @@ export default function Members({ workspaceId }: Props) {
           handleClose={() => {
             setIsOpenInvite(false);
           }}
-          workspaceId={workspace.id}
+          workspaceId={workspaceId}
         />
       </Modal>
     </>

@@ -239,7 +239,7 @@ export default function Index() {
       <Modal
         open={isOpenDelete}
         handleClose={() => {
-          setIsOpenDelete(false);
+          setIsOpenDelete(false); 
         }}
       >
         <DeleteItem handleClose={() => setIsOpenDelete(false)} />
