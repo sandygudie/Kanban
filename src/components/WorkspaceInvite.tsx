@@ -1,3 +1,4 @@
+import {  useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { TextArea, TextInput } from "components/InputField";
@@ -5,6 +6,7 @@ import { Loader } from "components/Spinner";
 import { useWorkspaceInviteMutation } from "redux/apiSlice";
 
 import { useToast } from "@chakra-ui/react";
+import { RiErrorWarningLine } from "react-icons/ri";
 
 interface Props {
   handleClose: () => void;
@@ -13,6 +15,7 @@ interface Props {
 export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
   const toast = useToast();
    const [sendInvite, { isLoading }] = useWorkspaceInviteMutation();
+   const [error, setError] = useState("");
 
   const inviteSchema = Yup.object().shape({
     email: Yup.string().email().required().lowercase().trim().label("Email"),
@@ -35,8 +38,8 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
         });
       }
       handleClose()
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      setError(error.message)
     }
   };
   return (
@@ -60,22 +63,23 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
               placeholder="xyz@xyz.com"
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-6 relative">
             <TextArea
               label="Add Note(optional)"
               name="inviteNote"
               placeholder="Send invite note"
             />
+            {error && <p className="text-error text-xs absolute -bottom-12 flex items-center gap-x-2">  <RiErrorWarningLine />{error}</p>}
           </div>
          
 
             <div className="flex items-center justify-end gap-x-4">
               <button
                 aria-label="Save"
-                className="p-2 text-sm md:w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
+                className="py-2 px-3 text-sm md:w-fit text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
                 type="submit"
               >
-                {isLoading ? <Loader /> : "Send"}
+                {isLoading ? <Loader /> : "Send Invite"}
               </button>
               <button
                 aria-label="cancel"

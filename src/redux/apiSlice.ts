@@ -19,14 +19,14 @@ export const apiSlice = createApi({
       invalidatesTags: ["Workspace"],
     }),
 
-updateWorkspaceProfile : builder.mutation({
-  query: (payload) => ({
-    url: `/workspace/${payload.workspaceId}`,
-    method: "PATCH",
-    data: payload.formData,
-  }),
-  invalidatesTags: ["Workspace"],
-}),
+    updateWorkspaceProfile: builder.mutation({
+      query: (payload) => ({
+        url: `/workspace/${payload.workspaceId}`,
+        method: "PATCH",
+        data: payload.formData,
+      }),
+      invalidatesTags: ["Workspace"],
+    }),
 
     joinWorkspace: builder.mutation({
       query: (payload) => ({
@@ -66,8 +66,8 @@ updateWorkspaceProfile : builder.mutation({
       }),
       invalidatesTags: ["Workspace"],
     }),
-  
-   removeWorkspaceMember: builder.mutation({
+
+    removeWorkspaceMember: builder.mutation({
       query: (payload) => ({
         url: `/workspace/delete-member/${payload.workspaceId}/${payload.userId}`,
         method: "DELETE",
@@ -203,5 +203,5 @@ export const {
   useGetBoardQuery,
   useEditTaskMutation,
   useRemoveWorkspaceMemberMutation,
-  useDeleteWorkspaceMutation
+  useDeleteWorkspaceMutation,
 } = apiSlice;
