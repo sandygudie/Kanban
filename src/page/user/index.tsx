@@ -115,7 +115,7 @@ export default function Index() {
                 >
                   <div>
                     {user.profilePics || selectedImage ? (
-                      <div className="relative w-36 h-36 rounded-full overflow-hidden border-[1px] border-solid border-gray">
+                      <div className="relative w-32 h-32 rounded-full overflow-hidden border-[1px] border-solid border-gray">
                         <img
                         className="h-40 w-40"
                           src={

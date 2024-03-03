@@ -2,19 +2,19 @@ import { useState } from "react";
 import logoMobile from "../../assets/logo-mobile.svg";
 import Icon from "components/Icon";
 import ToggleBtn from "components/ToggleBtn";
-import { Link, useNavigate,} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGetAllWorkspacesQuery } from "redux/apiSlice";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { saveloadWorkspaceData } from "utilis";
 
 export default function Index() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const currentTheme = localStorage.getItem("theme")!;
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const updateThemehandler = (theme: string) => setTheme(theme);
   const { data: response, isLoading } = useGetAllWorkspacesQuery();
-
+console.log(response)
   return (
     <>
       <div className={`w-full h-screen`}>
@@ -49,7 +49,6 @@ export default function Index() {
                 <Skeleton width={200} height={10} />
               </h2>
               <div className="flex items-center gap-x-4 mt-2">
-      
                 <Skeleton width={400} height={10} />
                 <Skeleton width={100} height={10} />
               </div>
@@ -59,7 +58,7 @@ export default function Index() {
           <div className="h-full ">
             <div className="mx-auto h-full mt-10 flex flex-col items-center justify-start">
               <div className="w-10/12 md:w-auto">
-                <h1 className="text-center text-lg font-bold mb-8">
+                <h1 className="text-center text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
                 </h1>
                 {response.data.workspace.map((ele: any) => {
@@ -70,30 +69,33 @@ export default function Index() {
                         saveloadWorkspaceData({
                           workspaceId: ele._id,
                         });
-                        navigate(`/workspace/${ele._id}`);
-                        // window.location.href=`workspace/${ele._id}`
+                        // navigate(`/workspace/${ele._id}`);
+                        window.location.href = `workspace/${ele._id}`;
                       }}
-                      className="px-3 py-5 mt-4 font-semiBold w-full md:w-[36rem] rounded-lg border-[1px] border-solid border-gray/60 flex hover:bg-primary/50 gap-x-4  items-center justify-between"
+                      className="px-3 py-5 mt-4 font-semiBold w-full md:w-[36rem] rounded-lg border-[1px] border-solid border-gray/20 flex hover:bg-primary/50 gap-x-4  items-center justify-between"
                     >
                       <div className="flex items-center gap-x-5">
                         <img
-                          src="./workspace-placeholder.webp"
+                          src={ele.profilePics}
                           className="w-5 h-5"
                           alt=""
                         />
                         <div>
-                          <h2 className="">{ele.name}</h2>
+                          <h2 className="font-bold">{ele.name}</h2>
                         </div>
                       </div>
-                      <div className="img_container">
+                      <div>
+                       <p className="font-normal text-base">{ele.members.length} members</p>
+                      </div>
+                      {/* <div className="img_container">
                         {ele.members.map((ele: any) => {
                           return (
                             <div className="avatar" key={ele.userId}>
-                              <img src="" alt="" className="img"/>
+                              <img src="" alt="" className="img" />
                             </div>
                           );
                         })}
-                      </div>
+                      </div> */}
                     </button>
                   );
                 })}

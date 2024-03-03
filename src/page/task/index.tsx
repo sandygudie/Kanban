@@ -17,13 +17,15 @@ import { CiEdit } from "react-icons/ci";
 import Modal from "components/Modal";
 import DeleteItem from "components/DeleteItem";
 import AddTask from "components/Board/AddTask";
-import { DatePicker, TimePicker } from "antd";
+import { DatePicker, DatePickerProps, TimePicker } from "antd";
 import { IoAdd } from "react-icons/io5";
+import { RangePickerProps } from "antd/es/date-picker";
+import dayjs from "dayjs";
 
 export default function TaskDetails() {
   const { RangePicker } = DatePicker;
   const dispatch = useDispatch();
-  const [value, setValue] = useState<null>(null);
+  const [currentTime, setTime] = useState<null | any>(null);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
@@ -34,8 +36,7 @@ export default function TaskDetails() {
     boardId,
   });
   const [editATask] = useEditTaskMutation();
-  const [checkedState, setCheckedState] = useState<boolean[]|any>([]);
-
+  const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
   const [selectedColumn, setSelectedColumn] = useState<string>();
 
   useEffect(() => {
@@ -63,17 +64,21 @@ export default function TaskDetails() {
         };
       }
     );
-    const payload = {
-      formdata: {
-        subtasks: updatedSubstasks,
-      },
-      workspaceId: workspaceId,
-      columnId: tasks?.data.columnId,
-      taskId: tasks?.data._id,
-    };
-    const response = await editATask(payload).unwrap();
-    if (response) {
-      dispatch(isCompletedToggle({ updatedCheckedState, id, tasks }));
+    try {
+      const payload = {
+        formdata: {
+          subtasks: updatedSubstasks,
+        },
+        workspaceId: workspaceId,
+        columnId: tasks?.data.columnId,
+        taskId: tasks?.data._id,
+      };
+      const response = await editATask(payload).unwrap();
+      if (response) {
+        dispatch(isCompletedToggle({ updatedCheckedState, id, tasks }));
+      }
+    } catch (error: any) {
+      console.log(error);
     }
   };
 
@@ -82,11 +87,47 @@ export default function TaskDetails() {
     (item: ISubTask) => item.isCompleted
   );
 
-  const onChange = (time: any) => {
-    setValue(time);
-    console.log(value);
+  const onChangeTime = async (timeString: any) => {
+
+    try {
+      const payload = {
+        formdata: {
+          dueTime: timeString,
+        },
+        workspaceId: workspaceId,
+        columnId: tasks?.data.columnId,
+        taskId: tasks?.data._id,
+      };
+      await editATask(payload).unwrap();
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
+  const onChangeDate = async (
+    value: DatePickerProps["value"] | RangePickerProps["value"],
+    dateString: [string, string] | string
+  ) => {
+    try {
+      const payload = {
+        formdata: {
+          dueDate: dateString,
+        },
+        workspaceId: workspaceId,
+        columnId: tasks?.data.columnId,
+        taskId: tasks?.data._id,
+      };
+      await editATask(payload).unwrap();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  
+  const pendingDate = dayjs(tasks?.data.dueDate[1]).diff(
+    dayjs(tasks?.data.dueDate[0]),
+    "day"
+  );
   return (
     <>
       {tasks ? (
@@ -128,15 +169,15 @@ export default function TaskDetails() {
             </div>
           </div>
           <div className="mt-8 ">
-            <p className="font-bold text-sm mb-2">Description</p>
-            <p className="text-white/50 rounded-md bg-secondary px-6 py-4 w-8/12">
+            <p className="font-semibold text-sm mb-2">Description</p>
+            <p className="text-white/50 rounded-md w-8/12">
               {tasks.data.description
                 ? tasks.data.description
                 : "No description"}
             </p>
             <div className="my-14 flex items-center justify-between">
               <div className="w-96">
-                <p className="font-bold  text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
+                <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
                     tasks.data.subtasks.length >= 4 && "h-[10rem] pr-4"
@@ -169,15 +210,15 @@ export default function TaskDetails() {
                 </div>
               </div>
               <div className="w-96">
-                <p className="font-bold mb-2 text-sm">Assignees</p>
+                <p className="font-semibold mb-2 text-sm">Assignees</p>
                 <button className="p-2  bg-secondary rounded-md">
-                  <IoAdd className="text-xl font-bold" />
+                  <IoAdd className="text-xl font-semibold" />
                 </button>
               </div>
             </div>
             <div className="flex justify-between items-start mt-10">
               <div className=" pb-6 w-96">
-                <p className="text-sm font-bold mb-2">Columns</p>
+                <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
                   active={active?.data}
@@ -187,23 +228,54 @@ export default function TaskDetails() {
                   workspaceId={workspaceId}
                 />
               </div>
-              <div className="w-96 flex items-start flex-col gap-y-2">
-                <div>
-                  <p className="text-sm font-bold mb-2">Due Date</p>
+              <div>
+                <div className="w-96 flex items-start flex-col gap-y-4">
                   <div>
-                    <RangePicker className="px-5 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary" />
+                    <p className="text-sm font-semibold mb-2">Due Date</p>
+                    <div>
+                      <RangePicker
+                        onChange={onChangeDate}
+                        defaultValue={[
+                          dayjs(tasks?.data.dueDate[0]),
+                          dayjs(tasks?.data.dueDate[1]),
+                        ]}
+                        className="px-3 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
+                      />
+                    </div>
                   </div>
+                  {tasks?.data.dueTime || currentTime ? (
+                    <div>
+                      <p className="text-sm font-semibold mb-2">Time</p>
+                      <TimePicker
+                        defaultValue={
+                          tasks?.data.dueTime
+                            ? dayjs(tasks?.data.dueTime)
+                            : null
+                        }
+                        use12Hours
+                        format="h:mm a"
+                        className="px-5 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
+                        onChange={onChangeTime}
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      className="bg-secondary font-bold py-3 px-4 rounded-md text-sm"
+                      onClick={() => {
+                        setTime(true);
+                      }}
+                    >
+                      Add Time
+                    </button>
+                  )}
                 </div>
-                <div>
-                  <div>
-                    <TimePicker
-                      use12Hours
-                      format="h:mm a"
-                      className="px-5 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
-                      onChange={onChange}
-                    />
-                  </div>
-                </div>
+                <p
+                  className={`${
+                    pendingDate > 1 ? "text-success" : "text-error"
+                  } font-bold mt-1`}
+                >
+                  {pendingDate} days left
+                </p>
               </div>
             </div>
           </div>

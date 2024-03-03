@@ -21,7 +21,7 @@ export interface ITask {
   columnId: string;
   createdAt: Date;
   assignTo: string;
-  deadline: string | Date;
+  dueDate: [];
 }
 
 export interface ISubTask {

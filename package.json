@@ -20,6 +20,7 @@
     "antd": "^5.14.2",
     "axios": "^1.6.7",
     "cloudinary-react": "^1.8.1",
+    "dayjs": "^1.11.10",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.7",
     "gsap": "^3.12.3",

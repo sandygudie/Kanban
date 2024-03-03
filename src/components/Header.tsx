@@ -30,6 +30,7 @@ export default function Header() {
   const updateThemehandler = (theme: string) => setTheme(theme);
   const [isFullscreen, setFullScreen] = useState(false);
 
+  // console.log(workspace)
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -145,7 +146,7 @@ export default function Header() {
                 onClick={() => setIsOpenBoardDetails(true)}
                 className="flex rounded-sm items-center py-2 px-4 hover:bg-gray/5"
               >
-                <span className={`font-bold md:w-auto `}>#{active.name}</span>{" "}
+                <span className={`font-bold md:w-auto `}>#{active.name} Board</span>{" "}
                 <HiOutlineChevronDown className="mt-1 text-sm" />
               </button>
             ) : (
@@ -158,6 +159,16 @@ export default function Header() {
             )}
 
             <div className="flex items-center gap-x-6">
+               {/* <div className="img_container">
+                        {ele.members.map((ele: any) => {
+                          return (
+                            <div className="avatar" key={ele.userId}>
+                              <img src="http://res.cloudinary.com/dvpoiwd0t/image/upload/v1709412639/Cloudinary-React/htt6js1upshs36eenlmk.png"
+ alt="" className="img" />
+                            </div>
+                          );
+                        })}
+                      </div> */}
               <button
                 onClick={() => toggleFullScreen()}
                 className="font-bold text-primary text-xl"
@@ -170,9 +181,8 @@ export default function Header() {
               />
               <div className="">
                 <button
-               
                   onClick={() => setOpenUser(true)}
-                  className="h-10 w-10 border-gray overflow-hidden rounded-full border-[2px] hover:border-primary"
+                  className="h-6 w-6 border-gray overflow-hidden rounded-full border-[2px] hover:border-primary"
                 >
                   {user.profilePics ? (
                     <img
