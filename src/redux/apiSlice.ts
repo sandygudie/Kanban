@@ -58,6 +58,16 @@ export const apiSlice = createApi({
       providesTags: ["Workspace"],
     }),
 
+  
+    updateMemberRole: builder.mutation({
+      query: (payload) => ({
+        url: `/workspace/assign-admin/${payload.workspaceId}/${payload.userId}`,
+        method: "PATCH",
+        data: {},
+      }),
+      invalidatesTags: ["Workspace"],
+    }),
+
     workspaceInvite: builder.mutation({
       query: (payload) => ({
         url: `/workspace/addmember/${payload.workspaceId}`,
@@ -71,11 +81,19 @@ export const apiSlice = createApi({
       query: (payload) => ({
         url: `/workspace/delete-member/${payload.workspaceId}/${payload.userId}`,
         method: "DELETE",
-        data: payload.formData,
       }),
       invalidatesTags: ["Workspace"],
     }),
 
+    removePendingMember: builder.mutation({
+      query: (payload) => ({
+        url: `/workspace/delete-pendingmember/${payload.workspaceId}/${payload.userEmail}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Workspace"],
+    }),
+
+    // /delete-member/:workspaceId/:userEmail
     deleteWorkspace: builder.mutation({
       query: (payload) => ({
         url: `/workspace/${payload.workspaceId}`,
@@ -204,4 +222,6 @@ export const {
   useEditTaskMutation,
   useRemoveWorkspaceMemberMutation,
   useDeleteWorkspaceMutation,
+  useRemovePendingMemberMutation,
+useUpdateMemberRoleMutation
 } = apiSlice;

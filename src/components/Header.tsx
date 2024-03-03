@@ -172,12 +172,12 @@ export default function Header() {
                 <button
                
                   onClick={() => setOpenUser(true)}
-                  className="h-10 w-10 border-gray rounded-full border-[2px] hover:border-primary"
+                  className="h-10 w-10 border-gray overflow-hidden rounded-full border-[2px] hover:border-primary"
                 >
                   {user.profilePics ? (
                     <img
-                      className="h-8 w-8"
-                      src="https://res.cloudinary.com/dvpoiwd0t/image/upload/v1709189257/person_10100279_1_l4cgfc.png"
+                      className="h-18 w-18"
+                      src={user.profilePics}
                       alt="user profile"
                     />
                   ) : (

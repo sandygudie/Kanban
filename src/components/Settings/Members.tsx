@@ -1,7 +1,9 @@
 import Spinner from "components/Spinner";
 import { useState } from "react";
 import {
+  useUpdateMemberRoleMutation,
   useGetWorkspaceQuery,
+  useRemovePendingMemberMutation,
   useRemoveWorkspaceMemberMutation,
 } from "redux/apiSlice";
 import { TitleCase } from "utilis";
@@ -15,16 +17,44 @@ interface Props {
 }
 export default function Members({ workspaceId }: Props) {
   const [isOpenInvite, setIsOpenInvite] = useState<boolean>(false);
-  const { data: workspace, isLoading } = useGetWorkspaceQuery(workspaceId);
-  const [removeMember, { isLoading: isRemovingMember }] =
-    useRemoveWorkspaceMemberMutation();
   const [memberId, setMemberId] = useState("");
-  const [isOption, setOption] = useState(false);
+  const [pendingMemberId, setPendingMemberId] = useState("");
+  const [isOption, setOption] = useState("");
+  const { data: workspace, isLoading } = useGetWorkspaceQuery(workspaceId);
+  const [removeMember, { isLoading: isRemovingLoading }] =
+    useRemoveWorkspaceMemberMutation();
+  const [removePendingMember, { isLoading: isRemovingPendingLoading }] =
+    useRemovePendingMemberMutation();
+  const [updateRole, { isLoading: isUpdateRoleLoading }] =
+    useUpdateMemberRoleMutation();
 
   const deletemember = async (userId: string) => {
     setMemberId(userId);
     try {
       const response = await removeMember({ workspaceId, userId });
+      if (response) {
+        setMemberId("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePendingmember = async (userEmail: string) => {
+    setPendingMemberId(userEmail);
+    try {
+      const response = await removePendingMember({ workspaceId, userEmail });
+      if (response) {
+        setMemberId("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const assignMemberAdmin = async (userId: string) => {
+    setMemberId(userId);
+    try {
+      const response = await updateRole({ workspaceId, userId });
       if (response) {
         setMemberId("");
       }
@@ -55,7 +85,7 @@ export default function Members({ workspaceId }: Props) {
               {workspace?.data.members.map((ele: any) => {
                 return (
                   <div
-                    className="flex items-center justify-between text-sm"
+                    className="flex items-center mt-2 justify-between text-sm"
                     key={ele?.userId}
                   >
                     <div className="">
@@ -69,49 +99,51 @@ export default function Members({ workspaceId }: Props) {
                       <div className="relative">
                         <button
                           onClick={() => {
-                            setOption(true);
+                            setOption(ele?.userId);
                           }}
                           className={`${
-                            isOption && "bg-gray/50"
-                          } border-2 border-gray/30 font-semibold rounded-md hover:bg-gray/50  py-1.5 px-2.5`}
+                            isOption === ele?.userId && "bg-gray/50"
+                          } border-2 border-gray/30 font-semibold flex flex-col justify-center items-center rounded-md hover:bg-gray/50 h-10 w-24 px-2.5`}
                         >
-                          {isRemovingMember && memberId === ele.userId ? (
+                          {isRemovingLoading ||
+                          (isUpdateRoleLoading && memberId === ele.userId) ? (
                             <Spinner />
                           ) : (
                             <span className="flex gap-x-2 items-center">
                               {" "}
-                              options
-                              {!isOption ? (
-                                <HiOutlineChevronUp />
-                              ) : (
+                              Options
+                              {isOption === ele?.userId ? (
                                 <HiOutlineChevronDown />
+                              ) : (
+                                <HiOutlineChevronUp />
                               )}
                             </span>
                           )}
                         </button>
-                        {isOption && (
+                        {isOption === ele?.userId && (
                           <Popup
                             style={{ top: 40, right: 0 }}
-                            handleOpenMenu={() => setOption(false)}
+                            handleOpenMenu={() => setOption("")}
                             items={[
                               {
                                 title: (
-                                  <button className="py-2 font-bold text-[0.95rem]">
-                                    Make Admin
-                                  </button>
+                                  <p className="py-2 font-bold text-[0.95rem] px-2">
+                                    Make{" "}
+                                    {ele.role === "admin" ? "Member" : "Admin"}
+                                  </p>
                                 ),
                                 handler: () => {
-                                  setOption(false);
+                                  assignMemberAdmin(ele?.userId), setOption("");
                                 },
                               },
                               {
                                 title: (
-                                  <button className="py-2 font-bold text-error text-[0.95rem]">
+                                  <p className="py-2 px-2  font-bold text-error text-[0.95rem]">
                                     Remove from Team
-                                  </button>
+                                  </p>
                                 ),
                                 handler: () => {
-                                  deletemember(ele.userId), setOption(false);
+                                  deletemember(ele.userId), setOption("");
                                 },
                               },
                             ]}
@@ -139,8 +171,18 @@ export default function Members({ workspaceId }: Props) {
                         key={ele}
                       >
                         <p>{ele}</p>
-                        <button className="text-error rounded-md font-bold">
-                          Remove
+                        <button
+                          onClick={() => {
+                            deletePendingmember(ele);
+                          }}
+                          className="text-error flex flex-col items-center justify-center rounded-md font-bold h-10 w-24"
+                        >
+                          {isRemovingPendingLoading &&
+                          pendingMemberId === ele ? (
+                            <Spinner />
+                          ) : (
+                            "Remove"
+                          )}
                         </button>
                       </div>
                     );

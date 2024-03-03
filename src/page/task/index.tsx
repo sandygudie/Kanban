@@ -90,7 +90,7 @@ export default function TaskDetails() {
   return (
     <>
       {tasks ? (
-        <div className="">
+        <div className="px-14 pt-8">
           <div className="text-lg font-bold flex mt-3 items-center justify-between">
             <p className="text-3xl"> {tasks?.data.title}</p>{" "}
             <div className="relative">

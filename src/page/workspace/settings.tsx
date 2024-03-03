@@ -90,7 +90,7 @@ export default function Index() {
             <img
               src={workspace.profilePics}
               alt="image"
-              className="rounded-full border-solid p-3 h-20 w-20"
+              className=" border-solid p-3 h-20 w-20"
             />
           </div>
           <div>
@@ -158,14 +158,14 @@ export default function Index() {
                               className="text-white cursor-pointer h-full"
                               htmlFor="file_input"
                             >
-                              <div className="relative w-36 h-auto rounded-full border-[1px] border-solid border-gray">
+                              <div className="relative w-36 h-36 border-[1px] overflow-hidden border-solid border-gray">
                                 <img
+                                  className="w-40 h-40"
                                   src={
                                     selectedImage
                                       ? selectedImage
                                       : workspace.profilePics
                                   }
-                                  className="p-2 "
                                 />
                                 <IoPencilOutline className="absolute -right-10 w-40 bottom-0 text-xl" />
                               </div>
@@ -239,7 +239,7 @@ export default function Index() {
       <Modal
         open={isOpenDelete}
         handleClose={() => {
-          setIsOpenDelete(false); 
+          setIsOpenDelete(false);
         }}
       >
         <DeleteItem handleClose={() => setIsOpenDelete(false)} />

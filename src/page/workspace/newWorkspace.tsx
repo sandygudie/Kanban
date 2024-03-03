@@ -12,7 +12,7 @@ import {
   useCreateWorkspaceMutation,
   useJoinWorkspaceMutation,
 } from "redux/apiSlice";
-
+import { IoAlertCircleOutline } from "react-icons/io5";
 const CreateWorkspaceForm = () => {
   const [createWorkspace, { isLoading, error, isError }] =
     useCreateWorkspaceMutation();
@@ -124,7 +124,7 @@ const JoinWorkspaceForm = () => {
             placeholder="Workspace name"
           />
         </div>
-        <div className="my-6">
+        <div className="my-4">
           <TextInput
             label="Workspace Code"
             name="inviteCode"
@@ -132,7 +132,7 @@ const JoinWorkspaceForm = () => {
             placeholder="Workspace invite code"
           />
         </div>
-        {error ? <p className="text-sm text-error">{error}</p> : null}
+        {error ? <p className="text-sm text-error flex items-center gap-x-2">  <IoAlertCircleOutline size={16} /> {error}</p> : null}
         <div className="my-8">
           <button
             aria-label="Board"

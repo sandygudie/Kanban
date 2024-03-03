@@ -13,28 +13,54 @@ export default function Index() {
   const [editedText, setEditedText] = useState({ name: "", email: "" });
   const [selectedImage, setSelectedImage] = useState<any>();
   const { user } = data;
-
+  const upload_preset = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
+  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
   const [editUser] = useUpdateUserMutation();
 
   const editUserProfile = async (e: ChangeEvent<HTMLInputElement>) => {
+    let res;
 
-    const { name, value } = e.target;
-    setEditedText({ ...editedText, [name]: value });
-    if (e.target.value.length > 0) {
+    if (e.target.name === "profilePics") {
+      const data = new FormData();
+      data.append(
+        "file",
+        e.currentTarget.files ? e.currentTarget.files[0] : ""
+      );
+      data.append("upload_preset", upload_preset);
+      data.append("cloud_name", cloud_name);
+      data.append("folder", "Cloudinary-React");
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      res = await response.json();
+    } else {
+      const { name, value } = e.target;
+      setEditedText({ ...editedText, [name]: value });
+    }
 
       try {
-       
         const response = await editUser({
           userId: user.id,
-          formData: { [e.target.name]: e.target.value },
+          formData: {
+            [e.target.name]: res?.url ? res?.url : e.target.value,
+          },
         }).unwrap();
+        console.log(response)
         if (response) {
-          dispatch(updateUserProfile({ [e.target.name]: e.target.value  }));
+          dispatch(
+            updateUserProfile({
+              [e.target.name]: res?.url ? res?.url : e.target.value,
+            })
+          );
         }
       } catch (error) {
         console.log(error);
       }
-    }
+
   };
 
   return (
@@ -89,17 +115,18 @@ export default function Index() {
                 >
                   <div>
                     {user.profilePics || selectedImage ? (
-                      <div className="relative w-36 h-36 rounded-full border-[1px] border-solid border-gray">
+                      <div className="relative w-36 h-36 rounded-full overflow-hidden border-[1px] border-solid border-gray">
                         <img
-                          src={selectedImage ? selectedImage : user.profilePics}
-                          className="p-2 "
+                        className="h-40 w-40"
+                          src={
+                            selectedImage
+                              ? URL.createObjectURL(selectedImage[0])
+                              : user.profilePics
+                          }
                         />
                       </div>
                     ) : (
-                      <span
-                        
-                        className="rounded-full h-24 w-24 border overflow-hidden flex items-center justify-center flex-col text-3xl font-bold"
-                      >
+                      <span className="rounded-full h-24 w-24 border overflow-hidden flex items-center justify-center flex-col text-3xl font-bold">
                         {DefaultImage(user.name)}
                       </span>
                     )}
@@ -114,9 +141,8 @@ export default function Index() {
                     accept="image/png, .svg"
                     onChange={(e) => {
                       if (e.currentTarget.files) {
-                        setSelectedImage(
-                          URL.createObjectURL(e.currentTarget.files[0])
-                        );
+                        setSelectedImage(e.currentTarget.files);
+                        editUserProfile(e);
                       }
                     }}
                   />

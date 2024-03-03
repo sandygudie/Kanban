@@ -28,7 +28,7 @@ function Popup({ items, style, handleOpenMenu, description }: Props) {
     <div
       ref={domRef}
       style={style}
-      className={`absolute bg-offwhite dark:bg-secondary rounded-md shadow-3xl dark:shadow-gray/10 shadow-gray/60 
+      className={`z-10 absolute bg-offwhite dark:bg-secondary rounded-md shadow-3xl dark:shadow-gray/10 shadow-gray/60 
      text-white w-fit right-6 top-5`}
     >
       <div className={`${description ? "w-64" : "w-max"}`}>
