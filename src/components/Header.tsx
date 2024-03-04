@@ -188,14 +188,12 @@ export default function Header() {
                 >
                   {user.profilePics ? (
                     <img
-                      className="h-16 w-16"
+                      className="h-8 w-8 p-1 rounded-full border-[1px] overflow-hidden border border-solid hover:border-primary"
                       src={user.profilePics}
                       alt="user profile"
                     />
                   ) : (
-                    <p
-                      className="h-[40px] w-[40px] text-sm p-1 overflow-hidden rounded-full border-[2px] hover:border-primary flex items-center justify-center flex-col font-bold"
-                    >
+                    <p className="h-[40px] w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
                       {DefaultImage(user.name)}
                     </p>
                   )}

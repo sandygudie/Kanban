@@ -5,8 +5,10 @@ import { IoPencilOutline } from "react-icons/io5";
 import { DefaultImage } from "utilis";
 import { useUpdateUserMutation } from "redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 
 export default function Index() {
+  const toast = useToast();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const [isEdit, setEdit] = useState("");
@@ -19,8 +21,19 @@ export default function Index() {
 
   const editUserProfile = async (e: ChangeEvent<HTMLInputElement>) => {
     let res;
-
     if (e.target.name === "profilePics") {
+      if(e.currentTarget.files && e.currentTarget.files[0].size >100000){
+       console.log( e.currentTarget.files[0].size)
+        toast({
+          title: "image should be less than 100kb.",
+          position: "top",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+        return null
+      }
+      setSelectedImage(e.currentTarget.files);
       const data = new FormData();
       data.append(
         "file",
@@ -49,7 +62,7 @@ export default function Index() {
             [e.target.name]: res?.url ? res?.url : e.target.value,
           },
         }).unwrap();
-        console.log(response)
+
         if (response) {
           dispatch(
             updateUserProfile({
@@ -72,7 +85,6 @@ export default function Index() {
         <div className="mt-14 h-auto">
           <div className="flex items-center justify-between my-4">
             <label className="text-gray/70 w-64">Name</label>
-
             <input
               name="name"
               value={editedText.name ? editedText.name : user.name}
@@ -138,10 +150,10 @@ export default function Index() {
                     id="file_input"
                     className="absolute top-20 text-sm invisible w-10"
                     name="profilePics"
-                    accept="image/png, .svg"
+                    accept=".jpg, .jpeg, .png"
                     onChange={(e) => {
                       if (e.currentTarget.files) {
-                        setSelectedImage(e.currentTarget.files);
+                       
                         editUserProfile(e);
                       }
                     }}
