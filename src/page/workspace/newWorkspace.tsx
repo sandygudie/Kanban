@@ -8,10 +8,7 @@ import { TextInput, TextArea } from "components/InputField";
 import { Loader } from "components/Spinner";
 import { useNavigate } from "react-router-dom";
 import { saveloadWorkspaceData, loadWorkspaceData } from "utilis";
-import {
-  useCreateWorkspaceMutation,
-  useJoinWorkspaceMutation,
-} from "redux/apiSlice";
+import {useCreateWorkspaceMutation, useJoinWorkspaceMutation} from "redux/apiSlice";
 import { IoAlertCircleOutline } from "react-icons/io5";
 const CreateWorkspaceForm = () => {
   const [createWorkspace, { isLoading, error, isError }] =
@@ -72,7 +69,7 @@ const CreateWorkspaceForm = () => {
         ) : null}
         <div className="my-8">
           <button
-            className=" px-2 flex justify-center text-white bg-primary h-14 font-bold py-4 w-full rounded-full"
+            className=" px-2 flex-col flex items-center justify-center text-white bg-primary h-14 font-bold py-4 w-full rounded-full"
             type="submit"
           >
             {isLoading ? <Loader /> : "Continue"}
@@ -136,7 +133,7 @@ const JoinWorkspaceForm = () => {
         <div className="my-8">
           <button
             aria-label="Board"
-            className=" px-2 text-white bg-primary h-14 font-bold py-4 w-full text-sm rounded-full"
+            className=" px-2 text-white bg-primary h-14 font-bold py-4 w-full text-sm rounded-full flex-col flex items-center justify-center"
             type="submit"
           >
             {isLoading ? <Loader /> : "Continue"}

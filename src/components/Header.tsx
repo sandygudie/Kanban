@@ -181,7 +181,7 @@ export default function Header() {
               <div className="">
                 <button
                   onClick={() => setOpenUser(true)}
-                  className="h-6 w-6 border-gray overflow-hidden rounded-full border-[2px] hover:border-primary"
+                  className="border-gray p-1 overflow-hidden rounded-full border-[2px] hover:border-primary"
                 >
                   {user.profilePics ? (
                     <img

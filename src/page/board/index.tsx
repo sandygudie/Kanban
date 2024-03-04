@@ -17,7 +17,7 @@ export default function Index() {
       {active ? (
         <ActiveBoard />
       ) : (
-        <div className="h-full flex flex-col items-center justify-center">
+        <div className="h-[32rem] flex flex-col items-center justify-center">
           <div className="md:p-8 mx-auto text-center">
             <div className="w-52 md:w-72 mx-auto h-auto">
               <img

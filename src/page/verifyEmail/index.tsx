@@ -28,10 +28,11 @@ export default function Index() {
       {isVerify ? (
         <div>
           <img
+          className="w-36 h-36 m-auto"
             src="https://res.cloudinary.com/dvpoiwd0t/image/upload/v1709390259/verify-email_gbc5z3.png"
             alt="success email verification"
           />
-          <p className="mb-8 text-secondary text-xl font-semiBold">
+          <p className="mb-4 mt-5 text-secondary text-xl font-semiBold">
             {isVerify}
           </p>
           <Link

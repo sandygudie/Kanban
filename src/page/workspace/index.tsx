@@ -85,7 +85,7 @@ console.log(response)
                         </div>
                       </div>
                       <div>
-                       <p className="font-normal text-base">{ele.members.length} members</p>
+                       <p className="font-bold text-base">{ele.members.length}{" "} members</p>
                       </div>
                       {/* <div className="img_container">
                         {ele.members.map((ele: any) => {
@@ -100,9 +100,9 @@ console.log(response)
                   );
                 })}
               </div>
-              <div className="text-center mt-24">
+              <div className="text-center mt-20">
                 <Link
-                  className="bg-primary/70 hover:bg-primary text-white text-sm py-4 px-8 rounded-lg font-bold"
+                  className="bg-primary/70 hover:bg-primary text-white flex-col flex items-center justify-center text-sm py-4 px-8 rounded-lg font-bold"
                   to="/workspace/new"
                 >
                   {" "}

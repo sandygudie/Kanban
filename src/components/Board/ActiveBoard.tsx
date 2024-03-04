@@ -130,7 +130,6 @@ export default function ActiveBoard() {
                                 : "",
                           }}
                         />
-
                         <input
                           onMouseOver={() => {
                             setEdit(true), setEditColumn(item._id);
@@ -152,7 +151,6 @@ export default function ActiveBoard() {
                           }`}
                         />
                       </div>
-
                       {item.tasks.length > 0 && (
                         <p className="text-gray/40 text-[14px]">
                           ({item.tasks.length})

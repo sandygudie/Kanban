@@ -6,6 +6,7 @@ import { Outlet, useParams } from "react-router-dom";
 import { useGetWorkspaceBoardsQuery } from "redux/apiSlice";
 import BoardSkeleton from "components/BoardSkeleton";
 import { loadWorkspaceData } from "utilis";
+import Spinner from "./Spinner";
 
 export default function Index() {
   const { workspaceId } = useParams();
@@ -44,7 +45,9 @@ export default function Index() {
           <div className="w-full h-screen">
             <div
               className={`absolute top-[65px] ${
-                workspaceDetails.data.workspace.boards?.length ? "h-screen" : "h-full"
+                workspaceDetails.data.workspace.boards?.length
+                  ? "h-screen"
+                  : "h-full"
               }  w-full`}
             >
               <SideBar
@@ -74,9 +77,8 @@ export default function Index() {
           </button>
         </div>
       ) : isError ? (
-        <div className="">
-          <p className="text-error text-sm">Error fetching workspace...</p>
-          <button>Try Again</button>
+        <div className="flex items-center justify-center flex-col">
+          <Spinner/>
         </div>
       ) : null}
     </>
