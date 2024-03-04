@@ -185,14 +185,14 @@ export default function Header() {
                 >
                   {user.profilePics ? (
                     <img
-                      className="h-18 w-18"
+                      className="h-16 w-16"
                       src={user.profilePics}
                       alt="user profile"
                     />
                   ) : (
-                    <span className="h-full w-full text-lg font-bold">
+                    <p className="text-lg h-auto w-auto font-bold">
                       {DefaultImage(user.name)}
-                    </span>
+                    </p>
                   )}
                 </button>
                 {isOpenUser && (
