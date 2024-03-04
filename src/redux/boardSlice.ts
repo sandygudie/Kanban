@@ -179,7 +179,6 @@ const boardSlice = createSlice({
     },
 
     isCompletedToggle: (state, action) => {
-   
       state.board.find((item: IBoard) =>
         item.name === state.active.name
           ? item.columns.find((o: IColumn) =>
@@ -200,11 +199,10 @@ const boardSlice = createSlice({
             )
           : null
       );
-      
+
       state.active = state.board.find(
         (item: IBoard) => item._id === state.active._id
       );
-     
     },
   },
   extraReducers: (builder) => {

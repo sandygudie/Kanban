@@ -80,7 +80,7 @@ export default function TaskDetails() {
       };
       const response = await editATask(payload).unwrap();
       if (response) {
-        dispatch(isCompletedToggle({ updatedCheckedState, id, tasks }));
+        dispatch(isCompletedToggle({ updatedCheckedState, id, tasks:tasks?.data }));
       }
     } catch (error: any) {
       console.log(error);
@@ -142,7 +142,7 @@ export default function TaskDetails() {
               <span className="text-gray/80 font-thin mt-1 text-sm">
                 Created by mark{tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")} . updated{" "}
-                {dayjs().fromNow()}
+                {dayjs(tasks.data.updatedAt).fromNow()}
               </span>
             </div>
             <div className="relative">

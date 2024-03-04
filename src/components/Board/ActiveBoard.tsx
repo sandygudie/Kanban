@@ -39,7 +39,6 @@ export default function ActiveBoard() {
   const data: AppState = useSelector(appData);
   const { active, workspace } = data;
 
-  // console.log(active)
   const onDragEnd = async (result: any) => {
     if (!result.destination) {
       return;

@@ -51,7 +51,7 @@ export default function AddColumn({ handleClose }: Props) {
          formData: { column: columnArray },
         };
         const response = await createColumn(payload).unwrap();
-        console.log(response.data)
+
         if (response) {
           dispatch(addColumn(response.data));
         }
