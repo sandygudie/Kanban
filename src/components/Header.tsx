@@ -15,7 +15,7 @@ import { TbUsersPlus } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GoArrowSwitch } from "react-icons/go";
 import { GrNewWindow } from "react-icons/gr";
-import { DefaultImage} from "utilis";
+import { DefaultImage } from "utilis";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -62,8 +62,9 @@ export default function Header() {
                 className="flex items-center rounded-sm relative"
               >
                 <h3
-                  className={`${workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
-                    } font-bold sm:text-base md:text-xl `}
+                  className={`${
+                    workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
+                  } font-bold sm:text-base md:text-xl `}
                 >
                   {workspace.name}
                 </h3>{" "}
@@ -145,7 +146,9 @@ export default function Header() {
                 onClick={() => setIsOpenBoardDetails(true)}
                 className="flex rounded-sm items-center py-2 px-4 hover:bg-gray/5"
               >
-                <span className={`font-bold md:w-auto `}>#{active.name} Board</span>{" "}
+                <span className={`font-bold md:w-auto `}>
+                  #{active.name} Board
+                </span>{" "}
                 <HiOutlineChevronDown className="mt-1 text-sm" />
               </button>
             ) : (
@@ -158,7 +161,7 @@ export default function Header() {
             )}
 
             <div className="flex items-center gap-x-6">
-               {/* <div className="img_container">
+              {/* <div className="img_container">
                         {ele.members.map((ele: any) => {
                           return (
                             <div className="avatar" key={ele.userId}>
@@ -181,7 +184,7 @@ export default function Header() {
               <div className="">
                 <button
                   onClick={() => setOpenUser(true)}
-                  className="border-gray p-1 overflow-hidden rounded-full border-[2px] hover:border-primary"
+                  className="border-gray "
                 >
                   {user.profilePics ? (
                     <img
@@ -190,7 +193,9 @@ export default function Header() {
                       alt="user profile"
                     />
                   ) : (
-                    <p className="text-lg h-auto w-auto font-bold">
+                    <p
+                      className="h-[40px] w-[40px] text-sm p-1 overflow-hidden rounded-full border-[2px] hover:border-primary flex items-center justify-center flex-col font-bold"
+                    >
                       {DefaultImage(user.name)}
                     </p>
                   )}
