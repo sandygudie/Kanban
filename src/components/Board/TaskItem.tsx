@@ -2,17 +2,18 @@ import Modal from "components/Modal";
 import { useState } from "react";
 import { ISubTask, ITask } from "types";
 import AddTask from "./AddTask";
-
 import { Draggable } from "@hello-pangea/dnd";
 import { useNavigate } from "react-router-dom";
-import { colorSelection } from "utilis";
+import { taskColorMarker } from "utilis";
+import dayjs from "dayjs";
+import {  Progress } from 'antd';
 
 interface Props {
   tasks: ITask;
   filtered: ISubTask[];
   index: number;
   workspaceId: string;
- boardId:string
+  boardId: string;
 }
 
 export default function TaskItem({
@@ -20,13 +21,11 @@ export default function TaskItem({
   filtered,
   index,
   workspaceId,
-  boardId
+  boardId,
 }: Props) {
   const navigate = useNavigate();
 
   const [isOpenModal, setOpenModal] = useState(false);
-
-  // const handleOpenModal = () => setOpenModal(true);
 
   return (
     <>
@@ -44,23 +43,31 @@ export default function TaskItem({
               } select-none rounded-lg`}
               data-id={index}
               onClick={() => {
-                navigate(
-                  `/workspace/${workspaceId}/${boardId}/${tasks._id}`
-                );
+                navigate(`/workspace/${workspaceId}/${boardId}/${tasks._id}`);
               }}
             >
               <div
                 style={{
-                  borderColor: colorSelection(),
+                  borderColor: taskColorMarker[tasks.title.length + index],
                 }}
                 className="shadow-lg hover:bg-gray/10
-              cursor-pointer rounded-lg border-l-2 mb-4 py-6 px-4"
+              cursor-pointer rounded-lg border-l-2 mb-4 py-2 px-4"
               >
-                <p className="font-bold text-sm">{tasks.title} </p>
-                <p className="pt-2 text-xs text-white/50 font-bold">
-                  {" "}
-                  {filtered.length} of {tasks.subtasks.length} subtasks
-                </p>
+                <p className="font-semibold">{tasks.title} </p>
+                <div className="mt-4 mb-2 flex items-center justify-between">
+                  <div className="text-xs text-white/50 font-semibold w-16">
+                    {" "}
+                    {filtered.length}/{tasks.subtasks.length} 
+                    <div> <Progress  steps={3} showInfo={false}  className="!text-white" percent={(filtered.length/tasks.subtasks.length)*100}  strokeColor="#44b774" trailColor="#3d3a3a80"  strokeWidth={5} /></div>
+                  </div>
+                  <p className="text-[11px] font-medium text-white/50  ">
+                   
+                    {dayjs(tasks.dueDate[1]).diff(
+                      dayjs(tasks.dueDate[0]),
+                      "day"
+                    )} days left
+                  </p>
+                </div>
               </div>
             </div>
           );

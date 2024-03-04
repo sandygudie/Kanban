@@ -8,6 +8,7 @@ import {
   useEditTaskMutation,
   useGetBoardQuery,
   useGetTaskQuery,
+  useGetWorkspaceQuery,
 } from "redux/apiSlice";
 import Spinner from "components/Spinner";
 import { ISubTask } from "types";
@@ -20,17 +21,21 @@ import AddTask from "components/Board/AddTask";
 import { DatePicker, DatePickerProps, TimePicker } from "antd";
 import { IoAdd } from "react-icons/io5";
 import { RangePickerProps } from "antd/es/date-picker";
-import dayjs from "dayjs";
+import * as dayjs from "dayjs";
+import * as relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
   const { RangePicker } = DatePicker;
   const dispatch = useDispatch();
+  const [isAssign, setAssign] = useState(false);
   const [currentTime, setTime] = useState<null | any>(null);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const { workspaceId, boardId, taskId }: string | any = useParams();
   const { data: tasks, isLoading } = useGetTaskQuery({ workspaceId, taskId });
+  const { data: workspace } = useGetWorkspaceQuery(workspaceId);
   const { data: active, isLoading: isLoadingActiveBoard } = useGetBoardQuery({
     workspaceId,
     boardId,
@@ -88,7 +93,6 @@ export default function TaskDetails() {
   );
 
   const onChangeTime = async (timeString: any) => {
-
     try {
       const payload = {
         formdata: {
@@ -123,7 +127,6 @@ export default function TaskDetails() {
     }
   };
 
-  
   const pendingDate = dayjs(tasks?.data.dueDate[1]).diff(
     dayjs(tasks?.data.dueDate[0]),
     "day"
@@ -133,7 +136,15 @@ export default function TaskDetails() {
       {tasks ? (
         <div className="px-14 pt-8">
           <div className="text-lg font-bold flex mt-3 items-center justify-between">
-            <p className="text-3xl"> {tasks?.data.title}</p>{" "}
+            <div>
+              {" "}
+              <p className="text-3xl"> {tasks?.data.title}</p>{" "}
+              <span className="text-gray/80 font-thin mt-1 text-sm">
+                Created by mark{tasks.data.createdBy} on{" "}
+                {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")} . updated{" "}
+                {dayjs().fromNow()}
+              </span>
+            </div>
             <div className="relative">
               <button className="text-3xl hover:text-primary">
                 <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
@@ -144,9 +155,9 @@ export default function TaskDetails() {
                   items={[
                     {
                       title: (
-                        <p className="flex items-center  gap-x-2.5 dark:text-white/80">
+                        <div className="flex items-center  gap-x-3 dark:text-white/80">
                           <CiEdit className="text-gray text-sm" /> Edit
-                        </p>
+                        </div>
                       ),
                       handler: () => {
                         setIsOpenEdit(true);
@@ -154,9 +165,9 @@ export default function TaskDetails() {
                     },
                     {
                       title: (
-                        <p className="flex items-center gap-x-2.5 dark:text-white/80">
+                        <div className="flex items-center w-24 gap-x-3 dark:text-white/80">
                           <MdDelete className="text-error" /> Delete
-                        </p>
+                        </div>
                       ),
                       handler: () => {
                         setIsOpenDelete(true);
@@ -193,7 +204,7 @@ export default function TaskDetails() {
                           <input
                             type="checkbox"
                             value={subtask.title}
-                            checked={checkedState[index]!}
+                            checked={checkedState[index]!||false}
                             onChange={() => handleOnChange(index)}
                           />
                           <p
@@ -209,11 +220,37 @@ export default function TaskDetails() {
                   )}
                 </div>
               </div>
-              <div className="w-96">
+
+              <div className="w-96 relative">
                 <p className="font-semibold mb-2 text-sm">Assignees</p>
-                <button className="p-2  bg-secondary rounded-md">
+                <button
+                  onClick={() => setAssign(true)}
+                  className="p-2 bg-secondary rounded-md"
+                >
                   <IoAdd className="text-xl font-semibold" />
                 </button>
+
+                {isAssign && (
+                  <Popup
+                    style={{ left: 0, top: 65 }}
+                    handleOpenMenu={() => setAssign(false)}
+                    items={workspace?.data.members.map((ele: any) => {
+                      return {
+                        title: (
+                          <div className="py-1 px-4 font-bold text-[0.8rem] flex items-center gap-x-3">
+                            <img
+                              className="w-6 h-6 rounded-full"
+                              src="https://res.cloudinary.com/dvpoiwd0t/image/upload/v1709064575/workspace-placeholder_urnll6.webp"
+                              alt="profile pic"
+                            />
+                            <span> {ele.name}</span>
+                          </div>
+                        ),
+                        handler: () => {},
+                      };
+                    })}
+                  />
+                )}
               </div>
             </div>
             <div className="flex justify-between items-start mt-10">
@@ -281,7 +318,9 @@ export default function TaskDetails() {
           </div>
         </div>
       ) : isLoading || isLoadingActiveBoard || !tasks ? (
-        <Spinner />
+       <div className="flex-col items-center justify-center h-full flex">
+         <Spinner />
+       </div>
       ) : null}
 
       <Modal

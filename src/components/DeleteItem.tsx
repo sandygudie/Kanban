@@ -8,7 +8,7 @@ import {
 import {
   appData,
   deleteBoard,
-  deleteTask,
+  // deleteTask,
   deleteColumn,
 } from "redux/boardSlice";
 import { AppState, IColumn, ITask } from "types";
@@ -58,7 +58,7 @@ export default function Delete({
       workspaceId: workspace.id,
     }).unwrap();
     if (response) {
-      dispatch(deleteTask(tasks));
+      // dispatch(deleteTask(tasks));
       handleClose();
       navigate(`/workspace/${workspace.id}`);
     }

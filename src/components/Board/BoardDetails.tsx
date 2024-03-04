@@ -29,12 +29,7 @@ export default function BoardDetails({ handleClose }: Props) {
         setToggle("About");
       },
     },
-    {
-      name: "Members",
-      handler: () => {
-        setToggle("Members");
-      },
-    },
+   
   ];
 
   return (
@@ -51,7 +46,7 @@ export default function BoardDetails({ handleClose }: Props) {
           </IconButton>
         </div>
 
-        <div className="flex items-center justify-start gap-x-6 mt-5 p-2 ">
+        <div className="flex items-center justify-start gap-x-6 p-2 ">
           {linkitems.map((ele: any) => {
             return (
               <button
@@ -69,7 +64,7 @@ export default function BoardDetails({ handleClose }: Props) {
         <div className="border-[1px] border-gray/10 rounded-md mt-1">
           {[
             {
-              title: <p className="text-base py-4 font-bold">{active.name}</p>,
+              title: <p className="text-base py-2 font-bold">{active.name}</p>,
               label: `Name`,
               handler: () => {
                 setIsOpenEdit(true);
@@ -81,9 +76,9 @@ export default function BoardDetails({ handleClose }: Props) {
               title: (
                 <>
                   {active?.description ? (
-                    <p className="text-sm py-4 ">{active?.description}</p>
+                    <p className="text-sm py-2">{active?.description}</p>
                   ) : (
-                    <p className="text-sm py-4 text-gray/40">
+                    <p className="text-sm py-2 text-gray/40">
                       ** A brief details about the board.
                     </p>
                   )}
@@ -97,18 +92,18 @@ export default function BoardDetails({ handleClose }: Props) {
             },
             {
               title: (
-                <div className="text-sm py-4">
-                  <p className="text-gray text-xs">
+              
+                  <p className="text-gray text-sm py-3">
                     Created by {workspace.createdBy} on{" "}
                     {moment(active.createdAt).format("MMM Do , YYYY")}
                   </p>
-                </div>
+          
               ),
             },
 
             {
               label: "",
-              title: <p className="text-xs text-error py-4">Delete Board</p>,
+              title: <p className="text-sm text-semibold text-error py-4">Delete Board</p>,
               handler: () => {
                 setIsOpenDelete(true); //admin
             

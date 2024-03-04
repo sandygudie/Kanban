@@ -21,7 +21,9 @@ export interface ITask {
   columnId: string;
   createdAt: Date;
   assignTo: string;
-  dueDate: [];
+  dueDate: string[];
+  createdBy:string
+  
 }
 
 export interface ISubTask {

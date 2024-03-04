@@ -6,6 +6,7 @@ import { apiSlice } from "./apiSlice";
 
 const workspaceData = loadState();
 const { board, active, workspace, user } = workspaceData;
+
 const boardSlice = createSlice({
   name: "boarddata",
   initialState: {
@@ -178,6 +179,7 @@ const boardSlice = createSlice({
     },
 
     isCompletedToggle: (state, action) => {
+   
       state.board.find((item: IBoard) =>
         item.name === state.active.name
           ? item.columns.find((o: IColumn) =>
@@ -185,10 +187,10 @@ const boardSlice = createSlice({
                 ? o.tasks.map((s: ITask) =>
                     s._id === action.payload.tasks._id
                       ? s.subtasks.map((t: ISubTask, i: number) =>
-                          i === action.payload._id
+                          i === action.payload.id
                             ? (t.isCompleted =
                                 action.payload.updatedCheckedState[
-                                  action.payload._id
+                                  action.payload.id
                                 ])
                             : t
                         )
@@ -198,9 +200,11 @@ const boardSlice = createSlice({
             )
           : null
       );
+      
       state.active = state.board.find(
         (item: IBoard) => item._id === state.active._id
       );
+     
     },
   },
   extraReducers: (builder) => {

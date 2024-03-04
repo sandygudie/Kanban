@@ -74,10 +74,10 @@ export const checkDuplicatedTask = (values: ITask, active: IBoard) => {
   return foundTask !== undefined ? true : false;
 };
 
-export const colorSelection = () => {
-  const randomNumber = Math.floor(Math.random() * 16777215).toString(16);
-  return `#${randomNumber}`;
-};
+// export const colorSelection = () => {
+//   const randomNumber = Math.floor(Math.random() * 16777215).toString(16);
+//   return `#${randomNumber}`;
+// };
 
 export function TitleCase(str: string) {
   str.toLowerCase().split(" ");
@@ -100,7 +100,7 @@ export const colorMarker = [
   "#03A9F4",
 ];
 export const taskColorMarker = [
-  " #ed8936",
+  "#ed8936",
   "#48bb78",
   "#9c27b0",
   "#3b61ff",

@@ -229,3 +229,9 @@ display: none !important;
 .ant-picker-outlined {
   background-color: hsla(0 ,0% ,12.55%,1) !important;
 }
+/* .ant-progress-text{
+  color:#72757acc !important
+}
+.ant-progress.ant-progress-status-success .ant-progress-text {
+  color:green!important
+} */

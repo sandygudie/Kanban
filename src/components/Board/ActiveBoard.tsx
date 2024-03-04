@@ -3,7 +3,7 @@ import AddTask from "./AddTask";
 import { BsCircleFill } from "react-icons/bs";
 import TaskItem from "./TaskItem";
 import { Droppable, DragDropContext } from "@hello-pangea/dnd";
-import { colorMarker, colorSelection } from "utilis";
+import { colorMarker} from "utilis";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, appData, deleteTask, editColumnName } from "redux/boardSlice";
 import { v4 as uuidv4 } from "uuid";
@@ -39,6 +39,7 @@ export default function ActiveBoard() {
   const data: AppState = useSelector(appData);
   const { active, workspace } = data;
 
+  // console.log(active)
   const onDragEnd = async (result: any) => {
     if (!result.destination) {
       return;
@@ -127,7 +128,7 @@ export default function ActiveBoard() {
                             fill:
                               index < colorMarker.length
                                 ? colorMarker[index]
-                                : colorSelection(),
+                                : "",
                           }}
                         />
 
