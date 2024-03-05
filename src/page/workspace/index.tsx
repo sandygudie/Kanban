@@ -13,8 +13,12 @@ export default function Index() {
   const currentTheme = localStorage.getItem("theme")!;
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const updateThemehandler = (theme: string) => setTheme(theme);
-  const { data: response, isLoading } = useGetAllWorkspacesQuery();
-console.log(response)
+
+  const { data: response, isLoading, isSuccess } = useGetAllWorkspacesQuery();
+
+  if (isSuccess && response?.data?.workspace.length < 1) {
+    return (window.location.href = `/login`);
+  }
   return (
     <>
       <div className={`w-full h-screen`}>
@@ -75,17 +79,15 @@ console.log(response)
                       className="px-3 py-5 mt-4 font-semiBold w-full md:w-[36rem] rounded-lg border-[1px] border-solid border-gray/20 flex hover:bg-primary/50 gap-x-4  items-center justify-between"
                     >
                       <div className="flex items-center gap-x-5">
-                        <img
-                          src={ele.profilePics}
-                          className="w-5 h-5"
-                          alt=""
-                        />
+                        <img src={ele.profilePics} className="w-5 h-5" alt="" />
                         <div>
                           <h2 className="font-bold">{ele.name}</h2>
                         </div>
                       </div>
                       <div>
-                       <p className="font-bold text-base">{ele.members.length}{" "} members</p>
+                        <p className="font-bold text-base">
+                          {ele.members.length} members
+                        </p>
                       </div>
                       {/* <div className="img_container">
                         {ele.members.map((ele: any) => {
@@ -112,7 +114,12 @@ console.log(response)
             </div>
           </div>
         ) : (
-          <p>No Workspace</p>
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="">No Workspace</p>
+            <button className="py-3 px-5 font-bold bg-primary rounded-md">
+              Create Workspace
+            </button>
+          </div>
         )}
       </div>
     </>

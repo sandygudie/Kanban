@@ -8,8 +8,7 @@ import {
 import {
   appData,
   deleteBoard,
-  // deleteTask,
-  deleteColumn,
+  deleteTask,
 } from "redux/boardSlice";
 import { AppState, IColumn, ITask } from "types";
 import { Loader } from "./Spinner";
@@ -58,7 +57,7 @@ export default function Delete({
       workspaceId: workspace.id,
     }).unwrap();
     if (response) {
-      // dispatch(deleteTask(tasks));
+      dispatch(deleteTask(tasks));
       handleClose();
       navigate(`/workspace/${workspace.id}`);
     }
@@ -70,8 +69,7 @@ export default function Delete({
       workspaceId: workspace.id,
     }).unwrap();
     if (response) {
-      dispatch(deleteColumn(selectedColumn));
-      handleClose();
+      navigate(`/workspace/${workspace.id}`);
     }
   };
   const deleteWorkspaceHandler = async () => {
@@ -79,8 +77,7 @@ export default function Delete({
       workspaceId: workspace.id,
     }).unwrap();
     if (response) {
-      dispatch(deleteColumn(selectedColumn));
-      handleClose();
+      navigate(`/workspaces`);
     }
   };
   return (

@@ -202,7 +202,7 @@ export default function ActiveBoard() {
                                 },
                               },
                             ]}
-                            handleOpenMenu={() => setEditColumn("")}
+                            handleClose={() => setEditColumn("")}
                           />
                         )}
                       </div>

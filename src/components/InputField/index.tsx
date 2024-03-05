@@ -39,7 +39,7 @@ export const TextInput = ({
         
         className={`${
           meta.error ? "border-error/70 border-solid" : null
-        } px-4 py-3 w-full border-[1px] mt-2 rounded-md outline-none text-sm placeholder:text-xs`}
+        } px-4 py-4 w-full border-[1px] mt-2 rounded-md outline-none text-sm placeholder:text-xs`}
       />
       {meta.touched || meta.error ? (
         <div className="absolute -bottom-3 text-error/70 text-xs">

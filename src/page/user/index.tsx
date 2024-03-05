@@ -23,7 +23,7 @@ export default function Index() {
     let res;
     if (e.target.name === "profilePics") {
       if(e.currentTarget.files && e.currentTarget.files[0].size >100000){
-       console.log( e.currentTarget.files[0].size)
+     
         toast({
           title: "image should be less than 100kb.",
           position: "top",
@@ -41,7 +41,7 @@ export default function Index() {
       );
       data.append("upload_preset", upload_preset);
       data.append("cloud_name", cloud_name);
-      data.append("folder", "Cloudinary-React");
+      data.append("folder", "Kanban-images");
       const response = await fetch(
         `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
         {
@@ -147,13 +147,13 @@ export default function Index() {
 
                   <input
                     type="file"
+                    size={100000}
                     id="file_input"
                     className="absolute top-20 text-sm invisible w-10"
                     name="profilePics"
                     accept=".jpg, .jpeg, .png"
                     onChange={(e) => {
                       if (e.currentTarget.files) {
-                       
                         editUserProfile(e);
                       }
                     }}

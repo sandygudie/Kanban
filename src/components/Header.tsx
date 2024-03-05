@@ -56,6 +56,7 @@ export default function Header() {
                 />
               </div>
               <button
+              
                 onClick={() => {
                   setWorkspaceMenu(!isWorkspaceMenu);
                 }}
@@ -89,8 +90,8 @@ export default function Header() {
                     </div>
                   </div>
                 }
-                style={{ top: 55, right: "-4rem" }}
-                handleOpenMenu={() => setWorkspaceMenu(false)}
+                style={{ top: 55, right: "-5rem" }}
+                handleClose={() => setWorkspaceMenu(false)}
                 items={[
                   {
                     title: (
@@ -161,16 +162,6 @@ export default function Header() {
             )}
 
             <div className="flex items-center gap-x-6">
-              {/* <div className="img_container">
-                        {ele.members.map((ele: any) => {
-                          return (
-                            <div className="avatar" key={ele.userId}>
-                              <img src="http://res.cloudinary.com/dvpoiwd0t/image/upload/v1709412639/Cloudinary-React/htt6js1upshs36eenlmk.png"
- alt="" className="img" />
-                            </div>
-                          );
-                        })}
-                      </div> */}
               <button
                 onClick={() => toggleFullScreen()}
                 className="font-bold text-primary text-xl"
@@ -201,7 +192,7 @@ export default function Header() {
                 {isOpenUser && (
                   <Popup
                     style={{ top: 56, right: 20 }}
-                    handleOpenMenu={() => setOpenUser(false)}
+                    handleClose={() => setOpenUser(false)}
                     items={[
                       {
                         title: (

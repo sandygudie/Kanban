@@ -123,7 +123,7 @@ export default function Members({ workspaceId }: Props) {
                         {isOption === ele?.userId && (
                           <Popup
                             style={{ top: 40, right: 0 }}
-                            handleOpenMenu={() => setOption("")}
+                            handleClose={() => setOption("")}
                             items={[
                               {
                                 title: (

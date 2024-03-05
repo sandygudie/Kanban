@@ -8,21 +8,21 @@ interface Props {
   }[];
   style: any;
   description?: ReactElement;
-  handleOpenMenu: () => void;
+  handleClose: () => void;
 }
 
-function Popup({ items, style, handleOpenMenu, description }: Props) {
+function Popup({ items, style,  handleClose, description }: Props) {
   const domRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClick = (e: any) => {
       if (domRef.current && !domRef.current.contains(e.target)) {
-        handleOpenMenu();
+        handleClose();
       }
     };
     document.addEventListener("click", handleClick, true);
     return () => document.removeEventListener("click", handleClick, true);
-  }, [handleOpenMenu]);
+  }, [ handleClose]);
 
   return (
     <div
@@ -31,7 +31,7 @@ function Popup({ items, style, handleOpenMenu, description }: Props) {
       className={`z-10 absolute bg-offwhite dark:bg-secondary rounded-md shadow-3xl dark:shadow-gray/10 shadow-gray/60 
      text-white w-fit right-6 top-5`}
     >
-      <div className={`${description ? "w-64" : "w-max"}`}>
+      <div className={`${description ? "w-[250px]" : "w-max"}`}>
         {description ? description : null}
 
         {items.map((list, i) => {

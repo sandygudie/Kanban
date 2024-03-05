@@ -174,7 +174,7 @@ export default function TaskDetails() {
                       },
                     },
                   ]}
-                  handleOpenMenu={handleOpenMenu}
+                  handleClose={handleOpenMenu}
                 />
               )}
             </div>
@@ -233,7 +233,7 @@ export default function TaskDetails() {
                 {isAssign && (
                   <Popup
                     style={{ left: 0, top: 65 }}
-                    handleOpenMenu={() => setAssign(false)}
+                    handleClose={() => setAssign(false)}
                     items={workspace?.data.members.map((ele: any) => {
                       return {
                         title: (
