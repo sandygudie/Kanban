@@ -47,11 +47,11 @@ export default function Header() {
           <div
             className={`relative border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer hidden md:flex`}
           >
-            <div className="flex items-center justify-center gap-x-2">
-              <div className="w-8 h-8">
+            <div className="flex items-center justify-center gap-x-1">
+              <div className="w-10 h-10 overflow-hidden">
                 <img
                   src={workspace.profilePics}
-                  className="w-8 h-8 object-fit"
+                  className="w-12 h-12 object-fit"
                   alt=""
                 />
               </div>
@@ -76,21 +76,21 @@ export default function Header() {
               <Popup
                 description={
                   <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 dark:text-white text-gray font-medium px-6 justify-start">
-                    <div className="w-8 h-8">
+                    <div className="w-8 h-8 overflow-hidden">
                       <img
                         src={workspace.profilePics}
-                        className="w-8 h-8 object-fit"
+                        className="w-10 h-10 object-fit"
                         alt=""
                       />
                     </div>
                     <div className="dark:text-white text-black">
-                      <h2 className="font-bold text-base">
+                      <h2 className="font-semibold text-base">
                         {workspace.name} Workspace
                       </h2>
                     </div>
                   </div>
                 }
-                style={{ top: 55, right: "-5rem" }}
+                style={{ top: 55, right: -120 }}
                 handleClose={() => setWorkspaceMenu(false)}
                 items={[
                   {

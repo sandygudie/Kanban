@@ -207,6 +207,7 @@ const boardSlice = createSlice({
   },
   extraReducers: (builder) => {
     const currentWorkspace = loadWorkspaceData();
+    console.log(currentWorkspace);
     builder.addMatcher(
       apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
@@ -224,7 +225,6 @@ const boardSlice = createSlice({
         const {
           userid,
           username,
-
           profilePics: userProfileImage,
           email,
         } = userDetails;

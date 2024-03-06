@@ -202,7 +202,7 @@ export default function ActiveBoard() {
                                 },
                               },
                             ]}
-                            handleClose={() => setEditColumn("")}
+                             handleClose={() => setEditColumn("")}
                           />
                         )}
                       </div>

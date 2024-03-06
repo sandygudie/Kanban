@@ -62,7 +62,7 @@ export default function TaskItem({
                   </div>
                   <p className="text-[11px] font-medium text-white/50  ">
                    
-                    {dayjs(tasks.dueDate[1]).diff(
+                    {tasks?.dueDate?.length && dayjs(tasks.dueDate[1]).diff(
                       dayjs(tasks.dueDate[0]),
                       "day"
                     )} days left
