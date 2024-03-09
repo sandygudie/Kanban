@@ -5,7 +5,7 @@ const baseURL = import.meta.env.VITE_API_BASEURL;
 export const authSlice = createApi({
   reducerPath: "authApi",
   baseQuery: axiosBaseQuery({ baseUrl: baseURL }),
-  tagTypes: ["User"],
+  tagTypes: ["User","Workspace"],
 
   endpoints: (builder) => ({
     // User
@@ -41,7 +41,7 @@ export const authSlice = createApi({
         method: "PATCH",
         data: payload.formData,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User","Workspace",],
     }),
   }),
 });

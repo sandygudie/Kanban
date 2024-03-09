@@ -34,7 +34,7 @@ function Popup({ items, style,  handleClose, description }: Props) {
       <div className={`${description ? "w-[280px]" : "w-max"}`}>
         {description ? description : null}
 
-        {items.map((list, i) => {
+        {items?.map((list, i) => {
           return (
             <button
               key={i}

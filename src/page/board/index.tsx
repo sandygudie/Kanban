@@ -29,10 +29,10 @@ export default function Index() {
             </div>
             <div className="">
               <h2 className="font-bold md:text-xl text-gray ">
-                Create your first board
+                Create a board
               </h2>
               <p className="mt-1 text-gray text-base mb-5">
-                You don&apos;t have any board for this workspace
+                You don&apos;t have any board for this workspace.
               </p>
               <button
                 onClick={() => {

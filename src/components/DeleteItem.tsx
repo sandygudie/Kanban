@@ -5,12 +5,7 @@ import {
   useDeleteTaskMutation,
   useDeleteWorkspaceMutation,
 } from "redux/apiSlice";
-import {
-  appData,
-  deleteBoard,
-  deleteTask,
-
-} from "redux/boardSlice";
+import { appData, deleteBoard, deleteTask } from "redux/boardSlice";
 import { AppState, IColumn, ITask } from "types";
 import { Loader } from "./Spinner";
 import { useNavigate } from "react-router-dom";
@@ -73,14 +68,16 @@ export default function Delete({
       navigate(`/workspace/${workspace.id}`);
     }
   };
+
   const deleteWorkspaceHandler = async () => {
     const response = await deleteAWorkspace({
       workspaceId: workspace.id,
     }).unwrap();
     if (response) {
-      navigate(`/workspaces`);
+      window.location.href = `/workspaces`;
     }
   };
+
   return (
     <div className="p-4">
       <h1 className="text-left text-xl text-error font-bold mb-4">
@@ -92,7 +89,7 @@ export default function Delete({
           ? selectedColumn.name
           : tasks
           ? tasks?.title
-          : `${workspace.name}` }
+          : `${workspace.name}`}
       </h1>
       <p className="text-base">
         Are you sure you want to delete this{" "}

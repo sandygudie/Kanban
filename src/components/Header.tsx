@@ -47,11 +47,11 @@ export default function Header() {
           <div
             className={`relative border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer hidden md:flex`}
           >
-            <div className="flex items-center justify-center gap-x-1">
-              <div className="w-10 h-10 overflow-hidden">
+            <div className="flex items-center justify-center gap-x-2">
+              <div className="w-8 h-auto overflow-hidden">
                 <img
                   src={workspace.profilePics}
-                  className="w-12 h-12 object-contain"
+                  className="w-auto h-auto object-contain"
                   alt=""
                 />
               </div>
@@ -76,10 +76,10 @@ export default function Header() {
               <Popup
                 description={
                   <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 dark:text-white text-gray font-medium px-6 justify-start">
-                    <div className="w-8 h-8 overflow-hidden">
+                    <div className="w-8 h-auto overflow-hidden">
                       <img
                         src={workspace.profilePics}
-                        className="w-10 h-10 object-contain"
+                        className="w-10 h-auto object-contain"
                         alt=""
                       />
                     </div>
@@ -140,7 +140,7 @@ export default function Header() {
           </div>
 
           <div
-            className={`flex items-center w-full justify-between px-4 md:px-6`}
+            className={`w-[calc(100%_-_220px)] flex items-center w-full justify-between px-4 md:px-6`}
           >
             {active ? (
               <button

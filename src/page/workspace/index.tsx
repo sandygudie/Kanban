@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logoMobile from "../../assets/logo-mobile.svg";
 import Icon from "components/Icon";
 import ToggleBtn from "components/ToggleBtn";
@@ -7,18 +7,21 @@ import { useGetAllWorkspacesQuery } from "redux/apiSlice";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { saveloadWorkspaceData } from "utilis";
+import { BsPeople } from "react-icons/bs";
+import { MdSpaceDashboard } from "react-icons/md";
 
 export default function Index() {
-  // const navigate = useNavigate();
   const currentTheme = localStorage.getItem("theme")!;
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const updateThemehandler = (theme: string) => setTheme(theme);
-
   const { data: response, isLoading, isSuccess } = useGetAllWorkspacesQuery();
 
-  if (isSuccess && response?.data?.workspace.length < 1) {
-    return (window.location.href = `/login`);
-  }
+  useEffect(() => {
+    if (isSuccess && response?.data?.workspace.length < 1) {
+      // window.location.href = `/login`;
+    }
+  }, [isSuccess, response]);
+
   return (
     <>
       <div className={`w-full h-screen`}>
@@ -58,61 +61,62 @@ export default function Index() {
               </div>
             </SkeletonTheme>
           </div>
-        ) : response.data.workspace.length > 0 ? (
-          <div className="h-full ">
-            <div className="mx-auto h-full mt-10 flex flex-col items-center justify-start">
-              <div className="w-10/12 md:w-auto">
+        ) : (
+          response.data.workspace.length > 0 && (
+            <div className="h-full ">
+              <div className="mx-auto h-full mt-10 flex flex-col items-center justify-start">
                 <h1 className="text-center text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
                 </h1>
-                {response.data.workspace.map((ele: any) => {
-                  return (
-                    <button
-                      key={ele._id}
-                      onClick={() => {
-                        saveloadWorkspaceData({
-                          workspaceId: ele._id,
-                        });
-                        // navigate(`/workspace/${ele._id}`);
-                        window.location.href = `workspace/${ele._id}`;
-                      }}
-                      className="px-3 py-5 mt-4 font-semiBold w-full md:w-[36rem] rounded-lg border-[1px] border-solid border-gray/20 flex hover:bg-primary/50 gap-x-4  items-center justify-between"
-                    >
-                      <div className="flex items-center gap-x-5">
-                        <img src={ele.profilePics} className="w-5 h-5" alt="" />
-                        <div>
-                          <h2 className="font-bold">{ele.name}</h2>
+                <div className="block md:grid px-8 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
+                  {response.data.workspace.map((ele: any) => {
+                    return (
+                      <button
+                        key={ele._id}
+                        onClick={() => {
+                          saveloadWorkspaceData({
+                            workspaceId: ele._id,
+                          });
+                          // navigate(`/workspace/${ele._id}`);
+                          window.location.href = `workspace/${ele._id}`;
+                        }}
+                        className="px-5 py-4 w-60 font-semibold rounded-md border-[1px] border-solid border-gray/20 hover:bg-primary/50 gap-x-4"
+                      >
+                        <div className="flex items-center gap-x-5">
+                          <img
+                            src={ele.profilePics}
+                            className="w-8 h-8"
+                            alt=""
+                          />
+                          <div>
+                            <h2 className="font-bold">{ele.name}</h2>
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <p className="font-bold text-base">
-                          {ele.members.length} members
-                        </p>
-                      </div>
-                     
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="text-center mt-20">
-                <Link
-                  className="bg-primary/70 hover:bg-primary text-white flex-col flex items-center justify-center text-sm py-4 px-8 rounded-lg font-bold"
-                  to="/workspace/new"
-                >
-                  {" "}
-                  Add Workspace
-                </Link>
+                        <div className="font-semibold text-sm mt-4 text-left text-white/50">
+                          <p className="flex items-center gap-x-2">
+                            <MdSpaceDashboard /> {ele.boards.length} boards
+                          </p>
+                          <p className="flex gap-x-2 items-center">
+                            <BsPeople /> {ele.members.length} members
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full">
-            <p className="">No Workspace</p>
-            <button className="py-3 px-5 font-bold bg-primary rounded-md">
-              Create Workspace
-            </button>
-          </div>
+          )
         )}
+        <div className="text-center h-full mx-auto w-56 flex flex-col items-center justify-center">
+          <Link
+            className="bg-primary/70  hover:bg-primary text-white flex-col flex items-center justify-center text-sm py-4 px-8 rounded-lg font-bold"
+            to="/workspace/new"
+          >
+            {" "}
+            Add Workspace
+          </Link>
+        </div>
       </div>
     </>
   );

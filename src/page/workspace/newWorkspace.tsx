@@ -7,14 +7,22 @@ import * as Yup from "yup";
 import { TextInput } from "components/InputField";
 import { Loader } from "components/Spinner";
 import { useNavigate } from "react-router-dom";
-import { saveloadWorkspaceData, loadWorkspaceData } from "utilis";
+import {
+  saveloadWorkspaceData,
+  loadWorkspaceData,
+  checkDuplicatedBoard,
+} from "utilis";
 import {
   useCreateWorkspaceMutation,
+  useGetAllWorkspacesQuery,
   useJoinWorkspaceMutation,
 } from "redux/apiSlice";
 import { IoAlertCircleOutline, IoPencilOutline } from "react-icons/io5";
+import { useToast } from "@chakra-ui/react";
 
 const CreateWorkspaceForm = () => {
+  const toast = useToast();
+  const { data: workspaces } = useGetAllWorkspacesQuery();
   const upload_preset = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
   const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
   const [selectedImage, setSelectedImage] = useState<any>();
@@ -34,8 +42,23 @@ const CreateWorkspaceForm = () => {
     profilePics: Yup.string(),
   });
 
-  const createNewWorksapce = async (values: any) => {
 
+  const createNewWorksapce = async (values: any) => {
+    const foundDuplicate = checkDuplicatedBoard(
+      values.workspaceName,
+      workspaces.data.workspace
+    );
+
+    if (foundDuplicate) {
+      toast({
+        title: "Workspace name already exist.",
+        position: "top",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      return null;
+    }
     const data = new FormData();
     data.append("file", values.profilePics);
     data.append("upload_preset", upload_preset);
@@ -113,7 +136,7 @@ const CreateWorkspaceForm = () => {
                   name="profilePics"
                   accept=".jpg, .jpeg, .png"
                   onChange={(e) => {
-                    setUploadError("")
+                    setUploadError("");
                     if (e.currentTarget.files) {
                       if (e.currentTarget.files[0].size > 100000) {
                         setUploadError("Image too large");
@@ -171,7 +194,7 @@ const JoinWorkspaceForm = () => {
   const joinWorkspaceHandler = async (values: any) => {
     try {
       const response = await joinWorkspace(values).unwrap();
-     
+
       if (response) {
         saveloadWorkspaceData({ workspaceId: response.data.workspaceId });
         navigate(`/workspace/${response.data.workspaceId}`);

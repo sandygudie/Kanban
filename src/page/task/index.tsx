@@ -57,7 +57,7 @@ export default function TaskDetails() {
   const handleSelectedColumn = (selectedColumn: string) => {
     setSelectedColumn(selectedColumn);
   };
-
+console.log(workspace )
   const handleOnChange = async (id: number) => {
     const updatedCheckedState = checkedState.map((item: any, index: number) =>
       index === id ? !item : item
@@ -137,7 +137,7 @@ export default function TaskDetails() {
     "day"
   );
 
-  // console.log(workspace?.data.members)
+
   return (
     <>
       {tasks ? (
@@ -237,7 +237,7 @@ export default function TaskDetails() {
                   onClick={() => setAssign(true)}
                   className="p-2 bg-secondary rounded-md"
                 >
-                  <IoAdd className="text-xl font-semibold" />
+                  <IoAdd className="text-xl font-bold" />
                 </button>
 
                 {isAssign && (
@@ -279,7 +279,7 @@ export default function TaskDetails() {
               </div>
               <div>
                 <p className="text-sm font-bold mb-4">Labels</p>
-                <div className="w-[30rem] flex items-start flex-col gap-y-4">
+                <div className="w-[30rem] flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length >0|| isDate ? (
                     <div className="flex items-center gap-x-4">
                       <p className="text-sm font-bold mb-2 w-16">Due Date</p>
@@ -308,7 +308,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-secondary font-bold py-3 px-4 rounded-md"
+                      className="bg-secondary font-bold py-2 px-4 text-sm rounded-md"
                       onClick={() => {
                         setDate(true);
                       }}
@@ -333,7 +333,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-secondary font-bold py-3 px-4 rounded-md"
+                      className="bg-secondary text-sm font-bold py-2 px-4 rounded-md"
                       onClick={() => {
                         setTime(true);
                       }}

@@ -9,6 +9,7 @@ export const apiSlice = createApi({
   tagTypes: ["Workspace", "Board", "Column", "Task"],
 
   endpoints: (builder) => ({
+    
     // Workspace
     createWorkspace: builder.mutation({
       query: (payload) => ({
@@ -97,7 +98,7 @@ export const apiSlice = createApi({
         url: `/workspace/${payload.workspaceId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Workspace"],
+      // invalidatesTags: ["Workspace"],
     }),
 
     createBoard: builder.mutation({

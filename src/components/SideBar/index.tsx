@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { GoSidebarExpand } from "react-icons/go";
-import Icon from "components/Icon";
+
 import { AppState, IBoard } from "types";
 import { useMediaQuery } from "react-responsive";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import Modal from "components/Modal";
 import AddBoard from "components/Board/AddBoard";
 import { saveloadWorkspaceData } from "utilis";
 import { useNavigate } from "react-router-dom";
+import { MdSpaceDashboard } from "react-icons/md";
 
 interface Props {
   showSidebar: boolean;
@@ -34,7 +35,6 @@ export default function Index({
   const isMobile = useMediaQuery({ query: "(min-width: 700px)" });
   const [isOpenBoard, setOpenBoard] = useState(false);
 
-  // console.log(active ,board)
   return (
     <>
       <>
@@ -78,9 +78,8 @@ export default function Index({
                           }}
                         >
                           <div className="flex items-center gap-x-2 justify-between">
-                            <Icon type="board" />
-                            <span className="text-sm flex items-center">
-                              {" "}
+                            {/* <Icon type="board" /> */}
+                   <         MdSpaceDashboard />
                               <span
                                 className={`${
                                   options.name.length > 12
@@ -90,10 +89,7 @@ export default function Index({
                               >
                                 {options.name}
                               </span>
-                              <span className="text-sm font-bold pl-1">
-                                ({options.columns?.length})
-                              </span>
-                            </span>
+                              
                           </div>
                         </button>
                       );

@@ -40,7 +40,7 @@ function AddBoard({ handleClose }: Props) {
   });
 
   const addBoardHandler = async (values: IBoard | any) => {
-    const foundDuplicate = checkDuplicatedBoard(values, board);
+    const foundDuplicate = checkDuplicatedBoard(values.name, board);
     const column = values.columns.map((ele: IColumn) => ele.name);
     const name = values.name;
     if (foundDuplicate === false) {
@@ -64,7 +64,7 @@ function AddBoard({ handleClose }: Props) {
       }
     } else {
       toast({
-        title: "Board already exist.",
+        title: "Board name already exist.",
         position: "top",
         status: "error",
         duration: 2000,

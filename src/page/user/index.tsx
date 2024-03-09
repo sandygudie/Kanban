@@ -127,9 +127,9 @@ export default function Index() {
                 >
                   <div>
                     {user.profilePics || selectedImage ? (
-                      <div className="relative w-32 h-auto rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
+                      <div className="relative w-32 h-32 rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
                         <img
-                        className="h-auto w-40"
+                        className="w-32 h-32"
                           src={
                             selectedImage
                               ? URL.createObjectURL(selectedImage[0])

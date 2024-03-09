@@ -44,8 +44,9 @@ export const saveloadWorkspaceData = (state: any) => {
   }
 };
 
-export const checkDuplicatedBoard = (values: IBoard, board: IBoard[]) => {
-  return board.some((ele: IBoard) => ele.name === values.name);
+export const checkDuplicatedBoard = (name: string, arr: any[]) => {
+  
+  return arr.some((ele: any) => ele.name === name);
 };
 
 export const checkDuplicatedColumn = (
