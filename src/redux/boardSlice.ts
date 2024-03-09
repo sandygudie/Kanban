@@ -32,9 +32,7 @@ const boardSlice = createSlice({
       return {
         ...state,
         board: filteredBoard,
-        active: filteredBoard.find(
-          (item: IBoard, index: number) => index === 0
-        ),
+        active: state.board.find((item: IBoard, index: number) => index === 0),
       };
     },
     addWorkspace: (state, action) => {
@@ -207,12 +205,10 @@ const boardSlice = createSlice({
   },
   extraReducers: (builder) => {
     const currentWorkspace = loadWorkspaceData();
-    console.log(currentWorkspace);
     builder.addMatcher(
       apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
         const { workspace, userDetails } = payload.data;
-
         const {
           boards,
           _id,

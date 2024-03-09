@@ -20,9 +20,11 @@ import DeleteItem from "components/DeleteItem";
 import AddTask from "components/Board/AddTask";
 import { DatePicker, DatePickerProps, TimePicker } from "antd";
 import { IoAdd } from "react-icons/io5";
+import { LuDot } from "react-icons/lu";
 import { RangePickerProps } from "antd/es/date-picker";
 import * as dayjs from "dayjs";
 import * as relativeTime from "dayjs/plugin/relativeTime";
+import { DefaultImage } from "utilis";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
@@ -30,6 +32,7 @@ export default function TaskDetails() {
   const dispatch = useDispatch();
   const [isAssign, setAssign] = useState(false);
   const [currentTime, setTime] = useState<null | any>(null);
+  const [isDate, setDate] = useState<null | any>(null);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
@@ -80,7 +83,9 @@ export default function TaskDetails() {
       };
       const response = await editATask(payload).unwrap();
       if (response) {
-        dispatch(isCompletedToggle({ updatedCheckedState, id, tasks:tasks?.data }));
+        dispatch(
+          isCompletedToggle({ updatedCheckedState, id, tasks: tasks?.data })
+        );
       }
     } catch (error: any) {
       console.log(error);
@@ -131,18 +136,23 @@ export default function TaskDetails() {
     dayjs(tasks?.data.dueDate[0]),
     "day"
   );
+
+  // console.log(workspace?.data.members)
   return (
     <>
       {tasks ? (
-        <div className="px-14 pt-8">
+        <div className="pl-14 pt-8">
           <div className="text-lg font-bold flex mt-3 items-center justify-between">
             <div>
               {" "}
-              <p className="text-3xl"> {tasks?.data.title}</p>{" "}
-              <span className="text-gray/80 font-thin mt-1 text-sm">
-                Created by mark{tasks.data.createdBy} on{" "}
-                {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")} . updated{" "}
+              <p className="text-3xl"> {tasks?.data.title}</p>
+              <span className="text-gray/80 font-thin mt-1 text-xs flex">
+                created by {tasks.data.createdBy} on{" "}
+                {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")} 
+              <span className="flex items-center ml-3">
+              <LuDot className="text-smtext-success"/> updated{" "}
                 {dayjs(tasks.data.updatedAt).fromNow()}
+              </span>
               </span>
             </div>
             <div className="relative">
@@ -204,7 +214,7 @@ export default function TaskDetails() {
                           <input
                             type="checkbox"
                             value={subtask.title}
-                            checked={checkedState[index]!||false}
+                            checked={checkedState[index]! || false}
                             onChange={() => handleOnChange(index)}
                           />
                           <p
@@ -221,7 +231,7 @@ export default function TaskDetails() {
                 </div>
               </div>
 
-              <div className="w-96 relative">
+              <div className="w-[30rem] relative">
                 <p className="font-semibold mb-2 text-sm">Assignees</p>
                 <button
                   onClick={() => setAssign(true)}
@@ -238,11 +248,13 @@ export default function TaskDetails() {
                       return {
                         title: (
                           <div className="py-1 px-4 font-bold text-[0.8rem] flex items-center gap-x-3">
-                            <img
+                           {ele.profilePics? <img
                               className="w-6 h-6 rounded-full"
-                              src="https://res.cloudinary.com/dvpoiwd0t/image/upload/v1709064575/workspace-placeholder_urnll6.webp"
+                              src={ele.profilePics}
                               alt="profile pic"
-                            />
+                            />:  <span className="h-[40px] w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                            {DefaultImage(ele.name)}
+                          </span>}
                             <span> {ele.name}</span>
                           </div>
                         ),
@@ -254,7 +266,7 @@ export default function TaskDetails() {
               </div>
             </div>
             <div className="flex justify-between items-start mt-10">
-              <div className=" pb-6 w-96">
+              <div className="pb-6 w-96">
                 <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
@@ -266,23 +278,47 @@ export default function TaskDetails() {
                 />
               </div>
               <div>
-                <div className="w-96 flex items-start flex-col gap-y-4">
-                  <div>
-                    <p className="text-sm font-semibold mb-2">Due Date</p>
-                    <div>
-                      <RangePicker
-                        onChange={onChangeDate}
-                        defaultValue={[
-                          dayjs(tasks?.data.dueDate[0]),
-                          dayjs(tasks?.data.dueDate[1]),
-                        ]}
-                        className="px-3 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
-                      />
+                <p className="text-sm font-bold mb-4">Labels</p>
+                <div className="w-[30rem] flex items-start flex-col gap-y-4">
+                  {tasks?.data.dueDate.length >0|| isDate ? (
+                    <div className="flex items-center gap-x-4">
+                      <p className="text-sm font-bold mb-2 w-16">Due Date</p>
+                      <div className="flex items-center justify-center gap-x-3">
+                       
+                        <RangePicker
+                          onChange={onChangeDate}
+                          defaultValue={
+                            tasks?.data.dueDate.length>0
+                              ? [
+                                  dayjs(tasks?.data.dueDate[0]),
+                                  dayjs(tasks?.data.dueDate[1]),
+                                ]
+                              : [dayjs(), dayjs()]
+                          }
+                          className="px-3 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
+                        />
+                        {  tasks?.data.dueDate.length >0 && <p
+                          className={`${
+                            pendingDate > 1 ? "text-success" : "text-error"
+                          } font-bold text-sm mt-1`}
+                        >
+                          {pendingDate} days left
+                        </p>}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <button
+                      className="bg-secondary font-bold py-3 px-4 rounded-md"
+                      onClick={() => {
+                        setDate(true);
+                      }}
+                    >
+                      Add Date
+                    </button>
+                  )}
                   {tasks?.data.dueTime || currentTime ? (
-                    <div>
-                      <p className="text-sm font-semibold mb-2">Time</p>
+                    <div className="flex items-center gap-x-4">
+                      <p className="text-sm font-bold mb-2 w-16">Time</p>
                       <TimePicker
                         defaultValue={
                           tasks?.data.dueTime
@@ -297,7 +333,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-secondary font-bold py-3 px-4 rounded-md text-sm"
+                      className="bg-secondary font-bold py-3 px-4 rounded-md"
                       onClick={() => {
                         setTime(true);
                       }}
@@ -306,21 +342,14 @@ export default function TaskDetails() {
                     </button>
                   )}
                 </div>
-                <p
-                  className={`${
-                    pendingDate > 1 ? "text-success" : "text-error"
-                  } font-bold mt-1`}
-                >
-                  {pendingDate} days left
-                </p>
               </div>
             </div>
           </div>
         </div>
       ) : isLoading || isLoadingActiveBoard || !tasks ? (
-       <div className="flex-col items-center justify-center h-full flex">
-         <Spinner />
-       </div>
+        <div className="flex-col items-center justify-center h-full flex">
+          <Spinner />
+        </div>
       ) : null}
 
       <Modal

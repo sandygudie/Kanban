@@ -89,15 +89,7 @@ export default function Index() {
                           {ele.members.length} members
                         </p>
                       </div>
-                      {/* <div className="img_container">
-                        {ele.members.map((ele: any) => {
-                          return (
-                            <div className="avatar" key={ele.userId}>
-                              <img src="" alt="" className="img" />
-                            </div>
-                          );
-                        })}
-                      </div> */}
+                     
                     </button>
                   );
                 })}

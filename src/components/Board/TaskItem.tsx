@@ -6,7 +6,7 @@ import { Draggable } from "@hello-pangea/dnd";
 import { useNavigate } from "react-router-dom";
 import { taskColorMarker } from "utilis";
 import dayjs from "dayjs";
-import {  Progress } from 'antd';
+import { Progress } from "antd";
 
 interface Props {
   tasks: ITask;
@@ -57,16 +57,32 @@ export default function TaskItem({
                 <div className="mt-4 mb-2 flex items-center justify-between">
                   <div className="text-xs text-white/50 font-semibold w-16">
                     {" "}
-                    {filtered.length}/{tasks.subtasks.length} 
-                    <div> <Progress  steps={3} showInfo={false}  className="!text-white" percent={(filtered.length/tasks.subtasks.length)*100}  strokeColor="#44b774" trailColor="#3d3a3a80"  strokeWidth={5} /></div>
+                    {filtered.length}/{tasks.subtasks.length}
+                    <div>
+                      {" "}
+                      <Progress
+                        steps={3}
+                        showInfo={false}
+                        className="!text-white"
+                        percent={
+                          (filtered.length / tasks.subtasks.length) * 100
+                        }
+                        strokeColor="#44b774"
+                        trailColor="#3d3a3a80"
+                        strokeWidth={5}
+                      />
+                    </div>
                   </div>
-                  <p className="text-[11px] font-medium text-white/50  ">
-                   
-                    {tasks?.dueDate?.length && dayjs(tasks.dueDate[1]).diff(
-                      dayjs(tasks.dueDate[0]),
-                      "day"
-                    )} days left
-                  </p>
+                  {tasks?.dueDate?.length >0&& (
+                    <p className="text-[11px] font-medium text-white/50  ">
+                      {tasks?.dueDate?.length &&
+                        dayjs(tasks.dueDate[1]).diff(
+                          dayjs(tasks.dueDate[0]),
+                          "day"
+                        )}{" "}
+                      days left
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

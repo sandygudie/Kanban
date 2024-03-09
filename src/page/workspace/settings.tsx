@@ -8,7 +8,7 @@ import Members from "components/Settings/Members";
 import { AppState } from "types";
 import { useDispatch, useSelector } from "react-redux";
 import { appData, updateWorkspace } from "redux/boardSlice";
-import { IoPencilOutline } from "react-icons/io5";
+import { IoAlertCircleOutline, IoPencilOutline } from "react-icons/io5";
 import { useUpdateWorkspaceProfileMutation } from "redux/apiSlice";
 import Spinner from "components/Spinner";
 import Modal from "components/Modal";
@@ -17,6 +17,7 @@ import DeleteItem from "components/DeleteItem";
 export default function Index() {
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
+  const [uploadError, setUploadError] = useState<any>();
   const { workspace } = data;
   const [toggle, setToggle] = useState("About");
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
@@ -158,9 +159,9 @@ export default function Index() {
                               className="text-white cursor-pointer h-full"
                               htmlFor="file_input"
                             >
-                              <div className="relative w-36 h-36 border-[1px] overflow-hidden border-solid border-gray">
+                              <div className="relative w-36 h-auto overflow-hidden">
                                 <img
-                                  className="w-40 h-40"
+                                  className="w-40 h-auto object-contain"
                                   src={
                                     selectedImage
                                       ? selectedImage
@@ -175,32 +176,42 @@ export default function Index() {
                                 id="file_input"
                                 className="absolute top-20 text-sm invisible w-48"
                                 name="profilePics"
-                                accept="image/png, .svg"
+                                accept=".jpg, .jpeg, .png"
                                 onChange={(e) => {
+                                  setUploadError("");
                                   if (e.currentTarget.files) {
-                                    setFieldValue(
-                                      "profilePics",
-                                      e.currentTarget.files[0]
-                                    );
-                                    setSelectedImage(
-                                      URL.createObjectURL(
+                                    if (
+                                      e.currentTarget.files[0].size > 100000
+                                    ) {
+                                      setUploadError("Image too large");
+                                    } else {
+                                      setFieldValue(
+                                        "profilePics",
                                         e.currentTarget.files[0]
-                                      )
-                                    );
+                                      );
+                                      setSelectedImage(
+                                        URL.createObjectURL(
+                                          e.currentTarget.files[0]
+                                        )
+                                      );
+                                    }
                                   }
                                 }}
                               />
                             </label>
-                            {errors.image && (
-                              <>
-                                <br />
-                                <span id="error">{errors.image}</span>
-                                <br />
-                              </>
-                            )}
+                            {errors.image ||
+                              (uploadError && (
+                                <span
+                                  className="text-xs text-error absolute -bottom-5 flex items-center gap-x-2"
+                                  id="error"
+                                >
+                                  <IoAlertCircleOutline size={16} />{" "}
+                                  {errors.image || uploadError}
+                                </span>
+                              ))}
                             <span className="text-gray/70 text-xs">
-                              Upload an image or pick an emoji. It will show up
-                              in your sidebar and notifications.
+                              Upload an image that will show up in your sidebar
+                              and notifications.
                             </span>
                           </div>
                         </div>

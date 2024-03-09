@@ -23,6 +23,7 @@ export default function Index() {
       } else {
         const workspaceData = loadWorkspaceData();
         setId(workspaceData?.workspaceId);
+        
       }
     }
     setLoadingBoard(false);

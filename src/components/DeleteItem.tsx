@@ -9,6 +9,7 @@ import {
   appData,
   deleteBoard,
   deleteTask,
+
 } from "redux/boardSlice";
 import { AppState, IColumn, ITask } from "types";
 import { Loader } from "./Spinner";

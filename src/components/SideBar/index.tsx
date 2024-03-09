@@ -34,6 +34,7 @@ export default function Index({
   const isMobile = useMediaQuery({ query: "(min-width: 700px)" });
   const [isOpenBoard, setOpenBoard] = useState(false);
 
+  // console.log(active ,board)
   return (
     <>
       <>

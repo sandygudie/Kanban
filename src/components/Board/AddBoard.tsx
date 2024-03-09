@@ -6,6 +6,7 @@ import { appData, addBoard } from "redux/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedBoard, saveloadWorkspaceData } from "utilis";
 import { useToast } from "@chakra-ui/react";
+import { v4 as uuidv4 } from "uuid";
 import { useCreateBoardMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
 interface Props {
@@ -13,7 +14,6 @@ interface Props {
 }
 function AddBoard({ handleClose }: Props) {
   const [createBoard, { isLoading }] = useCreateBoardMutation();
-
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const board: IBoard[] = data.board;
@@ -50,8 +50,10 @@ function AddBoard({ handleClose }: Props) {
           formData: { name, column },
         };
         const response = await createBoard(payload).unwrap();
+
+
         if (response) {
-          dispatch(addBoard({ _id: response.data.boardId, ...values }));
+          dispatch(addBoard({ _id: response.data.boardId, ... response.data.values }));
           saveloadWorkspaceData({
             workspaceId: workspace.id,
             activeBoard: response.data.boardId,
@@ -116,7 +118,7 @@ function AddBoard({ handleClose }: Props) {
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
-                            // _id: uuidv4(),
+                            _id: uuidv4(),
                             name: "",
                             tasks: [],
                           });

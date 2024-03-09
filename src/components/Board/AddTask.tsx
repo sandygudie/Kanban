@@ -45,7 +45,7 @@ export default function AddTask({
   const workspace: IWorkspaceProfile = data.workspace;
   const toast = useToast();
 
-  console.log(active)
+
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string(),
@@ -80,7 +80,7 @@ export default function AddTask({
           columnId: activeColumn?._id,
         };
         const response = await createTask(payload).unwrap();
-console.log(response)
+// console.log(response)
         if (response) {
           dispatch(
             addTask({

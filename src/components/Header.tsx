@@ -51,7 +51,7 @@ export default function Header() {
               <div className="w-10 h-10 overflow-hidden">
                 <img
                   src={workspace.profilePics}
-                  className="w-12 h-12 object-fit"
+                  className="w-12 h-12 object-contain"
                   alt=""
                 />
               </div>
@@ -79,7 +79,7 @@ export default function Header() {
                     <div className="w-8 h-8 overflow-hidden">
                       <img
                         src={workspace.profilePics}
-                        className="w-10 h-10 object-fit"
+                        className="w-10 h-10 object-contain"
                         alt=""
                       />
                     </div>

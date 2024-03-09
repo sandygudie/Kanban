@@ -113,6 +113,7 @@ const CreateWorkspaceForm = () => {
                   name="profilePics"
                   accept=".jpg, .jpeg, .png"
                   onChange={(e) => {
+                    setUploadError("")
                     if (e.currentTarget.files) {
                       if (e.currentTarget.files[0].size > 100000) {
                         setUploadError("Image too large");
@@ -170,7 +171,7 @@ const JoinWorkspaceForm = () => {
   const joinWorkspaceHandler = async (values: any) => {
     try {
       const response = await joinWorkspace(values).unwrap();
-      console.log(response);
+     
       if (response) {
         saveloadWorkspaceData({ workspaceId: response.data.workspaceId });
         navigate(`/workspace/${response.data.workspaceId}`);
