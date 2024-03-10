@@ -3,7 +3,7 @@ import { AppState } from "types";
 import { ChangeEvent, useState } from "react";
 import { IoPencilOutline } from "react-icons/io5";
 import { DefaultImage } from "utilis";
-import { useUpdateUserMutation } from "redux/authSlice";
+import { useUpdateUserMutation } from "redux/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 

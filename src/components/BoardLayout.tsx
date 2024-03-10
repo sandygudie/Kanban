@@ -36,13 +36,20 @@ export default function Index() {
     isError,
   } = useGetWorkspaceBoardsQuery(Id);
 
+  console.log(workspaceDetails)
+  const memberPics = workspaceDetails?.data.workspace.members.map((ele: {
+    name: string; profilePics: string; 
+})=>{
+    return {name:ele.name,profilePics:ele.profilePics}
+  })
+
   return (
     <>
       {isLoading || isLoadingBoard ? (
         <BoardSkeleton />
       ) : isSuccess ? (
         <div className="w-full h-full relative">
-          <Header />
+          <Header  memberPics={memberPics}/>
           <div className="w-full h-screen">
             <div
               className={`absolute top-[65px] ${

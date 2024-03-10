@@ -74,7 +74,8 @@ export default function Delete({
       workspaceId: workspace.id,
     }).unwrap();
     if (response) {
-      window.location.href = `/workspaces`;
+      navigate(`/workspaces`);
+      // window.location.href = `/workspaces`;
     }
   };
 

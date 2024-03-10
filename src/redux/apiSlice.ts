@@ -6,10 +6,18 @@ const baseURL = import.meta.env.VITE_API_BASEURL;
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery({ baseUrl: baseURL }),
-  tagTypes: ["Workspace", "Board", "Column", "Task"],
+  tagTypes: ["Workspace", "User","Board", "Column", "Task"],
 
   endpoints: (builder) => ({
     
+    UpdateUser: builder.mutation({
+      query: (payload) => ({
+        url: `/user/${payload.userId}`,
+        method: "PATCH",
+        data: payload.formData,
+      }),
+      invalidatesTags: ["User","Workspace",],
+    }),
     // Workspace
     createWorkspace: builder.mutation({
       query: (payload) => ({
@@ -200,6 +208,7 @@ export const apiSlice = createApi({
 });
 
 export const {
+  useUpdateUserMutation,
   useLazyGetAllWorkspacesQuery,
   useGetWorkspaceBoardsQuery,
   useUpdateWorkspaceProfileMutation,

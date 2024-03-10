@@ -157,7 +157,7 @@ export default function Members({ workspaceId }: Props) {
             </div>
 
             <div className="mt-20">
-              <h1 className="font-bold text-base border-b-[1px] border-gray/20 pb-2 ">
+              <h1 className="font-bold text-base border-b-[1px] border-gray/20 pb-2">
                 Pending Members
               </h1>
               {workspace?.data.pendingMembers.length ? (

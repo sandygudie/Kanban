@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import logoMobile from "../../assets/logo-mobile.svg";
 import Icon from "components/Icon";
 import ToggleBtn from "components/ToggleBtn";
@@ -14,13 +14,7 @@ export default function Index() {
   const currentTheme = localStorage.getItem("theme")!;
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const updateThemehandler = (theme: string) => setTheme(theme);
-  const { data: response, isLoading, isSuccess } = useGetAllWorkspacesQuery();
-
-  useEffect(() => {
-    if (isSuccess && response?.data?.workspace.length < 1) {
-      // window.location.href = `/login`;
-    }
-  }, [isSuccess, response]);
+  const { data: response, isLoading } = useGetAllWorkspacesQuery();
 
   return (
     <>
@@ -63,12 +57,12 @@ export default function Index() {
           </div>
         ) : (
           response.data.workspace.length > 0 && (
-            <div className="h-full ">
-              <div className="mx-auto h-full mt-10 flex flex-col items-center justify-start">
+            <div className="">
+              <div className="mx-auto mt-10">
                 <h1 className="text-center text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
                 </h1>
-                <div className="block md:grid px-8 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
+                <div className="block md:grid w-10/12 mx-auto md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
                   {response.data.workspace.map((ele: any) => {
                     return (
                       <button
@@ -108,7 +102,11 @@ export default function Index() {
             </div>
           )
         )}
-        <div className="text-center h-full mx-auto w-56 flex flex-col items-center justify-center">
+        <div
+          className={`text-center mx-auto w-56 flex flex-col items-center justify-center ${
+            response?.data.workspace.length > 0 ? "h-auto mt-10" : "h-full"
+          }`}
+        >
           <Link
             className="bg-primary/70  hover:bg-primary text-white flex-col flex items-center justify-center text-sm py-4 px-8 rounded-lg font-bold"
             to="/workspace/new"

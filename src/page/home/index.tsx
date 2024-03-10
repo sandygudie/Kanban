@@ -1,14 +1,14 @@
 import { useRef } from "react";
-import Icon from "components/Icon";
+
 import { Link } from "react-router-dom";
-import Marquee from "react-fast-marquee";
+// import Marquee from "react-fast-marquee";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { GoDotFill } from "react-icons/go";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { CgWebsite } from "react-icons/cg";
-import { MdOutlineEmail } from "react-icons/md";
+// import { GoDotFill } from "react-icons/go";
+// import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+// import { CgWebsite } from "react-icons/cg";
+// import { MdOutlineEmail } from "react-icons/md";
 
 export default function Index() {
   gsap.registerPlugin(ScrollTrigger);
@@ -45,23 +45,26 @@ export default function Index() {
     { scope: hero }
   );
 
-  const navItems = [
-    { title: "Why Track?", link: "features" },
-    { title: "Features", link: "features" },
-    { title: "Technologies", link: "technologies" },
-    { title: "Support", link: "connect" },
-  ];
+  // const navItems = [
+  //   { title: "Why Track?", link: "features" },
+  //   { title: "Features", link: "features" },
+  //   { title: "Technologies", link: "technologies" },
+  //   { title: "Support", link: "connect" },
+  // ];
   return (
     <div className="home-container h-screen bg-white overflow-y-auto relative w-full">
       <div ref={hero} className="h-full w-full relative z-20 text-black">
-        <header className="header shadow-lg flex items-center justify-between px-4 lg:px-16 py-4">
-          <Link className="hidden md:inline" to="/">
-            <Icon type="kanban_logo" />
+        <header className="header  flex items-center justify-between px-4 lg:px-16 py-4">
+          <Link className="inline-flex items-center gap-x-4" to="/">
+            <img
+              src="logo.webp"
+              className="w-8 h-8"
+              alt="mutiple-projects-image"
+            />
+            <span className="font-bold text-2xl">TRACK</span>
           </Link>
-          <Link className="inline md:hidden" to="/">
-            <Icon type="logo_mobile" />
-          </Link>
-          <div className="hidden md:flex items-center gap-x-12 w-3/6 justify-end">
+
+          {/* <div className="hidden md:flex items-center gap-x-12 w-3/6 justify-end">
             {navItems.map((ele) => {
               return (
                 <a
@@ -73,7 +76,7 @@ export default function Index() {
                 </a>
               );
             })}
-          </div>
+          </div> */}
           <div className="flex items-center ">
             <Link
               to="/login"
@@ -92,20 +95,20 @@ export default function Index() {
         </header>
         <main>
           <div>
-            <div className="px-3 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
-              <h1 className="font-bold text-[2rem] md:text-6xl">
+            <div className="px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
+              <h1 className="font-bold text-[2.5rem] md:text-6xl text-primary">
                 <p className="title-left"> Effortlessly Manage </p>
                 <p className="title-right">Your Projects.</p>
               </h1>
               <div className="description ">
-                <p className="md:px-8 lg:p-0 md:text-[20px] my-8 font-normal leading-[2.5rem]">
-                  <span className="font-bold">Kanban</span> offers a visual view
+                <p className="md:px-8 lg:p-0 text-[20px] my-8 font-normal leading-[2.5rem]">
+                  <span className="font-bold">TRACK</span> offers a visual view
                   for teams to manage tasks, quickly shift priorities, track
                   project progress, and stay on top of deadlines.
                 </p>
 
                 <div className="w-auto md:w-fit mx-auto relative">
-                  <input
+                 <input
                     placeholder="Email"
                     className="rounded-full w-full md:w-[30rem] py-4 px-6"
                   />
@@ -115,16 +118,28 @@ export default function Index() {
                   >
                     Get Started
                   </Link>
-                </div>
+                </div> 
               </div>
             </div>
           </div>
-          <section
+          {/* </div> */}
+          {/* <section
             id="features"
-            className="px-4 md:px-0 text-center rounded-b-[9rem] py-24"
-          >
-            <h1 className="text-3xl md:text-4xl font-bold">Features</h1>
-            <div className="box my-6 md:my-16 ">
+            className="px-4 md:px-0 text-center rounded-b-[9rem] py-8 md:py-24"
+          > */}
+            {/* <div className="flex items-center justify-center">
+              <img
+                src="full-board.webp"
+                className=""
+                alt="mutiple-projects-image"
+              />
+
+              <p className="text-2xl md:text-3xl font-semibold mb-4">
+                What you get
+              </p>
+            </div> */}
+            {/* <h1 className="text-3xl md:text-4xl font-bold">Features</h1> */}
+            {/* <div className="box my-6 md:my-16 ">
               <div className="simplified-view grid items-center md:grid-cols-2 md:ml-24">
                 <img
                   src="full-board.webp"
@@ -160,9 +175,9 @@ export default function Index() {
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-          <section
+            </div> */}
+          {/* </section> */}
+          {/* <section
             id="technologies"
             className="px-3 md:px-0 md:mx-auto text-center"
           >
@@ -229,9 +244,9 @@ export default function Index() {
                 <MdOutlineEmail />
               </Link>
             </div>
-          </section>
+          </section> */}
         </main>
-        <footer className="py-3 w-full text-sm bg-primary text-center text-white">
+        <footer className="py-3 w-full absolute bottom-0 text-sm bg-primary text-center text-white">
           Copyright <span>&copy;</span>
           {new Date().getFullYear()}. Sandy Goodnews
         </footer>

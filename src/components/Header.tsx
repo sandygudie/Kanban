@@ -17,7 +17,7 @@ import { GoArrowSwitch } from "react-icons/go";
 import { GrNewWindow } from "react-icons/gr";
 import { DefaultImage } from "utilis";
 
-export default function Header() {
+export default function Header({ memberPics }: any) {
   const navigate = useNavigate();
   const data: AppState = useSelector(appData);
   const { active, workspace, user } = data;
@@ -40,6 +40,7 @@ export default function Header() {
     }
   }
 
+  console.log(memberPics);
   return (
     <>
       <header className="fixed w-full z-40">
@@ -56,7 +57,6 @@ export default function Header() {
                 />
               </div>
               <button
-              
                 onClick={() => {
                   setWorkspaceMenu(!isWorkspaceMenu);
                 }}
@@ -140,7 +140,7 @@ export default function Header() {
           </div>
 
           <div
-            className={`w-[calc(100%_-_220px)] flex items-center w-full justify-between px-4 md:px-6`}
+            className={`w-[calc(100%_-_220px)] flex items-center justify-between px-4 md:px-6`}
           >
             {active ? (
               <button
@@ -161,7 +161,30 @@ export default function Header() {
               </Link>
             )}
 
-            <div className="flex items-center gap-x-6">
+            <div className="flex items-center gap-x-8">
+              <div className="img_container">
+                {memberPics.map(
+                  (
+                    ele: { name: string; profilePics: string },
+                    index: number
+                  ) => (
+                    <button className="avatar w-auto h-auto" key={index}>
+                      {ele.profilePics == null ? (
+                        <p className="w-8 h-8 rounded-full border flex flex-col justify-center items-center font-bold
+                      ">
+                          {" "}
+                          {DefaultImage(ele.name)}
+                        </p>
+                      ) : (
+                        <img
+                          className="w-8 h-8 rounded-full img"
+                          src={ele.profilePics}
+                        />
+                      )}
+                    </button>
+                  )
+                )}
+              </div>
               <button
                 onClick={() => toggleFullScreen()}
                 className="font-bold text-primary text-xl"

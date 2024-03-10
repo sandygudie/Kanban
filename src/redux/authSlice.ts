@@ -35,14 +35,6 @@ export const authSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
-    UpdateUser: builder.mutation({
-      query: (payload) => ({
-        url: `/user/${payload.userId}`,
-        method: "PATCH",
-        data: payload.formData,
-      }),
-      invalidatesTags: ["User","Workspace",],
-    }),
   }),
 });
 
@@ -50,5 +42,5 @@ export const {
   useCreateUserMutation,
   useLoginUserMutation,
   useVerifyEmailMutation,
-  useUpdateUserMutation
+ 
 } = authSlice;

@@ -5,7 +5,7 @@ module.exports = {
   darkMode: "class",
   theme: {
     colors: {
-      primary: "hsla(242, 48% ,58%,1)",
+      primary: "#008b8b",
       secondary: "hsla(0 ,0% ,12.55%,1)",
       "secondary-dark": "hsla(235, 16%, 15%,1)",
       gray: "hsla(216, 15%, 57%, 1)",
@@ -24,6 +24,7 @@ module.exports = {
     screens: {
       xs: "100px",
       sm: "300px",
+      mini:"700px",
       md: "991px",
       lg: "1200px",
     },
