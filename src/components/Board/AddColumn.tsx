@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
 import { useCreateColumnMutation } from "redux/apiSlice";
+import { IoIosAdd } from "react-icons/io";
 
 interface Props {
   handleClose: () => void;
@@ -67,7 +68,7 @@ export default function AddColumn({ handleClose }: Props) {
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-2 px-4">Add Column</h1>
+      <h1 className="font-bold text-lg pb-2 px-4">Column(s)</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem] px-4">
         <Formik
           initialValues={{ columns: [{ _id: uuidv4(), name: "", tasks: [] }] }}
@@ -79,7 +80,7 @@ export default function AddColumn({ handleClose }: Props) {
           {({ values, errors, }) => (
             <Form>
               <div className="mb-6">
-                <label className="text-sm font-bold">Columns</label>
+                {/* <label className="text-sm font-bold">Columns</label> */}
                 <FieldArray
                   name="columns"
                   render={(arrayHelpers) => (
@@ -96,7 +97,7 @@ export default function AddColumn({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-primary/40 text-primary dark:bg-white dark:text-primary px mt-3 font-bold text-sm -2 py-3 w-full rounded-full"
+                        className="bg-primary/40 text-primary dark:bg-white dark:text-primary px mt-3 font-bold text-sm -2 py-3 w-full flex items-center justify-center rounded-full"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -106,7 +107,7 @@ export default function AddColumn({ handleClose }: Props) {
                           });
                         }}
                       >
-                        + Add Column
+                        <IoIosAdd  className="font-bold" size={20} />{" "} Add Column
                       </button>
 
                       {values.columns.length >= 0 ? (
@@ -126,10 +127,10 @@ export default function AddColumn({ handleClose }: Props) {
               <div className="my-8 relative ">
                 <button
                   aria-label="Board"
-                  className="px-2 text-white bg-primary/70 hover:bg-primary font-bold py-4 flex justify-center items-center h-14 flex-col w-full rounded-full"
+                  className="text-white bg-primary/70 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
-                  {isLoading ? <Loader /> : "Submit"}
+                  {isLoading ? <Loader /> : "Add Column(s)"}
                 </button>
                 {error.length ? (
                   <p className="text-error absolute text-xs flex items-center mt-2 gap-x-2">

@@ -31,7 +31,7 @@ export default function Index() {
         className=""
       >
         {({ values, errors }) => (
-          <Form className="rounded-md p-10 bg-secondary h-full mt-20">
+          <Form className="rounded-md p-6 md:p-10 bg-secondary h-full mt-20">
             <label className="text-sm font-bold ">Social accounts</label>
             <FieldArray
               name="socialLinks"
@@ -40,9 +40,8 @@ export default function Index() {
                   {values.socialLinks &&
                     values.socialLinks.length > 0 &&
                     values.socialLinks.map((ele: any, index: number) => (
-                     <div key={index} className="flex items-center w-96 gap-x-2">
+                     <div key={index} className="flex items-center w-auto gap-x-2">
                         <BiLink className="text-xl text-gray"/>
-
                          <SubtaskInput
                         index={index}
                         name={`socialLinks.${index}.name`}

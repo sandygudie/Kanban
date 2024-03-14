@@ -20,6 +20,7 @@ import {
   useEditTaskMutation,
 } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
+import { IoIosAdd } from "react-icons/io";
 
 interface Props {
   handleClose: () => void;
@@ -44,7 +45,6 @@ export default function AddTask({
   const active: IBoard = data.active;
   const workspace: IWorkspaceProfile = data.workspace;
   const toast = useToast();
-
 
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
@@ -80,7 +80,7 @@ export default function AddTask({
           columnId: activeColumn?._id,
         };
         const response = await createTask(payload).unwrap();
-// console.log(response)
+        // console.log(response)
         if (response) {
           dispatch(
             addTask({
@@ -216,7 +216,7 @@ export default function AddTask({
                   title: "",
                   description: "",
                   status: activeColumn?.name,
-                  subtasks: [],
+                  subtasks: [{ _id: uuidv4(), title: "", isCompleted: false }],
                 }
           }
           validationSchema={TaskSchema}
@@ -228,7 +228,7 @@ export default function AddTask({
         >
           {({ values, errors }) => (
             <Form className="pb-4">
-              <div className="mb-6">
+              <div className="">
                 <TextInput
                   label="Title"
                   name="title"
@@ -236,22 +236,21 @@ export default function AddTask({
                   placeholder="E.g Pending design task"
                 />
               </div>
-              <div className="my-6">
+              <div className="my-4">
                 <TextArea
-                  placeholder="E.g  The hero page design is not completed"
+                  placeholder="E.g The hero page design is not completed"
                   name="description"
                   label="Description"
                 />
               </div>
 
-              <div className="mb-6">
+              <div className="">
                 <label className="text-sm font-bold">Subtasks</label>
                 <FieldArray
                   name="subtasks"
                   render={(arrayHelpers) => (
                     <div>
-                      {values.subtasks &&
-                        values.subtasks.length > 0 &&
+                      {values.subtasks.length > 0 &&
                         values.subtasks.map((task: ISubTask, index: number) => (
                           <SubtaskInput
                             key={task._id}
@@ -263,7 +262,7 @@ export default function AddTask({
                         ))}
                       <button
                         aria-label="Add Subtasks"
-                        className="dark:bg-white bg-primary/50 mt-2 font-bold text-sm text-primary px-2 py-3 w-full rounded-full"
+                        className="bg-primary/40 text-primary dark:bg-white dark:text-primary px mt-3 font-bold text-sm -2 py-3 w-full flex items-center justify-center rounded-full"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -273,7 +272,8 @@ export default function AddTask({
                           });
                         }}
                       >
-                        + Add New Subtask
+                        <IoIosAdd className="font-bold" size={20} /> Add
+                        subtasks
                       </button>
 
                       {values.subtasks.length >= 0 ? (

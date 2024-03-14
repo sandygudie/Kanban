@@ -23,7 +23,6 @@ export default function Index() {
       } else {
         const workspaceData = loadWorkspaceData();
         setId(workspaceData?.workspaceId);
-        
       }
     }
     setLoadingBoard(false);
@@ -36,12 +35,11 @@ export default function Index() {
     isError,
   } = useGetWorkspaceBoardsQuery(Id);
 
-  console.log(workspaceDetails)
-  const memberPics = workspaceDetails?.data.workspace.members.map((ele: {
-    name: string; profilePics: string; 
-})=>{
-    return {name:ele.name,profilePics:ele.profilePics}
-  })
+  const memberPics = workspaceDetails?.data.workspace.members.map(
+    (ele: { name: string; profilePics: string }) => {
+      return { name: ele.name, profilePics: ele.profilePics };
+    }
+  );
 
   return (
     <>
@@ -49,7 +47,7 @@ export default function Index() {
         <BoardSkeleton />
       ) : isSuccess ? (
         <div className="w-full h-full relative">
-          <Header  memberPics={memberPics}/>
+          <Header memberPics={memberPics} />
           <div className="w-full h-screen">
             <div
               className={`absolute top-[65px] ${
@@ -64,8 +62,10 @@ export default function Index() {
               />
               <div
                 className={`${
-                  showSidebar ? "translate-x-[220px] w-[85vw]" : "translate-x-0"
-                } max-w-screen-2xl h-full transition duration-700 ease-in-out pr-10`}
+                  showSidebar
+                    ? "mini:translate-x-[220px] mini:w-[calc(100%_-_220px)]"
+                    : "translate-x-0"
+                } max-w-screen-2xl h-full transition duration-700 ease-in-out `}
               >
                 <Outlet />
               </div>
@@ -78,7 +78,7 @@ export default function Index() {
             }}
             className={` ${
               showSidebar ? "opacity-0 delay-100" : "opacity-100 delay-500"
-            } cursor-pointer z-20 fixed top-16 text-white rounded-r-full bg-primary p-2 transition ease-in-out`}
+            } cursor-pointer z-20 hidden mini:block fixed top-16 text-white/50 rounded-r-full bg-gray-200 p-2 transition ease-in-out`}
           >
             {" "}
             <GoSidebarCollapse size={20} />{" "}
@@ -86,7 +86,7 @@ export default function Index() {
         </div>
       ) : isError ? (
         <div className="flex items-center justify-center flex-col">
-          <Spinner/>
+          <Spinner />
         </div>
       ) : null}
     </>

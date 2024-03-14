@@ -1,6 +1,6 @@
 import { FiMoreVertical } from "react-icons/fi";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Popup from "components/Popup";
 import { useDispatch } from "react-redux";
 import SelectBox from "components/SelectBox";
@@ -25,9 +25,12 @@ import { RangePickerProps } from "antd/es/date-picker";
 import * as dayjs from "dayjs";
 import * as relativeTime from "dayjs/plugin/relativeTime";
 import { DefaultImage } from "utilis";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import IconButton from "components/IconButton";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
+  const navigate = useNavigate();
   const { RangePicker } = DatePicker;
   const dispatch = useDispatch();
   const [isAssign, setAssign] = useState(false);
@@ -57,7 +60,7 @@ export default function TaskDetails() {
   const handleSelectedColumn = (selectedColumn: string) => {
     setSelectedColumn(selectedColumn);
   };
-console.log(workspace )
+
   const handleOnChange = async (id: number) => {
     const updatedCheckedState = checkedState.map((item: any, index: number) =>
       index === id ? !item : item
@@ -136,27 +139,28 @@ console.log(workspace )
     dayjs(tasks?.data.dueDate[0]),
     "day"
   );
-
-
+  //  <HiOutlineChevronDown className="mt-1 text-sm" /> className="mt-1 text-sm" />
   return (
     <>
       {tasks ? (
-        <div className="pl-14 pt-8">
-          <div className="text-lg font-bold flex mt-3 items-center justify-between">
+        <div className="px-6 overflow-auto h-full mini:px-14 pt-14 pb-24">
+       
+          <div className="text-lg font-bold items-start justify-between relative">
+        <div className="absolute -top-[20px]">  <IconButton handleClick={()=> navigate(-1)}> <HiOutlineChevronLeft className="mt-1" /></IconButton></div>
             <div>
               {" "}
               <p className="text-3xl"> {tasks?.data.title}</p>
-              <span className="text-gray/80 font-thin mt-1 text-xs flex">
+              <span className="text-gray/80 font-thin mt-1 text-xs mini:flex">
                 created by {tasks.data.createdBy} on{" "}
-                {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")} 
-              <span className="flex items-center ml-3">
-              <LuDot className="text-smtext-success"/> updated{" "}
-                {dayjs(tasks.data.updatedAt).fromNow()}
-              </span>
+                {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")}
+                <span className="flex items-center mini:ml-3">
+                  <LuDot className="mini:text-sm text-gray" /> updated{" "}
+                  {dayjs(tasks.data.updatedAt).fromNow()}
+                </span>
               </span>
             </div>
-            <div className="relative">
-              <button className="text-3xl hover:text-primary">
+            <div className="absolute top-0 right-0">
+              <button className="text-2xl mini:text-3xl hover:text-primary">
                 <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
               </button>
               {isOpenMenu && (
@@ -165,7 +169,7 @@ console.log(workspace )
                   items={[
                     {
                       title: (
-                        <div className="flex items-center  gap-x-3 dark:text-white/80">
+                        <div className="flex items-center gap-x-2 dark:text-white/80">
                           <CiEdit className="text-gray text-sm" /> Edit
                         </div>
                       ),
@@ -175,7 +179,7 @@ console.log(workspace )
                     },
                     {
                       title: (
-                        <div className="flex items-center w-24 gap-x-3 dark:text-white/80">
+                        <div className="flex items-center w-20 gap-x-2 dark:text-white/80">
                           <MdDelete className="text-error" /> Delete
                         </div>
                       ),
@@ -189,15 +193,15 @@ console.log(workspace )
               )}
             </div>
           </div>
-          <div className="mt-8 ">
+          <div className="mt-8">
             <p className="font-semibold text-sm mb-2">Description</p>
             <p className="text-white/50 rounded-md w-8/12">
               {tasks.data.description
                 ? tasks.data.description
                 : "No description"}
             </p>
-            <div className="my-14 flex items-center justify-between">
-              <div className="w-96">
+            <div className="mt-10 md:my-14 flex flex-col md:flex-row gap-x-36 gap-y-8 md:items-center">
+              <div className="md:w-96">
                 <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
@@ -231,7 +235,7 @@ console.log(workspace )
                 </div>
               </div>
 
-              <div className="w-[30rem] relative">
+              <div className="md:w-[36rem] relative">
                 <p className="font-semibold mb-2 text-sm">Assignees</p>
                 <button
                   onClick={() => setAssign(true)}
@@ -248,14 +252,18 @@ console.log(workspace )
                       return {
                         title: (
                           <div className="py-1 px-4 font-bold text-[0.8rem] flex items-center gap-x-3">
-                           {ele.profilePics? <img
-                              className="w-6 h-6 rounded-full"
-                              src={ele.profilePics}
-                              alt="profile pic"
-                            />:  <span className="h-[40px] w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
-                            {DefaultImage(ele.name)}
-                          </span>}
-                            <span> {ele.name}</span>
+                            {ele.profilePics ? (
+                              <img
+                                className="w-6 h-6 rounded-full"
+                                src={ele.profilePics}
+                                alt="profile pic"
+                              />
+                            ) : (
+                              <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                                {DefaultImage(ele.name)}
+                              </span>
+                            )}
+                            <span>{ele.name}</span>
                           </div>
                         ),
                         handler: () => {},
@@ -265,8 +273,8 @@ console.log(workspace )
                 )}
               </div>
             </div>
-            <div className="flex justify-between items-start mt-10">
-              <div className="pb-6 w-96">
+            <div className="flex flex-col md:flex-row gap-x-36 gap-y-8 items-start mt-10">
+              <div className="pb-6 w-full md:w-96">
                 <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
@@ -277,18 +285,19 @@ console.log(workspace )
                   workspaceId={workspaceId}
                 />
               </div>
-              <div>
+              <div className="md:w-[36rem]">
                 <p className="text-sm font-bold mb-4">Labels</p>
-                <div className="w-[30rem] flex items-start flex-col gap-y-2">
-                  {tasks?.data.dueDate.length >0|| isDate ? (
+                <div className="flex items-start flex-col gap-y-2">
+                  {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center gap-x-4">
-                      <p className="text-sm font-bold mb-2 w-16">Due Date</p>
-                      <div className="flex items-center justify-center gap-x-3">
-                       
+                      <p className="text-xs md:text-sm font-bold mb-2 w-16">
+                        Due Date
+                      </p>
+                      <div className="mini:flex items-center justify-center gap-x-3">
                         <RangePicker
                           onChange={onChangeDate}
                           defaultValue={
-                            tasks?.data.dueDate.length>0
+                            tasks?.data.dueDate.length > 0
                               ? [
                                   dayjs(tasks?.data.dueDate[0]),
                                   dayjs(tasks?.data.dueDate[1]),
@@ -297,13 +306,15 @@ console.log(workspace )
                           }
                           className="px-3 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
                         />
-                        {  tasks?.data.dueDate.length >0 && <p
-                          className={`${
-                            pendingDate > 1 ? "text-success" : "text-error"
-                          } font-bold text-sm mt-1`}
-                        >
-                          {pendingDate} days left
-                        </p>}
+                        {tasks?.data.dueDate.length > 0 && (
+                          <p
+                            className={`${
+                              pendingDate > 1 ? "text-success" : "text-error"
+                            } font-bold text-sm mt-1`}
+                          >
+                            {pendingDate} days left
+                          </p>
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -317,8 +328,10 @@ console.log(workspace )
                     </button>
                   )}
                   {tasks?.data.dueTime || currentTime ? (
-                    <div className="flex items-center gap-x-4">
-                      <p className="text-sm font-bold mb-2 w-16">Time</p>
+                    <div className="flex items-center gap-x-2 md:gap-x-4">
+                      <p className="text-xs md:text-sm font-bold mb-2 w-16">
+                        Time
+                      </p>
                       <TimePicker
                         defaultValue={
                           tasks?.data.dueTime

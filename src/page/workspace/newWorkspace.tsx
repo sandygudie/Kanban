@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Icon from "components/Icon";
 import logoMobile from "../../assets/logo-mobile.svg";
-import ToggleBtn from "components/ToggleBtn";
+// import ToggleBtn from "components/ToggleBtn";
 import { Formik, Form, FormikErrors } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "components/InputField";
@@ -170,7 +170,7 @@ const CreateWorkspaceForm = () => {
 
           <div className="my-10">
             <button
-              className=" px-2 flex-col flex items-center justify-center text-white bg-primary h-14 font-bold py-4 w-full rounded-full"
+              className="px-2 flex-col flex items-center justify-center text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
               type="submit"
             >
               {isLoading ? <Loader /> : "Continue"}
@@ -219,7 +219,7 @@ const JoinWorkspaceForm = () => {
             label="Workspace Name"
             name="workspaceName"
             type="text"
-            placeholder="Workspace name"
+            placeholder="Name"
           />
         </div>
         <div className="my-4">
@@ -227,7 +227,7 @@ const JoinWorkspaceForm = () => {
             label="Workspace Code"
             name="inviteCode"
             type="text"
-            placeholder="Workspace invite code"
+            placeholder="Invite code"
           />
         </div>
         {error ? (
@@ -239,7 +239,7 @@ const JoinWorkspaceForm = () => {
         <div className="my-8">
           <button
             aria-label="Board"
-            className=" px-2 text-white bg-primary h-14 font-bold py-4 w-full text-sm rounded-full flex-col flex items-center justify-center"
+            className="px-2 flex-col flex items-center justify-center text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
             type="submit"
           >
             {isLoading ? <Loader /> : "Continue"}
@@ -252,11 +252,11 @@ const JoinWorkspaceForm = () => {
 
 export default function NewWorkspace() {
   const navigate = useNavigate();
-  const currentTheme = localStorage.getItem("theme")!;
-  const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
+  // const currentTheme = localStorage.getItem("theme")!;
+  // const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const [toggle, setToggle] = useState(true);
   const currentWorkspace = loadWorkspaceData();
-  const updateThemehandler = (theme: string) => setTheme(theme);
+  // const updateThemehandler = (theme: string) => setTheme(theme);
 
   return (
     <div className={`w-full h-full `}>
@@ -277,7 +277,7 @@ export default function NewWorkspace() {
           ) : (
             <p>No Workspace</p>
           )}
-          <ToggleBtn updateThemehandler={updateThemehandler} theme={theme} />
+          {/* <ToggleBtn updateThemehandler={updateThemehandler} theme={theme} /> */}
         </div>
       </header>
       <main className="h-screen overflow-auto">
@@ -288,9 +288,9 @@ export default function NewWorkspace() {
             loading="eager"
             className="hidden md:inline w-[25rem] h-auto"
           />
-          <div className="w-96 mx-6 md:mx-0 h-[34rem] md:h-[30rem]">
+          <div className="w-96 mx-6 md:mx-0 h-[34rem]">
             <div>
-              <h1 className="text-primary text-xl sm:text-3xl md:text-3xl font-bold ">
+              <h1 className="text-white text-xl sm:text-3xl md:text-3xl font-bold ">
                 Welcome to Kanban!
               </h1>
               <p className="text-gray mt-1 text-sm mb-5">
@@ -300,16 +300,16 @@ export default function NewWorkspace() {
             <div className="flex items-center gap-x-4">
               <button
                 className={`${
-                  toggle ? "bg-primary text-white" : "bg-gray/30 text-base"
-                }  w-full rounded-full text-xs md:text-sm p-3`}
+                  toggle ? "bg-gray-200 text-white" : "text-base"
+                }  w-full rounded-full text-xs p-3 border-[1px] border-gray-100`}
                 onClick={() => setToggle(true)}
               >
                 Create Workspace
               </button>
               <button
                 className={`${
-                  !toggle ? "bg-primary text-white" : "text-base bg-gray/30"
-                }  w-full rounded-full text-xs md:text-sm p-3`}
+                  !toggle ? "bg-gray-200 text-white" : "text-base "
+                }  w-full rounded-full text-xs p-3 border-[1px] border-gray-100`}
                 onClick={() => setToggle(false)}
               >
                 Join Workspace

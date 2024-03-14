@@ -16,7 +16,7 @@ export default function BoardSkeleton() {
         </div>
       </header>
       <div className="flex pt-[4em] h-screen">
-        <div className="w-48 bg-secondary p-2 md:p-6  border border-r-[1px] border-gray/10">
+        <div className="hidden mini:block w-48 bg-secondary p-2 md:p-6  border border-r-[1px] border-gray/10">
           <div>
             <Skeleton />
             <div className="mt-8">

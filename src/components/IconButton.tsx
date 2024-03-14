@@ -5,5 +5,5 @@ interface Props {
   handleClick: () => void;
 }
 export default function IconButton({ children, handleClick }: Props) {
-  return <button className="hover:text-primary" onClick={handleClick}>{children}</button>;
+  return <button className="hover:text-gray" onClick={handleClick}>{children}</button>;
 }

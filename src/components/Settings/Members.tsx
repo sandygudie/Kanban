@@ -67,12 +67,12 @@ export default function Members({ workspaceId }: Props) {
     <>
       <div className="h-screen">
         <div className="flex items-center pb-2 justify-between border-b-[1px] border-gray/20">
-          <h1 className="font-bold text-base ">Workspace Members</h1>
+          <h1 className="font-bold text-sm md:text-base">Workspace Members</h1>
           <button
             onClick={() => {
               setIsOpenInvite(true);
             }}
-            className="px-2 py-2 bg-success font-bold rounded-md"
+            className="px-2 text-sm md:text-base py-2 bg-success font-bold rounded-md"
           >
             Invite members
           </button>
@@ -85,7 +85,7 @@ export default function Members({ workspaceId }: Props) {
               {workspace?.data.members.map((ele: any) => {
                 return (
                   <div
-                    className="flex items-center mt-2 justify-between text-sm"
+                    className="md:flex items-center mt-2 justify-between text-sm"
                     key={ele?.userId}
                   >
                     <div className="">
@@ -93,7 +93,7 @@ export default function Members({ workspaceId }: Props) {
                       <p className="font-semibold">{ele.name}</p>{" "}
                       <p className="text-gray/70 text-sm">{ele.email}</p>
                     </div>
-                    <div className="flex gap-x-3 items-center mt-4">
+                    <div className="flex gap-x-3 justify-between items-center mt-4">
                       {" "}
                       <p className="font-bold pr-6">{TitleCase(ele.role)}</p>
                       <div className="relative">

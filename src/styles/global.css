@@ -108,12 +108,12 @@
   select {
     font: inherit;
     background-color: transparent;
-    @apply border-gray/50 border-[1px];
+    @apply border-gray/20 border-[1px];
   }
   input:focus-visible,
   textarea:focus-visible {
     outline: none;
-    @apply border-primary;
+    @apply border-gray/40;
   }
   button {
     cursor: pointer;
@@ -188,7 +188,7 @@
 
 .img_container {
   display: inline-flex;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
 }
 
 .img {
@@ -196,16 +196,16 @@
   border: 1px solid #fff;
   border-radius: 50%;
   overflow: hidden;
-  width: 100px;
+  /* width: 100px; */
 }
 
 .avatar:not(:last-child) {
-  margin-right: -20px;
+  margin-right: -5px;
   z-index: 10;
 }
 
 .avatar img {
-  width: 100%;
+  /* width: 100%; */
   display: block;
 }
 

@@ -39,7 +39,7 @@ export const TextInput = ({
         
         className={`${
           meta.error ? "border-error/70 border-solid" : null
-        } px-4 py-4 w-full border-[1px] mt-2 rounded-md outline-none text-sm placeholder:text-xs`}
+        } px-4 py-4 w-full mt-2 rounded-md outline-none text-sm placeholder:text-xs`}
       />
       {meta.touched || meta.error ? (
         <div className="absolute -bottom-3 text-error/70 text-xs">
@@ -89,7 +89,7 @@ export const SubtaskInput = ({
           {...props}
           className={`${
             meta.error ? " border-error/70 border-solid" : null
-          } px-4 py-2.5 w-full text-sm placeholder:text-xs border-[1px] rounded-md outline-none`}
+          } px-4 py-3 w-full text-sm placeholder:text-xs border-[1px] rounded-md outline-none`}
         />
         <button onClick={() => arrayHelpers.remove(index)}>
           <MdClose className="text-lg hover:text-primary font-bold" />

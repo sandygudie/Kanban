@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
@@ -10,14 +10,16 @@ export default function Index() {
   const [signUp, { isLoading }] = useCreateUserMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState("");
+  const location = useLocation();
   const [error, setError] = useState(false);
   const [signupError, setSignupError] = useState("");
   const [signupSuccess, setSignupSuccess] = useState("");
   const [validatePassword, setValidatePassword] = useState<string[]>([]);
 
+
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    email: location.state,
   });
   const passwordValidation = ["An uppercase letter", "5 characters minimum"];
   const noSpacesCheck = /\s/g;
@@ -96,15 +98,15 @@ export default function Index() {
   return (
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
-        <div className="md:w-8/12 mx-auto">
+        <div className="w-9/12  mini:w-[50rem] mx-auto">
           <h1 className="font-bold text-3xl md:mt-8 md:pb-12 text-center">
             Sign Up
           </h1>
           <div className=" relative">
-            <div className="flex gap-x-24 items-center">
+            <div className="flex gap-x-20 items-center">
             <form
               onSubmit={handleSubmit}
-              className="w-full md:w-1/2 relative flex items-center md:border border-solid py-10 px-4 sm:px-12 md:shadow-lg flex-col gap-y-4 justify-center "
+              className="w-full md:w-1/2 relative flex items-center md:border border-solid py-10 md:p-8  md:shadow-lg flex-col gap-y-4 justify-center "
             >
               <div className="block md:hidden">
                 <button
@@ -218,7 +220,7 @@ export default function Index() {
 
               <div className="w-full mt-10">
                 <button
-                  className="bg-primary flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
+                  className="bg-secondary-dark flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Continue with Email"}

@@ -3,7 +3,7 @@ import AddTask from "./AddTask";
 import { BsCircleFill } from "react-icons/bs";
 import TaskItem from "./TaskItem";
 import { Droppable, DragDropContext } from "@hello-pangea/dnd";
-import { colorMarker} from "utilis";
+import { colorMarker } from "utilis";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, appData, deleteTask, editColumnName } from "redux/boardSlice";
 import { v4 as uuidv4 } from "uuid";
@@ -21,6 +21,7 @@ import {
   useDeleteTaskMutation,
   useEditColumnMutation,
 } from "redux/apiSlice";
+import { IoIosAdd } from "react-icons/io";
 
 export default function ActiveBoard() {
   const dispatch = useDispatch();
@@ -108,8 +109,8 @@ export default function ActiveBoard() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className=" overflow-x-auto settings_scroll overflow-y-hidden">
-          <div className="z-10 h-full flex gap-x-10 w-full pt-8 px-14">
+        <div className="overflow-x-auto settings_scroll overflow-y-hidden">
+          <div className="z-10 h-full flex gap-x-10 w-full pt-12 mini:pt-8 px-8 mini:px-14">
             {active.columns?.map((item: IColumn, index: number) => {
               return (
                 <div
@@ -117,7 +118,7 @@ export default function ActiveBoard() {
                     setSelectedColumn(item), setShowColumnOptions(true);
                   }}
                   key={item._id}
-                  className="w-[250px] cursor-pointer shrink-0"
+                  className="w-[220px] cursor-pointer shrink-0"
                 >
                   <div className="flex h-10 mb-4 justify-between relative items-center">
                     <div className="flex gap-x-1 items-center justify-between w-10/12 text-gray font-bold uppercase text-xs tracking-widest">
@@ -144,9 +145,9 @@ export default function ActiveBoard() {
                           onChange={(e) => editColumnChangeHandler(e)}
                           className={`${
                             inputError && "border-error"
-                          } w-28 px-2 h-8 border-none text-[14px] rounded-md ${
+                          } w-28 px-2 h-8 font-medium text-gray/60 border-none text-[14px] rounded-md ${
                             isEdit && isEditColumn === item._id
-                              ? "bg-gray/5"
+                              ? "bg-gray-100"
                               : "border-none"
                           }`}
                         />
@@ -171,7 +172,7 @@ export default function ActiveBoard() {
                             setEditColumn(item._id);
                           }}
                         >
-                          <div className="bg-secondary px-1.5 rounded-md">
+                          <div className="hover:bg-gray-100 px-1.5 rounded-md">
                             <PiDotsThreeBold className="text-2xl font-bold" />
                           </div>
                         </IconButton>
@@ -235,7 +236,7 @@ export default function ActiveBoard() {
                             })}
                           </div>
                         ) : (
-                          <div className="w-[250px] shrink-0 h-full">
+                          <div className="w-[220px] shrink-0 h-full">
                             <div className="h-[75vh] dark:bg-secondary/20 border-dashed border-[1px] border-gray/20 rounded-lg"></div>
                           </div>
                         )}
@@ -248,14 +249,14 @@ export default function ActiveBoard() {
               );
             })}
 
-            <div className="mt-14 h-[75vh] w-[280px] pr-8 shrink-0">
+            <div className="mt-14 h-[75vh] w-[260px] pr-8 shrink-0">
               <button
                 onClick={() => setAddColumn(true)}
-                className="h-full w-full bg-gray/5 hover:bg-gray/10 cursor-pointer flex items-center flex-col justify-center text-center rounded-lg"
+                className="h-full w-full bg-gray/10 hover:bg-gray/15 cursor-pointer flex items-center flex-col justify-center text-center rounded-lg"
               >
-                <p className="text-lg hover:text-white/70 text-white/50 font-bold">
+                <p className="text-lg hover:text-white/70 text-white/50 font-bold flex items-center">
                   {" "}
-                  + Add Column
+                  <IoIosAdd size={20} />{" "}Add Column
                 </p>
               </button>
             </div>

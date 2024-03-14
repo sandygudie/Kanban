@@ -1,7 +1,7 @@
 import { appData, updateUserProfile } from "redux/boardSlice";
 import { AppState } from "types";
 import { ChangeEvent, useState } from "react";
-import { IoPencilOutline } from "react-icons/io5";
+
 import { DefaultImage } from "utilis";
 import { useUpdateUserMutation } from "redux/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -77,14 +77,14 @@ export default function Index() {
   };
 
   return (
-    <div className="h-full pt-12 px-20">
+    <div className="h-full pt-14 md:pt-8 px-6 md:px-20">
       <div className="h-full overflow-auto pb-24 settings_scroll">
-        <h1 className="text-xl font-bold border-b-[1px] border-gray/10 pb-2">
+        <h1 className="md:text-lg font-bold border-b-[1px] border-gray/10 pb-2">
           User Settings
         </h1>
-        <div className="mt-14 h-auto">
-          <div className="flex items-center justify-between my-4">
-            <label className="text-gray/70 w-64">Name</label>
+        <div className="h-auto">
+          <div className="md:flex items-center justify-between my-4">
+            <label className="text-gray/70 md:w-64 text-sm ">Name</label>
             <input
               name="name"
               value={editedText.name ? editedText.name : user.name}
@@ -95,13 +95,13 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${
+              className={`text-sm font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${
                 isEdit === "name" ? "bg-gray/5" : "border-gray/0"
               }`}
             />
           </div>
-          <div className="flex items-center justify-between my-4">
-            <label className="text-gray/70 w-64">Email</label>
+          <div className="md:flex items-center justify-between my-4">
+            <label className="text-gray/70  text-sm md:w-64">Email</label>
             <input
               name="email"
               value={editedText.email ? editedText.email : user.email}
@@ -112,24 +112,27 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${
+              className={`font-bold text-sm rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${
                 isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
               }`}
             />
           </div>
           <div className="flex items-start my-6">
-            <label className="text-gray/70 w-64">Avatar</label>
-            <div className="w-auto">
+            <label className="text-gray/70 md:w-64 text-sm ">Avatar</label>
+            <div className="w-fit">
               <div className="relative">
                 <label
-                  className="text-white cursor-pointer h-full"
+                  className="text-white cursor-pointer relative h-full"
                   htmlFor="file_input"
                 >
+                    <div className="w-30 absolute top-0 bg-gray z-20 rounded-full flex flex-col items-center justify-center opacity-0 hover:opacity-90 font-bold text-xs h-full p-5 text-center">
+                                 Click to upload image
+                                </div>
                   <div>
                     {user.profilePics || selectedImage ? (
-                      <div className="relative w-32 h-32 rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
+                      <div className="relative w-28 h-auto rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
                         <img
-                        className="w-32 h-32"
+                        className="w-28 h-auto"
                           src={
                             selectedImage
                               ? URL.createObjectURL(selectedImage[0])
@@ -142,7 +145,7 @@ export default function Index() {
                         {DefaultImage(user.name)}
                       </span>
                     )}
-                    <IoPencilOutline className="absolute w-40 bottom-0 -left-2 text-xl" />
+                  
                   </div>
 
                   <input
@@ -165,7 +168,7 @@ export default function Index() {
         </div>
 
         <div className="mt-24 bg-secondary rounded-md px-8 py-4">
-          <h2 className="border-b-[1px] border-gray/10 pb-1 text-lg font-bold">
+          <h2 className="border-b-[1px] border-gray/10 pb-1 text-base font-bold">
             Delete user
           </h2>
           <p className="text-gray/70 text-sm mt-3 mb-4">

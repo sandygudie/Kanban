@@ -25,8 +25,8 @@ export default function Index({
   setShowSidebar,
   handleClose,
   showSidebar,
-  // workspaceId,
-}: Props) {
+}: // workspaceId,
+Props) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ export default function Index({
     <>
       <>
         <div
-          className={`h-screen fixed z-20 w-[220px] transition duration-700 ease-in-out ${
+          className={`hidden mini:block h-screen fixed z-20 w-[220px] transition duration-700 ease-in-out ${
             showSidebar ? "translate-x-0" : "-translate-x-64"
           }`}
         >
@@ -62,7 +62,7 @@ export default function Index({
                           key={options._id}
                           className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-bold cursor-pointer ${`${
                             active?._id === options._id
-                              ? "bg-primary rounded-r-full text-white"
+                              ? "bg-gray-100 rounded-r-full text-white"
                               : "rounded-r-full hover:bg-primary/20"
                           } `} `}
                           onClick={() => {
@@ -79,17 +79,16 @@ export default function Index({
                         >
                           <div className="flex items-center gap-x-2 justify-between">
                             {/* <Icon type="board" /> */}
-                   <         MdSpaceDashboard />
-                              <span
-                                className={`${
-                                  options.name.length > 12
-                                    ? "truncate w-[11ch]"
-                                    : "w-auto"
-                                } block `}
-                              >
-                                {options.name}
-                              </span>
-                              
+                            <MdSpaceDashboard />
+                            <span
+                              className={`${
+                                options.name.length > 12
+                                  ? "truncate w-[11ch]"
+                                  : "w-auto"
+                              } block `}
+                            >
+                              {options.name}
+                            </span>
                           </div>
                         </button>
                       );
@@ -104,7 +103,7 @@ export default function Index({
                         ? handleaddBoardMobile()
                         : setIsOpen(true);
                     }}
-                    className="pl-4 mt-4 font-bold cursor-pointer text-primary/80 hover:text-primary"
+                    className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
                   >
                     <div className="flex items-center">
                       {" "}
@@ -125,7 +124,7 @@ export default function Index({
                 onClick={() => {
                   setShowSidebar ? setShowSidebar(false) : null;
                 }}
-                className="cursor-pointer p-2 rounded-l-full bg-primary text-white border-none inline-flex items-center gap-x-2 text-xs"
+                className="cursor-pointer p-2 rounded-l-full bg-gray-200 text-white border-none inline-flex items-center gap-x-2 text-xs"
               >
                 <GoSidebarExpand size={20} />
               </button>

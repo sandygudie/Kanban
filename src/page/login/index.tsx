@@ -153,14 +153,14 @@ useEffect(()=>{
               </div>
               <div className="w-full mt-4">
                 <button
-                  className="bg-primary flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
+                  className="bg-secondary-dark flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
                   type="submit"
                 >
-                  {isLoading ? <Loader /> : "Continue with Email"}
+                  {isLoading ? <Loader /> : "Continue with email"}
                 </button>
                 <div className="flex items-center justify-between pt-3">
                   <Link
-                    className="text-xs text-primary underline "
+                    className="text-xs text-gray underline"
                     to="/signup"
                   >
                     Create account

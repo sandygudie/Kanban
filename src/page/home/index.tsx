@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import Marquee from "react-fast-marquee";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -11,6 +11,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // import { MdOutlineEmail } from "react-icons/md";
 
 export default function Index() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   gsap.registerPlugin(ScrollTrigger);
   const hero = useRef(null);
   useGSAP(
@@ -55,10 +57,10 @@ export default function Index() {
     <div className="home-container h-screen bg-white overflow-y-auto relative w-full">
       <div ref={hero} className="h-full w-full relative z-20 text-black">
         <header className="header  flex items-center justify-between px-4 lg:px-16 py-4">
-          <Link className="inline-flex items-center gap-x-4" to="/">
+          <Link className="inline-flex items-center gap-x-2" to="/">
             <img
-              src="logo.webp"
-              className="w-8 h-8"
+              src="black_logo.webp"
+              className="w-6 h-auto"
               alt="mutiple-projects-image"
             />
             <span className="font-bold text-2xl">TRACK</span>
@@ -80,14 +82,14 @@ export default function Index() {
           <div className="flex items-center ">
             <Link
               to="/login"
-              className="hover:scale-110 p-2 rounded-lg transition ease-in-out delay-100 duration-300"
+              className="hover:scale-110 p-2 rounded-lg font-normal transition ease-in-out delay-100 duration-300"
             >
               Log In
             </Link>
             <span> | </span>
             <Link
               to="/signup"
-              className="hover:scale-110 p-2 rounded-lg transition ease-in-out delay-100 duration-300"
+              className="hover:scale-110 p-2 rounded-lg font-normal transition ease-in-out delay-100 duration-300"
             >
               Sign Up
             </Link>
@@ -96,11 +98,11 @@ export default function Index() {
         <main>
           <div>
             <div className="px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
-              <h1 className="font-bold text-[2.5rem] md:text-6xl text-primary">
+              <h1 className="font-bold text-[2.5rem] md:text-6xl">
                 <p className="title-left"> Effortlessly Manage </p>
                 <p className="title-right">Your Projects.</p>
               </h1>
-              <div className="description ">
+              <div className="description">
                 <p className="md:px-8 lg:p-0 text-[20px] my-8 font-normal leading-[2.5rem]">
                   <span className="font-bold">TRACK</span> offers a visual view
                   for teams to manage tasks, quickly shift priorities, track
@@ -108,17 +110,22 @@ export default function Index() {
                 </p>
 
                 <div className="w-auto md:w-fit mx-auto relative">
-                 <input
-                    placeholder="Email"
-                    className="rounded-full w-full md:w-[30rem] py-4 px-6"
+                  <input
+                    onChange={(e) =>
+                      e.target ? setEmail(e.target.value) : null
+                    }
+                    required
+                    type="email"
+                    placeholder="Email address"
+                    className="rounded-full w-full md:w-[30rem] py-3 px-6"
                   />
-                  <Link
-                    to="/signup"
-                    className="bg-primary absolute top-[0.4rem] right-3 transition ease-in-out delay-100 duration-300 hover:scale-110 text-white rounded-full hover:bg-primary px-4 py-2.5 font-medium"
+                  <button
+                    onClick={() => navigate("/signup", { state: email })}
+                    className="text-sm bg-black absolute top-[0.5rem] right-3 transition ease-in-out delay-100 duration-300 hover:scale-110 text-white rounded-full hover:bg-black px-4 py-2 font-medium"
                   >
                     Get Started
-                  </Link>
-                </div> 
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -127,7 +134,7 @@ export default function Index() {
             id="features"
             className="px-4 md:px-0 text-center rounded-b-[9rem] py-8 md:py-24"
           > */}
-            {/* <div className="flex items-center justify-center">
+          {/* <div className="flex items-center justify-center">
               <img
                 src="full-board.webp"
                 className=""
@@ -138,8 +145,8 @@ export default function Index() {
                 What you get
               </p>
             </div> */}
-            {/* <h1 className="text-3xl md:text-4xl font-bold">Features</h1> */}
-            {/* <div className="box my-6 md:my-16 ">
+          {/* <h1 className="text-3xl md:text-4xl font-bold">Features</h1> */}
+          {/* <div className="box my-6 md:my-16 ">
               <div className="simplified-view grid items-center md:grid-cols-2 md:ml-24">
                 <img
                   src="full-board.webp"
@@ -246,7 +253,7 @@ export default function Index() {
             </div>
           </section> */}
         </main>
-        <footer className="py-3 w-full absolute bottom-0 text-sm bg-primary text-center text-white">
+        <footer className="py-3 w-full absolute bottom-0 text-sm bg-black text-center text-white">
           Copyright <span>&copy;</span>
           {new Date().getFullYear()}. Sandy Goodnews
         </footer>
