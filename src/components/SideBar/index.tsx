@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { GoSidebarExpand } from "react-icons/go";
-
 import { AppState, IBoard } from "types";
 import { useMediaQuery } from "react-responsive";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +13,6 @@ import { MdSpaceDashboard } from "react-icons/md";
 
 interface Props {
   showSidebar: boolean;
-
   setShowSidebar?: Dispatch<SetStateAction<boolean>>;
   handleClose?: () => void;
   handleaddBoardMobile?: () => void;
@@ -25,7 +23,7 @@ export default function Index({
   setShowSidebar,
   handleClose,
   showSidebar,
-}: // workspaceId,
+}:
 Props) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -39,14 +37,14 @@ Props) {
     <>
       <>
         <div
-          className={`hidden mini:block h-screen fixed z-20 w-[220px] transition duration-700 ease-in-out ${
+          className={`hidden mini:block h-screen fixed z-20 w-[220px] transition-all duration-700 ease-in-out ${
             showSidebar ? "translate-x-0" : "-translate-x-64"
           }`}
         >
           <div
             className={`z-40 text-gray bg-white dark:bg-secondary ${
               isMobile && "pr-2 pb-24 border-r-[1px] border-gray/20"
-            } pt-2 flex flex-col justify-between h-full left-0`}
+            } pt-2 h-full left-0`}
           >
             <div>
               <p className="pl-4 pt-2 pb-4 text-xs">
@@ -78,7 +76,7 @@ Props) {
                           }}
                         >
                           <div className="flex items-center gap-x-2 justify-between">
-                            {/* <Icon type="board" /> */}
+                       
                             <MdSpaceDashboard />
                             <span
                               className={`${
@@ -103,7 +101,7 @@ Props) {
                         ? handleaddBoardMobile()
                         : setIsOpen(true);
                     }}
-                    className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
+                    className="pl-4 mt-6 font-bold cursor-pointer text-gray hover:text-white text-gray px-3 text-sm "
                   >
                     <div className="flex items-center">
                       {" "}

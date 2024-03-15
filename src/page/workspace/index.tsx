@@ -73,7 +73,7 @@ export default function Index() {
                 <h1 className="text-center md:text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
                 </h1>
-                <div className="grid w-full w-4/6 mini:w-10/12 mx-auto mini:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
+                <div className="grid w-4/6 mini:w-10/12 mx-auto mini:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
                   {response.data.workspace.map((ele: any) => {
                     return (
                       <button

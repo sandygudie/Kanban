@@ -143,13 +143,18 @@ export default function TaskDetails() {
   return (
     <>
       {tasks ? (
-        <div className="px-6 overflow-auto h-full mini:px-14 pt-14 pb-24">
-       
-          <div className="text-lg font-bold items-start justify-between relative">
-        <div className="absolute -top-[20px] mini:-top-[35px]">  <IconButton handleClick={()=> navigate(-1)}> <HiOutlineChevronLeft  /></IconButton></div>
+        <div className="px-6 overflow-auto h-full mini:px-20 pt-16 pb-24">
+          <div className="text-lg font-bold flex items-start justify-between relative">
+            <div className="absolute -top-[28px] mini:-top-[40px]">
+              {" "}
+              <IconButton handleClick={() => navigate(-1)}>
+                {" "}
+                <HiOutlineChevronLeft />
+              </IconButton>
+            </div>
             <div>
               {" "}
-              <p className="text-3xl"> {tasks?.data.title}</p>
+              <p className="text-2xl mini:text-3xl"> {tasks?.data.title}</p>
               <span className="text-gray/80 font-thin mt-1 text-xs mini:flex">
                 created by {tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")}
@@ -159,39 +164,37 @@ export default function TaskDetails() {
                 </span>
               </span>
             </div>
-            <div className="absolute top-0 right-0">
-              <button className="text-2xl mini:text-3xl hover:text-primary">
-                <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
-              </button>
-              {isOpenMenu && (
-                <Popup
-                  style={{}}
-                  items={[
-                    {
-                      title: (
-                        <div className="flex items-center gap-x-2 dark:text-white/80">
-                          <CiEdit className="text-gray text-sm" /> Edit
-                        </div>
-                      ),
-                      handler: () => {
-                        setIsOpenEdit(true);
-                      },
+            <button className="text-2xl mini:text-3xl hover:text-primary mt-2">
+              <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
+            </button>
+            {isOpenMenu && (
+              <Popup
+                style={{}}
+                items={[
+                  {
+                    title: (
+                      <div className="flex items-center gap-x-2 dark:text-white/80">
+                        <CiEdit className="text-gray text-sm" /> Edit
+                      </div>
+                    ),
+                    handler: () => {
+                      setIsOpenEdit(true);
                     },
-                    {
-                      title: (
-                        <div className="flex items-center w-20 gap-x-2 dark:text-white/80">
-                          <MdDelete className="text-error" /> Delete
-                        </div>
-                      ),
-                      handler: () => {
-                        setIsOpenDelete(true);
-                      },
+                  },
+                  {
+                    title: (
+                      <div className="flex items-center w-20 gap-x-2 dark:text-white/80">
+                        <MdDelete className="text-error" /> Delete
+                      </div>
+                    ),
+                    handler: () => {
+                      setIsOpenDelete(true);
                     },
-                  ]}
-                  handleClose={handleOpenMenu}
-                />
-              )}
-            </div>
+                  },
+                ]}
+                handleClose={handleOpenMenu}
+              />
+            )}{" "}
           </div>
           <div className="mt-8">
             <p className="font-semibold text-sm mb-2">Description</p>
@@ -201,7 +204,7 @@ export default function TaskDetails() {
                 : "No description"}
             </p>
             <div className="mt-10 md:my-14 flex flex-col md:flex-row gap-x-36 gap-y-8 md:items-center">
-              <div className="md:w-96">
+              <div className="md:w-[28rem]">
                 <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
@@ -235,8 +238,8 @@ export default function TaskDetails() {
                 </div>
               </div>
 
-              <div className="md:w-[36rem] relative">
-                <p className="font-semibold mb-2 text-sm">Assignees</p>
+              <div className="relative">
+                <p className="font-semibold pb-2 text-sm">Assignees</p>
                 <button
                   onClick={() => setAssign(true)}
                   className="p-2 bg-secondary rounded-md"
@@ -274,7 +277,7 @@ export default function TaskDetails() {
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-x-36 gap-y-8 items-start mt-10">
-              <div className="pb-6 w-full md:w-96">
+              <div className="pb-6 w-full md:w-[28rem]">
                 <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
@@ -285,7 +288,7 @@ export default function TaskDetails() {
                   workspaceId={workspaceId}
                 />
               </div>
-              <div className="md:w-[36rem]">
+              <div className="">
                 <p className="text-sm font-bold mb-4">Labels</p>
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (

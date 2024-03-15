@@ -110,8 +110,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <TbUsersPlus /> Invite people to{" "}
-                        {TitleCase(workspace.name)}
+                        <TbUsersPlus /> Invite members
                       </p>
                     ),
                     handler: () => {

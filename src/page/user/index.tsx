@@ -81,7 +81,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-full px-6 md:px-20  md:pb-24 pt-16 md:pt-14 ">
+    <div className="h-full px-6 md:px-24 md:pb-24 pt-16 md:pt-14 ">
       <div className="h-full overflow-auto pb-24 settings_scroll">
         <div className="absolute top-[35px] mini:top-[20px]">
           {" "}
@@ -176,16 +176,18 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="mt-24 bg-secondary rounded-md px-8 py-4">
-          <h2 className="border-b-[1px] border-gray/10 pb-1 text-base font-bold">
+        <div className="mt-12 md:mt-24 bg-secondary rounded-md py-4">
+          <h2 className="border-b-[1px] border-gray/10 pb-3 text-base font-bold px-4 md:px-8">
             Delete user
           </h2>
-          <p className="text-gray/70 text-sm mt-3 mb-4">
+          <div className="px-4 md:px-8 py-5">
+          <p className="text-gray/70 text-sm mb-4">
             Once you delete your account, there is no going back.
           </p>
           <button className="text-white px-4 font-bold rounded-md text-sm bg-error py-2">
             Delete Account
           </button>
+          </div>
         </div>
       </div>
     </div>

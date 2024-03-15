@@ -9,29 +9,29 @@ export default function BoardSkeleton() {
       baseColor="#20212c"
       highlightColor="#2b2c36"
     >
-      <header className="dark:bg-secondary p-6 fixed w-full border border-[1px] border-gray/10">
+      <header className="dark:bg-secondary px-6 h-[50px] mini:h-[65px] flex flex-col justify-center  fixed w-full border border-[1px] border-gray/10">
         <div className="flex gap-x-36">
           <Skeleton width={100} />
           <Skeleton width={200} />
         </div>
       </header>
       <div className="flex pt-[4em] h-screen">
-        <div className="hidden mini:block w-48 bg-secondary p-2 md:p-6  border border-r-[1px] border-gray/10">
+        <div className="hidden mini:block w-[220px] bg-secondary p-2 md:p-6 border border-r-[1px] border-gray/10">
           <div>
             <Skeleton />
             <div className="mt-8">
               <Skeleton />
               <Skeleton width={100} />
               <div className="mt-3">
-                <div className="flex  items-center gap-x-4">
+                <div className="flex items-center gap-x-4">
                   <Skeleton width={15} height={15} />
                   <Skeleton width={100} />
                 </div>
-                <div className="flex items-center  gap-x-4">
+                <div className="flex items-center gap-x-4">
                   <Skeleton width={15} height={15} />
                   <Skeleton width={100} />
                 </div>
-                <div className="flex items-center  gap-x-4">
+                <div className="flex items-center gap-x-4">
                   <Skeleton width={15} height={15} />
                   <Skeleton width={100} />
                 </div>
@@ -51,7 +51,7 @@ export default function BoardSkeleton() {
               <Skeleton width={200} />
             </SkeletonTheme>
 
-            {/* <Skeleton width={200} /> */}
+           
           </div>
         </div>
       </div>

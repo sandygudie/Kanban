@@ -156,10 +156,6 @@
   animation: spinner 1.5s linear infinite;
 }
 
-.swiper-pagination-bullet {
-  @apply bg-primary dark:bg-white;
-}
-
 .loader {
   width: 40px;
   aspect-ratio: 6.5;
@@ -185,7 +181,10 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-
+.test {
+  transition-property: auto;
+  transition-duration: unset;
+}
 .img_container {
   display: inline-flex;
   /* flex-direction: row-reverse; */
@@ -217,17 +216,15 @@
   color: white !important;
 }
 .ant-picker-panel-layout {
-  background-color: rgb(219, 215, 215)!important;
-
+  background-color: rgb(219, 215, 215) !important;
 }
-.ant-picker-input{
+.ant-picker-input {
   color: white !important;
   font-weight: bold;
 }
-.ant-picker-active-bar{
-display: none !important;
+.ant-picker-active-bar {
+  display: none !important;
 }
 .ant-picker-outlined {
-  background-color: hsla(0 ,0% ,12.55%,1) !important;
+  background-color: hsla(0, 0%, 12.55%, 1) !important;
 }
-

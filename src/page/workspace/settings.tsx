@@ -97,7 +97,7 @@ export default function Index() {
 
   return (
     <>
-      <div className="h-full overflow-y-auto md:overflow-hidden relative md:pb-24 pt-16 md:pt-14 px-6 md:px-14">
+      <div className="h-full overflow-y-auto md:overflow-hidden relative md:pb-24 pt-16 px-6 md:px-20">
         <div className="flex gap-x-4 items-center relative">
           <div className="absolute -top-[30px] mini:-top-[35px]">
             {" "}
