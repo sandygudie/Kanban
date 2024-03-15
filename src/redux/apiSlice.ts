@@ -177,7 +177,7 @@ export const apiSlice = createApi({
         method: "POST",
         data: payload.formdata,
       }),
-      invalidatesTags: ["Task"],
+      invalidatesTags: ["Task","Board","Workspace"],
     }),
 
     getTask: builder.query({

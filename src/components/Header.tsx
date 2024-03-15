@@ -35,6 +35,7 @@ export default function Header({ memberPics }: any) {
   // const updateThemehandler = (theme: string) => setTheme(theme);
   const [isFullscreen, setFullScreen] = useState(false);
 
+
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();

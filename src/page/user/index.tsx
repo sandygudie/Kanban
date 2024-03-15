@@ -6,9 +6,13 @@ import { DefaultImage } from "utilis";
 import { useUpdateUserMutation } from "redux/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
+import IconButton from "components/IconButton";
+import { HiOutlineChevronLeft } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 export default function Index() {
   const toast = useToast();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const [isEdit, setEdit] = useState("");
@@ -22,8 +26,8 @@ export default function Index() {
   const editUserProfile = async (e: ChangeEvent<HTMLInputElement>) => {
     let res;
     if (e.target.name === "profilePics") {
-      if(e.currentTarget.files && e.currentTarget.files[0].size >100000){
-     
+      if (e.currentTarget.files && e.currentTarget.files[0].size > 100000) {
+
         toast({
           title: "image should be less than 100kb.",
           position: "top",
@@ -55,30 +59,37 @@ export default function Index() {
       setEditedText({ ...editedText, [name]: value });
     }
 
-      try {
-        const response = await editUser({
-          userId: user.id,
-          formData: {
-            [e.target.name]: res?.url ? res?.url : e.target.value,
-          },
-        }).unwrap();
+    try {
+      const response = await editUser({
+        userId: user.id,
+        formData: {
+          [e.target.name]: res?.url ? res?.url : e.target.value,
+        },
+      }).unwrap();
 
-        if (response) {
-          dispatch(
-            updateUserProfile({
-              [e.target.name]: res?.url ? res?.url : e.target.value,
-            })
-          );
-        }
-      } catch (error) {
-        console.log(error);
+      if (response) {
+        dispatch(
+          updateUserProfile({
+            [e.target.name]: res?.url ? res?.url : e.target.value,
+          })
+        );
       }
+    } catch (error) {
+      console.log(error);
+    }
 
   };
 
   return (
-    <div className="h-full pt-14 md:pt-8 px-6 md:px-20">
+    <div className="h-full px-6 md:px-20  md:pb-24 pt-16 md:pt-14 ">
       <div className="h-full overflow-auto pb-24 settings_scroll">
+        <div className="absolute top-[35px] mini:top-[20px]">
+          {" "}
+          <IconButton handleClick={() => navigate(-1)}>
+            {" "}
+            <HiOutlineChevronLeft />
+          </IconButton>
+        </div>
         <h1 className="md:text-lg font-bold border-b-[1px] border-gray/10 pb-2">
           User Settings
         </h1>
@@ -95,9 +106,8 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`text-sm font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${
-                isEdit === "name" ? "bg-gray/5" : "border-gray/0"
-              }`}
+              className={`text-sm font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${isEdit === "name" ? "bg-gray/5" : "border-gray/0"
+                }`}
             />
           </div>
           <div className="md:flex items-center justify-between my-4">
@@ -112,9 +122,8 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-bold text-sm rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${
-                isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
-              }`}
+              className={`font-bold text-sm rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
+                }`}
             />
           </div>
           <div className="flex items-start my-6">
@@ -125,14 +134,14 @@ export default function Index() {
                   className="text-white cursor-pointer relative h-full"
                   htmlFor="file_input"
                 >
-                    <div className="w-30 absolute top-0 bg-gray z-20 rounded-full flex flex-col items-center justify-center opacity-0 hover:opacity-90 font-bold text-xs h-full p-5 text-center">
-                                 Click to upload image
-                                </div>
+                  <div className="w-30 absolute top-0 bg-gray z-20 rounded-full flex flex-col items-center justify-center opacity-0 hover:opacity-90 font-bold text-xs h-full p-5 text-center">
+                    Click to upload image
+                  </div>
                   <div>
                     {user.profilePics || selectedImage ? (
                       <div className="relative w-28 h-auto rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
                         <img
-                        className="w-28 h-auto"
+                          className="w-28 h-auto"
                           src={
                             selectedImage
                               ? URL.createObjectURL(selectedImage[0])
@@ -145,7 +154,7 @@ export default function Index() {
                         {DefaultImage(user.name)}
                       </span>
                     )}
-                  
+
                   </div>
 
                   <input

@@ -11,11 +11,13 @@ import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import Popup from "components/Popup";
 import Modal from "components/Modal";
 import WorkspaceInvite from "components/WorkspaceInvite";
+import { useToast } from "@chakra-ui/react";
 
 interface Props {
   workspaceId: string;
 }
 export default function Members({ workspaceId }: Props) {
+  const toast = useToast();
   const [isOpenInvite, setIsOpenInvite] = useState<boolean>(false);
   const [memberId, setMemberId] = useState("");
   const [pendingMemberId, setPendingMemberId] = useState("");
@@ -31,35 +33,53 @@ export default function Members({ workspaceId }: Props) {
   const deletemember = async (userId: string) => {
     setMemberId(userId);
     try {
-      const response = await removeMember({ workspaceId, userId });
+      const response = await removeMember({ workspaceId, userId }).unwrap();
       if (response) {
         setMemberId("");
       }
-    } catch (error) {
-      console.log(error);
+    }  catch (error:any) {
+      toast({
+        title: error.message,
+        position: "top",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
   const deletePendingmember = async (userEmail: string) => {
     setPendingMemberId(userEmail);
     try {
-      const response = await removePendingMember({ workspaceId, userEmail });
+      const response = await removePendingMember({ workspaceId, userEmail }).unwrap();
       if (response) {
         setMemberId("");
       }
-    } catch (error) {
-      console.log(error);
+    }  catch (error:any) {
+      toast({
+        title: error.message,
+        position: "top",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   const assignMemberAdmin = async (userId: string) => {
     setMemberId(userId);
     try {
-      const response = await updateRole({ workspaceId, userId });
+      const response = await updateRole({ workspaceId, userId }).unwrap();
       if (response) {
         setMemberId("");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      toast({
+        title: error.message,
+        position: "top",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
@@ -72,7 +92,7 @@ export default function Members({ workspaceId }: Props) {
             onClick={() => {
               setIsOpenInvite(true);
             }}
-            className="px-2 text-sm md:text-base py-2 bg-success font-bold rounded-md"
+            className="px-2 text-sm md:text-sm py-1.5 bg-success font-bold rounded-md"
           >
             Invite members
           </button>

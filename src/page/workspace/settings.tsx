@@ -58,13 +58,14 @@ export default function Index() {
   });
 
   const UpdateWorkSpace = async (values: any) => {
-    const data = new FormData();
-    data.append("file", values.profilePics);
-    data.append("upload_preset", upload_preset);
-    data.append("cloud_name", cloud_name);
-    data.append("folder", "Cloudinary-React");
+    let res;
+    if (values.profilePics) {
+      const data = new FormData();
+      data.append("file", values.profilePics);
+      data.append("upload_preset", upload_preset);
+      data.append("cloud_name", cloud_name);
+      data.append("folder", "Cloudinary-React");
 
-    try {
       const response = await fetch(
         `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
         {
@@ -72,10 +73,17 @@ export default function Index() {
           body: data,
         }
       );
-      const res = await response.json();
+      res = await response.json();
+    }
+    try {
       const payload = {
         workspaceId: workspace.id,
-        formData: { name: values.name, profilePics: res?.url },
+        formData:
+          values.name && !values.profilePics
+            ? { name: values.name }
+            : values.profilePics && !values.name
+            ? { profilePics: res?.url }
+            : { name: values.name, profilePics: res?.url },
       };
 
       const result = await editWorkspaceProfile(payload);
@@ -89,20 +97,20 @@ export default function Index() {
 
   return (
     <>
-      <div className="h-full overflow-y-auto relative md:pb-24 pt-16 md:pt-8 px-6 md:px-14">
+      <div className="h-full overflow-y-auto md:overflow-hidden relative md:pb-24 pt-16 md:pt-14 px-6 md:px-14">
         <div className="flex gap-x-4 items-center relative">
-          <div className="md:hidden absolute -top-[26px]">
+          <div className="absolute -top-[30px] mini:-top-[35px]">
             {" "}
             <IconButton handleClick={() => navigate(-1)}>
               {" "}
-              <HiOutlineChevronLeft className="mt-1" />
+              <HiOutlineChevronLeft />
             </IconButton>
           </div>
           <div>
             <img
               src={workspace.profilePics}
               alt="image"
-              className=" border-solid h-auto w-10"
+              className=" border-solid h-auto w-20"
             />
           </div>
           <div>
@@ -113,7 +121,7 @@ export default function Index() {
           </div>
         </div>
         <div className="h-full mt-8 md:mt-16">
-          <div className="md:fixed my-6">
+          <div className="md:fixed my-6 md:my-0">
             <div className="flex md:flex-col w-40 md:w-36 items-start gap-y-3">
               {linkitems.map((ele: any) => {
                 return (
@@ -231,7 +239,7 @@ export default function Index() {
                         <div className="mt-6">
                           <div className="ml-auto md:w-20">
                             <button
-                              className="py-2 px-4 text-xs text-white h-10 w-20 flex justify-center items-center flex-col hover:bg-secondary border border-gray/30 rounded-md bg-secondary/80 font-bold"
+                              className="h-10 px-4 text-xs text-white h-10 w-20 flex justify-center items-center flex-col hover:bg-secondary border border-gray/30 rounded-md bg-secondary/80 font-bold"
                               type="submit"
                             >
                               {isLoading ? <Spinner /> : "Update"}

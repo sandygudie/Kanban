@@ -6,7 +6,6 @@ import { Droppable, DragDropContext } from "@hello-pangea/dnd";
 import { colorMarker } from "utilis";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, appData, deleteTask, editColumnName } from "redux/boardSlice";
-import { v4 as uuidv4 } from "uuid";
 import Modal from "components/Modal";
 import { AppState, IColumn, ISubTask, ITask } from "types";
 import DeleteItem from "components/DeleteItem";
@@ -41,6 +40,7 @@ export default function ActiveBoard() {
   const { active, workspace } = data;
 
   const onDragEnd = async (result: any) => {
+    console.log(result);
     if (!result.destination) {
       return;
     }
@@ -63,30 +63,30 @@ export default function ActiveBoard() {
       };
     });
 
+    dispatch(deleteTask(sourceTask));
+
     const updatedTasks = {
       ...sourceTask,
-      id: uuidv4(),
       status: result.destination.droppableId,
     };
     const position = result.destination.index;
     dispatch(addTask({ updatedTasks, position }));
-    dispatch(deleteTask(sourceTask));
-
-    const payload = {
-      formdata: {
-        title: sourceTask.title,
-        description: sourceTask.description,
-        subtasks: updatedSubstasks,
-      },
-      workspaceId: workspace.id,
-      columnId: columnId,
-    };
-    await createTask(payload).unwrap();
     await deleteATask({
       taskId: sourceTask?._id,
       columnId: sourceTask?.columnId,
       workspaceId: workspace.id,
     }).unwrap();
+    const payload = {
+      formdata: {
+        title: sourceTask.title,
+        description: sourceTask.description,
+        subtasks: updatedSubstasks,
+        position,
+      },
+      workspaceId: workspace.id,
+      columnId: columnId,
+    };
+    await createTask(payload).unwrap();
   };
 
   const editColumnChangeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -105,11 +105,11 @@ export default function ActiveBoard() {
       console.log(error);
     }
   };
-
+  // console.log(active.columns)
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="overflow-x-auto settings_scroll overflow-y-hidden">
+        <div className="overflow-x-auto settings_scroll overflow-y-auto">
           <div className="z-10 h-full flex gap-x-10 w-full pt-12 mini:pt-8 px-8 mini:px-14">
             {active.columns?.map((item: IColumn, index: number) => {
               return (
@@ -118,7 +118,7 @@ export default function ActiveBoard() {
                     setSelectedColumn(item), setShowColumnOptions(true);
                   }}
                   key={item._id}
-                  className="w-[220px] cursor-pointer shrink-0"
+                  className="w-[230px] cursor-pointer shrink-0"
                 >
                   <div className="flex h-10 mb-4 justify-between relative items-center">
                     <div className="flex gap-x-1 items-center justify-between w-10/12 text-gray font-bold uppercase text-xs tracking-widest">
@@ -256,7 +256,7 @@ export default function ActiveBoard() {
               >
                 <p className="text-lg hover:text-white/70 text-white/50 font-bold flex items-center">
                   {" "}
-                  <IoIosAdd size={20} />{" "}Add Column
+                  <IoIosAdd size={20} /> Add Column
                 </p>
               </button>
             </div>

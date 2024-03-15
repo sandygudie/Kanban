@@ -139,14 +139,14 @@ export default function TaskDetails() {
     dayjs(tasks?.data.dueDate[0]),
     "day"
   );
-  //  <HiOutlineChevronDown className="mt-1 text-sm" /> className="mt-1 text-sm" />
+
   return (
     <>
       {tasks ? (
         <div className="px-6 overflow-auto h-full mini:px-14 pt-14 pb-24">
        
           <div className="text-lg font-bold items-start justify-between relative">
-        <div className="absolute -top-[20px]">  <IconButton handleClick={()=> navigate(-1)}> <HiOutlineChevronLeft className="mt-1" /></IconButton></div>
+        <div className="absolute -top-[20px] mini:-top-[35px]">  <IconButton handleClick={()=> navigate(-1)}> <HiOutlineChevronLeft  /></IconButton></div>
             <div>
               {" "}
               <p className="text-3xl"> {tasks?.data.title}</p>

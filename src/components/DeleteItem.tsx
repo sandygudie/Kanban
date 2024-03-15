@@ -9,6 +9,7 @@ import { appData, deleteBoard, deleteTask } from "redux/boardSlice";
 import { AppState, IColumn, ITask } from "types";
 import { Loader } from "./Spinner";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 interface Props {
   handleClose: () => void;
@@ -24,11 +25,14 @@ export default function Delete({
   selectedColumn,
 }: Props) {
   const navigate = useNavigate();
+  const toast = useToast();
   const [deleteAColumn, { isLoading: isDeletingColumn }] =
     useDeleteColumnMutation();
   const [deleteATask, { isLoading: isDeletingTask }] = useDeleteTaskMutation();
-  const [deleteAWorkspace, { isLoading: isDeletingWorkspace }] =
-    useDeleteWorkspaceMutation();
+  const [
+    deleteAWorkspace,
+    { isLoading: isDeletingWorkspace},
+  ] = useDeleteWorkspaceMutation();
   const [deleteABoard, { isLoading: isDeletingBoard }] =
     useDeleteBoardMutation();
   const dispatch = useDispatch();
@@ -70,12 +74,23 @@ export default function Delete({
   };
 
   const deleteWorkspaceHandler = async () => {
-    const response = await deleteAWorkspace({
-      workspaceId: workspace.id,
-    }).unwrap();
-    if (response) {
-      navigate(`/workspaces`);
-      // window.location.href = `/workspaces`;
+    try {
+      const response = await deleteAWorkspace({
+        workspaceId: workspace.id,
+      }).unwrap();
+      if (response) {
+        navigate(`/workspaces`);
+        // window.location.href = `/workspaces`;
+      }
+    } catch (error:any) {
+        toast({
+          title: error.message,
+          position: "top",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      
     }
   };
 
