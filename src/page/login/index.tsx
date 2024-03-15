@@ -2,9 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useEffect, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import  { Loader } from "components/Spinner";
+import { Loader } from "components/Spinner";
 import { loadWorkspaceData } from "utilis";
 import { useLoginUserMutation } from "redux/authSlice";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Index() {
   const navigate = useNavigate();
@@ -16,9 +17,9 @@ export default function Index() {
     email: "",
     password: "",
   });
-useEffect(()=>{
-  localStorage.removeItem("currentWorkspace");
-})
+  useEffect(() => {
+    localStorage.removeItem("currentWorkspace");
+  });
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginError("");
     setInputError("");
@@ -35,6 +36,10 @@ useEffect(()=>{
       setInputError("");
     }
   };
+  const googleLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+    flow: "auth-code",
+  });
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -85,7 +90,8 @@ useEffect(()=>{
             >
               <div className="">
                 <button
-                  onClick={() => {}}
+                  type="button"
+                  onClick={() => googleLogin()}
                   className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
                 >
                   <div className="w-10 h-10">
@@ -159,10 +165,7 @@ useEffect(()=>{
                   {isLoading ? <Loader /> : "Continue with email"}
                 </button>
                 <div className="flex items-center justify-between pt-3">
-                  <Link
-                    className="text-xs text-gray underline"
-                    to="/signup"
-                  >
+                  <Link className="text-xs text-gray underline" to="/signup">
                     Create account
                   </Link>
                   <Link className="text-xs underline text-gray" to="/">

@@ -15,8 +15,10 @@ const Home = lazy(() => import("page/home"));
 const Settings = lazy(() => import("page/workspace/settings"));
 const User = lazy(() => import("page/user"));
 import Task from "page/task";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
+  const clientId = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
     if (currentTheme === null) {
@@ -43,7 +45,13 @@ function App() {
     >
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route element={<AuthLayout />}>
+        <Route
+          element={
+            <GoogleOAuthProvider clientId={clientId}>
+              <AuthLayout />
+            </GoogleOAuthProvider>
+          }
+        >
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route

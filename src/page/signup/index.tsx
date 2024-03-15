@@ -5,6 +5,7 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
 import { useCreateUserMutation } from "redux/authSlice";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Index() {
   const [signUp, { isLoading }] = useCreateUserMutation();
@@ -16,10 +17,9 @@ export default function Index() {
   const [signupSuccess, setSignupSuccess] = useState("");
   const [validatePassword, setValidatePassword] = useState<string[]>([]);
 
-
   const [formData, setFormData] = useState({
     name: "",
-    email: location.state,
+    email: location.state || "",
   });
   const passwordValidation = ["An uppercase letter", "5 characters minimum"];
   const noSpacesCheck = /\s/g;
@@ -95,6 +95,11 @@ export default function Index() {
     }
   };
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+    flow: "auth-code",
+  });
+
   return (
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
@@ -104,137 +109,134 @@ export default function Index() {
           </h1>
           <div className=" relative">
             <div className="flex gap-x-20 items-center">
-            <form
-              onSubmit={handleSubmit}
-              className="w-full md:w-1/2 relative flex items-center md:border border-solid py-10 md:p-8  md:shadow-lg flex-col gap-y-4 justify-center "
-            >
-              <div className="block md:hidden">
-                <button
-                  onClick={() => {}}
-                  className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
-                >
-                  <div className="w-10 h-10">
-                    <img
-                      src="./google_icon.webp"
-                      alt="devlink logo"
-                      width="40"
-                      loading="eager"
-                      height="40"
-                    />
-                  </div>
-                  <p className="text-sm">Sign up with Google</p>
-                </button>
-              </div>
-              <p className="pb-4 md:hidden text-sm text-gray">OR</p>
-              <input
-                type="text"
-                minLength={5}
-                autoComplete="off"
-                required
-                name="name"
-                value={formData.name}
-                className="py-3 px-4 rounded-lg w-full"
-                placeholder="What should we call you?"
-                onChange={(e) => handleInputChange(e)}
-              />
-              <input
-                required
-                type="email"
-                value={formData.email}
-                name="email"
-                className="py-3 px-4 rounded-lg w-full"
-                placeholder="Email Address"
-                onChange={(e) => handleInputChange(e)}
-              />
-              <div className="relative w-full">
+              <form
+                onSubmit={(e)=>handleSubmit(e)}
+                className="w-full md:w-1/2 relative flex items-center md:border border-solid py-10 md:p-8  md:shadow-lg flex-col gap-y-4 justify-center "
+              >
+                <div className="block md:hidden">
+                  <button
+                  type="button"
+                    onClick={() => googleLogin()}
+                    className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
+                  >
+                    <div className="w-10 h-10">
+                      <img
+                        src="./google_icon.webp"
+                        alt="devlink logo"
+                        width="40"
+                        loading="eager"
+                        height="40"
+                      />
+                    </div>
+                    <p className="text-sm">Sign up with Google</p>
+                  </button>
+                </div>
+                <p className="pb-4 md:hidden text-sm text-gray">OR</p>
+                <input
+                  type="text"
+                  minLength={5}
+                  autoComplete="off"
+                  required
+                  name="name"
+                  value={formData.name}
+                  className="py-3 px-4 rounded-lg w-full"
+                  placeholder="What should we call you?"
+                  onChange={(e) => handleInputChange(e)}
+                />
                 <input
                   required
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  className={`${
-                    error ? "border-error" : "border"
-                  } border-[1px] py-3 px-4 rounded-lg w-full`}
-                  placeholder="Password"
-                  onChange={(e) => handleChange(e)}
+                  type="email"
+                  value={formData.email}
+                  name="email"
+                  className="py-3 px-4 rounded-lg w-full"
+                  placeholder="Email Address"
+                  onChange={(e) => handleInputChange(e)}
                 />
-                <button type="button" className="absolute top-4 right-5">
-                  {showPassword ? (
-                    <AiOutlineEye
-                      className="text-xl text-gray/80"
-                      onClick={() => setShowPassword(false)}
-                    />
-                  ) : (
-                    <AiOutlineEyeInvisible
-                      className="text-xl text-gray/80"
-                      onClick={() => setShowPassword(true)}
-                    />
-                  )}
-                </button>
-                <div className="mt-2 text-[13px] absolute ">
-                  {signupSuccess.length > 0 ? (
-                    <p className="text-success text-center">
-                      {signupSuccess}
-                      <span>
+                <div className="relative w-full">
+                  <input
+                    required
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    className={`${
+                      error ? "border-error" : "border"
+                    } border-[1px] py-3 px-4 rounded-lg w-full`}
+                    placeholder="Password"
+                    onChange={(e) => handleChange(e)}
+                  />
+                  <button type="button" className="absolute top-4 right-5">
+                    {showPassword ? (
+                      <AiOutlineEye
+                        className="text-xl text-gray/80"
+                        onClick={() => setShowPassword(false)}
+                      />
+                    ) : (
+                      <AiOutlineEyeInvisible
+                        className="text-xl text-gray/80"
+                        onClick={() => setShowPassword(true)}
+                      />
+                    )}
+                  </button>
+                  <div className="mt-2 text-[13px] absolute ">
+                    {signupSuccess.length > 0 ? (
+                      <p className="text-success text-center">
+                        {signupSuccess}
+                        <span> Check your inbox for verification link.</span>
+                      </p>
+                    ) : signupError.length > 0 ? (
+                      <p className="text-error flex items-center gap-x-2">
                         {" "}
-                        Check your inbox for verification link.
-                      </span>
-                    </p>
-                  ) : signupError.length > 0 ? (
-                    <p className="text-error flex items-center gap-x-2">
-                      {" "}
-                      <IoAlertCircleOutline size={16} /> {signupError}
-                    </p>
-                  ) : (
-                    <>
-                      {password.length
-                        ? passwordValidation.map((ele, index) => (
-                            <p key={index}>
-                              <span
-                                className={` ${
-                                  validatePassword.includes(ele)
-                                    ? "text-success"
-                                    : "text-error"
-                                } text-[13px] flex items-center gap-x-2`}
-                              >
-                                {validatePassword.includes(ele) ? (
-                                  <IoCheckmarkCircleOutline size={16} />
-                                ) : (
-                                  <IoAlertCircleOutline size={16} />
-                                )}
-                                {ele}
-                              </span>
-                            </p>
-                          ))
-                        : null}
-                      {validatePassword.includes("No space") ? (
-                        <p className="text-error text-[13px] flex items-center gap-x-2">
-                          {" "}
-                          <IoAlertCircleOutline size={16} />
-                          No spaces
-                        </p>
-                      ) : null}
-                    </>
-                  )}
+                        <IoAlertCircleOutline size={16} /> {signupError}
+                      </p>
+                    ) : (
+                      <>
+                        {password.length
+                          ? passwordValidation.map((ele, index) => (
+                              <p key={index}>
+                                <span
+                                  className={` ${
+                                    validatePassword.includes(ele)
+                                      ? "text-success"
+                                      : "text-error"
+                                  } text-[13px] flex items-center gap-x-2`}
+                                >
+                                  {validatePassword.includes(ele) ? (
+                                    <IoCheckmarkCircleOutline size={16} />
+                                  ) : (
+                                    <IoAlertCircleOutline size={16} />
+                                  )}
+                                  {ele}
+                                </span>
+                              </p>
+                            ))
+                          : null}
+                        {validatePassword.includes("No space") ? (
+                          <p className="text-error text-[13px] flex items-center gap-x-2">
+                            {" "}
+                            <IoAlertCircleOutline size={16} />
+                            No spaces
+                          </p>
+                        ) : null}
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="w-full mt-10">
-                <button
-                  className="bg-secondary-dark flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
-                  type="submit"
-                >
-                  {isLoading ? <Loader /> : "Continue with Email"}
-                </button>
-                <div className="text-right pt-2">
-                  {" "}
-                  <Link className="text-xs underline text-gray" to="/login">
-                    You have an account? log in
-                  </Link>
+                <div className="w-full mt-10">
+                  <button
+                    className="bg-secondary-dark flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
+                    type="submit"
+                  >
+                    {isLoading ? <Loader /> : "Continue with Email"}
+                  </button>
+                  <div className="text-right pt-2">
+                    {" "}
+                    <Link className="text-xs underline text-gray" to="/login">
+                      You have an account? log in
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              
-            </form>
-            <hr className="border-r-[1px] border-solid hidden md:block h-96" />
+              </form>
+              <hr className="border-r-[1px] border-solid hidden md:block h-96" />
             </div>
             <div className="hidden md:block absolute right-0 top-36">
               <p className="pb-4 text-sm text-gray">With existing account</p>
