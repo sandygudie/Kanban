@@ -9,7 +9,7 @@ import { appData, deleteBoard, deleteTask } from "redux/boardSlice";
 import { AppState, IColumn, ITask } from "types";
 import { Loader } from "./Spinner";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
+import { App as AntDesign } from "antd";
 
 interface Props {
   handleClose: () => void;
@@ -25,14 +25,12 @@ export default function Delete({
   selectedColumn,
 }: Props) {
   const navigate = useNavigate();
-  const toast = useToast();
+  const { message } = AntDesign.useApp();
   const [deleteAColumn, { isLoading: isDeletingColumn }] =
     useDeleteColumnMutation();
   const [deleteATask, { isLoading: isDeletingTask }] = useDeleteTaskMutation();
-  const [
-    deleteAWorkspace,
-    { isLoading: isDeletingWorkspace},
-  ] = useDeleteWorkspaceMutation();
+  const [deleteAWorkspace, { isLoading: isDeletingWorkspace }] =
+    useDeleteWorkspaceMutation();
   const [deleteABoard, { isLoading: isDeletingBoard }] =
     useDeleteBoardMutation();
   const dispatch = useDispatch();
@@ -80,17 +78,13 @@ export default function Delete({
       }).unwrap();
       if (response) {
         navigate(`/workspaces`);
-        // window.location.href = `/workspaces`;
+        window.location.href = `/workspaces`;
       }
-    } catch (error:any) {
-        toast({
-          title: error.message,
-          position: "top",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
-        });
-      
+    } catch (error: any) {
+      message.error({
+        content: "error",
+        className: "text-error",
+      });
     }
   };
 

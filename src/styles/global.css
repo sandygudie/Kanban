@@ -74,6 +74,26 @@
     U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
     U+FEFF, U+FFFD;
 }
+.ant-app {
+  color: #fff !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+}
+.ant-modal-content {
+  padding: 0 !important;
+  color: white !important;
+  background-color: transparent !important;
+}
+.ant-modal-close {
+  color: hsla(216, 15%, 57%, 0.9) !important;
+  margin: 1em;
+  width: 30px !important;
+  height: 30px !important;
+}
+.ant-modal-close:hover {
+  color: white !important;
+  background-color: hsla(216, 15%, 57%, 0.2) !important;
+}
+
 @layer base {
   :root {
     /* light mode */
@@ -204,7 +224,6 @@
 }
 
 .avatar img {
-  /* width: 100%; */
   display: block;
 }
 

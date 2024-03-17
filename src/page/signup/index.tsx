@@ -111,7 +111,7 @@ export default function Index() {
             <div className="flex gap-x-20 items-center">
               <form
                 onSubmit={(e)=>handleSubmit(e)}
-                className="w-full md:w-1/2 relative flex items-center md:border border-solid py-10 md:p-8  md:shadow-lg flex-col gap-y-4 justify-center "
+                className="w-full md:w-1/2 relative flex items-center py-10 md:p-8 md:shadow-xl flex-col gap-y-4 justify-center"
               >
                 <div className="block md:hidden">
                   <button
@@ -176,7 +176,7 @@ export default function Index() {
                       />
                     )}
                   </button>
-                  <div className="mt-2 text-[13px] absolute ">
+                  <div className="mt-2 text-[13px] absolute">
                     {signupSuccess.length > 0 ? (
                       <p className="text-success text-center">
                         {signupSuccess}
@@ -236,7 +236,7 @@ export default function Index() {
                   </div>
                 </div>
               </form>
-              <hr className="border-r-[1px] border-solid hidden md:block h-96" />
+              <hr className="border-r-[1px] border-gray/20 border-solid hidden md:block h-96" />
             </div>
             <div className="hidden md:block absolute right-0 top-36">
               <p className="pb-4 text-sm text-gray">With existing account</p>

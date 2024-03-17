@@ -59,7 +59,7 @@ The application is built with
 * TailwindCSS
 * Formik
 * Yup
-* Chakara-UI
+* Ant Design
 * Cypress
 * Eslint and Prettier
 * Docker Compose

@@ -5,7 +5,7 @@ import { AppState, IBoard, IColumn, IWorkspaceProfile } from "types";
 import { appData, addBoard } from "redux/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedBoard, saveloadWorkspaceData } from "utilis";
-import { useToast } from "@chakra-ui/react";
+import { App as AntDesign } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import { useCreateBoardMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
@@ -13,12 +13,13 @@ interface Props {
   handleClose: () => void;
 }
 function AddBoard({ handleClose }: Props) {
+  const { message } = AntDesign.useApp();
   const [createBoard, { isLoading }] = useCreateBoardMutation();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const board: IBoard[] = data.board;
   const workspace: IWorkspaceProfile = data.workspace;
-  const toast = useToast();
+
 
   const BoardSchema = Yup.object().shape({
     name: Yup.string()
@@ -63,13 +64,12 @@ function AddBoard({ handleClose }: Props) {
         console.log(error);
       }
     } else {
-      toast({
-        title: "Board name already exist.",
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+      message.error({
+        content: "Board name already exist.",
+        className: "text-error",
       });
+    
+     
     }
     handleClose();
   };

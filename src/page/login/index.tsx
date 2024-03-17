@@ -86,7 +86,7 @@ export default function Index() {
           <div className="">
             <form
               onSubmit={handleSubmit}
-              className="w-full flex items-center md:border border-solid py-10 px-4 sm:px-12 md:shadow-lg flex-col gap-y-4 justify-center "
+              className="w-full flex items-center py-10 px-4 sm:px-12 md:shadow-xl flex-col gap-y-4 justify-center"
             >
               <div className="">
                 <button
@@ -168,7 +168,10 @@ export default function Index() {
                   <Link className="text-xs text-gray underline" to="/signup">
                     Create account
                   </Link>
-                  <Link className="text-xs underline text-gray" to="/forgot-password">
+                  <Link
+                    className="text-xs underline text-gray"
+                    to="/forgot-password"
+                  >
                     forgot password?
                   </Link>
                 </div>

@@ -11,13 +11,14 @@ import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import Popup from "components/Popup";
 import Modal from "components/Modal";
 import WorkspaceInvite from "components/WorkspaceInvite";
-import { useToast } from "@chakra-ui/react";
+import { App as AntDesign } from "antd";
+
 
 interface Props {
   workspaceId: string;
 }
 export default function Members({ workspaceId }: Props) {
-  const toast = useToast();
+  const { message } = AntDesign.useApp();
   const [isOpenInvite, setIsOpenInvite] = useState<boolean>(false);
   const [memberId, setMemberId] = useState("");
   const [pendingMemberId, setPendingMemberId] = useState("");
@@ -38,12 +39,9 @@ export default function Members({ workspaceId }: Props) {
         setMemberId("");
       }
     }  catch (error:any) {
-      toast({
-        title: error.message,
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+      message.error({
+        content: error.message,
+        className: "text-error",
       });
     }
   };
@@ -56,12 +54,9 @@ export default function Members({ workspaceId }: Props) {
         setMemberId("");
       }
     }  catch (error:any) {
-      toast({
-        title: error.message,
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+      message.error({
+        content: error.message,
+        className: "text-error",
       });
     }
   };
@@ -73,12 +68,9 @@ export default function Members({ workspaceId }: Props) {
         setMemberId("");
       }
     } catch (error:any) {
-      toast({
-        title: error.message,
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+      message.error({
+        content: error.message,
+        className: "text-error",
       });
     }
   };

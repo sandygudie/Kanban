@@ -1,8 +1,5 @@
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-} from "@chakra-ui/react";
+
+import {Modal } from 'antd';
 
 interface Props {
   open: boolean;
@@ -17,21 +14,20 @@ export default function ModalPopup({
   handleClose,
   showDowndrop,
 }: Props) {
+  
   return (
-    <Modal isCentered isOpen={open} onClose={handleClose}>
-      <ModalOverlay />
-      <ModalContent className="!w-auto !rounded-full !bg-white !dark:bg-secondary">
+    <Modal open={open} onCancel={handleClose} className='w-fit' wrapClassName="text-white" centered={true} footer={null}>
         <div
-          className={`rounded-lg  ${
+          className={`rounded-lg ${
             showDowndrop
               ? "w-[17rem] p-2 top-[13rem]"
-              : `w-[17rem] sm:w-[20rem] p-4 md:w-[33rem] md:p-6 top-[50%]`
+              : `w-auto md:px-6 pt-12 top-[50%]`
           }  bg-white dark:bg-secondary 
             rounded-lg max-h-[27rem] h-auto md:max-h-[35rem] overflow-auto md:overflow-hidden`}
         >
           {children}
         </div>
-      </ModalContent>
+
     </Modal>
   );
 }

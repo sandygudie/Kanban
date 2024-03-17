@@ -59,7 +59,7 @@ export default function Index() {
         <header className="header  flex items-center justify-between px-4 lg:px-16 py-4">
           <Link className="inline-flex items-center gap-x-2" to="/">
             <img
-              src="black_logo.webp"
+              src="track_black_logo.webp"
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />

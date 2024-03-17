@@ -1,6 +1,4 @@
 import moment from "moment";
-import IconButton from "components/IconButton";
-import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { AppState } from "types";
 import { appData } from "redux/boardSlice";
@@ -33,16 +31,9 @@ export default function BoardDetails({ handleClose }: Props) {
 
   return (
     <>
-      <div className="rounded-md p-4">
+      <div className="rounded-md px-4 pb-4">
         <div className="flex items-center justify-between mb-6">
           <h1 className="font-bold text-xl">#{active.name}</h1>
-          <IconButton
-            handleClick={() => {
-              handleClose();
-            }}
-          >
-            <IoClose className="font-medium text-gray/40 hover:bg-gray-100 rounded-md p-1 text-4xl" />
-          </IconButton>
         </div>
 
         <div className="flex items-center justify-start gap-x-6 p-2 pb-4">

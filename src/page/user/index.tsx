@@ -5,13 +5,13 @@ import { ChangeEvent, useState } from "react";
 import { DefaultImage } from "utilis";
 import { useUpdateUserMutation } from "redux/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useToast } from "@chakra-ui/react";
+import { App as AntDesign } from "antd";
 import IconButton from "components/IconButton";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
 export default function Index() {
-  const toast = useToast();
+  const { message } = AntDesign.useApp();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
@@ -27,14 +27,11 @@ export default function Index() {
     let res;
     if (e.target.name === "profilePics") {
       if (e.currentTarget.files && e.currentTarget.files[0].size > 100000) {
-
-        toast({
-          title: "image should be less than 100kb.",
-          position: "top",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
+        message.error({
+          content:"image should be less than 100kb.",
+          className: "text-error",
         });
+       
         return null
       }
       setSelectedImage(e.currentTarget.files);

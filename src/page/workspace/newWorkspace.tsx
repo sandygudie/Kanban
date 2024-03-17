@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Icon from "components/Icon";
 import logoMobile from "../../assets/logo-mobile.svg";
-// import ToggleBtn from "components/ToggleBtn";
+import { App as AntDesign } from "antd";
 import { Formik, Form, FormikErrors } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "components/InputField";
@@ -18,10 +18,9 @@ import {
   useJoinWorkspaceMutation,
 } from "redux/apiSlice";
 import { IoAlertCircleOutline, IoPencilOutline } from "react-icons/io5";
-import { useToast } from "@chakra-ui/react";
 
 const CreateWorkspaceForm = () => {
-  const toast = useToast();
+  const { message } = AntDesign.useApp();
   const { data: workspaces } = useGetAllWorkspacesQuery();
   const upload_preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -42,7 +41,6 @@ const CreateWorkspaceForm = () => {
     profilePics: Yup.string(),
   });
 
-
   const createNewWorksapce = async (values: any) => {
     const foundDuplicate = checkDuplicatedBoard(
       values.workspaceName,
@@ -50,13 +48,11 @@ const CreateWorkspaceForm = () => {
     );
 
     if (foundDuplicate) {
-      toast({
-        title: "Workspace name already exist.",
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+      message.error({
+        content: "Workspace name already exist.",
+        className: "text-error",
       });
+
       return null;
     }
     const data = new FormData();

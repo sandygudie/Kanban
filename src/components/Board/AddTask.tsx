@@ -12,7 +12,7 @@ import {
 import { appData, addTask, editTask, deleteTask } from "redux/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedTask } from "utilis";
-import { useToast } from "@chakra-ui/react";
+import { App as AntDesign } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import {
   useCreateTaskMutation,
@@ -37,6 +37,7 @@ export default function AddTask({
   tasks,
   selectedColumn,
 }: Props) {
+  const { message } = AntDesign.useApp();
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const [deleteATask] = useDeleteTaskMutation();
   const [editATask, { isLoading: isLoadingEdit }] = useEditTaskMutation();
@@ -44,7 +45,6 @@ export default function AddTask({
   const data: AppState = useSelector(appData);
   const active: IBoard = data.active;
   const workspace: IWorkspaceProfile = data.workspace;
-  const toast = useToast();
 
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
@@ -97,12 +97,9 @@ export default function AddTask({
         console.log(error);
       }
     } else {
-      toast({
-        title: "Task name already exist.",
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+      message.error({
+        content: "Task name already exist.",
+        className: "text-error",
       });
     }
     handleClose();
@@ -111,12 +108,9 @@ export default function AddTask({
   const editTaskHandler = async (values: ITask | any) => {
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === true && values._id !== tasks?._id) {
-      toast({
-        title: "Task name already exist.",
-        position: "top",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+      message.error({
+        content: "Task name already exist.",
+        className: "text-error",
       });
     } else {
       try {
