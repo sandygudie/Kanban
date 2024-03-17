@@ -3,13 +3,14 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 export default function BoardSkeleton() {
   return (
+    <div className="bg-secondary">
     <SkeletonTheme
       height={12}
       borderRadius={30}
       baseColor="#20212c"
       highlightColor="#2b2c36"
     >
-      <header className="dark:bg-secondary px-6 h-[50px] mini:h-[65px] flex flex-col justify-center  fixed w-full border border-[1px] border-gray/10">
+      <header className="bg-secondary px-6 h-[50px] mini:h-[65px] flex flex-col justify-center fixed w-full border border-[1px] border-gray/10">
         <div className="flex gap-x-36">
           <Skeleton width={100} />
           <Skeleton width={200} />
@@ -40,13 +41,13 @@ export default function BoardSkeleton() {
           </div>
         </div>
         <div className="w-10/12 pt-20 px-8 ">
-          <div className="md:flex gap-x-24">
-            <SkeletonTheme
+          <div className="md:flex gap-x-24 bg-secondary">
+             <SkeletonTheme
               height={12}
               borderRadius={30}
               baseColor="#2b2c36"
               highlightColor="#20212c"
-            >
+            > 
               <Skeleton width={200} />
               <Skeleton width={200} />
             </SkeletonTheme>
@@ -56,5 +57,6 @@ export default function BoardSkeleton() {
         </div>
       </div>
     </SkeletonTheme>
+    </div>
   );
 }
