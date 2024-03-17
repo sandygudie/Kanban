@@ -23,7 +23,7 @@ import { IoAdd } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs from 'dayjs';
-import * as relativeTime from "dayjs/plugin/relativeTime";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { DefaultImage } from "utilis";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import IconButton from "components/IconButton";

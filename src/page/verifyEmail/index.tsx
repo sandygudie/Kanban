@@ -12,6 +12,7 @@ export default function Index() {
 
   useEffect(() => {
     emailVerify();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const emailVerify = async () => {
