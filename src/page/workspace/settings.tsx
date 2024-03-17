@@ -1,5 +1,4 @@
 import { Formik, Form, FormikErrors } from "formik";
-import moment from "moment";
 import * as Yup from "yup";
 import { TextInput } from "components/InputField";
 import SocialLinks from "components/Settings/SocialLinks";
@@ -16,6 +15,8 @@ import DeleteItem from "components/DeleteItem";
 import IconButton from "components/IconButton";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import dayjs from 'dayjs';
+
 
 export default function Index() {
   const navigate = useNavigate();
@@ -116,7 +117,9 @@ export default function Index() {
           <div>
             <h1 className="font-bold md:text-xl">{workspace.name} Workspace</h1>
             <p className="text-gray/50 text-xs">
-              Created on {moment(workspace.createdAt).format("MMMM Do YYYY")}{" "}
+              Created on
+              { dayjs(workspace.createdAt).format('"MMMM DD, YYYY"')}
+
             </p>
           </div>
         </div>

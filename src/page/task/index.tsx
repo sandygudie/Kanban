@@ -22,7 +22,7 @@ import { DatePicker, DatePickerProps, TimePicker } from "antd";
 import { IoAdd } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import { RangePickerProps } from "antd/es/date-picker";
-import * as dayjs from "dayjs";
+import dayjs from 'dayjs';
 import * as relativeTime from "dayjs/plugin/relativeTime";
 import { DefaultImage } from "utilis";
 import { HiOutlineChevronLeft } from "react-icons/hi";
@@ -143,7 +143,7 @@ export default function TaskDetails() {
   return (
     <>
       {tasks ? (
-        <div className="px-8 overflow-auto h-full md:px-20 pt-16 pb-24">
+        <div className="px-6 overflow-auto h-full mini:px-20 pt-16 pb-24">
           <div className="text-lg font-bold flex items-start justify-between relative">
             <div className="absolute -top-[28px] mini:-top-[40px]">
               {" "}
@@ -239,7 +239,7 @@ export default function TaskDetails() {
               </div>
 
               <div className="relative">
-                <p className="font-semibold pb-2 text-sm">Assignees</p>
+                <p className="font-semibold mb-2 text-sm">Assignees</p>
                 <button
                   onClick={() => setAssign(true)}
                   className="p-2 bg-secondary rounded-md"

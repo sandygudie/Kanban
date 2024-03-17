@@ -5,7 +5,7 @@ import AddTask from "./AddTask";
 import { Draggable } from "@hello-pangea/dnd";
 import { useNavigate } from "react-router-dom";
 import { taskColorMarker } from "utilis";
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 import { Progress } from "antd";
 
 interface Props {

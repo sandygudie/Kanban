@@ -1,4 +1,4 @@
-import moment from "moment";
+
 import { useSelector } from "react-redux";
 import { AppState } from "types";
 import { appData } from "redux/boardSlice";
@@ -7,6 +7,7 @@ import { useState } from "react";
 import EditBoard from "./EditBoard";
 import DeleteItem from "components/DeleteItem";
 import { CiEdit } from "react-icons/ci";
+import dayjs from "dayjs";
 
 interface Props {
   handleClose: () => void;
@@ -83,7 +84,7 @@ export default function BoardDetails({ handleClose }: Props) {
               title: (
                 <p className="text-gray/50 text-sm py-5">
                   Created by {workspace.createdBy} on{" "}
-                  {moment(active.createdAt).format("MMM Do , YYYY")}
+                 { dayjs(active.createdAt).format("MMMM DD, YYYY")}
                 </p>
               ),
             },
