@@ -311,9 +311,9 @@ export default function Header({ memberPics }: any) {
             {viewBoard && (
               <div
                 ref={domRef}
-                className="bg-secondary py-3 top-[2.1rem] absolute shadow-2xl rounded-br-lg left-0"
+                className={`bg-secondary absolute shadow-2xl rounded-br-lg left-0`}
               >
-                <div className="py-1">
+                <div className="h-full py-8  ">
                   {board && (
                     <>
                       {board.map((options: IBoard) => {
@@ -338,15 +338,15 @@ export default function Header({ memberPics }: any) {
                               setViewBoard(false);
                             }}
                           >
-                            <div className="flex items-center gap-x-2 justify-between">
-                              {/* <Icon type="board" /> */}
-                              <MdSpaceDashboard />
+                            <div className="flex items-center justify-between">
+               
+                              <MdSpaceDashboard className="text-lg" />
                               <span
                                 className={`${
-                                  options.name.length > 12
-                                    ? "truncate w-[11ch]"
+                                  options.name.length > 13
+                                    ? "truncate w-[13ch]"
                                     : "w-auto"
-                                } block text-sm`}
+                                } block text-base`}
                               >
                                 {options.name}
                               </span>
