@@ -12,7 +12,7 @@ export default function Index() {
     <main className="h-full flex items-center flex-col gap-y-4 justify-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="w-11/12 mini:w-4/6 md:w-1/2 relative md:border border-solid py-10 mini:px-8 md:p-10 mini:shadow-lg"
+        className="w-11/12 mini:w-4/6 md:w-1/2 relative py-10 mini:px-8 md:p-10 mini:shadow-xl"
       >
         <h1 className="font-semibold text-2xl py-3 text-center">
           Forgot password?

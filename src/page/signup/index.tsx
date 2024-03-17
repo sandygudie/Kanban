@@ -230,7 +230,7 @@ export default function Index() {
                   </button>
                   <div className="text-right pt-2">
                     {" "}
-                    <Link className="text-xs underline text-gray" to="/login">
+                    <Link className="text-xs underline text-gray hover:text-gray" to="/login">
                       You have an account? log in
                     </Link>
                   </div>

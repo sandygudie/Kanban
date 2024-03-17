@@ -165,11 +165,11 @@ export default function Index() {
                   {isLoading ? <Loader /> : "Continue with email"}
                 </button>
                 <div className="flex items-center justify-between pt-3">
-                  <Link className="text-xs text-gray underline" to="/signup">
+                  <Link className="text-xs text-gray underline  hover:text-gray" to="/signup">
                     Create account
                   </Link>
                   <Link
-                    className="text-xs underline text-gray"
+                    className="text-xs underline text-gray  hover:text-gray"
                     to="/forgot-password"
                   >
                     forgot password?
