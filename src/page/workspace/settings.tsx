@@ -28,8 +28,8 @@ export default function Index() {
   const [selectedImage, setSelectedImage] = useState<any>();
   const [editWorkspaceProfile, { isLoading }] =
     useUpdateWorkspaceProfileMutation();
-  const upload_preset = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
-  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
+  const upload_preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+  const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
   const linkitems = [
     {

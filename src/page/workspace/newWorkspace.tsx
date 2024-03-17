@@ -23,8 +23,8 @@ import { useToast } from "@chakra-ui/react";
 const CreateWorkspaceForm = () => {
   const toast = useToast();
   const { data: workspaces } = useGetAllWorkspacesQuery();
-  const upload_preset = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
-  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
+  const upload_preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+  const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const [selectedImage, setSelectedImage] = useState<any>();
   const [uploadError, setUploadError] = useState<any>();
   const [createWorkspace, { isLoading }] = useCreateWorkspaceMutation();

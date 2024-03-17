@@ -20,7 +20,7 @@ import Task from "page/task";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
-  const clientId = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
+  const clientId = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
     if (currentTheme === null) {

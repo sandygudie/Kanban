@@ -19,8 +19,8 @@ export default function Index() {
   const [editedText, setEditedText] = useState({ name: "", email: "" });
   const [selectedImage, setSelectedImage] = useState<any>();
   const { user } = data;
-  const upload_preset = import.meta.env.VITE_APP_CLOUDINARY_UPLOAD_PRESET;
-  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
+  const upload_preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+  const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const [editUser] = useUpdateUserMutation();
 
   const editUserProfile = async (e: ChangeEvent<HTMLInputElement>) => {
