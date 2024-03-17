@@ -104,7 +104,7 @@ export default function Index() {
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
         <div className="w-9/12  mini:w-[50rem] mx-auto">
-          <h1 className="font-bold text-3xl md:mt-8 md:pb-12 text-center">
+          <h1 className="font-semibold text-3xl md:mt-8 md:pb-12 text-center">
             Sign Up
           </h1>
           <div className=" relative">

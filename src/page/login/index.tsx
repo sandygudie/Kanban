@@ -80,7 +80,7 @@ export default function Index() {
     <main className="h-full">
       <div className="h-full">
         <div className="md:w-4/12 mx-auto">
-          <h1 className="font-bold text-3xl pt-6 md:pb-12 text-center">
+          <h1 className="font-semibold text-3xl pt-6 md:pb-12 text-center">
             Log In
           </h1>
           <div className="">
@@ -168,7 +168,7 @@ export default function Index() {
                   <Link className="text-xs text-gray underline" to="/signup">
                     Create account
                   </Link>
-                  <Link className="text-xs underline text-gray" to="/">
+                  <Link className="text-xs underline text-gray" to="/forgot-password">
                     forgot password?
                   </Link>
                 </div>

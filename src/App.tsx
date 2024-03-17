@@ -6,6 +6,8 @@ import AuthLayout from "components/AuthLayout";
 import ProtectedRoutes from "components/ProtectedRoutes";
 import BoardLayout from "components/BoardLayout";
 const Login = lazy(() => import("page/login"));
+const ForgotPassword = lazy(() => import("page/forgotPassword"));
+const ResetPassword = lazy(() => import("page/resetPassword"));
 const Signup = lazy(() => import("page/signup"));
 const VerifyEmail = lazy(() => import("page/verifyEmail"));
 const Board = lazy(() => import("page/board"));
@@ -54,6 +56,8 @@ function App() {
         >
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/email-verify/:confirmationCode"
             element={<VerifyEmail />}
