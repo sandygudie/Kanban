@@ -16,7 +16,7 @@ export default function Index() {
       setError(error.message);
     }
   };
-console.log(response)
+
   return (
     <main className="h-full flex items-center flex-col gap-y-4 justify-center">
       <form
@@ -48,7 +48,7 @@ console.log(response)
        {error? <p className="text-xs flex items-center text-error gap-x-2">
           {" "}
           <IoAlertCircleOutline size={16} /> {error}{" "}
-        </p>: response?<p className="ml-8 text-success">{response.message}</p>: null}
+        </p>: response?<p className="font-medium ml-8 text-success">{response.message}</p>: null}
       </form>
     </main>
   );

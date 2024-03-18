@@ -1,8 +1,17 @@
-// import { Loader } from "components/Spinner";
+
+
 import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
+import { Loader } from "components/Spinner";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { IoAlertCircleOutline } from "react-icons/io5";
+import { useResetPasswordMutation } from "redux/authSlice";
 
 export default function Index() {
+  const {resetCode }: any = useParams();
+  const [resetpassword, { isLoading, data: response }] =
+    useResetPasswordMutation();
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false,
@@ -12,8 +21,13 @@ export default function Index() {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    try {
+      await resetpassword({ password }).unwrap();
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
-
+console.log(resetCode)
   return (
     <main className="h-full flex items-center flex-col gap-y-4 justify-center">
       <form
@@ -99,8 +113,16 @@ export default function Index() {
           className="my-8 bg-secondary-dark flex justify-center items-center flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
           type="submit"
         >
-          {"Reset Password"}
+          {isLoading ? <Loader /> : "Reset Password"}
         </button>
+        {error ? (
+          <p className="text-xs flex items-center text-error gap-x-2">
+            {" "}
+            <IoAlertCircleOutline size={16} /> {error}{" "}
+          </p>
+        ) : response ? (
+          <p className="font-medium ml-8 text-success">{response.message}</p>
+        ) : null}
       </form>
     </main>
   );

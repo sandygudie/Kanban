@@ -181,7 +181,7 @@ export default function Index() {
                   </Link>
                   <Link
                     className="text-xs underline text-gray  hover:text-gray"
-                    to="/forgot-password"
+                    to="/forgotpassword"
                   >
                     forgot password?
                   </Link>

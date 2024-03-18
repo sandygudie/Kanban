@@ -67,5 +67,6 @@ export const {
   useLoginUserMutation,
   useVerifyEmailMutation,
   useGoogleLoginMutation,
-  useForgotPasswordMutation
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = authSlice;

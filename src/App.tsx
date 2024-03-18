@@ -40,7 +40,7 @@ function App() {
     <React.Suspense
       fallback={
         <div className="flex flex-col items-center justify-center h-screen bg-skin-fill">
-        <div className="app_loader "></div>
+          <div className="app_loader "></div>
         </div>
       }
     >
@@ -55,8 +55,8 @@ function App() {
         >
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/resetpassword/:resetCode" element={<ResetPassword />} />
           <Route
             path="/email-verify/:confirmationCode"
             element={<VerifyEmail />}
