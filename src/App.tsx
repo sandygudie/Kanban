@@ -1,6 +1,5 @@
 import React, { useEffect, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import Spinner from "components/Spinner";
 import NotFound from "page/notFound";
 import AuthLayout from "components/AuthLayout";
 import ProtectedRoutes from "components/ProtectedRoutes";
@@ -41,7 +40,7 @@ function App() {
     <React.Suspense
       fallback={
         <div className="flex flex-col items-center justify-center h-screen bg-skin-fill">
-          <Spinner />
+        <div className="app_loader "></div>
         </div>
       }
     >
