@@ -42,7 +42,7 @@ export default function Index() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        {error? <p className="text-xs flex justify-center items-center mb-4 text-error gap-x-2">
+        {error? <p className="text-xs flex justify-center items-center mb-4 text-error gap-x-2 font-medium">
           {" "}
           <IoAlertCircleOutline size={16} /> {error}{" "}
         </p>: response?<p className="font-medium ml-8 text-success">{response.message}</p>: null}

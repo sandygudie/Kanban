@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "components/Spinner";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { IoAlertCircleOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
+import {
+  IoAlertCircleOutline,
+  IoCheckmarkCircleOutline,
+} from "react-icons/io5";
 import { useResetPasswordMutation } from "redux/authSlice";
 
 export default function Index() {
@@ -63,8 +66,6 @@ export default function Index() {
       !noSpacesCheck.test(password) &&
       upperCaseCheck.test(password)
     ) {
-     
-
       try {
         await resetpassword({ resetCode, password }).unwrap();
       } catch (error: any) {
@@ -110,52 +111,48 @@ export default function Index() {
               />
             )}
           </button>
-  
 
-        <div className="mt-2 text-[13px]">
-                    {response?.message? (
-                      <p className="text-success text-center">
-                        {response.message}
-                       
-                      </p>
-                    ) : error.length > 0 ? (
-                      <p className="text-error flex items-center gap-x-2">
-                        {" "}
-                        <IoAlertCircleOutline size={16} /> {error}
-                      </p>
-                    ) : (
-                      <>
-                        {password.length
-                          ? passwordValidation.map((ele, index) => (
-                              <p key={index}>
-                                <span
-                                  className={` ${
-                                    validatePassword.includes(ele)
-                                      ? "text-success"
-                                      : "text-error"
-                                  } text-[13px] flex items-center gap-x-2`}
-                                >
-                                  {validatePassword.includes(ele) ? (
-                                    <IoCheckmarkCircleOutline size={16} />
-                                  ) : (
-                                    <IoAlertCircleOutline size={16} />
-                                  )}
-                                  {ele}
-                                </span>
-                              </p>
-                            ))
-                          : null}
-                        {validatePassword.includes("No space") ? (
-                          <p className="text-error text-[13px] flex items-center gap-x-2">
-                            {" "}
+          <div className="mt-2 text-[13px]">
+            {response?.message ? (
+              <p className="text-success text-center font-medium">{response.message}</p>
+            ) : error.length > 0 ? (
+              <p className="text-error flex font-medium items-center gap-x-2">
+                {" "}
+                <IoAlertCircleOutline size={16} /> {error}
+              </p>
+            ) : (
+              <>
+                {password.length
+                  ? passwordValidation.map((ele, index) => (
+                      <p key={index}>
+                        <span
+                          className={` ${
+                            validatePassword.includes(ele)
+                              ? "text-success"
+                              : "text-error"
+                          } text-[13px] flex items-center gap-x-2`}
+                        >
+                          {validatePassword.includes(ele) ? (
+                            <IoCheckmarkCircleOutline size={16} />
+                          ) : (
                             <IoAlertCircleOutline size={16} />
-                            No spaces
-                          </p>
-                        ) : null}
-                      </>
-                    )}
-                  </div>
-                  </div>
+                          )}
+                          {ele}
+                        </span>
+                      </p>
+                    ))
+                  : null}
+                {validatePassword.includes("No space") ? (
+                  <p className="text-error text-[13px] flex items-center gap-x-2">
+                    {" "}
+                    <IoAlertCircleOutline size={16} />
+                    No spaces
+                  </p>
+                ) : null}
+              </>
+            )}
+          </div>
+        </div>
         <button
           className="my-8 bg-secondary-dark min-w-48 flex justify-center items-center flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
           type="submit"
