@@ -161,7 +161,7 @@ export default function Index() {
                 </button>
                 <div className="pt-3 relative">
                   {loginError ? (
-                    <p className="text-xs absolute  flex items-center text-error gap-x-2">
+                    <p className="text-xs absolute flex items-center text-error gap-x-2">
                       {" "}
                       <IoAlertCircleOutline size={16} /> {loginError}{" "}
                     </p>
