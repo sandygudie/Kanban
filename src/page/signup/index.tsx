@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
@@ -6,8 +6,10 @@ import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import Spinner, { Loader } from "components/Spinner";
 import { useCreateUserMutation, useGoogleLoginMutation } from "redux/authSlice";
 import { useGoogleLogin } from "@react-oauth/google";
+import { loadWorkspaceData } from "utilis";
 
 export default function Index() {
+  const navigate = useNavigate();
   const [signUp, { isLoading }] = useCreateUserMutation();
   const [googleSignUp, { isLoading: isGoogleLoginLoading }] =
     useGoogleLoginMutation();
@@ -100,9 +102,26 @@ export default function Index() {
   const signUpWithGoggle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        await googleSignUp({
+        const response = await googleSignUp({
           token: tokenResponse.access_token,
         }).unwrap();
+        const currentWorkspace = loadWorkspaceData();
+        const { workspace } = response.userdetails;
+        if (!workspace.length) {
+          navigate("/workspace/new");
+        } else if (workspace.length && !currentWorkspace) {
+          navigate("/workspaces");
+        } else {
+          const exisitngWorkspace = workspace.includes(
+            currentWorkspace.workspaceId
+          );
+          if (exisitngWorkspace) {
+            navigate(`/workspace/${currentWorkspace.workspaceId}`);
+          } else {
+            localStorage.removeItem("currentWorkspace");
+            navigate("/workspaces");
+          }
+        }
       } catch (error: any) {
         setSignupError(error.message);
       }
