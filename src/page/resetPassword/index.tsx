@@ -76,7 +76,7 @@ export default function Index() {
       setError("password does not match");
     }
   };
-  console.log(response);
+
   return (
     <main className="h-full flex items-center flex-col gap-y-4 justify-center">
       <form

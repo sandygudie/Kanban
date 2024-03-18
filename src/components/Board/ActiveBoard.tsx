@@ -40,7 +40,7 @@ export default function ActiveBoard() {
   const { active, workspace } = data;
 
   const onDragEnd = async (result: any) => {
-    console.log(result);
+
     if (!result.destination) {
       return;
     }
@@ -105,7 +105,7 @@ export default function ActiveBoard() {
       console.log(error);
     }
   };
-  // console.log(active.columns)
+
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>

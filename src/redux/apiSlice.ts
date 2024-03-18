@@ -209,7 +209,6 @@ export const apiSlice = createApi({
 
 export const {
   useUpdateUserMutation,
-  useLazyGetAllWorkspacesQuery,
   useGetWorkspaceBoardsQuery,
   useUpdateWorkspaceProfileMutation,
   useGetWorkspaceQuery,

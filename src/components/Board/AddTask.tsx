@@ -80,7 +80,7 @@ export default function AddTask({
           columnId: activeColumn?._id,
         };
         const response = await createTask(payload).unwrap();
-        // console.log(response)
+
         if (response) {
           dispatch(
             addTask({

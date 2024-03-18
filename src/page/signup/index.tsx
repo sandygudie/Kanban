@@ -109,7 +109,7 @@ export default function Index() {
         }).unwrap();
         const currentWorkspace = loadWorkspaceData();
         const { workspace } = response.userdetails;
-        console.log(response);
+
         if (!workspace.length) {
           navigate("/workspace/new");
         } else if (workspace.length && !currentWorkspace) {
