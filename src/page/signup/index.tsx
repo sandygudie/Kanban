@@ -3,12 +3,14 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
-import { Loader } from "components/Spinner";
-import { useCreateUserMutation } from "redux/authSlice";
+import Spinner, { Loader } from "components/Spinner";
+import { useCreateUserMutation, useGoogleLoginMutation } from "redux/authSlice";
 import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Index() {
   const [signUp, { isLoading }] = useCreateUserMutation();
+  const [googleSignUp, { isLoading: isGoogleLoginLoading }] =
+    useGoogleLoginMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState("");
   const location = useLocation();
@@ -95,9 +97,16 @@ export default function Index() {
     }
   };
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: (codeResponse) => console.log(codeResponse),
-    flow: "auth-code",
+  const signUpWithGoggle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        await googleSignUp({
+          token: tokenResponse.access_token,
+        }).unwrap();
+      } catch (error: any) {
+        setSignupError(error.message);
+      }
+    },
   });
 
   return (
@@ -110,13 +119,13 @@ export default function Index() {
           <div className=" relative">
             <div className="flex gap-x-20 items-center">
               <form
-                onSubmit={(e)=>handleSubmit(e)}
+                onSubmit={(e) => handleSubmit(e)}
                 className="w-full md:w-1/2 relative flex items-center py-10 md:p-8 md:shadow-xl flex-col gap-y-4 justify-center"
               >
                 <div className="block md:hidden">
                   <button
-                  type="button"
-                    onClick={() => googleLogin()}
+                    type="button"
+                    onClick={() => signUpWithGoggle()}
                     className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
                   >
                     <div className="w-10 h-10">
@@ -128,7 +137,13 @@ export default function Index() {
                         height="40"
                       />
                     </div>
-                    <p className="text-sm">Sign up with Google</p>
+                    <div className="text-sm">
+                      {isGoogleLoginLoading ? (
+                        <Spinner />
+                      ) : (
+                        "Sign up with Google"
+                      )}
+                    </div>
                   </button>
                 </div>
                 <p className="pb-4 md:hidden text-sm text-gray">OR</p>
@@ -230,7 +245,10 @@ export default function Index() {
                   </button>
                   <div className="text-right pt-2">
                     {" "}
-                    <Link className="text-xs underline text-gray hover:text-gray" to="/login">
+                    <Link
+                      className="text-xs underline text-gray hover:text-gray"
+                      to="/login"
+                    >
                       You have an account? log in
                     </Link>
                   </div>
@@ -239,9 +257,10 @@ export default function Index() {
               <hr className="border-r-[1px] border-gray/20 border-solid hidden md:block h-96" />
             </div>
             <div className="hidden md:block absolute right-0 top-36">
-              <p className="pb-4 text-sm text-gray">With existing account</p>
+              <p className="pb-4 text-sm text-gray">With social account</p>
               <button
-                onClick={() => {}}
+                type="button"
+                onClick={() => signUpWithGoggle()}
                 className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
               >
                 <div className="w-10 h-10">

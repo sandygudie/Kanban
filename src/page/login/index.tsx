@@ -2,14 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useEffect, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import { Loader } from "components/Spinner";
+import Spinner, { Loader } from "components/Spinner";
 import { loadWorkspaceData } from "utilis";
-import { useLoginUserMutation } from "redux/authSlice";
+import { useGoogleLoginMutation, useLoginUserMutation } from "redux/authSlice";
 import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Index() {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginUserMutation();
+  const [loginGoggle, { isLoading: isGoogleLoginLoading }] =
+  useGoogleLoginMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -36,9 +38,18 @@ export default function Index() {
       setInputError("");
     }
   };
+  
   const googleLogin = useGoogleLogin({
-    onSuccess: (codeResponse) => console.log(codeResponse),
-    flow: "auth-code",
+    onSuccess: async (tokenResponse) => {
+      try {
+        const result = await loginGoggle({
+          token: tokenResponse.access_token,
+        }).unwrap();
+        console.log(result);
+      } catch (error: any) {
+        console.log(error);
+      }
+    },
   });
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -103,7 +114,7 @@ export default function Index() {
                       height="40"
                     />
                   </div>
-                  <p className="text-sm">Sign in with Google</p>
+                  <div className="text-sm">{ isGoogleLoginLoading? <Spinner/> :'Sign up with Google'}</div>
                 </button>
               </div>
               <p className="text-sm text-gray">OR</p>

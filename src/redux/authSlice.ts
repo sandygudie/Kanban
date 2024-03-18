@@ -5,7 +5,7 @@ const baseURL = import.meta.env.VITE_API_BASEURL;
 export const authSlice = createApi({
   reducerPath: "authApi",
   baseQuery: axiosBaseQuery({ baseUrl: baseURL }),
-  tagTypes: ["User","Workspace"],
+  tagTypes: ["User", "Workspace"],
 
   endpoints: (builder) => ({
     // User
@@ -35,6 +35,14 @@ export const authSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
+    googleLogin: builder.mutation({
+      query: (payload) => ({
+        url: `/auth/google`,
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -42,5 +50,5 @@ export const {
   useCreateUserMutation,
   useLoginUserMutation,
   useVerifyEmailMutation,
- 
+  useGoogleLoginMutation,
 } = authSlice;
