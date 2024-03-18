@@ -32,7 +32,7 @@ export const authSlice = createApi({
         url: `/auth/email-verify/${confirmationCode}`,
         method: "GET",
       }),
-      invalidatesTags: ["User"],
+      // invalidatesTags: ["User"],
     }),
 
     googleLogin: builder.mutation({
