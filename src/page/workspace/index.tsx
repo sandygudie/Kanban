@@ -12,7 +12,7 @@ export default function Index() {
   // const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   // const updateThemehandler = (theme: string) => setTheme(theme);
   const { data: response, isLoading } = useGetAllWorkspacesQuery();
-
+console.log(response)
   return (
     <>
       <div className={`w-full h-screen overflow-auto `}>

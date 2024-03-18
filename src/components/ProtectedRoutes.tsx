@@ -13,7 +13,7 @@ console.log(cookies)
       }
     };
     verifyCookie();
-  }, [cookies.access_token, navigate]);
+  }, []);
 
   return children;
 }
