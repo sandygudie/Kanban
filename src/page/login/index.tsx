@@ -114,7 +114,7 @@ export default function Index() {
                       height="40"
                     />
                   </div>
-                  <div className="text-sm">{ isGoogleLoginLoading? <Spinner/> :'Sign up with Google'}</div>
+                  <div className="text-sm">{ isGoogleLoginLoading? <Spinner/> :'Continue with Google'}</div>
                 </button>
               </div>
               <p className="text-sm text-gray">OR</p>
@@ -161,7 +161,7 @@ export default function Index() {
                 </button>
                 <div className="pt-3 relative">
                   {loginError ? (
-                    <p className="text-xs absolute  flex items-center text-error gap-x-2">
+                    <p className="text-xs absolute flex items-center text-error gap-x-2">
                       {" "}
                       <IoAlertCircleOutline size={16} /> {loginError}{" "}
                     </p>
@@ -181,7 +181,7 @@ export default function Index() {
                   </Link>
                   <Link
                     className="text-xs underline text-gray  hover:text-gray"
-                    to="/forgot-password"
+                    to="/forgotpassword"
                   >
                     forgot password?
                   </Link>

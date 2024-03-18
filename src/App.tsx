@@ -1,6 +1,5 @@
 import React, { useEffect, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import Spinner from "components/Spinner";
 import NotFound from "page/notFound";
 import AuthLayout from "components/AuthLayout";
 import ProtectedRoutes from "components/ProtectedRoutes";
@@ -41,7 +40,7 @@ function App() {
     <React.Suspense
       fallback={
         <div className="flex flex-col items-center justify-center h-screen bg-skin-fill">
-          <Spinner />
+          <div className="app_loader "></div>
         </div>
       }
     >
@@ -56,8 +55,8 @@ function App() {
         >
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/resetpassword/:resetCode" element={<ResetPassword />} />
           <Route
             path="/email-verify/:confirmationCode"
             element={<VerifyEmail />}

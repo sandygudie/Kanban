@@ -39,7 +39,8 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
     }
   };
   return (
-    <div className="h-auto px-2 py-2">
+    <div className="h-auto px-2 pb-4">
+       <h1 className="font-bold text-lg pb-4">Invite Request</h1>
       <Formik
         initialValues={{
           email: "",

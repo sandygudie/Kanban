@@ -1,7 +1,6 @@
 import { appData, updateUserProfile } from "redux/boardSlice";
 import { AppState } from "types";
 import { ChangeEvent, useState } from "react";
-
 import { DefaultImage } from "utilis";
 import { useUpdateUserMutation } from "redux/apiSlice";
 import { useDispatch, useSelector } from "react-redux";

@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 export default function ProtectedRoutes({ children }: any) {
   const navigate = useNavigate();
   const [cookies] = useCookies(["access_token"]);
-
+console.log(cookies)
   useEffect(() => {
     const verifyCookie = async () => {
       if (!cookies.access_token) {

@@ -38,6 +38,7 @@ export default function Index() {
       [name]: value,
     }));
   };
+
   const handleChange = (e: any) => {
     setSignupError("");
     setSignupSuccess("");
@@ -78,6 +79,7 @@ export default function Index() {
     }
     setPassword(tempPassword);
   };
+  
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (
@@ -160,7 +162,7 @@ export default function Index() {
                       {isGoogleLoginLoading ? (
                         <Spinner />
                       ) : (
-                        "Sign up with Google"
+                        "Continue with Google"
                       )}
                     </div>
                   </button>
@@ -291,7 +293,7 @@ export default function Index() {
                     height="40"
                   />
                 </div>
-                <p className="text-sm">Sign up with Google</p>
+                <p className="text-sm">Continue with Google</p>
               </button>
             </div>
           </div>

@@ -27,6 +27,22 @@ export const authSlice = createApi({
       invalidatesTags: ["User"],
     }),
 
+forgotPassword: builder.mutation({
+      query: (payload) => ({
+        url: `/auth/forgotpassword`,
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    resetPassword: builder.mutation({
+      query: (payload) => ({
+        url: `/auth/resetpassword`,
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: ["User"],
+    }),
     verifyEmail: builder.mutation({
       query: (confirmationCode) => ({
         url: `/auth/email-verify/${confirmationCode}`,
@@ -51,4 +67,6 @@ export const {
   useLoginUserMutation,
   useVerifyEmailMutation,
   useGoogleLoginMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation
 } = authSlice;

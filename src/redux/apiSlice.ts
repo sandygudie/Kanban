@@ -9,7 +9,7 @@ export const apiSlice = createApi({
   tagTypes: ["Workspace", "User","Board", "Column", "Task"],
 
   endpoints: (builder) => ({
-    
+  
     UpdateUser: builder.mutation({
       query: (payload) => ({
         url: `/user/${payload.userId}`,
