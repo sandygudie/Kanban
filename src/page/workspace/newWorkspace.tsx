@@ -42,6 +42,7 @@ const CreateWorkspaceForm = () => {
   });
 
   const createNewWorksapce = async (values: any) => {
+    console.log(values)
     const foundDuplicate = checkDuplicatedBoard(
       values.workspaceName,
       workspaces.data.workspace
@@ -90,7 +91,7 @@ const CreateWorkspaceForm = () => {
       validateOnChange={false}
       validationSchema={createWorkspaceSchema}
       validateOnBlur={false}
-      onSubmit={createNewWorksapce}
+      onSubmit={(values) => createNewWorksapce(values)}
     >
       {({ setFieldValue, errors }: FormikErrors<{ image?: File }> | any) => (
         <Form>
