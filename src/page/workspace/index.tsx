@@ -1,6 +1,4 @@
-// import { useState } from "react";
 
-// import ToggleBtn from "components/ToggleBtn";
 import { Link } from "react-router-dom";
 import { useGetAllWorkspacesQuery } from "redux/apiSlice";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -67,7 +65,7 @@ export default function Index() {
             </SkeletonTheme>
           </div>
         ) : (
-          response.data.workspace.length > 0 && (
+          response?.data.workspace.length > 0 && (
             <div className="">
               <div className="mx-auto mt-10">
                 <h1 className="text-center md:text-lg font-semibold mb-8">

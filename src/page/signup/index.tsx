@@ -79,7 +79,7 @@ export default function Index() {
     }
     setPassword(tempPassword);
   };
-  
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (
@@ -109,6 +109,7 @@ export default function Index() {
         }).unwrap();
         const currentWorkspace = loadWorkspaceData();
         const { workspace } = response.userdetails;
+   
         if (!workspace.length) {
           navigate("/workspace/new");
         } else if (workspace.length && !currentWorkspace) {
@@ -125,6 +126,7 @@ export default function Index() {
           }
         }
       } catch (error: any) {
+
         setSignupError(error.message);
       }
     },
@@ -218,7 +220,7 @@ export default function Index() {
                         {signupSuccess}
                         <span> Check your inbox for verification link.</span>
                       </p>
-                    ) : signupError.length > 0 ? (
+                    ) : signupError?.length > 0 ? (
                       <p className="text-error flex items-center gap-x-2">
                         {" "}
                         <IoAlertCircleOutline size={16} /> {signupError}

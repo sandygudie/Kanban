@@ -48,7 +48,7 @@ export const apiSlice = createApi({
 
     getAllWorkspaces: builder.query<any, void>({
       query: () => ({ url: "/user", method: "get" }),
-      providesTags: ["Workspace"],
+      providesTags: ["User","Workspace"],
     }),
 
     getWorkspaceBoards: builder.query({

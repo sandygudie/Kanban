@@ -13,7 +13,6 @@ import Modal from "components/Modal";
 import WorkspaceInvite from "components/WorkspaceInvite";
 import { App as AntDesign } from "antd";
 
-
 interface Props {
   workspaceId: string;
 }
@@ -32,13 +31,12 @@ export default function Members({ workspaceId }: Props) {
     useUpdateMemberRoleMutation();
 
   const deletemember = async (userId: string) => {
-    setMemberId(userId);
     try {
       const response = await removeMember({ workspaceId, userId }).unwrap();
       if (response) {
         setMemberId("");
       }
-    }  catch (error:any) {
+    } catch (error: any) {
       message.error({
         content: error.message,
         className: "text-error",
@@ -49,11 +47,14 @@ export default function Members({ workspaceId }: Props) {
   const deletePendingmember = async (userEmail: string) => {
     setPendingMemberId(userEmail);
     try {
-      const response = await removePendingMember({ workspaceId, userEmail }).unwrap();
+      const response = await removePendingMember({
+        workspaceId,
+        userEmail,
+      }).unwrap();
       if (response) {
         setMemberId("");
       }
-    }  catch (error:any) {
+    } catch (error: any) {
       message.error({
         content: error.message,
         className: "text-error",
@@ -67,7 +68,7 @@ export default function Members({ workspaceId }: Props) {
       if (response) {
         setMemberId("");
       }
-    } catch (error:any) {
+    } catch (error: any) {
       message.error({
         content: error.message,
         className: "text-error",
@@ -155,7 +156,9 @@ export default function Members({ workspaceId }: Props) {
                                   </p>
                                 ),
                                 handler: () => {
-                                  deletemember(ele.userId), setOption("");
+                                  setMemberId(ele?.userId),
+                                    deletemember(ele.userId),
+                                    setOption("");
                                 },
                               },
                             ]}
