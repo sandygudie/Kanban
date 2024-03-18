@@ -37,8 +37,8 @@ export default function Index() {
             {isVerify}
           </p>
           <Link
-            className="p-4 rounded-lg w-full block text-center font-bold bg-black text-white"
-            to="/workspace/new"
+            className="p-4 hover:text-white rounded-lg w-full block text-center font-bold bg-black text-white"
+            to="/login"
           >
             Continue{" "}
           </Link>

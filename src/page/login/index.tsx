@@ -114,7 +114,7 @@ export default function Index() {
                       height="40"
                     />
                   </div>
-                  <div className="text-sm">{ isGoogleLoginLoading? <Spinner/> :'Sign up with Google'}</div>
+                  <div className="text-sm">{ isGoogleLoginLoading? <Spinner/> :'Continue with Google'}</div>
                 </button>
               </div>
               <p className="text-sm text-gray">OR</p>

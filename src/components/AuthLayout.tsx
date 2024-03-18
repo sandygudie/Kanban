@@ -7,7 +7,7 @@ export default function Header() {
     <header className="px-4 lg:px-16 py-4">
     <Link className="inline-flex items-center gap-x-2" to="/">
             <img
-              src="track_black_logo.webp"
+              src="/track_black_logo.webp"
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />
