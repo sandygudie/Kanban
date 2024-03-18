@@ -1,18 +1,15 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
-import Spinner, { Loader } from "components/Spinner";
-import { useCreateUserMutation, useGoogleLoginMutation } from "redux/authSlice";
-import { useGoogleLogin } from "@react-oauth/google";
-import { loadWorkspaceData } from "utilis";
+import { Loader } from "components/Spinner";
+import { useCreateUserMutation} from "redux/authSlice";
+import GoogleLogin from "components/GoogleLogin";
+
 
 export default function Index() {
-  const navigate = useNavigate();
   const [signUp, { isLoading }] = useCreateUserMutation();
-  const [googleSignUp, { isLoading: isGoogleLoginLoading }] =
-    useGoogleLoginMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState("");
   const location = useLocation();
@@ -101,35 +98,7 @@ export default function Index() {
     }
   };
 
-  const signUpWithGoggle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        const response = await googleSignUp({
-          token: tokenResponse.access_token,
-        }).unwrap();
-        const currentWorkspace = loadWorkspaceData();
-        const { workspace } = response.userdetails;
 
-        if (!workspace.length) {
-          navigate("/workspace/new");
-        } else if (workspace.length && !currentWorkspace) {
-          navigate("/workspaces");
-        } else {
-          const exisitngWorkspace = workspace.includes(
-            currentWorkspace.workspaceId
-          );
-          if (exisitngWorkspace) {
-            navigate(`/workspace/${currentWorkspace.workspaceId}`);
-          } else {
-            localStorage.removeItem("currentWorkspace");
-            navigate("/workspaces");
-          }
-        }
-      } catch (error: any) {
-        setSignupError(error.message);
-      }
-    },
-  });
 
   return (
     <main className="h-full">
@@ -144,30 +113,10 @@ export default function Index() {
                 onSubmit={(e) => handleSubmit(e)}
                 className="w-full md:w-1/2 relative flex items-center py-10 md:p-8 md:shadow-xl flex-col gap-y-4 justify-center"
               >
-                <div className="block md:hidden">
-                  <button
-                    type="button"
-                    onClick={() => signUpWithGoggle()}
-                    className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
-                  >
-                    <div className="w-10 h-10">
-                      <img
-                        src="./google_icon.webp"
-                        alt="devlink logo"
-                        width="40"
-                        loading="eager"
-                        height="40"
-                      />
-                    </div>
-                    <div className="text-sm">
-                      {isGoogleLoginLoading ? (
-                        <Spinner />
-                      ) : (
-                        "Continue with Google"
-                      )}
-                    </div>
-                  </button>
-                </div>
+                 <div className="block md:hidden">
+                 <GoogleLogin/>
+                 </div>
+     
                 <p className="pb-4 md:hidden text-sm text-gray">OR</p>
                 <input
                   type="text"
@@ -280,22 +229,7 @@ export default function Index() {
             </div>
             <div className="hidden md:block absolute right-0 top-36">
               <p className="pb-4 text-sm text-gray">With social account</p>
-              <button
-                type="button"
-                onClick={() => signUpWithGoggle()}
-                className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
-              >
-                <div className="w-10 h-10">
-                  <img
-                    src="./google_icon.webp"
-                    alt="devlink logo"
-                    width="40"
-                    loading="eager"
-                    height="40"
-                  />
-                </div>
-                <p className="text-sm">Continue with Google</p>
-              </button>
+             <GoogleLogin/>
             </div>
           </div>
         </div>

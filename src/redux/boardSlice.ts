@@ -208,6 +208,7 @@ const boardSlice = createSlice({
     builder.addMatcher(
       apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
+
         const { workspace, userDetails } = payload.data;
         const {
           boards,

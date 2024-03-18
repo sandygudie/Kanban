@@ -2,16 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useEffect, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import Spinner, { Loader } from "components/Spinner";
+import { Loader } from "components/Spinner";
 import { loadWorkspaceData } from "utilis";
-import { useGoogleLoginMutation, useLoginUserMutation } from "redux/authSlice";
-import { useGoogleLogin } from "@react-oauth/google";
+import {useLoginUserMutation } from "redux/authSlice";
+
+import GoogleLogin from "components/GoogleLogin";
 
 export default function Index() {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginUserMutation();
-  const [loginGoggle, { isLoading: isGoogleLoginLoading }] =
-  useGoogleLoginMutation();
+ 
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -39,18 +39,7 @@ export default function Index() {
     }
   };
   
-  const googleLogin = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        const result = await loginGoggle({
-          token: tokenResponse.access_token,
-        }).unwrap();
-        console.log(result);
-      } catch (error: any) {
-        console.log(error);
-      }
-    },
-  });
+
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -90,7 +79,7 @@ export default function Index() {
   return (
     <main className="h-full">
       <div className="h-full">
-        <div className="md:w-4/12 mx-auto">
+        <div className="md:w-5/12 mx-auto">
           <h1 className="font-semibold text-3xl pt-6 md:pb-12 text-center">
             Log In
           </h1>
@@ -100,22 +89,7 @@ export default function Index() {
               className="w-full flex items-center py-10 px-4 sm:px-12 md:shadow-xl flex-col gap-y-4 justify-center"
             >
               <div className="">
-                <button
-                  type="button"
-                  onClick={() => googleLogin()}
-                  className="bg-white text-sm shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] hover:shadow-[0_3px_10px_rgb(0,0,0,0.40)] font-extraBold flex justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
-                >
-                  <div className="w-10 h-10">
-                    <img
-                      src="./google_icon.webp"
-                      alt="devlink logo"
-                      width="40"
-                      loading="eager"
-                      height="40"
-                    />
-                  </div>
-                  <div className="text-sm">{ isGoogleLoginLoading? <Spinner/> :'Continue with Google'}</div>
-                </button>
+               <GoogleLogin/>
               </div>
               <p className="text-sm text-gray">OR</p>
 

@@ -35,7 +35,6 @@ export default function Header({ memberPics }: any) {
   // const updateThemehandler = (theme: string) => setTheme(theme);
   const [isFullscreen, setFullScreen] = useState(false);
 
-
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -65,7 +64,7 @@ export default function Header({ memberPics }: any) {
             <div className="flex items-center justify-center gap-x-2">
               <div className="w-8 h-auto overflow-hidden">
                 <img
-                  src={workspace.profilePics}
+                  src={workspace?.profilePics}
                   className="w-auto h-auto object-contain"
                   alt=""
                 />
@@ -78,7 +77,7 @@ export default function Header({ memberPics }: any) {
               >
                 <h3
                   className={`${
-                    workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
+                    workspace?.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
                   } font-bold sm:text-base md:text-xl`}
                 >
                   {TitleCase(workspace?.name)}
@@ -171,7 +170,7 @@ export default function Header({ memberPics }: any) {
               ) : (
                 <Link
                   to={`/workspace/${workspace.id}`}
-                  className="text-gray/50 font-bold"
+                  className="text-gray/80 font-bold hover:text-white"
                 >
                   Board
                 </Link>
@@ -180,7 +179,7 @@ export default function Header({ memberPics }: any) {
             <div className="flex items-center gap-x-8">
               <div className="border-[1px] border-solid border-gray-200 rounded-lg px-2 py-1 gap-x-4 items-center hidden mini:flex">
                 <div className="img_container">
-                  {memberPics.map(
+                  {memberPics?.map(
                     (
                       ele: { name: string; profilePics: string },
                       index: number
@@ -191,7 +190,7 @@ export default function Header({ memberPics }: any) {
                       >
                         {ele.profilePics == null ? (
                           <p
-                            className="w-6 p-0.5 text-xs h-6 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold
+                            className="w-8 p-0.5 text-xs h-8 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold
                       "
                           >
                             {" "}
@@ -207,7 +206,9 @@ export default function Header({ memberPics }: any) {
                     )
                   )}
                 </div>
-                <p className="font-medium text-xs">{memberPics.length} members</p>
+                <p className="font-medium text-xs">
+                  {memberPics.length} members
+                </p>
               </div>
               <button
                 onClick={() => toggleFullScreen()}
@@ -232,7 +233,7 @@ export default function Header({ memberPics }: any) {
                     />
                   </button>
                 ) : (
-                  <button className="h-[40px] w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                  <button className="h-[30px] w-[30px] mini:h-[40px] mini:w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
                     {DefaultImage(user.name)}
                   </button>
                 )}
@@ -281,106 +282,105 @@ export default function Header({ memberPics }: any) {
             </div>
           </div>
         </div>
-        <div className="h-auto xs:h-[45px] bg-secondary absolute top-[50px] left-0 mini:hidden flex flex-col pr-4 items-start bg-gray-100 justify-center w-full">
-          <div className="relative">
-            <button
-              onClick={() => setViewBoard(!viewBoard)}
-              className={`font-bold md:w-auto text-sm pl-4`}
-            >
-              <div className="flex">
-                <span className="text-xs sm:inline">
-                  ALL BOARDS ({board.length})
-                </span>
-
-                <HiOutlineChevronDown className="mt-0.5 text-sm inline " />
-              </div>
-            </button>{" "}
-            <span>
-              <FaAnglesRight className="inline text-xs mx-4 text-gray-200" />{" "}
-            </span>
-            <button
-              onClick={() => setIsOpenBoardDetails(true)}
-              className={`${
-                active?.name.length > 9
-                  ? "truncate w-[9ch] sm:w-auto"
-                  : "w-auto"
-              } hidden xs:inline text-sm font-medium bg-gray/20 py-1 px-4 rounded`}
-            >
-              #{TitleCase(active?.name)}
-            </button>
-            {viewBoard && (
-              <div
-                ref={domRef}
-                className={`bg-secondary absolute shadow-2xl rounded-br-lg left-0`}
+        {board.length && (
+          <div className="h-auto xs:h-[45px] bg-secondary absolute top-[50px] left-0 mini:hidden flex flex-col pr-4 items-start bg-gray-100 justify-center w-full">
+            <div className="relative">
+              <button
+                onClick={() => setViewBoard(!viewBoard)}
+                className={`font-bold md:w-auto text-sm pl-4`}
               >
-                <div className="h-full py-8  ">
-                  {board && (
-                    <>
-                      {board.map((options: IBoard) => {
-                        return (
-                          <button
-                            key={options._id}
-                            className={`h-10 w-52 px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${
-                              active?._id === options._id
-                                ? "bg-gray-100 rounded-r-full text-white"
-                                : "rounded-r-full hover:bg-primary/20"
-                            }  `}
-                            onClick={() => {
-                              navigate(`/workspace/${workspace.id}`);
-                              dispatch(activeItem(options));
-                              saveloadWorkspaceData({
-                                workspaceId: workspace.id,
-                                activeBoard: options._id,
-                              });
-                              // if (handleClose) {
-                              //   handleClose();
-                              // }
-                              setViewBoard(false);
-                            }}
-                          >
-                            <div className="flex items-center justify-between">
-               
-                              <MdSpaceDashboard className="text-lg" />
-                              <span
-                                className={`${
-                                  options.name.length > 13
-                                    ? "truncate w-[13ch]"
-                                    : "w-auto"
-                                } block text-base`}
-                              >
-                                {options.name}
-                              </span>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </>
-                  )}
+                <div className="flex">
+                  <span className="text-xs sm:inline">
+                    ALL BOARDS ({board.length})
+                  </span>
 
-                  {workspace.id ? (
-                    <button
-                      // onClick={() => {
-                      //   handleaddBoardMobile
-                      //     ? handleaddBoardMobile()
-                      //     : setIsOpen(true);
-                      // }}
-                      className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
-                    >
-                      <div className="flex items-center text-sm mini:text-base mt-4">
-                        {" "}
-                        <span>
-                          {" "}
-                          <IoIosAdd size={20} />{" "}
-                        </span>{" "}
-                        <p> New Board</p>
-                      </div>
-                    </button>
-                  ) : null}
+                  <HiOutlineChevronDown className="mt-0.5 text-sm inline " />
                 </div>
-              </div>
-            )}
+              </button>{" "}
+              <span>
+                <FaAnglesRight className="inline text-xs mx-4 text-gray-200" />{" "}
+              </span>
+              <button
+                onClick={() => setIsOpenBoardDetails(true)}
+                className={`${
+                  active?.name.length > 9
+                    ? "truncate w-[9ch] sm:w-auto"
+                    : "w-auto"
+                } hidden xs:inline text-sm font-medium bg-gray/20 py-1 px-4 rounded`}
+              >
+                #{TitleCase(active?.name)}
+              </button>
+              {viewBoard && (
+                <div
+                  ref={domRef}
+                  className={`bg-secondary absolute shadow-2xl rounded-br-lg left-0`}
+                >
+                  <div className="h-full py-8  ">
+                    {board && (
+                      <>
+                        {board.map((options: IBoard) => {
+                          return (
+                            <button
+                              key={options._id}
+                              className={`h-10 w-52 px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${
+                                active?._id === options._id
+                                  ? "bg-gray-100 rounded-r-full text-white"
+                                  : "rounded-r-full hover:bg-primary/20"
+                              }  `}
+                              onClick={() => {
+                                navigate(`/workspace/${workspace.id}`);
+                                dispatch(activeItem(options));
+                                saveloadWorkspaceData({
+                                  workspaceId: workspace.id,
+                                  activeBoard: options._id,
+                                });
+
+                                setViewBoard(false);
+                              }}
+                            >
+                              <div className="flex items-center justify-between">
+                                <MdSpaceDashboard className="text-lg" />
+                                <span
+                                  className={`${
+                                    options.name.length > 13
+                                      ? "truncate w-[13ch]"
+                                      : "w-auto"
+                                  } block text-base`}
+                                >
+                                  {options.name}
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </>
+                    )}
+
+                    {workspace.id ? (
+                      <button
+                        // onClick={() => {
+                        //   handleaddBoardMobile
+                        //     ? handleaddBoardMobile()
+                        //     : setIsOpen(true);
+                        // }}
+                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
+                      >
+                        <div className="flex items-center text-sm mini:text-base mt-4">
+                          {" "}
+                          <span>
+                            {" "}
+                            <IoIosAdd size={20} />{" "}
+                          </span>{" "}
+                          <p> New Board</p>
+                        </div>
+                      </button>
+                    ) : null}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </header>
 
       <Modal
