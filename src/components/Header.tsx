@@ -81,7 +81,7 @@ export default function Header({ memberPics }: any) {
                     workspace.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
                   } font-bold sm:text-base md:text-xl`}
                 >
-                  {TitleCase(workspace.name)}
+                  {TitleCase(workspace?.name)}
                 </h3>{" "}
                 <HiOutlineChevronDown className="mt-1 text-sm" />
               </button>
@@ -99,7 +99,7 @@ export default function Header({ memberPics }: any) {
                     </div>
                     <div className="dark:text-white text-black">
                       <h2 className="font-semibold text-base">
-                        {TitleCase(workspace.name)} workspace
+                        {TitleCase(workspace?.name)} workspace
                       </h2>
                     </div>
                   </div>
@@ -163,7 +163,7 @@ export default function Header({ memberPics }: any) {
                   className="rounded-sm items-center py-2 md:px-4 hover:bg-gray-100 flex"
                 >
                   <span className={`font-bold md:w-auto`}>
-                    #{TitleCase(active.name)}{" "}
+                    #{TitleCase(active?.name)}{" "}
                     <span className="hidden sm:inline">Board</span>
                   </span>{" "}
                   <HiOutlineChevronDown className="mt-1 text-sm" />

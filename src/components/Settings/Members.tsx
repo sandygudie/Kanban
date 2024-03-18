@@ -108,7 +108,7 @@ export default function Members({ workspaceId }: Props) {
                     </div>
                     <div className="flex gap-x-3 justify-between items-center mt-4">
                       {" "}
-                      <p className="font-bold pr-6">{TitleCase(ele.role)}</p>
+                      <p className="font-bold pr-6">{TitleCase(ele?.role)}</p>
                       <div className="relative">
                         <button
                           onClick={() => {
