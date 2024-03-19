@@ -123,7 +123,7 @@
     width: 100%;
   }
 a:hover{
-  color:black;
+  color:inherit;
 
 }
   input,

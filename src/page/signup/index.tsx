@@ -1,12 +1,11 @@
-import { Link, useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
-import { useCreateUserMutation} from "redux/authSlice";
+import { useCreateUserMutation } from "redux/authSlice";
 import GoogleLogin from "components/GoogleLogin";
-
 
 export default function Index() {
   const [signUp, { isLoading }] = useCreateUserMutation();
@@ -98,25 +97,24 @@ export default function Index() {
     }
   };
 
-
-
   return (
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
-        <div className="w-9/12  mini:w-[50rem] mx-auto">
-          <h1 className="font-semibold text-3xl md:mt-8 md:pb-12 text-center">
+        <div className="w-9/12 md:w-[60rem] mx-auto">
+          <h1 className="font-semibold text-2xl md:mt-8 md:pb-12 text-center">
             Sign Up
           </h1>
           <div className=" relative">
             <div className="flex gap-x-20 items-center">
               <form
+
                 onSubmit={(e) => handleSubmit(e)}
-                className="w-full md:w-1/2 relative flex items-center py-10 md:p-8 md:shadow-xl flex-col gap-y-4 justify-center"
+                className="w-full md:w-[50%] relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-md mini:shadow-3xl "
               >
-                 <div className="block md:hidden">
-                 <GoogleLogin/>
-                 </div>
-     
+                <div className="block md:hidden">
+                  <GoogleLogin />
+                </div>
+
                 <p className="pb-4 md:hidden text-sm text-gray">OR</p>
                 <input
                   type="text"
@@ -227,9 +225,9 @@ export default function Index() {
               </form>
               <hr className="border-r-[1px] border-gray/20 border-solid hidden md:block h-96" />
             </div>
-            <div className="hidden md:block absolute right-0 top-36">
+            <div className="hidden md:block absolute right-20 top-36">
               <p className="pb-4 text-sm text-gray">With social account</p>
-             <GoogleLogin/>
+              <GoogleLogin />
             </div>
           </div>
         </div>

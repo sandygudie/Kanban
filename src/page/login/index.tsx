@@ -4,14 +4,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
 import { loadWorkspaceData } from "utilis";
-import {useLoginUserMutation } from "redux/authSlice";
+import { useLoginUserMutation } from "redux/authSlice";
 
 import GoogleLogin from "components/GoogleLogin";
 
 export default function Index() {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginUserMutation();
- 
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -38,8 +38,6 @@ export default function Index() {
       setInputError("");
     }
   };
-  
-
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -79,17 +77,17 @@ export default function Index() {
   return (
     <main className="h-full">
       <div className="h-full">
-        <div className="md:w-5/12 mx-auto">
-          <h1 className="font-semibold text-3xl pt-6 md:pb-12 text-center">
+        <div className="w-full mini:w-9/12 md:w-[40%] mx-auto">
+          <h1 className="font-semibold text-2xl pt-6 pb-4 md:pb-12 text-center">
             Log In
           </h1>
           <div className="">
             <form
               onSubmit={handleSubmit}
-              className="w-full flex items-center py-10 px-4 sm:px-12 md:shadow-xl flex-col gap-y-4 justify-center"
+              className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center mini:shadow-3xl rounded-md"
             >
               <div className="">
-               <GoogleLogin/>
+                <GoogleLogin />
               </div>
               <p className="text-sm text-gray">OR</p>
 
@@ -150,7 +148,10 @@ export default function Index() {
                   {isLoading ? <Loader /> : "Continue with email"}
                 </button>
                 <div className="flex items-center justify-between pt-3">
-                  <Link className="text-xs text-gray underline  hover:text-gray" to="/signup">
+                  <Link
+                    className="text-xs text-gray underline  hover:text-gray"
+                    to="/signup"
+                  >
                     Create account
                   </Link>
                   <Link

@@ -21,10 +21,10 @@ export default function Index() {
   };
 
   return (
-    <main className="h-full flex items-center flex-col gap-y-4 justify-center">
+    <main className="h-full flex items-center flex-col gap-y-4 justify-start md:justify-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="w-11/12 mini:w-4/6 md:w-1/2 relative py-10 mini:px-8 md:p-10 mini:shadow-xl"
+        className="w-11/12 mini:w-4/6 md:w-1/2 relative py-10 rounded-md mini:px-8 md:p-10 mini:shadow-3xl"
       >
         <h1 className="font-semibold text-2xl text-center">
           Forgot password?
@@ -47,7 +47,7 @@ export default function Index() {
           <IoAlertCircleOutline size={16} /> {error}{" "}
         </p>: response?<p className="font-medium ml-8 text-success">{response.message}</p>: null}
         <button
-          className="mb-4 bg-secondary-dark flex justify-center items-center min-w-48 flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
+          className="mb-4 mt-12 bg-secondary-dark flex justify-center items-center min-w-48 flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
           type="submit"
         >
           {isLoading ? <Loader /> : "Continue with email"}

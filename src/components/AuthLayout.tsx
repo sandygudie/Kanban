@@ -12,7 +12,7 @@ export default function Header() {
               alt="mutiple-projects-image"
             />
                     
-            <span className="font-bold text-2xl">TRACK</span>
+          <span className="hidden mini:block font-bold text-3xl">Kanban</span>
           </Link>
     </header>
     <Outlet/>
