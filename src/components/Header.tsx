@@ -233,7 +233,7 @@ export default function Header({ memberPics }: any) {
                     />
                   </button>
                 ) : (
-                  <button className="h-[30px] w-[30px] mini:h-[40px] mini:w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                  <button  onClick={() => setOpenUser(true)} className="h-[30px] w-[30px] mini:h-[40px] mini:w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
                     {DefaultImage(user.name)}
                   </button>
                 )}
