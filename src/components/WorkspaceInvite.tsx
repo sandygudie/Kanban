@@ -22,7 +22,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
     inviteNote: Yup.string(),
   });
 
-  const sendInviteHandler = async (values: any) => {
+  const sendInviteHandler = async (values: any, { resetForm }: any) => {
     try {
       const response = await sendInvite({
         workspaceId: workspaceId,
@@ -37,10 +37,11 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
     } catch (error: any) {
       setError(error.message);
     }
+    resetForm();
   };
   return (
     <div className="h-auto px-2 pb-4">
-       <h1 className="font-bold text-lg pb-4">Invite Request</h1>
+      <h1 className="font-bold text-lg pb-4">Invite Request</h1>
       <Formik
         initialValues={{
           email: "",

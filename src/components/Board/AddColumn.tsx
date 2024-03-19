@@ -35,7 +35,7 @@ export default function AddColumn({ handleClose }: Props) {
       .min(1, "Add a column."),
   });
 
-  const addColumnHandler = async (values: any) => {
+  const addColumnHandler = async (values: any,{resetForm}:any) => {
     const foundDuplicate = checkDuplicatedColumn(
       values.columns,
       active.columns
@@ -60,6 +60,8 @@ export default function AddColumn({ handleClose }: Props) {
       } catch (error: any) {
         console.log(error);
         setError(error.message);
+      }finally{
+        resetForm()
       }
     } else {
       setError("Duplicated column name");
@@ -75,7 +77,9 @@ export default function AddColumn({ handleClose }: Props) {
           validationSchema={ColumnSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={addColumnHandler}
+          onSubmit={
+            addColumnHandler}
+         
         >
           {({ values, errors, }) => (
             <Form>

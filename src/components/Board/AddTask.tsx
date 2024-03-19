@@ -60,7 +60,7 @@ export default function AddTask({
       .min(1, "Add a substask."),
   });
 
-  const addTaskHandler = async (values: ITask | any) => {
+  const addTaskHandler = async (values: ITask | any, {resetForm}: any) => {
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === false) {
       try {
@@ -95,6 +95,8 @@ export default function AddTask({
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        handleClose();
       }
     } else {
       message.error({
@@ -102,10 +104,10 @@ export default function AddTask({
         className: "text-error",
       });
     }
-    handleClose();
+    resetForm();
   };
 
-  const editTaskHandler = async (values: ITask | any) => {
+  const editTaskHandler = async (values: ITask | any, {resetForm}: any) => {
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === true && values._id !== tasks?._id) {
       message.error({
@@ -177,6 +179,7 @@ export default function AddTask({
       }
     }
     handleClose();
+    resetForm();
   };
 
   return (
@@ -216,9 +219,11 @@ export default function AddTask({
           validationSchema={TaskSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={(values) => {
-            tasks ? editTaskHandler(values) : addTaskHandler(values);
-          }}
+          onSubmit={
+            tasks
+              ? editTaskHandler
+              : addTaskHandler
+          }
         >
           {({ values, errors }) => (
             <Form className="pb-4">
