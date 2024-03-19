@@ -29,7 +29,7 @@ export default function Index() {
         <h1 className="font-semibold text-2xl text-center">
           Forgot password?
         </h1>
-        <div className="w-5/6 mx-auto mt-8 mb-4">
+        <div className="w-5/6 mx-auto mt-8 mb-4 relative">
           <input
             type="email"
             minLength={5}
@@ -39,13 +39,17 @@ export default function Index() {
             value={email}
             className="py-3 px-4 rounded-lg w-full "
             placeholder="Email Address"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {setError(""),setEmail(e.target.value)}}
           />
-        </div>
-        {error? <p className="text-xs flex justify-center items-center mb-4 text-error gap-x-2 font-medium">
+           <div className="absolute -bottom-6">
+        {error? <p className="text-xs flex justify-center items-center text-error gap-x-2 font-medium">
           {" "}
           <IoAlertCircleOutline size={16} /> {error}{" "}
-        </p>: response?<p className="font-medium ml-8 text-success">{response.message}</p>: null}
+        </p>: response?<p className="font-medium text-success">{response.message}</p>: null}
+        </div>
+        </div>
+       
+        
         <button
           className="mb-4 mt-12 bg-secondary-dark flex justify-center items-center min-w-48 flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
           type="submit"

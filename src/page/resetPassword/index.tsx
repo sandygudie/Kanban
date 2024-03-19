@@ -21,6 +21,7 @@ export default function Index() {
   const upperCaseCheck = /[A-Z]/;
 
   const handleChange = (e: any) => {
+    setError("")
     const tempPassword = e.target.value;
 
     if (tempPassword.length > 5) {
@@ -86,7 +87,7 @@ export default function Index() {
         <h1 className="font-semibold text-2xl py-3 text-center">
           Reset password?
         </h1>
-        <div className="relative my-6 w-5/6 mx-auto">
+        <div className="relative mt-6 mb-12 w-5/6 mx-auto">
           <input
             type={showPassword ? "text" : "password"}
             minLength={5}
@@ -112,7 +113,7 @@ export default function Index() {
             )}
           </button>
 
-          <div className="mt-2 text-[13px]">
+          <div className="mt-2 text-[13px] absolute -bottom-10">
             {response?.message ? (
               <p className="text-success text-center font-medium">{response.message}</p>
             ) : error.length > 0 ? (
@@ -154,7 +155,7 @@ export default function Index() {
           </div>
         </div>
         <button
-          className="mb-4 mt-12 bg-secondary-dark min-w-48 flex justify-center items-center flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
+          className="mb-4 bg-secondary-dark min-w-48 flex justify-center items-center flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
           type="submit"
         >
           {isLoading ? <Loader /> : "Reset Password"}
