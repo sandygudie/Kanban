@@ -83,10 +83,9 @@ export default function Index() {
                           saveloadWorkspaceData({
                             workspaceId: ele._id,
                           });
-                          // navigate(`/workspace/${ele._id}`);
                           window.location.href = `workspace/${ele._id}`;
                         }}
-                        className="px-5 py-4 font-semibold rounded-md border-[1px] border-solid border-gray/20 hover:bg-gray-100 gap-x-4"
+                        className="px-5 py-4 font-semibold rounded-md border-[1px] border-solid border-gray/20 bg-gray-100 hover:bg-gray/15 gap-x-4"
                       >
                         <div className="flex items-center gap-x-3 md:gap-x-4">
                           <img
