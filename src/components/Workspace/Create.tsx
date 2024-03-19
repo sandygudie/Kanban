@@ -12,7 +12,7 @@ import { checkDuplicatedBoard, saveloadWorkspaceData } from "utilis";
 import { TextInput } from "components/InputField";
 import { Loader } from "components/Spinner";
 
-export default function Create() {
+export default function CreateWorkspace() {
   const { message } = AntDesign.useApp();
   const { data: workspaces } = useGetAllWorkspacesQuery();
   const upload_preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -56,7 +56,6 @@ export default function Create() {
       form.append("cloud_name", cloud_name);
       form.append("folder", "Kanban-images");
 
-      console.log(form)
       const result = await fetch(
         `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
         {

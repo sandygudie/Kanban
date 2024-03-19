@@ -1,24 +1,16 @@
 import { useState } from "react";
 import Icon from "components/Icon";
 import logoMobile from "../../assets/logo-mobile.svg";
-
-import { Formik, Form} from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "components/InputField";
 import { Loader } from "components/Spinner";
 import { useNavigate } from "react-router-dom";
-import {
-  saveloadWorkspaceData,
-  loadWorkspaceData,
+import { saveloadWorkspaceData, loadWorkspaceData } from "utilis";
+import { useJoinWorkspaceMutation } from "redux/apiSlice";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
-} from "utilis";
-import {
-
-  useJoinWorkspaceMutation,
-} from "redux/apiSlice";
-import { IoAlertCircleOutline} from "react-icons/io5";
-import Create from "components/Workspace/Create";
-
+import CreateWorkspace from "components/Workspace/Create";
 
 const JoinWorkspaceForm = () => {
   const [joinWorkspace, { isLoading }] = useJoinWorkspaceMutation();
@@ -32,13 +24,11 @@ const JoinWorkspaceForm = () => {
   const joinWorkspaceHandler = async (values: any) => {
     try {
       const response = await joinWorkspace(values).unwrap();
-
       if (response) {
         saveloadWorkspaceData({ workspaceId: response.data.workspaceId });
         navigate(`/workspace/${response.data.workspaceId}`);
       }
     } catch (error: any) {
-      console.log(error);
       setError(error.message);
     }
   };
@@ -153,7 +143,7 @@ export default function NewWorkspace() {
                 Join Workspace
               </button>
             </div>
-            {toggle ? <Create/> : <JoinWorkspaceForm />}
+            {toggle ? <CreateWorkspace /> : <JoinWorkspaceForm />}
           </div>
         </div>
       </main>
