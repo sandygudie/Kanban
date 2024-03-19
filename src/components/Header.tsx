@@ -155,7 +155,7 @@ export default function Header({ memberPics }: any) {
               {active ? (
                 <button
                   onClick={() => setIsOpenBoardDetails(true)}
-                  className="rounded-sm items-center py-2 md:px-4 rounded-md hover:bg-gray/20 bg-gray-100 flex"
+                  className="rounded-sm items-center py-2 px-4 rounded-md hover:bg-gray/20 bg-gray-100 flex"
                 >
                   <span className={`font-bold md:w-auto`}>
                     #{TitleCase(active?.name)}{" "}
@@ -175,7 +175,7 @@ export default function Header({ memberPics }: any) {
             <div className="flex items-center gap-x-8">
               <button
                 onClick={() => setIsOpenInvite(false)}
-                className="bg-success/70 hover:bg-success px-3 py-1.5 font-bold rounded-md "
+                className="hidden md:block bg-success/70 hover:bg-success px-3 py-1.5 font-bold rounded-md "
               >
                 Send Invite{" "}
               </button>
@@ -183,7 +183,7 @@ export default function Header({ memberPics }: any) {
                 onClick={() =>
                   navigate("/workspace/settings?members", { state: "Members" })
                 }
-                className="hover:bg-gray-100 border-[1px] cursor-pointer border-solid border-gray-200 rounded-lg px-2 py-1 gap-x-4 items-center hidden mini:flex"
+                className="hover:bg-gray-100 border-[1px] cursor-pointer border-solid border-gray-200 rounded-lg px-2 py-1 gap-x-4 items-center hidden md:flex"
               >
                 <div className="img_container">
                   {memberPics?.map(

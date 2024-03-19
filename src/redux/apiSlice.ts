@@ -202,7 +202,7 @@ export const apiSlice = createApi({
         url: `/task/${payload.workspaceId}/${payload.columnId}/${payload.taskId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Task"],
+      invalidatesTags: ["Task","Board"],
     }),
   }),
 });
