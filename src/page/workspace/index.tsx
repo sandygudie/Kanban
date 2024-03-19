@@ -7,9 +7,6 @@ import { BsPeople } from "react-icons/bs";
 import { MdSpaceDashboard } from "react-icons/md";
 
 export default function Index() {
-  // const currentTheme = localStorage.getItem("theme")!;
-  // const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
-  // const updateThemehandler = (theme: string) => setTheme(theme);
   const { data: response, isLoading } = useGetAllWorkspacesQuery();
 
   return (
@@ -19,14 +16,15 @@ export default function Index() {
           <div
             className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
           >
-            <div className="inline-flex items-center gap-x-2" >
+            <div className="inline-flex items-center gap-x-2">
               <img
                 src="/track_logo.webp"
                 className="w-6 h-auto"
                 alt="mutiple-projects-image"
               />
-              <span className="text-white font-bold md:text-2xl hidden md:block">
-                TRACK
+
+              <span className="hidden mini:block font-bold text-3xl">
+                Kanban
               </span>
             </div>
           </div>
@@ -37,7 +35,6 @@ export default function Index() {
                 ? "Workspace(s)"
                 : "No Workspace"}
             </h1>
-            {/* <ToggleBtn updateThemehandler={updateThemehandler} theme={theme} /> */}
           </div>
         </header>
         {isLoading ? (

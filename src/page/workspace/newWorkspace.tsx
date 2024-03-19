@@ -80,12 +80,8 @@ const JoinWorkspaceForm = () => {
 
 export default function NewWorkspace() {
   const navigate = useNavigate();
-  // const currentTheme = localStorage.getItem("theme")!;
-  // const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const [toggle, setToggle] = useState(true);
-
   const { data: response, isLoading } = useGetAllWorkspacesQuery();
-  // const updateThemehandler = (theme: string) => setTheme(theme);
 
   return (
     <div className={`w-full h-full `}>
@@ -99,9 +95,7 @@ export default function NewWorkspace() {
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />
-            <span className="text-white font-bold md:text-2xl hidden md:block">
-              TRACK
-            </span>
+          <span className="hidden mini:block font-bold text-3xl">Kanban</span>
           </div>
         </div>
         <div className="flex items-center font-bold text-gray justify-between w-full pl-2 md:px-4 mini:text-lg">
@@ -114,7 +108,6 @@ export default function NewWorkspace() {
           ) : (
             <p>No Workspace</p>
           )}
-          {/* <ToggleBtn updateThemehandler={updateThemehandler} theme={theme} /> */}
         </div>
       </header>
       <main className="h-screen overflow-auto">
@@ -128,7 +121,7 @@ export default function NewWorkspace() {
           <div className="w-96 mx-6 md:mx-0 h-[34rem]">
             <div>
               <h1 className="text-white text-xl sm:text-3xl md:text-3xl font-bold ">
-                Welcome to Track!
+                Welcome to Kanban!
               </h1>
               <p className="text-gray mt-1 text-sm mb-5">
                 Get started by creating or joining a workspace!
