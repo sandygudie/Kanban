@@ -18,8 +18,10 @@ export default function CreateWorkspace() {
   const upload_preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const [selectedImage, setSelectedImage] = useState<any>();
+  const [loading, setLoading] = useState(false);
   const [uploadError, setUploadError] = useState<any>();
   const [createWorkspace, { isLoading }] = useCreateWorkspaceMutation();
+  
   const navigate = useNavigate();
 
   const createWorkspaceSchema = Yup.object().shape({
@@ -35,6 +37,7 @@ export default function CreateWorkspace() {
   });
 
   const createNewWorksapce = async (values: any) => {
+    setLoading(true)
     let res;
     const foundDuplicate = checkDuplicatedBoard(
       values.workspaceName,
@@ -76,6 +79,7 @@ export default function CreateWorkspace() {
         });
         navigate(`/workspace/${response.data.workspaceId}`);
       }
+      setLoading(false)
     } catch (error: any) {
       setUploadError(error.message);
     }
@@ -165,7 +169,7 @@ export default function CreateWorkspace() {
               className="px-2 flex-col flex items-center justify-center text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
               type="submit"
             >
-              {isLoading ? <Loader /> : "Continue"}
+              {isLoading ||loading? <Loader /> : "Continue"}
             </button>
           </div>
         </Form>
