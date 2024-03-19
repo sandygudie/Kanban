@@ -68,7 +68,7 @@ export default function BoardDetails({ handleClose }: Props) {
                   {active?.description ? (
                     <p className="text-sm py-4">{active?.description}</p>
                   ) : (
-                    <p className="text-sm py-4 text-gray/40">
+                    <p className="text-sm py-4 text-gray/80">
                       ** A brief details about the board.
                     </p>
                   )}
@@ -82,7 +82,7 @@ export default function BoardDetails({ handleClose }: Props) {
             },
             {
               title: (
-                <p className="text-gray/50 text-sm py-5">
+                <p className="text-gray/90 text-sm py-5">
                   Created by {workspace.createdBy} on{" "}
                  { dayjs(active.createdAt).format("MMMM DD, YYYY")}
                 </p>

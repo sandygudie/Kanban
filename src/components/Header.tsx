@@ -159,7 +159,7 @@ export default function Header({ memberPics }: any) {
               {active ? (
                 <button
                   onClick={() => setIsOpenBoardDetails(true)}
-                  className="rounded-sm items-center py-2 md:px-4 hover:bg-gray-100 flex"
+                  className="rounded-sm items-center py-2 md:px-4 rounded-md hover:bg-gray/20 bg-gray-100 flex"
                 >
                   <span className={`font-bold md:w-auto`}>
                     #{TitleCase(active?.name)}{" "}
@@ -170,14 +170,19 @@ export default function Header({ memberPics }: any) {
               ) : (
                 <Link
                   to={`/workspace/${workspace.id}`}
-                  className="text-gray/80 font-bold hover:text-white"
+                  className="mini:text-lg font-bold text-white"
                 >
                   Board
                 </Link>
               )}
             </div>
             <div className="flex items-center gap-x-8">
-              <div className="border-[1px] border-solid border-gray-200 rounded-lg px-2 py-1 gap-x-4 items-center hidden mini:flex">
+              <div
+                onClick={() =>
+                  navigate("/workspace/settings?members", { state: "Members" })
+                }
+                className="hover:bg-gray-100 border-[1px] cursor-pointer border-solid border-gray-200 rounded-lg px-2 py-1 gap-x-4 items-center hidden mini:flex"
+              >
                 <div className="img_container">
                   {memberPics?.map(
                     (
@@ -189,10 +194,7 @@ export default function Header({ memberPics }: any) {
                         key={index}
                       >
                         {ele.profilePics == null ? (
-                          <p
-                            className="w-8 p-0.5 text-xs h-8 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold
-                      "
-                          >
+                          <p className="w-8 p-0.5 text-xs h-8 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold">
                             {" "}
                             {DefaultImage(ele.name)}
                           </p>
@@ -233,7 +235,10 @@ export default function Header({ memberPics }: any) {
                     />
                   </button>
                 ) : (
-                  <button  onClick={() => setOpenUser(true)} className="h-[30px] w-[30px] mini:h-[40px] mini:w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                  <button
+                    onClick={() => setOpenUser(true)}
+                    className="h-[30px] w-[30px] mini:h-[40px] mini:w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold"
+                  >
                     {DefaultImage(user.name)}
                   </button>
                 )}
@@ -293,7 +298,6 @@ export default function Header({ memberPics }: any) {
                   <span className="text-xs sm:inline">
                     ALL BOARDS ({board.length})
                   </span>
-
                   <HiOutlineChevronDown className="mt-0.5 text-sm inline " />
                 </div>
               </button>{" "}
@@ -334,7 +338,6 @@ export default function Header({ memberPics }: any) {
                                   workspaceId: workspace.id,
                                   activeBoard: options._id,
                                 });
-
                                 setViewBoard(false);
                               }}
                             >

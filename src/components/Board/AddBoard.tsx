@@ -40,7 +40,7 @@ function AddBoard({ handleClose }: Props) {
       .min(1, "Add a column."),
   });
 
-  const addBoardHandler = async (values: IBoard | any) => {
+  const addBoardHandler = async (values: IBoard | any,{resetForm}:any) => {
     const foundDuplicate = checkDuplicatedBoard(values.name, board);
     const column = values.columns.map((ele: IColumn) => ele.name);
     const name = values.name;
@@ -72,6 +72,7 @@ function AddBoard({ handleClose }: Props) {
      
     }
     handleClose();
+    resetForm()
   };
 
   return (

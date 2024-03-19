@@ -47,9 +47,9 @@ Props) {
             } pt-2 h-full left-0`}
           >
             <div>
-              <p className="pl-4 pt-2 pb-4 text-xs">
+             { board.length >0 && <p className="pl-4 pt-2 pb-4 text-xs">
                 ALL BOARDS ({board.length})
-              </p>
+              </p>}
 
               <div className="pt-1">
                 {board && (

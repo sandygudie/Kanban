@@ -14,17 +14,18 @@ import Modal from "components/Modal";
 import DeleteItem from "components/DeleteItem";
 import IconButton from "components/IconButton";
 import { HiOutlineChevronLeft } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from 'dayjs';
 
 
 export default function Index() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const [uploadError, setUploadError] = useState<any>();
   const { workspace } = data;
-  const [toggle, setToggle] = useState("About");
+  const [toggle, setToggle] = useState(location.state || "About");
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<any>();
   const [editWorkspaceProfile, { isLoading }] =
