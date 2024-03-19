@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import NotFound from "page/notFound";
 import AuthLayout from "components/AuthLayout";
 import ProtectedRoutes from "components/ProtectedRoutes";
+import Home from "page/home";
 import BoardLayout from "components/BoardLayout";
 const Login = lazy(() => import("page/login"));
 const ForgotPassword = lazy(() => import("page/forgotPassword"));
@@ -12,7 +13,7 @@ const VerifyEmail = lazy(() => import("page/verifyEmail"));
 const Board = lazy(() => import("page/board"));
 const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
 const AvailableWorkspace = lazy(() => import("page/workspace"));
-const Home = lazy(() => import("page/home"));
+
 const Settings = lazy(() => import("page/workspace/settings"));
 const User = lazy(() => import("page/user"));
 import Task from "page/task";

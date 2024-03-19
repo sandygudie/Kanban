@@ -54,12 +54,15 @@ export default function Index() {
   //   { title: "Support", link: "connect" },
   // ];
   return (
-    <div  className="home-container bg-primary/10 h-screen text-white overflow-y-auto relative w-full">
+    <div
+      style={{ backgroundImage: `url("download.webp")` }}
+      className="bg-no-repeat bg-cover w-full home-container bg-primary/10 h-screen text-black overflow-y-auto bg-white relative w-full"
+    >
       <div ref={hero} className="h-full w-full relative z-20">
-        <header className="header  flex items-center justify-between px-4 lg:px-16 py-4">
+        <header className="header flex items-center justify-between px-4 lg:px-16 py-4">
           <Link className="inline-flex items-center gap-x-2" to="/">
             <img
-              src="/track_logo.webp"
+              src="/track_black_logo.webp"
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />
@@ -95,40 +98,37 @@ export default function Index() {
             </Link>
           </div>
         </header>
-        <main>
-          <div>
-            <div className="px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
-              <h1 className="font-bold text-[2.5rem] md:text-6xl">
-                <p className="title-left"> Effortlessly Manage </p>
-                <p className="title-right">Your Projects.</p>
-              </h1>
-              <div className="description">
-                <p className="md:px-8 lg:p-0 text-[20px] my-8 font-normal leading-[2.5rem]">
-                  <span className="font-bold text-2xl">Kanban</span> offers a visual view
-                  for teams to manage tasks, quickly shift priorities, track
-                  project progress, and stay on top of deadlines.
-                </p>
+        <main className="h-[90%]">
+          <div className="px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
+            <h1 className="font-bold text-[2.5rem] md:text-6xl">
+              <p className="title-left"> Effortlessly Manage </p>
+              <p className="title-right">Your Projects.</p>
+            </h1>
+            <div className="description">
+              <p className="md:px-8 lg:p-0 text-[20px] my-8 font-normal leading-[2.5rem]">
+                <span className="font-bold text-2xl">Kanban</span> offers a
+                visual view for teams to manage tasks, quickly shift priorities,
+                track project progress, and stay on top of deadlines.
+              </p>
 
-                <div className="w-auto md:w-fit mx-auto relative">
-                  <input
-                    onChange={(e) =>
-                      e.target ? setEmail(e.target.value) : null
-                    }
-                    required
-                    type="email"
-                    placeholder="Email address"
-                    className="rounded-full w-full md:w-[30rem] py-4 px-6"
-                  />
-                  <button
-                    onClick={() => navigate("/signup", { state: email })}
-                    className="text-sm bg-white absolute top-[0.55rem] right-3 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full hover:bg-white px-4 py-2.5 font-medium"
-                  >
-                    Get Started
-                  </button>
-                </div>
+              <div className="w-auto md:w-fit mx-auto relative">
+                <input
+                  onChange={(e) => (e.target ? setEmail(e.target.value) : null)}
+                  required
+                  type="email"
+                  placeholder="Email address"
+                  className="rounded-full w-full border focus:border-black/40 border-black/20 placeholder:text-black/50 md:w-[30rem] py-4 px-6"
+                />
+                <button
+                  onClick={() => navigate("/signup", { state: email })}
+                  className="text-sm bg-black text-white absolute top-[0.55rem] right-3 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full  px-4 py-2.5 font-medium"
+                >
+                  Get Started
+                </button>
               </div>
             </div>
           </div>
+
           {/* </div> */}
           {/* <section
             id="features"
@@ -253,7 +253,7 @@ export default function Index() {
             </div>
           </section> */}
         </main>
-        <footer className="py-3 w-full absolute bottom-0 text-xs bg-black text-center text-white">
+        <footer className="py-3 w-full text-xs text-center text-black">
           Copyright <span>&copy;</span>
           {new Date().getFullYear()}. Sandy Goodnews
         </footer>
