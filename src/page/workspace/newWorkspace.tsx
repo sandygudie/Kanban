@@ -42,7 +42,7 @@ const CreateWorkspaceForm = () => {
   });
 
   const createNewWorksapce = async (values: any) => {
-    console.log(values)
+    let res;
     const foundDuplicate = checkDuplicatedBoard(
       values.workspaceName,
       workspaces.data.workspace
@@ -56,13 +56,13 @@ const CreateWorkspaceForm = () => {
 
       return null;
     }
-    const data = new FormData();
-    data.append("file", values.profilePics);
-    data.append("upload_preset", upload_preset);
-    data.append("cloud_name", cloud_name);
-    data.append("folder", "Kanban-images");
+    if (values) {
+      const data = new FormData();
+      data.append("file", values.profilePics);
+      data.append("upload_preset", upload_preset);
+      data.append("cloud_name", cloud_name);
+      data.append("folder", "Kanban-images");
 
-    try {
       const result = await fetch(
         `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
         {
@@ -70,10 +70,12 @@ const CreateWorkspaceForm = () => {
           body: data,
         }
       );
-      const { url } = await result.json();
+      res = await result.json();
+    }
+    try {
       const response = await createWorkspace({
         workspaceName: values.workspaceName,
-        profilePics: url,
+        profilePics: res.url,
       }).unwrap();
       if (response) {
         saveloadWorkspaceData({
