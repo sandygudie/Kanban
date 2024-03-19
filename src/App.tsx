@@ -39,7 +39,7 @@ function App() {
   return (
     <React.Suspense
       fallback={
-        <div className="flex flex-col items-center justify-center h-screen bg-skin-fill">
+        <div className="flex flex-col items-center justify-center h-screen bg-white">
           <div className="app_loader "></div>
         </div>
       }

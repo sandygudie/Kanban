@@ -253,7 +253,7 @@ export default function Index() {
             </div>
           </section> */}
         </main>
-        <footer className="py-3 w-full absolute bottom-0 text-sm bg-black text-center text-white">
+        <footer className="py-3 w-full absolute bottom-0 text-xs bg-black text-center text-white">
           Copyright <span>&copy;</span>
           {new Date().getFullYear()}. Sandy Goodnews
         </footer>
