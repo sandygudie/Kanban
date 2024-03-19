@@ -296,7 +296,7 @@ export default function TaskDetails() {
                       <p className="text-xs md:text-sm font-bold mb-2 w-16">
                         Due Date
                       </p>
-                      <div className="mini:flex items-center justify-center gap-x-3">
+                      <div className="">
                         <RangePicker
                           onChange={onChangeDate}
                           defaultValue={
@@ -313,7 +313,7 @@ export default function TaskDetails() {
                           <p
                             className={`${
                               pendingDate > 1 ? "text-success" : "text-error"
-                            } font-bold text-sm mt-1`}
+                            } font-bold text-sm my-2`}
                           >
                             {pendingDate} days left
                           </p>
