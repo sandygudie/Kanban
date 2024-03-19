@@ -1,15 +1,15 @@
 import { useState } from "react";
-import Icon from "components/Icon";
-import logoMobile from "../../assets/logo-mobile.svg";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "components/InputField";
-import { Loader } from "components/Spinner";
+import Spinner, { Loader } from "components/Spinner";
 import { useNavigate } from "react-router-dom";
-import { saveloadWorkspaceData, loadWorkspaceData } from "utilis";
-import { useJoinWorkspaceMutation } from "redux/apiSlice";
+import { saveloadWorkspaceData } from "utilis";
+import {
+  useGetAllWorkspacesQuery,
+  useJoinWorkspaceMutation,
+} from "redux/apiSlice";
 import { IoAlertCircleOutline } from "react-icons/io5";
-
 import CreateWorkspace from "components/Workspace/Create";
 
 const JoinWorkspaceForm = () => {
@@ -83,22 +83,31 @@ export default function NewWorkspace() {
   // const currentTheme = localStorage.getItem("theme")!;
   // const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
   const [toggle, setToggle] = useState(true);
-  const currentWorkspace = loadWorkspaceData();
+
+  const { data: response, isLoading } = useGetAllWorkspacesQuery();
   // const updateThemehandler = (theme: string) => setTheme(theme);
 
   return (
     <div className={`w-full h-full `}>
       <header className="bg-white h-[65px] dark:bg-secondary flex items-center w-full border-b-[1px] border-gray/20">
         <div
-          className={`border-r-[1px] border-gray/20 h-[65px] flex-col justify-center item-center px-4 min-w-[14rem] cursor-pointer hidden md:flex`}
+          className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
         >
-          <Icon type="kanban_logo" />
+          <div className="inline-flex items-center gap-x-2">
+            <img
+              src="/track_logo.webp"
+              className="w-6 h-auto"
+              alt="mutiple-projects-image"
+            />
+            <span className="text-white font-bold md:text-2xl hidden md:block">
+              TRACK
+            </span>
+          </div>
         </div>
-        <div className="block md:hidden border-gray/20 p-3 cursor-pointer">
-          <img src={logoMobile} alt="logo" className="w-8 h-8" />
-        </div>
-        <div className="flex items-center font-bold text-gray justify-between w-full pr-2 md:px-4">
-          {currentWorkspace?.workspaceId ? (
+        <div className="flex items-center font-bold text-gray justify-between w-full pl-2 md:px-4 mini:text-lg">
+          {isLoading ? (
+            <Spinner />
+          ) : response.data.workspace.length ? (
             <button onClick={() => navigate(`/workspaces`)}>
               Available Workspace(s)
             </button>
@@ -119,7 +128,7 @@ export default function NewWorkspace() {
           <div className="w-96 mx-6 md:mx-0 h-[34rem]">
             <div>
               <h1 className="text-white text-xl sm:text-3xl md:text-3xl font-bold ">
-                Welcome to Kanban!
+                Welcome to Track!
               </h1>
               <p className="text-gray mt-1 text-sm mb-5">
                 Get started by creating or joining a workspace!

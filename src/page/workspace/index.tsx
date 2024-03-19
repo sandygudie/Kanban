@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { useGetAllWorkspacesQuery } from "redux/apiSlice";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -20,24 +19,22 @@ export default function Index() {
           <div
             className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
           >
-            <Link className="inline-flex items-center gap-x-2" to="/">
+            <div className="inline-flex items-center gap-x-2" >
               <img
-                src="track_logo.webp"
+                src="/track_logo.webp"
                 className="w-6 h-auto"
                 alt="mutiple-projects-image"
               />
-              <span className="font-bold md:text-xl hidden md:block">
+              <span className="text-white font-bold md:text-2xl hidden md:block">
                 TRACK
               </span>
-            </Link>
+            </div>
           </div>
-          {/* <div className="block md:hidden border-gray/20 p-3 cursor-pointer">
-            <img src={logoMobile} alt="logo" className="w-8 h-8" />
-          </div> */}
+
           <div className="flex items-center justify-between w-full pr-2 px-4">
-            <h1 className="font-bold text-white/50 md:text-lg">
+            <h1 className="font-bold mini:text-lg  text-gray">
               {response?.data?.workspace.length > 0
-                ? "workspace(s)"
+                ? "Workspace(s)"
                 : "No Workspace"}
             </h1>
             {/* <ToggleBtn updateThemehandler={updateThemehandler} theme={theme} /> */}
@@ -58,9 +55,18 @@ export default function Index() {
               <div className="grid w-10/12 mx-auto mini:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-2">
                 <Skeleton height={120} className=" w-full mini:w-[250px]" />
                 <Skeleton height={120} className=" w-full mini:w-[250px]" />
-                <Skeleton height={120} className="hidden mini:block mini:w-[250px]" />
-                <Skeleton height={120} className="hidden mini:block  mini:w-[250px]" />
-                <Skeleton height={120} className="hidden mini:block mini:w-[250px]" />
+                <Skeleton
+                  height={120}
+                  className="hidden mini:block mini:w-[250px]"
+                />
+                <Skeleton
+                  height={120}
+                  className="hidden mini:block  mini:w-[250px]"
+                />
+                <Skeleton
+                  height={120}
+                  className="hidden mini:block mini:w-[250px]"
+                />
               </div>
             </SkeletonTheme>
           </div>
@@ -117,7 +123,7 @@ export default function Index() {
           }`}
         >
           <Link
-            className="bg-gray-100 hover:bg-gray-200 text-white flex-col flex items-center justify-center text-sm h-12 px-8 rounded-lg font-bold"
+            className="bg-gray-100 hover:bg-gray-200 !text-white flex-col flex items-center justify-center text-sm h-12 px-8 rounded-lg font-bold"
             to="/workspace/new"
           >
             {" "}
