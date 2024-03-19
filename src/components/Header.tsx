@@ -4,7 +4,6 @@ import Popup from "./Popup";
 import { useDispatch, useSelector } from "react-redux";
 import { activeItem, appData } from "redux/boardSlice";
 import { AppState, IBoard } from "types";
-// import ToggleBtn from "./ToggleBtn";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { GoScreenFull } from "react-icons/go";
@@ -30,9 +29,6 @@ export default function Header({ memberPics }: any) {
   const [isWorkspaceMenu, setWorkspaceMenu] = useState(false);
   const [isOpenUser, setOpenUser] = useState(false);
   const [viewBoard, setViewBoard] = useState(false);
-  // const currentTheme = localStorage.getItem("theme")!;
-  // const [theme, setTheme] = useState(currentTheme ? currentTheme : "dark");
-  // const updateThemehandler = (theme: string) => setTheme(theme);
   const [isFullscreen, setFullScreen] = useState(false);
 
   function toggleFullScreen() {
@@ -170,7 +166,7 @@ export default function Header({ memberPics }: any) {
               ) : (
                 <Link
                   to={`/workspace/${workspace.id}`}
-                  className="mini:text-lg font-bold text-white"
+                  className="mini:text-lg font-bold !text-white"
                 >
                   Board
                 </Link>
@@ -218,10 +214,7 @@ export default function Header({ memberPics }: any) {
               >
                 {isFullscreen ? <MdZoomInMap /> : <GoScreenFull />}
               </button>
-              {/* <ToggleBtn
-                updateThemehandler={updateThemehandler}
-                theme={theme}
-              /> */}
+
               <div className="relative">
                 {user.profilePics ? (
                   <button
@@ -360,14 +353,7 @@ export default function Header({ memberPics }: any) {
                     )}
 
                     {workspace.id ? (
-                      <button
-                        // onClick={() => {
-                        //   handleaddBoardMobile
-                        //     ? handleaddBoardMobile()
-                        //     : setIsOpen(true);
-                        // }}
-                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
-                      >
+                      <button className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white">
                         <div className="flex items-center text-sm mini:text-base mt-4">
                           {" "}
                           <span>
