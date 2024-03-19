@@ -23,14 +23,14 @@ export default function Index() {
                 alt="mutiple-projects-image"
               />
 
-              <span className="hidden md:block font-bold text-3xl">
+              <span className="hidden md:block font-bold text-2xl">
                 Kanban
               </span>
             </div>
           </div>
 
           <div className="flex items-center justify-between w-full pr-2 px-4">
-            <h1 className="font-bold mini:text-lg  text-gray">
+            <h1 className="font-bold mini:text-lg text-gray">
               {response?.data?.workspace.length > 0
                 ? "Workspace(s)"
                 : "No Workspace"}

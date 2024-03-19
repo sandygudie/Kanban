@@ -95,10 +95,10 @@ export default function NewWorkspace() {
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />
-          <span className="hidden md:block font-bold text-3xl">Kanban</span>
+          <span className="hidden md:block font-bold text-2xl">Kanban</span>
           </div>
         </div>
-        <div className="flex items-center font-bold text-gray justify-between w-full pl-2 md:px-4 mini:text-lg">
+        <div className="flex items-center font-bold text-gray justify-between w-full pl-2 md:px-4">
           {isLoading ? (
             <Spinner />
           ) : response.data.workspace.length ? (
