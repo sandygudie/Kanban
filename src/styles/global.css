@@ -258,7 +258,7 @@ a:hover{
   content: "";
   position: absolute;
   inset: 0;
-  background: #514b82;
+  background: hsl(242.31deg 48.15% 57.65%);
   clip-path: polygon(0 0,100% 0, 100% 67%,50% 67%,50% 34%,0 34%);
   animation: sp7 2s infinite;
 }
