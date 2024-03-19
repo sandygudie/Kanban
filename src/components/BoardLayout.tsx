@@ -85,7 +85,7 @@ export default function Index() {
           </button>
         </div>
       ) : isError ? (
-        <div className="flex items-center justify-center flex-col">
+        <div className="flex items-center justify-center h-screen flex-col">
           <Spinner />
         </div>
       ) : null}

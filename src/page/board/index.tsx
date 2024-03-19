@@ -38,9 +38,7 @@ export default function Index() {
                 onClick={() => {
                   setOpenBoard(true);
                 }}
-                className="font-bold bg-primary rounded-full px-6 py-3 cursor-pointer text-white transition ease-in-out delay-100 duration-500 bg-blue-500 hover:-translate-y-1 hover:scale-110
-      "
-              >
+                className="font-bold bg-primary/70 hover:bg-primary rounded-full px-6 py-3 cursor-pointer text-white bg-blue-500">
                 <div className="flex items-center justify-center gap-x-2">
                   <span>
                     <IoIosAdd />

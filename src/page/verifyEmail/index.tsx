@@ -53,7 +53,7 @@ export default function Index() {
           </Link>
         </div>
       ) : (
-        <Spinner />
+   <p>     <Spinner /> loading data...</p>
       )}
     </div>
   );

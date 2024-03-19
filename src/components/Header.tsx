@@ -105,7 +105,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <TbUsersPlus /> Invite members
+                        <TbUsersPlus /> Invite members to workspace
                       </p>
                     ),
                     handler: () => {
@@ -173,6 +173,7 @@ export default function Header({ memberPics }: any) {
               )}
             </div>
             <div className="flex items-center gap-x-8">
+              <button onClick={()=>setIsOpenInvite(false) } className="bg-success/70 hover:bg-success px-3 py-1.5 font-bold rounded-md ">Send Invite </button>
               <div
                 onClick={() =>
                   navigate("/workspace/settings?members", { state: "Members" })
@@ -210,7 +211,7 @@ export default function Header({ memberPics }: any) {
               </div>
               <button
                 onClick={() => toggleFullScreen()}
-                className="hidden mini:block font-bold text-gray-200 text-xl"
+                className="hidden mini:block font-bold text-gray/80 hover:text-white text-xl"
               >
                 {isFullscreen ? <MdZoomInMap /> : <GoScreenFull />}
               </button>
@@ -230,7 +231,7 @@ export default function Header({ memberPics }: any) {
                 ) : (
                   <button
                     onClick={() => setOpenUser(true)}
-                    className="h-[30px] w-[30px] mini:h-[40px] mini:w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold"
+                    className="h-[30px] w-[30px] mini:h-[40px] mini:w-[40px] text-sm p-1 overflow-hidden rounded-full border-[1px] border-gray hover:border-white flex items-center justify-center flex-col font-bold"
                   >
                     {DefaultImage(user.name)}
                   </button>

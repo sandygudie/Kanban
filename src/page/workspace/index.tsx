@@ -23,7 +23,7 @@ export default function Index() {
                 alt="mutiple-projects-image"
               />
 
-              <span className="hidden mini:block font-bold text-3xl">
+              <span className="hidden md:block font-bold text-3xl">
                 Kanban
               </span>
             </div>

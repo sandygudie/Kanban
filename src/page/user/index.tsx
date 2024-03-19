@@ -102,12 +102,12 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`text-sm font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${isEdit === "name" ? "bg-gray/5" : "border-gray/0"
+              className={`text-sm font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "name" ? "bg-gray/5" : "border-gray/0"
                 }`}
             />
           </div>
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray/70  text-sm md:w-64">Email</label>
+            <label className="text-gray/70 text-sm md:w-64">Email</label>
             <input
               name="email"
               value={editedText.email ? editedText.email : user.email}
@@ -118,7 +118,7 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-bold text-sm rounded-md w-full border-none focus:bg-gray/5 px-4 py-2 ${isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
+              className={`font-bold text-sm rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
                 }`}
             />
           </div>
@@ -173,7 +173,7 @@ export default function Index() {
         </div>
 
         <div className="mt-12 md:mt-24 bg-secondary rounded-md py-4">
-          <h2 className="border-b-[1px] border-gray/10 pb-3 text-base font-bold px-4 md:px-8">
+          <h2 className="border-b-[1px] border-gray/10 py-3 text-base font-bold px-4 md:px-8">
             Delete user
           </h2>
           <div className="px-4 md:px-8 py-5">

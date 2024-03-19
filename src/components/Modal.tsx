@@ -21,7 +21,7 @@ export default function ModalPopup({
           className={`rounded-lg ${
             showDowndrop
               ? "w-[17rem] p-2 top-[13rem]"
-              : `w-auto md:px-6 pt-12 top-[50%]`
+              : `w-auto px-6 pt-12 top-[50%]`
           }  bg-white dark:bg-secondary 
             rounded-lg max-h-[27rem] h-auto md:max-h-[35rem] overflow-auto md:overflow-hidden`}
         >
