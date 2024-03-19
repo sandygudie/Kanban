@@ -145,7 +145,7 @@ export default function ActiveBoard() {
                           onChange={(e) => editColumnChangeHandler(e)}
                           className={`${
                             inputError && "border-error"
-                          } w-28 px-2 h-8 font-medium text-gray/60 border-none text-[14px] rounded-md ${
+                          } w-28 px-2 h-8 font-medium text-gray border-none text-[14px] rounded-md ${
                             isEdit && isEditColumn === item._id
                               ? "bg-gray-100"
                               : "border-none"
