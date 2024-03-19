@@ -173,7 +173,12 @@ export default function Header({ memberPics }: any) {
               )}
             </div>
             <div className="flex items-center gap-x-8">
-              <button onClick={()=>setIsOpenInvite(false) } className="bg-success/70 hover:bg-success px-3 py-1.5 font-bold rounded-md ">Send Invite </button>
+              <button
+                onClick={() => setIsOpenInvite(false)}
+                className="bg-success/70 hover:bg-success px-3 py-1.5 font-bold rounded-md "
+              >
+                Send Invite{" "}
+              </button>
               <div
                 onClick={() =>
                   navigate("/workspace/settings?members", { state: "Members" })
@@ -190,17 +195,19 @@ export default function Header({ memberPics }: any) {
                         className="avatar w-auto h-auto w-max"
                         key={index}
                       >
-                        {ele.profilePics == null ? (
-                          <p className="w-8 p-0.5 text-xs h-8 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold">
-                            {" "}
-                            {DefaultImage(ele.name)}
-                          </p>
-                        ) : (
-                          <img
-                            className="w-6 h-6 rounded-full img"
-                            src={ele.profilePics}
-                          />
-                        )}
+                        {index <= 4 ? (
+                          ele.profilePics == null ? (
+                            <p className="w-8 p-0.5 text-xs h-8 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold">
+                              {" "}
+                              {DefaultImage(ele.name)}
+                            </p>
+                          ) : (
+                            <img
+                              className="w-6 h-6 rounded-full img"
+                              src={ele.profilePics}
+                            />
+                          )
+                        ) : null}
                       </button>
                     )
                   )}

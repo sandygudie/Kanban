@@ -118,8 +118,8 @@ export default function Index() {
           <div>
             <h1 className="font-bold md:text-xl">{workspace.name} Workspace</h1>
             <p className="text-gray/50 text-xs">
-              Created on
-              { dayjs(workspace.createdAt).format('"MMMM DD, YYYY"')}
+              Created on {""}
+              {dayjs(workspace.createdAt).format(`MMMM DD, YYYY`)}
 
             </p>
           </div>
