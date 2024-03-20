@@ -313,7 +313,7 @@ export default function Header({ memberPics }: any) {
                   active?.name.length > 9
                     ? "truncate w-[9ch] sm:w-auto"
                     : "w-auto"
-                } hidden xs:inline text-sm font-medium bg-gray/20 py-1 px-4 rounded`}
+                } hidden xs:inline text-sm font-medium bg-gray/20 py-2 px-4 rounded`}
               >
                 #{TitleCase(active?.name)}
               </button>
