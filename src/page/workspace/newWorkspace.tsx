@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { TextInput } from "components/InputField";
-import Spinner, { Loader } from "components/Spinner";
+import { Loader } from "components/Spinner/index";
 import { useNavigate } from "react-router-dom";
 import { saveloadWorkspaceData } from "utilis";
 import {
@@ -67,7 +67,7 @@ const JoinWorkspaceForm = () => {
         <div className="my-8">
           <button
             aria-label="Board"
-            className="px-2 flex-col flex items-center justify-center text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
+            className="px-2 flex-col md:text-lg flex items-center justify-center text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
             type="submit"
           >
             {isLoading ? <Loader /> : "Continue"}
@@ -98,11 +98,11 @@ export default function NewWorkspace() {
           <span className="hidden md:block font-bold text-2xl">Kanban</span>
           </div>
         </div>
-        <div className="flex items-center font-bold text-gray justify-between w-full pl-2 md:px-4">
+        <div className="flex items-center font-bold text-white/50 justify-between w-full pl-2 md:px-4">
           {isLoading ? (
-            <Spinner />
+            <Loader />
           ) : response.data.workspace.length ? (
-            <button onClick={() => navigate(`/workspaces`)}>
+            <button className="md:text-lg" onClick={() => navigate(`/workspaces`)}>
               Available Workspace(s)
             </button>
           ) : (

@@ -2,7 +2,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { TextArea, TextInput } from "components/InputField";
-import { Loader } from "components/Spinner";
+import { Loader } from "components/Spinner/index";
 import { useWorkspaceInviteMutation } from "redux/apiSlice";
 
 import { App as AntDesign } from "antd";

@@ -166,7 +166,7 @@ export default function CreateWorkspace() {
 
           <div className="my-10">
             <button
-              className="px-2 flex-col flex items-center justify-center text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
+              className="px-2 flex-col flex items-center justify-center md:text-lg text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
               type="submit"
             >
               {isLoading ||loading? <Loader /> : "Continue"}

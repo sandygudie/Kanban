@@ -1,0 +1,23 @@
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid #5350a9;
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}
+
+
+.bar-loader {
+  width: 40px;
+  aspect-ratio: 6.5;
+  background: radial-gradient(circle closest-side, #c9c8c8 90%, #0000) 0 /
+    calc(100% / 4) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: l1 1s steps(4) infinite;
+}
+@keyframes l1 {
+  to {
+    clip-path: inset(0 -34% 0 0);
+  }
+}

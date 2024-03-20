@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { appData, updateWorkspace } from "redux/boardSlice";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { useUpdateWorkspaceProfileMutation } from "redux/apiSlice";
-import Spinner from "components/Spinner";
+import Spinner from "components/Spinner/index";
 import Modal from "components/Modal";
 import DeleteItem from "components/DeleteItem";
 import IconButton from "components/IconButton";

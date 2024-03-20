@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedColumn } from "utilis";
 import { v4 as uuidv4 } from "uuid";
 import { IoAlertCircleOutline } from "react-icons/io5";
-import { Loader } from "components/Spinner";
+import { Loader } from "components/Spinner/index";
 import { useCreateColumnMutation } from "redux/apiSlice";
 import { IoIosAdd } from "react-icons/io";
 

@@ -1,4 +1,4 @@
-import Spinner from "components/Spinner";
+import  { Loader } from "components/Spinner";
 import { useGoogleLoginMutation } from "redux/authSlice";
 import { useGoogleLogin } from "@react-oauth/google";
 import { handleDeviceDetection, loadWorkspaceData } from "utilis";
@@ -59,8 +59,8 @@ export default function GoogleLogin() {
           height="40"
         />
       </div>
-      <div className="text-sm">
-        {isGoogleLoginLoading ? <Spinner /> : "Continue with Google"}
+      <div className="text-sm font-medium">
+        {isGoogleLoginLoading ? <Loader/> : "Continue with Google"}
       </div>
     </button>
   );

@@ -17,6 +17,7 @@ const Settings = lazy(() => import("page/workspace/settings"));
 const User = lazy(() => import("page/user"));
 import Task from "page/task";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { AppLoader } from "components/Spinner";
 
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -40,7 +41,7 @@ function App() {
     <React.Suspense
       fallback={
         <div className="flex flex-col items-center justify-center h-screen bg-skin-fill">
-          <div className="app_loader"></div>
+  <AppLoader/>
         </div>
       }
     >

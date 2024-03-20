@@ -30,7 +30,7 @@ export default function Index() {
           </div>
 
           <div className="flex items-center justify-between w-full pr-2 px-4">
-            <h1 className="font-bold mini:text-lg text-gray">
+            <h1 className="font-bold mini:text-lg text-white/50">
               {response?.data?.workspace.length > 0
                 ? "Workspace(s)"
                 : "No Workspace"}

@@ -6,7 +6,7 @@ import { Outlet, useParams } from "react-router-dom";
 import { useGetWorkspaceBoardsQuery } from "redux/apiSlice";
 import BoardSkeleton from "components/BoardSkeleton";
 import { loadWorkspaceData } from "utilis";
-import Spinner from "./Spinner";
+import { AppLoader } from "./Spinner/index";
 
 export default function Index() {
   const { workspaceId } = useParams();
@@ -86,7 +86,7 @@ export default function Index() {
         </div>
       ) : isError ? (
         <div className="flex items-center justify-center h-screen flex-col">
-          <Spinner />
+          <AppLoader />
         </div>
       ) : null}
     </>

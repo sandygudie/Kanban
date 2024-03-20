@@ -163,7 +163,7 @@ export default function ActiveBoard() {
                             setEditColumn(item._id);
                           }}
                         >
-                          <div className="hover:bg-gray-100 hover:text-white text-white/50 px-1.5 rounded-md">
+                          <div className="hover:bg-gray-100 hover:text-white text-white/50 px-1.5 mt-1.5 rounded-md">
                             <PiDotsThreeBold className="text-2xl font-bold" />
                           </div>
                         </IconButton>
