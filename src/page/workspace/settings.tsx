@@ -99,7 +99,7 @@ export default function Index() {
 
   return (
     <>
-      <div className="h-full overflow-y-auto md:overflow-hidden relative md:pb-24 pt-16 px-8 md:px-20">
+      <div className="h-full overflow-y-auto md:overflow-hidden relative pb-24 pt-16 px-8 md:px-20">
         <div className="flex gap-x-4 items-center relative">
           <div className="absolute -top-[30px] mini:-top-[35px]">
             {" "}
@@ -116,7 +116,7 @@ export default function Index() {
             />
           </div>
           <div>
-            <h1 className="font-bold md:text-xl">{workspace.name} Workspace</h1>
+            <h1 className="font-bold sm:text-lg md:text-xl">{workspace.name} Workspace</h1>
             <p className="text-gray/50 text-xs">
               Created on {""}
               {dayjs(workspace.createdAt).format(`MMMM DD, YYYY`)}

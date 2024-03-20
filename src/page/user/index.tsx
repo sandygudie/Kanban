@@ -77,8 +77,8 @@ export default function Index() {
   };
 
   return (
-    <div className="h-full px-8 md:px-24 md:pb-24 pt-16 md:pt-14 ">
-      <div className="h-full overflow-auto pb-24 settings_scroll">
+    <div className="h-full px-8 md:px-24  pt-16 md:pt-14">
+      <div className="h-full overflow-auto pb-28 settings_scroll">
         <div className="absolute top-[35px] mini:top-[20px]">
           {" "}
           <IconButton handleClick={() => navigate(-1)}>
@@ -86,7 +86,7 @@ export default function Index() {
             <HiOutlineChevronLeft />
           </IconButton>
         </div>
-        <h1 className="md:text-lg font-bold border-b-[1px] border-gray/10 pb-2">
+        <h1 className="sm:text-lg font-bold border-b-[1px] border-gray/10 pb-2">
           User Settings
         </h1>
         <div className="h-auto">
