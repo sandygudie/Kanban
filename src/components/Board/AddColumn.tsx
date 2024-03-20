@@ -70,8 +70,8 @@ export default function AddColumn({ handleClose }: Props) {
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-2 px-4">Column(s)</h1>
-      <div className="overflow-y-auto h-auto max-h-[30rem] px-4">
+      <h1 className="font-bold text-lg pb-2">Column(s)</h1>
+      <div className="overflow-y-auto h-auto max-h-[30rem]">
         <Formik
           initialValues={{ columns: [{ _id: uuidv4(), name: "", tasks: [] }] }}
           validationSchema={ColumnSchema}

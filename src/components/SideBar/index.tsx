@@ -14,19 +14,13 @@ import { MdSpaceDashboard } from "react-icons/md";
 interface Props {
   showSidebar: boolean;
   setShowSidebar?: Dispatch<SetStateAction<boolean>>;
-  handleClose?: () => void;
-  handleaddBoardMobile?: () => void;
 }
 
 export default function Index({
-  handleaddBoardMobile,
   setShowSidebar,
-  handleClose,
   showSidebar,
-}:
-Props) {
+}: Props) {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
   const { active, board, workspace } = data;
@@ -47,9 +41,11 @@ Props) {
             } pt-2 h-full left-0`}
           >
             <div>
-             { board.length >0 && <p className="pl-4 pt-2 pb-4 text-xs">
-                ALL BOARDS ({board.length})
-              </p>}
+              {board.length > 0 && (
+                <p className="pl-4 pt-2 pb-4 text-xs">
+                  ALL BOARDS ({board.length})
+                </p>
+              )}
 
               <div className="pt-1">
                 {board && (
@@ -70,13 +66,9 @@ Props) {
                               workspaceId: workspace.id,
                               activeBoard: options._id,
                             });
-                            if (handleClose) {
-                              handleClose();
-                            }
                           }}
                         >
                           <div className="flex items-center gap-x-2 justify-between">
-                       
                             <MdSpaceDashboard />
                             <span
                               className={`${
@@ -97,9 +89,7 @@ Props) {
                 {workspace.id ? (
                   <button
                     onClick={() => {
-                      handleaddBoardMobile
-                        ? handleaddBoardMobile()
-                        : setIsOpen(true);
+                      setOpenBoard(true);
                     }}
                     className="pl-4 mt-6 font-bold cursor-pointer text-gray hover:text-white text-gray px-3 text-sm "
                   >
@@ -131,16 +121,12 @@ Props) {
         </div>
       </>
       <Modal
-        open={isOpen || isOpenBoard}
+        open={isOpenBoard}
         handleClose={() => {
-          setIsOpen(false), setOpenBoard(false);
+          setOpenBoard(false);
         }}
       >
-        {isOpenBoard ? (
-          <AddBoard handleClose={() => setOpenBoard(false)} />
-        ) : (
-          <AddBoard handleClose={() => setIsOpen(false)} />
-        )}
+        <AddBoard handleClose={() => setOpenBoard(false)} />
       </Modal>
     </>
   );

@@ -94,7 +94,7 @@ export default function Members({ workspaceId }: Props) {
           <Spinner />
         ) : (
           <>
-            <div className="mt-6 bg-secondary px-8 py-2 rounded-md">
+            <div className="mt-6 bg-secondary px-4 py-2 rounded-md">
               {workspace?.data.members.map((ele: any) => {
                 return (
                   <div

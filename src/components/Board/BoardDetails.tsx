@@ -32,7 +32,7 @@ export default function BoardDetails({ handleClose }: Props) {
 
   return (
     <>
-      <div className="rounded-md px-4 pb-4">
+      <div className="rounded-md pb-4">
         <div className="flex items-center justify-between mb-6">
           <h1 className="font-bold text-xl">#{active.name}</h1>
         </div>

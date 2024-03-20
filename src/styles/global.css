@@ -85,7 +85,7 @@
 }
 .ant-modal-close {
   color: hsla(216, 15%, 57%, 0.9) !important;
-  margin: 1em;
+  /* margin: 1em; */
   width: 30px !important;
   height: 30px !important;
 }

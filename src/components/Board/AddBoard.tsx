@@ -77,8 +77,8 @@ function AddBoard({ handleClose }: Props) {
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-2 px-4">New Board</h1>
-      <div className="overflow-y-auto h-auto max-h-[30rem] px-4">
+      <h1 className="font-bold text-lg pb-2">New Board</h1>
+      <div className="overflow-y-auto h-auto max-h-[30rem]">
         <Formik
           initialValues={{ name: "", columns: [] }}
           validationSchema={BoardSchema}

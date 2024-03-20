@@ -17,6 +17,7 @@ import { GrNewWindow } from "react-icons/gr";
 import { DefaultImage, TitleCase, saveloadWorkspaceData } from "utilis";
 import { IoIosAdd } from "react-icons/io";
 import { FaAnglesRight } from "react-icons/fa6";
+import AddBoard from "./Board/AddBoard";
 
 export default function Header({ memberPics }: any) {
   const domRef = useRef<HTMLDivElement>(null);
@@ -30,6 +31,7 @@ export default function Header({ memberPics }: any) {
   const [isOpenUser, setOpenUser] = useState(false);
   const [viewBoard, setViewBoard] = useState(false);
   const [isFullscreen, setFullScreen] = useState(false);
+  const [isOpenBoard, setOpenBoard] = useState(false);
 
   function toggleFullScreen() {
     if (!document.fullscreenElement) {
@@ -342,7 +344,7 @@ export default function Header({ memberPics }: any) {
                                 setViewBoard(false);
                               }}
                             >
-                              <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-x-2 justify-between">
                                 <MdSpaceDashboard className="text-lg" />
                                 <span
                                   className={`${
@@ -361,13 +363,14 @@ export default function Header({ memberPics }: any) {
                     )}
 
                     {workspace.id ? (
-                      <button className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white">
+                      <button
+                        onClick={() => setOpenBoard(true)}
+                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
+                      >
                         <div className="flex items-center text-sm mini:text-base mt-4">
-                          {" "}
                           <span>
-                            {" "}
-                            <IoIosAdd size={20} />{" "}
-                          </span>{" "}
+                            <IoIosAdd size={20} />
+                          </span>
                           <p> New Board</p>
                         </div>
                       </button>
@@ -381,21 +384,21 @@ export default function Header({ memberPics }: any) {
       </header>
 
       <Modal
-        open={isOpenBoardDetails || isOpenInvite}
+        open={isOpenBoardDetails || isOpenInvite||isOpenBoard}
         handleClose={() => {
-          setIsOpenBoardDetails(false), setIsOpenInvite(false);
+          setIsOpenBoardDetails(false), setIsOpenInvite(false) , setOpenBoard(false);
         }}
       >
         {isOpenBoardDetails ? (
           <BoardDetails handleClose={() => setIsOpenBoardDetails(false)} />
-        ) : (
+        ) : isOpenInvite?(
           <WorkspaceInvite
             handleClose={() => {
               setIsOpenInvite(false), setWorkspaceMenu(true);
             }}
             workspaceId={workspace.id}
           />
-        )}
+        ):  <AddBoard handleClose={() => setOpenBoard(false)} />}
       </Modal>
     </>
   );

@@ -184,7 +184,7 @@ export default function AddTask({
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-2 px-4">
+      <h1 className="font-bold text-lg pb-6 px-4">
         {tasks ? (
           "Edit"
         ) : activeColumn ? (
