@@ -43,7 +43,7 @@ const axiosBaseQuery =
       const err = axiosError as AxiosError;
       if (err.response) {
         if (err.response.status === 401) {
-          // window.location.replace("/login");
+          window.location.replace("/login");
         }
       }
       return {

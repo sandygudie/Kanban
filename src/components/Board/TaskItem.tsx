@@ -51,7 +51,7 @@ export default function TaskItem({
                   borderColor: taskColorMarker[tasks.title.length + index],
                 }}
                 className="shadow-lg hover:bg-gray-100
-              cursor-pointer rounded-lg border-l-2 mb-4 py-4 px-4"
+              cursor-pointer rounded-lg border-l-2 mb-4 py-3 px-4"
               >
                 <p className="font-semibold">{tasks.title} </p>
                 <div className="mt-4 mb-2 flex items-center justify-between">
