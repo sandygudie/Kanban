@@ -84,7 +84,7 @@ export default function NewWorkspace() {
   const { data: response, isLoading } = useGetAllWorkspacesQuery();
 
   return (
-    <div className={`w-full h-full `}>
+    <div className={`w-full h-full`}>
       <header className="bg-white h-[65px] dark:bg-secondary flex items-center w-full border-b-[1px] border-gray/20">
         <div
           className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
@@ -111,7 +111,7 @@ export default function NewWorkspace() {
         </div>
       </header>
       <main className="h-screen overflow-auto">
-        <div className="flex-wrap flex items-center relative h-full justify-evenly">
+        <div className="flex-wrap py-12 flex item-start md:items-center relative h-full justify-evenly">
           <img
             src="/start-project.webp"
             alt="start project"
@@ -127,7 +127,7 @@ export default function NewWorkspace() {
                 Get started by creating or joining a workspace!
               </p>
             </div>
-            <div className="flex items-center gap-x-4">
+            <div className="flex items-center gap-x-4 my-4">
               <button
                 className={`${
                   toggle ? "bg-gray-200 text-white" : "text-base"
