@@ -19,6 +19,7 @@
     "@types/react": "^18.2.45",
     "antd": "^5.14.2",
     "axios": "^1.6.7",
+    "bowser": "^2.11.0",
     "cloudinary-react": "^1.8.1",
     "dayjs": "^1.11.10",
     "formik": "^2.2.9",

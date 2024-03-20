@@ -3,10 +3,11 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { ChangeEvent, useEffect, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
-import { loadWorkspaceData } from "utilis";
+import { handleDeviceDetection, loadWorkspaceData } from "utilis";
 import { useLoginUserMutation } from "redux/authSlice";
 
 import GoogleLogin from "components/GoogleLogin";
+import { setToken } from "utilis/token";
 
 export default function Index() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function Index() {
   });
   useEffect(() => {
     localStorage.removeItem("currentWorkspace");
+    localStorage.removeItem("APP_TOKEN");
   });
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginError("");
@@ -51,7 +53,11 @@ export default function Index() {
     } else {
       try {
         const response = await login(formData).unwrap();
-        const { workspace } = response.userdetails;
+        const { workspace, access_token } = response.userdetails;
+        const deviceType = handleDeviceDetection();
+        if (deviceType === "mobile") {
+          setToken(access_token);
+        }
         if (!workspace.length) {
           navigate("/workspace/new");
         } else if (workspace.length && !currentWorkspace) {

@@ -1,3 +1,4 @@
+import Bowser from "bowser"
 import { AppState, IBoard, IColumn, ITask } from "types";
 const data: IBoard[] = [];
 
@@ -17,7 +18,7 @@ export const loadState = () => {
       id: "",
       name: "",
       profilePics: "",
-      email:""
+      email: "",
     },
   };
   return initialState;
@@ -45,7 +46,6 @@ export const saveloadWorkspaceData = (state: any) => {
 };
 
 export const checkDuplicatedBoard = (name: string, arr: any[]) => {
-  
   return arr.some((ele: any) => ele.name === name);
 };
 
@@ -75,11 +75,6 @@ export const checkDuplicatedTask = (values: ITask, active: IBoard) => {
   return foundTask !== undefined ? true : false;
 };
 
-// export const colorSelection = () => {
-//   const randomNumber = Math.floor(Math.random() * 16777215).toString(16);
-//   return `#${randomNumber}`;
-// };
-
 export function TitleCase(str: string) {
   str.toLowerCase().split(" ");
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -87,7 +82,7 @@ export function TitleCase(str: string) {
 
 export function DefaultImage(str: string) {
   str.toLowerCase().split(" ");
-  return str.charAt(0).toUpperCase() + str.charAt(1).toUpperCase()
+  return str.charAt(0).toUpperCase() + str.charAt(1).toUpperCase();
 }
 export const colorMarker = [
   "#FFEB3B",
@@ -112,3 +107,8 @@ export const taskColorMarker = [
   "#03A9F4",
   "#8bc34a",
 ];
+
+export const handleDeviceDetection = () => {
+  const userAgent = Bowser.parse(window.navigator.userAgent);
+  return userAgent.platform.type;
+};

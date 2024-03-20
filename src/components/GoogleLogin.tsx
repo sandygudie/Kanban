@@ -1,8 +1,9 @@
 import Spinner from "components/Spinner";
 import { useGoogleLoginMutation } from "redux/authSlice";
 import { useGoogleLogin } from "@react-oauth/google";
-import { loadWorkspaceData } from "utilis";
+import { handleDeviceDetection, loadWorkspaceData } from "utilis";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "utilis/token";
 
 export default function GoogleLogin() {
   const navigate = useNavigate();
@@ -16,8 +17,13 @@ export default function GoogleLogin() {
           token: tokenResponse.access_token,
         }).unwrap();
         const currentWorkspace = loadWorkspaceData();
-        const { workspace } = response.userdetails;
 
+        const { workspace, access_token } = response.data.userdetails;
+        const deviceType = handleDeviceDetection();
+
+        if (deviceType === "mobile") {
+          setToken(access_token);
+        }
         if (!workspace.length) {
           navigate("/workspace/new");
         } else if (workspace.length && !currentWorkspace) {
