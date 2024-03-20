@@ -116,7 +116,7 @@ export default function ActiveBoard() {
                   key={item._id}
                   className="w-[250px] cursor-pointer shrink-0"
                 >
-                  <div className="flex h-10 mb-4 justify-between relative items-center">
+                  <div className="flex h-10 mb-3 justify-between relative items-center">
                     <div className="flex gap-x-1 items-center justify-between w-10/12 text-gray font-bold uppercase text-xs tracking-widest">
                       <div className="flex items-center gap-x-1">
                         <BsCircleFill
@@ -141,7 +141,7 @@ export default function ActiveBoard() {
                           onChange={(e) => editColumnChangeHandler(e)}
                           className={`${
                             inputError && "border-error"
-                          } w-28 px-2 h-8 font-medium text-gray border-none text-[14px] rounded-md ${
+                          } w-28 px-2 h-8 font-medium text-white/50 border-none text-[14px] rounded-md ${
                             isEdit && isEditColumn === item._id
                               ? "bg-gray-100"
                               : "border-none"
@@ -149,7 +149,7 @@ export default function ActiveBoard() {
                         />
                       </div>
                       {item.tasks.length > 0 && (
-                        <p className="text-gray/40 text-[14px]">
+                        <p className="text-white/50 text-[14px]">
                           ({item.tasks.length})
                         </p>
                       )}
@@ -163,7 +163,7 @@ export default function ActiveBoard() {
                             setEditColumn(item._id);
                           }}
                         >
-                          <div className="hover:bg-gray-100 px-1.5 rounded-md">
+                          <div className="hover:bg-gray-100 hover:text-white text-white/50 px-1.5 rounded-md">
                             <PiDotsThreeBold className="text-2xl font-bold" />
                           </div>
                         </IconButton>
@@ -212,7 +212,7 @@ export default function ActiveBoard() {
                           <div className="h-[75vh] px-3 pb-6 overflow-y-auto">
                             <button
                               onClick={() => setAddTask(true)}
-                              className="flex items-center justify-center w-full my-3 mb-6 mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
+                              className="flex items-center justify-center w-full mb-4 mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
                             >
                               {" "}
                               <span>
@@ -242,7 +242,7 @@ export default function ActiveBoard() {
                             <div className="h-[75vh] border-dashed border-[1px] border-gray/15 rounded-md">
                               <button
                                 onClick={() => setAddTask(true)}
-                                className="flex items-center justify-center w-[90%] mt-3 mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
+                                className="flex items-center justify-center w-[90%] mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
                               >
                                 {" "}
                                 <span>

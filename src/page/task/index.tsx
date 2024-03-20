@@ -143,7 +143,7 @@ export default function TaskDetails() {
   return (
     <>
       {tasks ? (
-        <div className="px-6 overflow-auto h-full mini:px-20 pt-16 pb-24">
+        <div className="px-6 overflow-auto h-full mini:px-20 pt-16 pb-36">
           <div className="text-lg font-bold flex items-start justify-between relative">
             <div className="absolute -top-[28px] mini:-top-[40px]">
               {" "}
