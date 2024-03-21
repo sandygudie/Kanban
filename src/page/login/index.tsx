@@ -53,7 +53,7 @@ export default function Index() {
     } else {
       try {
         const response = await login(formData).unwrap();
-        const { workspace, access_token } = response.userdetails;
+        const { workspace, access_token } = response.data.userdetails;
         const deviceType = handleDeviceDetection();
         if (deviceType === "mobile") {
           setToken(access_token);

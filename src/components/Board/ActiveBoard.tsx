@@ -104,7 +104,7 @@ export default function ActiveBoard() {
       console.log(error);
     }
   };
-
+console.log(selectedColumn)
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -211,8 +211,8 @@ export default function ActiveBoard() {
                         {item.tasks?.length > 0 ? (
                           <div className="h-[75vh] px-3 pb-6 overflow-y-auto">
                             <button
-                              onClick={() => setAddTask(true)}
-                              className="flex items-center justify-center w-full mb-4 mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
+                               onClick={() => { setSelectedColumn(item),setAddTask(true)}}
+                              className="flex items-center justify-center w-full my-3 mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
                             >
                               {" "}
                               <span>
@@ -241,8 +241,8 @@ export default function ActiveBoard() {
                           <div className="w-[250px] shrink-0 h-full">
                             <div className="h-[75vh] border-dashed border-[1px] border-gray/15 rounded-md">
                               <button
-                                onClick={() => setAddTask(true)}
-                                className="flex items-center justify-center w-[90%] mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
+                                onClick={() => { setSelectedColumn(item),setAddTask(true)}}
+                                className="flex items-center justify-center w-[90%] mx-auto mt-3 text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
                               >
                                 {" "}
                                 <span>

@@ -138,8 +138,8 @@ a:hover{
     outline: none;
     @apply border-gray/40;
   }
-  input::placeholder{
-    @apply text-gray/60;
+  input::placeholder, textarea::placeholder{
+    @apply text-gray/50;
   }
   button {
     cursor: pointer;
