@@ -104,7 +104,7 @@ export default function ActiveBoard() {
       console.log(error);
     }
   };
-console.log(selectedColumn)
+
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
