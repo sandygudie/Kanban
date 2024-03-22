@@ -53,7 +53,7 @@ export default function GoogleLogin() {
       <div className="w-10 h-10">
         <img
           src="./google_icon.webp"
-          alt="devlink logo"
+          alt="Google logo"
           width="40"
           loading="eager"
           height="40"
