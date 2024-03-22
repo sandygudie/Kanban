@@ -58,7 +58,7 @@ export default function Index() {
       style={{ backgroundImage: `url("download.webp")` }}
       className="bg-no-repeat bg-cover w-full home-container bg-primary/10 h-screen text-black overflow-y-auto bg-white relative w-full"
     >
-      <div ref={hero} className="h-full w-full relative z-20">
+      <div ref={hero} className="">
         <header className="header flex items-center justify-between px-4 lg:px-16 py-4">
           <Link className="inline-flex items-center gap-x-2" to="/">
             <img
@@ -98,8 +98,8 @@ export default function Index() {
             </Link>
           </div>
         </header>
-        <main className="h-[90%]">
-          <div className="px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
+
+          <main className="h-full md:h-screen px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
             <h1 className="font-bold text-[2.5rem] md:text-6xl">
               <p className="title-left"> Effortlessly Manage </p>
               <p className="title-right">Your Projects.</p>
@@ -127,7 +127,7 @@ export default function Index() {
                 </button>
               </div>
             </div>
-          </div>
+     
 
           {/* </div> */}
           {/* <section
