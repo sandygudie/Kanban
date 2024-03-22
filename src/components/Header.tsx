@@ -384,21 +384,25 @@ export default function Header({ memberPics }: any) {
       </header>
 
       <Modal
-        open={isOpenBoardDetails || isOpenInvite||isOpenBoard}
+        open={isOpenBoardDetails || isOpenInvite || isOpenBoard}
         handleClose={() => {
-          setIsOpenBoardDetails(false), setIsOpenInvite(false) , setOpenBoard(false);
+          setIsOpenBoardDetails(false),
+            setIsOpenInvite(false),
+            setOpenBoard(false);
         }}
       >
         {isOpenBoardDetails ? (
           <BoardDetails handleClose={() => setIsOpenBoardDetails(false)} />
-        ) : isOpenInvite?(
+        ) : isOpenInvite ? (
           <WorkspaceInvite
             handleClose={() => {
               setIsOpenInvite(false), setWorkspaceMenu(true);
             }}
             workspaceId={workspace.id}
           />
-        ):  <AddBoard handleClose={() => setOpenBoard(false)} />}
+        ) : (
+          <AddBoard handleClose={() => setOpenBoard(false)} />
+        )}
       </Modal>
     </>
   );
