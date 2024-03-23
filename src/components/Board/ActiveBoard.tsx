@@ -25,10 +25,10 @@ import { IoIosAdd } from "react-icons/io";
 export default function ActiveBoard() {
   const dispatch = useDispatch();
   const [isAddTask, setAddTask] = useState(false);
-
   const [isAddColumn, setAddColumn] = useState(false);
+  const [searchString, setSearchString] = useState<any>("");
   const [isEditColumn, setEditColumn] = useState<string | null>("");
-  const [isEdit, setEdit] = useState(false);
+
   const [inputError, setInputError] = useState(false);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isDeleteColumn, setDeleteColumn] = useState(false);
@@ -88,18 +88,23 @@ export default function ActiveBoard() {
     await createTask(payload).unwrap();
   };
 
-  const editColumnChangeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+  const editColumnChangeHandler = async (
+    e: ChangeEvent<HTMLInputElement>,
+    item: any
+  ) => {
     setInputError(false);
-    const editedText = e.target.value;
+    const name = e.target.value;
+    setSearchString(e.target.value);
     try {
       const response = await editAColumn({
-        columnId: selectedColumn?._id,
+        columnId: item?._id,
         workspaceId: workspace.id,
-        formData: { editedText },
+        formData: { name },
       }).unwrap();
       if (response) {
-        dispatch(editColumnName({ editedText, selectedColumn }));
+        dispatch(editColumnName({ name, selectedColumn: item }));
       }
+      setSearchString("");
     } catch (error) {
       console.log(error);
     }
@@ -117,7 +122,7 @@ export default function ActiveBoard() {
                   className="w-[250px] cursor-pointer shrink-0"
                 >
                   <div className="flex h-10 mb-3 justify-between relative items-center">
-                    <div className="flex gap-x-1 items-center justify-between w-10/12 text-gray font-bold uppercase text-xs tracking-widest">
+                    <div className="flex gap-x-1 items-center justify-between w-10/12 font-bold uppercase text-xs tracking-widest">
                       <div className="flex items-center gap-x-1">
                         <BsCircleFill
                           style={{
@@ -129,29 +134,32 @@ export default function ActiveBoard() {
                         />
                         <input
                           onMouseOver={() => {
-                            setEdit(true), setEditColumn(item._id);
+                            setEditColumn(item._id);
+
                             setOpenMenu(false);
                           }}
                           onMouseOut={() => {
-                            setEdit(false), setEditColumn("");
+                            setEditColumn("");
                             setOpenMenu(false);
                           }}
                           type="text"
-                          value={item.name}
-                          onChange={(e) => editColumnChangeHandler(e)}
+                          value={
+                            isEditColumn === item._id && searchString.length > 0
+                              ? searchString
+                              : item.name
+                          }
+                          onChange={(e) => editColumnChangeHandler(e, item)}
                           className={`${
                             inputError && "border-error"
-                          } w-28 px-2 h-8 font-medium text-white/50 border-none text-[14px] rounded-md ${
-                            isEdit && isEditColumn === item._id
+                          } w-28 px-2 h-8 font-medium border-none text-[14px] rounded-md ${
+                            isEditColumn === item._id
                               ? "bg-gray-100"
                               : "border-none"
                           }`}
                         />
                       </div>
                       {item.tasks.length > 0 && (
-                        <p className="text-white/50 text-[14px]">
-                          ({item.tasks.length})
-                        </p>
+                        <p className="text-[14px]">({item.tasks.length})</p>
                       )}
                     </div>
                     <div className={`absolute right-0 gap-x-1 items-center`}>
@@ -163,7 +171,7 @@ export default function ActiveBoard() {
                             setEditColumn(item._id);
                           }}
                         >
-                          <div className="hover:bg-gray-100 hover:text-white text-white/50 px-1.5 mt-1.5 rounded-md">
+                          <div className="hover:bg-gray-200 px-1.5 mt-1.5 rounded-md">
                             <PiDotsThreeBold className="text-2xl font-bold" />
                           </div>
                         </IconButton>
@@ -174,9 +182,9 @@ export default function ActiveBoard() {
                             items={[
                               {
                                 title: (
-                                  <p className="flex py-1 items-center gap-x-2.5 dark:text-white/80">
+                                  <p className="flex py-1 items-center gap-x-2.5">
                                     <CiEdit className="text-gray text-sm" /> Add
-                                    card
+                                    Card
                                   </p>
                                 ),
                                 handler: () => {
@@ -185,7 +193,7 @@ export default function ActiveBoard() {
                               },
                               {
                                 title: (
-                                  <p className="flex py-1 items-center gap-x-2.5 dark:text-white/80">
+                                  <p className="flex py-1 items-center gap-x-2.5">
                                     <MdDelete className="text-error" /> Delete
                                   </p>
                                 ),
@@ -211,15 +219,17 @@ export default function ActiveBoard() {
                         {item.tasks?.length > 0 ? (
                           <div className="h-[75vh] px-3 pb-6 overflow-y-auto">
                             <button
-                               onClick={() => { setSelectedColumn(item),setAddTask(true)}}
-                              className="flex items-center justify-center w-full my-3 mx-auto text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
+                              onClick={() => {
+                                setSelectedColumn(item), setAddTask(true);
+                              }}
+                              className="flex font-medium items-center justify-center w-full my-3 mx-auto text-center px-3 text-xs py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                             >
                               {" "}
                               <span>
                                 {" "}
                                 <IoIosAdd size={20} />{" "}
                               </span>{" "}
-                              Add card
+                              Add Card
                             </button>
                             {item.tasks.map((tasks: ITask, index: number) => {
                               const filtered = tasks.subtasks.filter(
@@ -239,17 +249,19 @@ export default function ActiveBoard() {
                           </div>
                         ) : (
                           <div className="w-[250px] shrink-0 h-full">
-                            <div className="h-[75vh] border-dashed border-[1px] border-gray/15 rounded-md">
+                            <div className="h-[75vh] border-dashed border-[1px] border-gray-300 rounded-md">
                               <button
-                                onClick={() => { setSelectedColumn(item),setAddTask(true)}}
-                                className="flex items-center justify-center w-[90%] mx-auto mt-3 text-center px-3 text-xs py-2 rounded-md hover:text-white/70 text-white/50 bg-gray/10 hover:bg-gray/15"
+                                onClick={() => {
+                                  setSelectedColumn(item), setAddTask(true);
+                                }}
+                                className="flex items-center justify-center w-[90%] font-medium mx-auto mt-3 text-center px-3 text-xs py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                               >
                                 {" "}
                                 <span>
                                   {" "}
                                   <IoIosAdd size={20} />{" "}
                                 </span>{" "}
-                                Add card
+                                Add Card
                               </button>
                             </div>
                           </div>
@@ -266,9 +278,9 @@ export default function ActiveBoard() {
             <div className="mt-14 h-[75vh] w-[260px] pr-8 shrink-0">
               <button
                 onClick={() => setAddColumn(true)}
-                className="h-full w-full bg-gray/10 hover:bg-gray/15 cursor-pointer flex items-center flex-col justify-center text-center rounded-md"
+                className="h-full w-full bg-gray-100 hover:bg-gray-200 cursor-pointer flex items-center flex-col justify-center text-center rounded-md"
               >
-                <p className="text-lg hover:text-white/70 text-white/50 font-bold flex items-center">
+                <p className="font-bold flex text-gray items-center">
                   {" "}
                   <IoIosAdd size={20} /> Add Column
                 </p>

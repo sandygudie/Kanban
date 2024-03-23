@@ -4,7 +4,6 @@ import { Formik, Form } from "formik";
 import { TextArea, TextInput } from "components/InputField";
 import { Loader } from "components/Spinner/index";
 import { useWorkspaceInviteMutation } from "redux/apiSlice";
-
 import { App as AntDesign } from "antd";
 import { RiErrorWarningLine } from "react-icons/ri";
 
@@ -82,7 +81,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
               className="py-2 px-3 text-sm md:w-[100px] text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
               type="submit"
             >
-              {isLoading ? <Loader /> : "Send Invite"}
+              {isLoading ? <Loader /> : "Send"}
             </button>
             <button
               aria-label="cancel"

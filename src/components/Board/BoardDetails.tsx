@@ -97,7 +97,7 @@ export default function BoardDetails({ handleClose }: Props) {
                 </p>
               ),
               handler: () => {
-                setIsOpenDelete(true); //admin
+                setIsOpenDelete(true); 
               },
             },
           ].map((ele, index) => {
@@ -108,17 +108,17 @@ export default function BoardDetails({ handleClose }: Props) {
                 className={`${
                   index > 2
                     ? "border-none rounded-b-md"
-                    : `border-b border-gray/10 ${index === 0 && "rounded-t-md"}`
+                    : `border-b border-gray/15 ${index === 0 && "rounded-t-md"}`
                 } w-full border-x-0 border-t-0 hover:bg-gray-100`}
               >
                 <div className="justify-between flex items-center py-2 px-5">
                   <div className="text-left">
-                    <span className="text-gray/50 text-sm ">{ele.label}</span>
+                    <span className="text-gray/80 font-medium text-sm ">{ele.label}</span>
                     {ele.title}
                   </div>
                   {ele.label ? (
                     <span onClick={() => ele.handler()}>
-                      <CiEdit className="text-gray/50 text-lg" />
+                      <CiEdit className="text-lg" />
                     </span>
                   ) : null}
                 </div>

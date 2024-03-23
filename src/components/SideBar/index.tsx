@@ -36,7 +36,7 @@ export default function Index({
           }`}
         >
           <div
-            className={`z-40 text-gray bg-white dark:bg-secondary ${
+            className={`z-40 bg-secondary ${
               isMobile && "pr-2 pb-24 border-r-[1px] border-gray/20"
             } pt-2 h-full left-0`}
           >
@@ -56,7 +56,7 @@ export default function Index({
                           key={options._id}
                           className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-bold cursor-pointer ${`${
                             active?._id === options._id
-                              ? "bg-gray-100 rounded-r-full text-white"
+                              ? "bg-gray-200 rounded-r-full"
                               : "rounded-r-full hover:bg-primary/20"
                           } `} `}
                           onClick={() => {
@@ -91,7 +91,7 @@ export default function Index({
                     onClick={() => {
                       setOpenBoard(true);
                     }}
-                    className="pl-4 mt-6 font-bold cursor-pointer text-gray hover:text-white text-gray px-3 text-sm "
+                    className="pl-4 mt-8 font-bold cursor-pointer font-medium text-gray/80 hover:text-gray px-3 text-sm "
                   >
                     <div className="flex items-center">
                       {" "}
@@ -112,7 +112,7 @@ export default function Index({
                 onClick={() => {
                   setShowSidebar ? setShowSidebar(false) : null;
                 }}
-                className="cursor-pointer p-2 rounded-l-full bg-gray-200 text-white border-none inline-flex items-center gap-x-2 text-xs"
+                className="cursor-pointer p-2 rounded-l-full hover:bg-gray/50 bg-gray-200 text-gray hover:text-white border-none inline-flex items-center gap-x-2 text-xs"
               >
                 <GoSidebarExpand size={20} />
               </button>

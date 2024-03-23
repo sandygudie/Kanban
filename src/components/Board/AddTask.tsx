@@ -261,7 +261,7 @@ export default function AddTask({
                         ))}
                       <button
                         aria-label="Add Subtasks"
-                        className="bg-primary/40 text-primary dark:bg-white dark:text-primary px mt-3 font-bold text-sm -2 py-3 w-full flex items-center justify-center rounded-full"
+                        className="bg-gray/30 px-4 mt-3 font-semibold text-xs py-3 w-40 rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -271,8 +271,8 @@ export default function AddTask({
                           });
                         }}
                       >
-                        <IoIosAdd className="font-bold" size={20} /> Add
-                        subtasks
+                           <IoIosAdd  className="font-bold" size={20} />{" "} Add
+                        Subtasks
                       </button>
 
                       {values.subtasks.length >= 0 ? (
@@ -292,7 +292,7 @@ export default function AddTask({
               <div className="my-8">
                 <button
                   aria-label="Create Task"
-                  className="text-white bg-primary/70 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
+                  className="text-white bg-primary/80 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
                   {isLoading || isLoadingEdit ? (

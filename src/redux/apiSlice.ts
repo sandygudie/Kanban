@@ -159,7 +159,7 @@ export const apiSlice = createApi({
         data: payload.formData,
         method: "PATCH",
       }),
-      invalidatesTags: ["Column"],
+      invalidatesTags: ["Column","Board","Workspace"],
     }),
 
     deleteColumn: builder.mutation({
@@ -167,7 +167,7 @@ export const apiSlice = createApi({
         url: `/column/${payload.workspaceId}/${payload.columnId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Column"],
+      invalidatesTags: ["Column","Board","Workspace"],
     }),
 
     // Task

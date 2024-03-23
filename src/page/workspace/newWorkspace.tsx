@@ -55,7 +55,7 @@ const JoinWorkspaceForm = () => {
             label="Workspace Code"
             name="inviteCode"
             type="text"
-            placeholder="Invite code"
+            placeholder="Workspace Invite code"
           />
         </div>
         {error ? (
@@ -85,7 +85,7 @@ export default function NewWorkspace() {
 
   return (
     <div className={`w-full h-full`}>
-      <header className="bg-white h-[65px] dark:bg-secondary flex items-center w-full border-b-[1px] border-gray/20">
+      <header className="h-[65px] flex items-center w-full border-b-[1px] border-gray/20">
         <div
           className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
         >
@@ -95,14 +95,17 @@ export default function NewWorkspace() {
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />
-          <span className="hidden md:block font-bold text-2xl">Kanban</span>
+            <span className="hidden md:block font-bold text-2xl">Kanban</span>
           </div>
         </div>
-        <div className="flex items-center font-bold text-white/50 justify-between w-full pl-2 md:px-4">
+        <div className="flex items-center font-bold justify-between w-full pl-2 md:px-4">
           {isLoading ? (
             <Loader />
           ) : response.data.workspace.length ? (
-            <button className="md:text-lg" onClick={() => navigate(`/workspaces`)}>
+            <button
+              className="md:text-lg"
+              onClick={() => navigate(`/workspaces`)}
+            >
               Available Workspace(s)
             </button>
           ) : (
@@ -120,17 +123,17 @@ export default function NewWorkspace() {
           />
           <div className="w-96 mx-6 md:mx-0 h-[34rem]">
             <div>
-              <h1 className="text-white text-xl sm:text-3xl font-bold ">
+              <h1 className="text-xl sm:text-3xl font-bold ">
                 Welcome to Kanban!
               </h1>
-              <p className="text-gray mt-1 text-sm mb-5">
+              <p className="text-gray/70 font-medium mt-1 text-sm mb-5">
                 Get started by creating or joining a workspace!
               </p>
             </div>
             <div className="flex items-center gap-x-4 mt-6">
               <button
                 className={`${
-                  toggle ? "bg-gray-200 text-white" : "text-base"
+                  toggle ? "bg-gray/30" : "text-base"
                 }  w-full rounded-full text-xs p-3 border-[1px] border-gray-100`}
                 onClick={() => setToggle(true)}
               >
@@ -138,7 +141,7 @@ export default function NewWorkspace() {
               </button>
               <button
                 className={`${
-                  !toggle ? "bg-gray-200 text-white" : "text-base "
+                  !toggle ? "bg-gray/30" : "text-base "
                 }  w-full rounded-full text-xs p-3 border-[1px] border-gray-100`}
                 onClick={() => setToggle(false)}
               >

@@ -28,7 +28,7 @@ export const TextInput = ({
   return (
     <div className="relative py-1">
       <label
-        className="font-bold text-[15px]"
+        className="font-semibold text-[15px]"
         htmlFor={props.id || props.name}
       >
         {label}

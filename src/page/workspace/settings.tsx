@@ -15,8 +15,9 @@ import DeleteItem from "components/DeleteItem";
 import IconButton from "components/IconButton";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
-import dayjs from 'dayjs';
-
+import dayjs from "dayjs";
+import Theme from "components/Settings/Theme";
+import { TitleCase } from "utilis";
 
 export default function Index() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function Index() {
   const data: AppState = useSelector(appData);
   const [uploadError, setUploadError] = useState<any>();
   const { workspace } = data;
-  const [toggle, setToggle] = useState(location.state || "About");
+  const [toggle, setToggle] = useState(location.state || "about");
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<any>();
   const [editWorkspaceProfile, { isLoading }] =
@@ -35,16 +36,13 @@ export default function Index() {
 
   const linkitems = [
     {
-      name: "About",
-      handler: () => {
-        setToggle("About");
-      },
+      name: "about",
     },
     {
-      name: "Members",
-      handler: () => {
-        setToggle("Members");
-      },
+      name: "members",
+    },
+    {
+      name: "theme",
     },
   ];
   const aboutSchema = Yup.object().shape({
@@ -116,11 +114,12 @@ export default function Index() {
             />
           </div>
           <div>
-            <h1 className="font-bold sm:text-lg md:text-xl">{workspace.name} Workspace</h1>
-            <p className="text-gray/50 text-xs">
+            <h1 className="font-bold sm:text-lg md:text-xl">
+              {workspace.name} Workspace
+            </h1>
+            <p className="text-gray/80 font-medium text-xs">
               Created on {""}
               {dayjs(workspace.createdAt).format(`MMMM DD, YYYY`)}
-
             </p>
           </div>
         </div>
@@ -130,21 +129,21 @@ export default function Index() {
               {linkitems.map((ele: any) => {
                 return (
                   <button
-                    onClick={() => setToggle(ele.name)}
+                    onClick={() => setToggle((ele.name))}
                     key={ele.name}
                     className={`${
-                      toggle === ele.name && "bg-secondary"
-                    } border-none px-4 py-2 rounded-md text-sm font-bold w-full text-left`}
+                      toggle === ele.name && "bg-gray-200"
+                    } border-none px-4 py-2 rounded-md text-[15px] font-medium w-full text-left`}
                   >
-                    {ele.name}
+                    {TitleCase(ele.name)}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div className="md:w-9/12 settings_scroll overflow-y-auto h-full pb-24 ml-auto">
-            {toggle === "About" ? (
+          <div className="md:w-9/12 overflow-y-auto h-full pb-24 ml-auto pr-4">
+            {toggle === "about" ? (
               <div>
                 <div>
                   <Formik
@@ -162,8 +161,8 @@ export default function Index() {
                       setFieldValue,
                       errors,
                     }: FormikErrors<{ image?: File }> | any) => (
-                      <Form className="rounded-md p-6 md:p-10 bg-secondary">
-                        <div className="mb-6">
+                      <Form className="rounded-md p-6 md:px-10 md:pt-8 md:pb-10 bg-secondary">
+                        <div className="mb-10">
                           <TextInput
                             label="Workspace Name"
                             name="name"
@@ -183,7 +182,7 @@ export default function Index() {
                               htmlFor="file_input"
                             >
                               <div className="relative w-24 h-auto">
-                                <div className="w-24 absolute top-0 bg-gray opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-4">
+                                <div className="w-24 absolute top-0 bg-gray/50 opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-4">
                                   Click to upload image
                                 </div>
                                 <img
@@ -243,7 +242,7 @@ export default function Index() {
                         <div className="mt-6">
                           <div className="ml-auto md:w-20">
                             <button
-                              className="h-10 px-4 text-xs text-white h-10 w-20 flex justify-center items-center flex-col hover:bg-secondary border border-gray/30 rounded-md bg-secondary/80 font-bold"
+                              className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
                               type="submit"
                             >
                               {isLoading ? <Spinner /> : "Update"}
@@ -266,8 +265,10 @@ export default function Index() {
                   </button>
                 </div>
               </div>
-            ) : (
+            ) : toggle === "members" ? (
               <Members workspaceId={workspace.id} />
+            ) : (
+              <Theme />
             )}
           </div>
         </div>

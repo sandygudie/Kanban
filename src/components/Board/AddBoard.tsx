@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedBoard, saveloadWorkspaceData } from "utilis";
 import { App as AntDesign } from "antd";
 import { v4 as uuidv4 } from "uuid";
+import { IoIosAdd } from "react-icons/io";
 import { useCreateBoardMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
 interface Props {
@@ -19,7 +20,6 @@ function AddBoard({ handleClose }: Props) {
   const data: AppState = useSelector(appData);
   const board: IBoard[] = data.board;
   const workspace: IWorkspaceProfile = data.workspace;
-
 
   const BoardSchema = Yup.object().shape({
     name: Yup.string()
@@ -40,7 +40,7 @@ function AddBoard({ handleClose }: Props) {
       .min(1, "Add a column."),
   });
 
-  const addBoardHandler = async (values: IBoard | any,{resetForm}:any) => {
+  const addBoardHandler = async (values: IBoard | any, { resetForm }: any) => {
     const foundDuplicate = checkDuplicatedBoard(values.name, board);
     const column = values.columns.map((ele: IColumn) => ele.name);
     const name = values.name;
@@ -52,9 +52,10 @@ function AddBoard({ handleClose }: Props) {
         };
         const response = await createBoard(payload).unwrap();
 
-
         if (response) {
-          dispatch(addBoard({ _id: response.data.boardId, ... response.data.values }));
+          dispatch(
+            addBoard({ _id: response.data.boardId, ...response.data.values })
+          );
           saveloadWorkspaceData({
             workspaceId: workspace.id,
             activeBoard: response.data.boardId,
@@ -68,19 +69,21 @@ function AddBoard({ handleClose }: Props) {
         content: "Board name already exist.",
         className: "text-error",
       });
-    
-     
     }
     handleClose();
-    resetForm()
+    resetForm();
   };
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-2">New Board</h1>
+      <h1 className="font-bold text-lg pb-4">New Board</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem]">
         <Formik
-          initialValues={{ name: "", columns: [] }}
+          initialValues={{ name: "", columns: [{
+            _id: uuidv4(),
+            name: "",
+            tasks: [],
+          }] }}
           validationSchema={BoardSchema}
           validateOnChange={false}
           validateOnBlur={false}
@@ -115,7 +118,7 @@ function AddBoard({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-primary/40 text-primary dark:bg-white dark:text-primary px mt-3 font-bold text-sm -2 py-3 w-full rounded-full"
+                        className="bg-gray/30 px-4 mt-3 font-semibold text-xs py-3 w-40 rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -125,7 +128,7 @@ function AddBoard({ handleClose }: Props) {
                           });
                         }}
                       >
-                        + Add New Column
+                           <IoIosAdd  className="font-bold" size={20} />{" "} Add Column
                       </button>
 
                       {values.columns.length >= 0 ? (
@@ -145,7 +148,7 @@ function AddBoard({ handleClose }: Props) {
               <div className="my-8">
                 <button
                   aria-label="Board"
-                  className="px-2 text-white h-12 bg-primary/70 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
+                  className="px-2 text-white h-12 bg-primary/80 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Create Board"}

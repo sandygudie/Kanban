@@ -68,6 +68,7 @@ export default function Delete({
     }).unwrap();
     if (response) {
       navigate(`/workspace/${workspace.id}`);
+      handleClose();
     }
   };
 
@@ -92,7 +93,7 @@ export default function Delete({
     <div className="p-4">
       <h1 className="text-left text-xl text-error font-bold mb-4">
         {" "}
-        <span className="dark:text-white text-black"> Delete</span>{" "}
+        <span className=""> Delete</span>{" "}
         {boardname
           ? boardname
           : selectedColumn

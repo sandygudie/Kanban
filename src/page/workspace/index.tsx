@@ -12,7 +12,7 @@ export default function Index() {
   return (
     <>
       <div className={`w-full h-screen overflow-auto `}>
-        <header className="bg-white h-[65px] dark:bg-secondary z-20 flex items-center w-full border-b-[1px] border-gray/20">
+        <header className="bg-secondary h-[65px] z-20 flex items-center w-full border-b-[1px] border-gray/20">
           <div
             className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
           >
@@ -23,14 +23,12 @@ export default function Index() {
                 alt="mutiple-projects-image"
               />
 
-              <span className="hidden md:block font-bold text-2xl">
-                Kanban
-              </span>
+              <span className="hidden md:block font-bold text-2xl">Kanban</span>
             </div>
           </div>
 
           <div className="flex items-center justify-between w-full pr-2 px-4">
-            <h1 className="font-bold mini:text-lg text-white/50">
+            <h1 className="font-bold mini:text-lg">
               {response?.data?.workspace.length > 0
                 ? "Workspace(s)"
                 : "No Workspace"}
@@ -38,13 +36,8 @@ export default function Index() {
           </div>
         </header>
         {isLoading ? (
-          <div className="mx-auto h-full mt-10 flex mt-10 flex-col items-center justify-start">
-            <SkeletonTheme
-              height={12}
-              borderRadius={10}
-              baseColor="#2b2c36"
-              highlightColor="#20212c"
-            >
+          <div className="mx-auto mt-10 flex mt-10 flex-col items-center justify-start">
+            <SkeletonTheme height={12} borderRadius={10}>
               <h2 className="mb-10">
                 {" "}
                 <Skeleton width={200} height={10} />
@@ -69,7 +62,7 @@ export default function Index() {
           </div>
         ) : (
           response?.data.workspace.length > 0 && (
-            <div className="">
+            <div className="bg-main">
               <div className="mx-auto mt-10">
                 <h1 className="text-center md:text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
@@ -97,7 +90,7 @@ export default function Index() {
                             <h2 className="font-bold text-base">{ele.name}</h2>
                           </div>
                         </div>
-                        <div className="font-semibold text-sm mt-4 text-left text-white/50">
+                        <div className="font-semibold text-sm mt-4 text-left">
                           <p className="flex items-center gap-x-2">
                             <MdSpaceDashboard /> {ele.boards.length} boards
                           </p>
@@ -119,7 +112,7 @@ export default function Index() {
           }`}
         >
           <Link
-            className="bg-gray-100 hover:bg-gray-200 !text-white flex-col flex items-center justify-center text-sm h-12 px-8 rounded-lg font-bold"
+            className="bg-gray-200 hover:bg-gray-300 flex-col flex items-center justify-center text-sm h-12 px-8 rounded-lg font-bold"
             to="/workspace/new"
           >
             {" "}

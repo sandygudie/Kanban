@@ -63,7 +63,7 @@ export default function Index() {
               <div
                 className={`${
                   showSidebar
-                    ? "mini:translate-x-[220px] mini:w-[calc(100%_-_220px)] transition-all duration-700 ease-in-out"
+                    ? "bg-main mini:translate-x-[220px] mini:w-[calc(100%_-_220px)] transition-all duration-700 ease-in-out"
                     : "translate-x-0 transition-auto duration-500 ease-in"
                 }  h-full `}
               >
@@ -77,8 +77,8 @@ export default function Index() {
               setShowSidebar(true);
             }}
             className={` ${
-              showSidebar ? "opacity-0 delay-100" : "opacity-100 delay-500"
-            } cursor-pointer z-20 hidden mini:block fixed top-16 text-white rounded-r-full bg-gray-200 p-2 transition ease-in-out`}
+              showSidebar ? "opacity-0 delay-50" : "opacity-100 delay-500"
+            } cursor-pointer z-20 hidden mini:block fixed top-16 hover:bg-gray/50 bg-gray-200 text-gray hover:text-white rounded-r-full p-2 transition ease-in-out`}
           >
             {" "}
             <GoSidebarCollapse size={20} />{" "}

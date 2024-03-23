@@ -75,7 +75,7 @@ export default function Header({ memberPics }: any) {
               >
                 <h3
                   className={`${
-                    workspace?.name.length > 10 ? "truncate w-[10ch]" : "w-auto"
+                    workspace?.name.length > 10 ? "truncate w-[9ch] text-left" : "w-auto"
                   } font-bold sm:text-base md:text-xl`}
                 >
                   {TitleCase(workspace?.name)}
@@ -86,7 +86,7 @@ export default function Header({ memberPics }: any) {
             {isWorkspaceMenu && (
               <Popup
                 description={
-                  <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 dark:text-white text-gray font-medium px-6 justify-start">
+                  <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 font-medium px-6 justify-start">
                     <div className="w-8 h-auto overflow-hidden">
                       <img
                         src={workspace?.profilePics}
@@ -94,7 +94,7 @@ export default function Header({ memberPics }: any) {
                         alt=""
                       />
                     </div>
-                    <div className="dark:text-white text-black">
+                    <div className="">
                       <h2 className="font-semibold text-base">
                         {TitleCase(workspace?.name)} workspace
                       </h2>
@@ -157,7 +157,7 @@ export default function Header({ memberPics }: any) {
               {active ? (
                 <button
                   onClick={() => setIsOpenBoardDetails(true)}
-                  className="rounded-sm items-center py-2 px-4 rounded-md hover:bg-gray/20 bg-gray-100 flex"
+                  className="rounded-sm items-center py-2 px-4 rounded-md hover:bg-gray-300 bg-gray-200 flex"
                 >
                   <span className={`font-bold md:w-auto`}>
                     #{TitleCase(active?.name)}{" "}
@@ -177,9 +177,9 @@ export default function Header({ memberPics }: any) {
             <div className="flex items-center gap-x-8">
               <button
                 onClick={() => setIsOpenInvite(false)}
-                className="hidden md:block bg-success/70 hover:bg-success px-3 py-1.5 font-bold rounded-md "
+                className="hidden md:block bg-success/70 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
               >
-                Send Invite{" "}
+              Invite Members{" "}
               </button>
               <div
                 onClick={() =>
@@ -220,7 +220,7 @@ export default function Header({ memberPics }: any) {
               </div>
               <button
                 onClick={() => toggleFullScreen()}
-                className="hidden mini:block font-bold text-gray/80 hover:text-white text-xl"
+                className="hidden mini:block font-bold text-gray/80 hover:text-gray text-xl"
               >
                 {isFullscreen ? <MdZoomInMap /> : <GoScreenFull />}
               </button>
@@ -256,7 +256,7 @@ export default function Header({ memberPics }: any) {
                             <p className="font-bold mini:text-lg">
                               {user.name}
                             </p>
-                            <span className="text-gray/50 text-xs">
+                            <span className="text-gray/80 font-medium text-xs">
                               {user.email}
                             </span>
                           </div>

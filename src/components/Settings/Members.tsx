@@ -80,14 +80,14 @@ export default function Members({ workspaceId }: Props) {
     <>
       <div className="h-screen">
         <div className="flex items-center pb-2 justify-between border-b-[1px] border-gray/20">
-          <h1 className="font-bold text-sm md:text-base">Workspace Members</h1>
+          <h1 className="font-semibold text-sm md:text-base">Workspace Members</h1>
           <button
             onClick={() => {
               setIsOpenInvite(true);
             }}
-            className="px-2 text-sm md:text-sm py-2 bg-success/70 hover:bg-success font-bold rounded-md"
+            className="px-3 text-sm md:text-sm py-2 bg-success/70 hover:bg-success font-semibold text-sm rounded-md"
           >
-            Invite members
+            Invite Members
           </button>
         </div>
         {isLoading ? (
@@ -103,8 +103,8 @@ export default function Members({ workspaceId }: Props) {
                   >
                     <div className="">
                       {" "}
-                      <p className="font-semibold">{ele.name}</p>{" "}
-                      <p className="text-gray/70 text-sm">{ele.email}</p>
+                      <p className="font-semibold text-lg">{ele.name}</p>{" "}
+                      <p className="text-gray/80 font-medium text-sm">{ele.email}</p>
                     </div>
                     <div className="flex gap-x-3 justify-between items-center mt-4">
                       {" "}
@@ -116,7 +116,7 @@ export default function Members({ workspaceId }: Props) {
                           }}
                           className={`${
                             isOption === ele?.userId && "bg-gray/50"
-                          } border-2 border-gray/30 font-semibold flex flex-col justify-center items-center rounded-md hover:bg-gray/50 h-10 w-24 px-2.5`}
+                          } border-2 border-gray/30 font-semibold flex flex-col justify-center items-center rounded-md hover:bg-gray-200 h-10 w-24 px-2.5`}
                         >
                           {isRemovingLoading ||
                           (isUpdateRoleLoading && memberId === ele.userId) ? (
@@ -172,7 +172,7 @@ export default function Members({ workspaceId }: Props) {
             </div>
 
             <div className="mt-20">
-              <h1 className="font-bold text-base border-b-[1px] border-gray/20 pb-2">
+              <h1 className="font-semibold text-base border-b-[1px] border-gray/20 pb-2">
                 Pending Members
               </h1>
               {workspace?.data.pendingMembers.length ? (
@@ -204,7 +204,7 @@ export default function Members({ workspaceId }: Props) {
                   }
                 )
               ) : (
-                <p className="text-gray/50 text-sm mt-3">No pending request</p>
+                <p className="text-gray/80 font-medium text-sm mt-3">No pending request</p>
               )}
             </div>
           </>

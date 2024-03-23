@@ -143,7 +143,7 @@ export default function TaskDetails() {
   return (
     <>
       {tasks ? (
-        <div className="px-6 overflow-auto h-full mini:px-20 pt-16 pb-36">
+        <div className="px-6 overflow-auto h-full mini:pl-20 mini:pr-12 pt-16 pb-36">
           <div className="text-lg font-bold flex items-start justify-between relative">
             <div className="absolute -top-[28px] mini:-top-[40px]">
               {" "}
@@ -155,7 +155,7 @@ export default function TaskDetails() {
             <div>
               {" "}
               <p className="text-2xl mini:text-3xl"> {tasks?.data.title}</p>
-              <span className="text-gray/80 font-thin mt-1 text-xs mini:flex">
+              <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
                 created by {tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")}
                 <span className="flex items-center mini:ml-3">
@@ -173,8 +173,8 @@ export default function TaskDetails() {
                 items={[
                   {
                     title: (
-                      <div className="flex items-center gap-x-2 dark:text-white/80">
-                        <CiEdit className="text-gray text-sm" /> Edit
+                      <div className="flex items-center gap-x-2">
+                        <CiEdit className="text-sm" /> Edit
                       </div>
                     ),
                     handler: () => {
@@ -183,7 +183,7 @@ export default function TaskDetails() {
                   },
                   {
                     title: (
-                      <div className="flex items-center w-20 gap-x-2 dark:text-white/80">
+                      <div className="flex items-center w-20 gap-x-2">
                         <MdDelete className="text-error" /> Delete
                       </div>
                     ),
@@ -198,13 +198,13 @@ export default function TaskDetails() {
           </div>
           <div className="mt-8">
             <p className="font-semibold text-sm mb-2">Description</p>
-            <p className="text-white/50 rounded-md w-8/12">
+            <p className="rounded-md w-8/12">
               {tasks.data.description
                 ? tasks.data.description
                 : "No description"}
             </p>
             <div className="mt-10 md:my-14 flex flex-col md:flex-row gap-x-36 gap-y-8 md:items-center">
-              <div className="md:w-[28rem]">
+              <div className="md:w-[40%]">
                 <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
@@ -216,7 +216,7 @@ export default function TaskDetails() {
                       return (
                         <div
                           key={subtask._id}
-                          className="dark:bg-secondary bg-offwhite flex items-center gap-x-4 rounded-sm p-4 mt-2"
+                          className="bg-gray/20 flex items-center gap-x-4 rounded-sm p-4 mt-2"
                         >
                           <input
                             type="checkbox"
@@ -238,7 +238,7 @@ export default function TaskDetails() {
                 </div>
               </div>
 
-              <div className="relative">
+              <div className="relative md:w-[50%]">
                 <p className="font-semibold mb-2 text-sm">Assignees</p>
                 <button
                   onClick={() => setAssign(true)}
@@ -266,7 +266,7 @@ export default function TaskDetails() {
                                 {DefaultImage(ele.name)}
                               </span>
                             )}
-                            <span>{ele.name}</span>
+                            <span className="font-medium">{ele.name}</span>
                           </div>
                         ),
                         handler: () => {},
@@ -277,7 +277,7 @@ export default function TaskDetails() {
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-x-36 gap-y-8 items-start mt-10">
-              <div className="pb-6 w-full md:w-[28rem]">
+              <div className="pb-6 w-full md:w-[40%]">
                 <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
@@ -288,11 +288,11 @@ export default function TaskDetails() {
                   workspaceId={workspaceId}
                 />
               </div>
-              <div className="">
+              <div className="md:w-[50%]">
                 <p className="text-sm font-bold mb-4">Labels</p>
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
-                    <div className="flex items-center gap-x-4">
+                    <div className="flex items-center relative gap-x-4">
                       <p className="text-xs md:text-sm font-bold mb-2 w-16">
                         Due Date
                       </p>
@@ -307,13 +307,13 @@ export default function TaskDetails() {
                                 ]
                               : [dayjs(), dayjs()]
                           }
-                          className="px-3 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
+                          className="px-3 py-[10px] hover:!bg-gray/30 focus:!gray/30 outline-none border-none hover:border-none bg-gray"
                         />
                         {tasks?.data.dueDate.length > 0 && (
                           <p
                             className={`${
                               pendingDate > 1 ? "text-success" : "text-error"
-                            } font-bold text-sm my-2`}
+                            } font-bold absolute text-xs my-2`}
                           >
                             {pendingDate} days left
                           </p>
@@ -322,7 +322,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-secondary font-bold py-2 px-4 text-sm rounded-md"
+                      className="bg-gray font-bold py-2 px-4 text-sm rounded-md"
                       onClick={() => {
                         setDate(true);
                       }}
@@ -331,7 +331,7 @@ export default function TaskDetails() {
                     </button>
                   )}
                   {tasks?.data.dueTime || currentTime ? (
-                    <div className="flex items-center gap-x-2 md:gap-x-4">
+                    <div className="flex items-center gap-x-2 md:gap-x-4 mt-8">
                       <p className="text-xs md:text-sm font-bold mb-2 w-16">
                         Time
                       </p>

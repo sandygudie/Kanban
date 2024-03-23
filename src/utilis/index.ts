@@ -1,4 +1,4 @@
-import Bowser from "bowser"
+import Bowser from "bowser";
 import { AppState, IBoard, IColumn, ITask } from "types";
 const data: IBoard[] = [];
 
@@ -111,4 +111,9 @@ export const taskColorMarker = [
 export const handleDeviceDetection = () => {
   const userAgent = Bowser.parse(window.navigator.userAgent);
   return userAgent.platform.type;
+};
+
+export const changeTheme = (theme: string) => {
+  localStorage.setItem("theme", theme.toLowerCase());
+  document.querySelector("html")?.setAttribute("data-theme", theme.toLowerCase());
 };

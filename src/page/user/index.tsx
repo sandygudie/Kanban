@@ -78,7 +78,7 @@ export default function Index() {
 
   return (
     <div className="h-full px-8 md:px-24  pt-16 md:pt-14">
-      <div className="h-full overflow-auto pb-28 settings_scroll">
+      <div className="h-full overflow-auto pb-28 pr-4">
         <div className="absolute top-[35px] mini:top-[20px]">
           {" "}
           <IconButton handleClick={() => navigate(-1)}>
@@ -91,7 +91,7 @@ export default function Index() {
         </h1>
         <div className="h-auto">
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray/70 md:w-64 text-sm ">Name</label>
+            <label className="text-gray/80 font-medium md:w-64 text-sm ">Name</label>
             <input
               name="name"
               value={editedText.name ? editedText.name : user.name}
@@ -102,12 +102,12 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`text-sm font-bold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "name" ? "bg-gray/5" : "border-gray/0"
+              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "name" ? "bg-gray/5" : "border-gray/0"
                 }`}
             />
           </div>
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray/70 text-sm md:w-64">Email</label>
+            <label className="text-gray/80 font-medium text-sm md:w-64">Email</label>
             <input
               name="email"
               value={editedText.email ? editedText.email : user.email}
@@ -118,7 +118,7 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-bold text-sm rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
+              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
                 }`}
             />
           </div>
@@ -177,7 +177,7 @@ export default function Index() {
             Delete user
           </h2>
           <div className="px-4 md:px-8 py-5">
-          <p className="text-gray/70 text-sm mb-4">
+          <p className="text-gray/80 text-sm mb-4">
             Once you delete your account, there is no going back.
           </p>
           <button className="text-white px-4 font-bold rounded-md text-sm bg-error py-2">

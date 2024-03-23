@@ -79,7 +79,7 @@ export default function Index() {
 
             <div className="ml-auto mt-6 md:w-20">
               <button
-                className="py-2 px-4 text-xs text-white h-10 flex justify-center items-center flex-col hover:bg-secondary border border-gray/30 rounded-md bg-secondary/80 font-bold"
+                  className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
                 type="submit"
               >
              Update

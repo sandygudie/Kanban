@@ -28,8 +28,8 @@ function Popup({ items, style, handleClose, description }: Props) {
     <div
       ref={domRef}
       style={style}
-      className={`z-10 absolute bg-secondary rounded-md shadow-3xl dark:shadow-gray/10 shadow-gray/60 
-     text-white w-fit right-6 top-5`}
+      className={`z-10 absolute bg-secondary rounded-md shadow-3xl
+      w-fit right-6 top-5`}
     >
       <div className={`${description ? "w-[280px]" : "w-max"}`}>
         {description ? description : null}
@@ -40,10 +40,10 @@ function Popup({ items, style, handleClose, description }: Props) {
               key={i}
               disabled={list.status === false}
               onClick={list.handler}
-              className={`block w-full text-left font-semiBold dark:text-white text-black hover:bg-gray-200 text-[13.5px] 
+              className={`block w-full font-medium text-left font-semiBold hover:bg-gray-200 text-[13.5px] 
               ${
                 description
-                  ? ` py-3 px-4 text-[0.91rem] dark:text-white/80 text-black hover:bg-gray-200 hover:text-white ${
+                  ? ` py-3 px-4 text-[0.91rem] hover:bg-gray-200 ${
                       i === items.length - 1 && `rounded-b-md`
                     }`
                   : `py-1  ${i === 0 && `rounded-t-md`} ${

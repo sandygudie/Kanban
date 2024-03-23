@@ -103,9 +103,9 @@ export default function CreateWorkspace() {
             />
           </div>
           <div className="">
-            <p className="mb-2 font-bold text-[15px]">
+            <p className="mb-2 font-semibold text-[15px]">
               Workspace logo{" "}
-              <span className="text-gray/70 text-xs font-normal pl-1">
+              <span className="text-gray/80 text-xs font-normal pl-1">
                 (You can upload your company logo.){" "}
               </span>{" "}
             </p>
