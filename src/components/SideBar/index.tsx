@@ -42,7 +42,7 @@ export default function Index({
           >
             <div>
               {board.length > 0 && (
-                <p className="pl-4 pt-2 pb-4 text-xs">
+                <p className="pl-4 pt-2 pb-4 font-medium text-xs">
                   ALL BOARDS ({board.length})
                 </p>
               )}
@@ -54,7 +54,7 @@ export default function Index({
                       return (
                         <button
                           key={options._id}
-                          className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-bold cursor-pointer ${`${
+                          className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${`${
                             active?._id === options._id
                               ? "bg-gray-200 rounded-r-full"
                               : "rounded-r-full hover:bg-primary/20"
@@ -91,7 +91,7 @@ export default function Index({
                     onClick={() => {
                       setOpenBoard(true);
                     }}
-                    className="pl-4 mt-8 font-bold cursor-pointer font-medium text-gray/80 hover:text-gray px-3 text-sm "
+                    className="pl-4 mt-8 font-bold cursor-pointer font-medium text-gray/90 hover:text-gray px-3 text-sm "
                   >
                     <div className="flex items-center">
                       {" "}

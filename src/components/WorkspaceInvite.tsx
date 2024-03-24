@@ -40,7 +40,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
   };
   return (
     <div className="h-auto px-2 pb-4">
-      <h1 className="font-bold text-lg pb-4">Invite Request</h1>
+      <h1 className="font-medium text-lg pb-4">Invite Request</h1>
       <Formik
         initialValues={{
           email: "",
@@ -52,7 +52,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
         onSubmit={sendInviteHandler}
       >
         <Form>
-          <div className="mb-6">
+          <div className="mb-5">
             <TextInput
               label="Email"
               name="email"
@@ -60,7 +60,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
               placeholder="xyz@xyz.com"
             />
           </div>
-          <div className="mb-6 relative">
+          <div className="mb-5 relative">
             <TextArea
               label="Add Note(optional)"
               name="inviteNote"
@@ -78,7 +78,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
           <div className="flex items-center justify-end gap-x-4">
             <button
               aria-label="Save"
-              className="py-2 px-3 text-sm md:w-[100px] text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
+              className="py-2 px-3 text-sm md:w-[100px] text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/90 font-bold"
               type="submit"
             >
               {isLoading ? <Loader /> : "Send"}

@@ -144,8 +144,8 @@ export default function TaskDetails() {
     <>
       {tasks ? (
         <div className="px-6 overflow-auto h-full mini:pl-20 mini:pr-12 pt-16 pb-36">
-          <div className="text-lg font-bold flex items-start justify-between relative">
-            <div className="absolute -top-[28px] mini:-top-[40px]">
+          <div className="text-lg flex items-start justify-between relative">
+            <div className="absolute -top-[28px] font-bold mini:-top-[40px]">
               {" "}
               <IconButton handleClick={() => navigate(-1)}>
                 {" "}
@@ -154,7 +154,7 @@ export default function TaskDetails() {
             </div>
             <div>
               {" "}
-              <p className="text-2xl mini:text-3xl"> {tasks?.data.title}</p>
+              <p className="text-2xl mini:text-3xl font-semibold"> {tasks?.data.title}</p>
               <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
                 created by {tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")}
@@ -164,7 +164,7 @@ export default function TaskDetails() {
                 </span>
               </span>
             </div>
-            <button className="text-2xl mini:text-3xl hover:text-primary mt-2">
+            <button className="text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2">
               <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
             </button>
             {isOpenMenu && (
@@ -227,7 +227,7 @@ export default function TaskDetails() {
                           <p
                             className={`${
                               checkedState[index]! && "line-through"
-                            } text-xs`}
+                            } text-xs font-medium`}
                           >
                             {subtask.title}
                           </p>
@@ -242,7 +242,7 @@ export default function TaskDetails() {
                 <p className="font-semibold mb-2 text-sm">Assignees</p>
                 <button
                   onClick={() => setAssign(true)}
-                  className="p-2 bg-secondary rounded-md"
+                  className="p-2 bg-gray/20 hover:bg-gray/30 rounded-md"
                 >
                   <IoAdd className="text-xl font-bold" />
                 </button>
@@ -289,7 +289,7 @@ export default function TaskDetails() {
                 />
               </div>
               <div className="md:w-[50%]">
-                <p className="text-sm font-bold mb-4">Labels</p>
+                <p className="text-sm font-semibold mb-4">Labels</p>
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center relative gap-x-4">
@@ -322,7 +322,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-gray font-bold py-2 px-4 text-sm rounded-md"
+                      className="font-semibold bg-gray/20 hover:bg-gray/30 py-2 px-4 text-sm rounded-md"
                       onClick={() => {
                         setDate(true);
                       }}
@@ -349,7 +349,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-secondary text-sm font-bold py-2 px-4 rounded-md"
+                      className="bg-gray/20 hover:bg-gray/30 text-sm font-semibold py-2 px-4 rounded-md"
                       onClick={() => {
                         setTime(true);
                       }}

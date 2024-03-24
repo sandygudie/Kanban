@@ -55,7 +55,7 @@ export default function BoardDetails({ handleClose }: Props) {
         <div className="border-[1px] border-gray/10 rounded-md mt-1">
           {[
             {
-              title: <p className="text-base py-4 font-bold">{active.name}</p>,
+              title: <p className="text-base py-4 font-medium">{active.name}</p>,
               label: `Name`,
               handler: () => {
                 setIsOpenEdit(true);
@@ -66,7 +66,7 @@ export default function BoardDetails({ handleClose }: Props) {
               title: (
                 <>
                   {active?.description ? (
-                    <p className="text-sm py-4">{active?.description}</p>
+                    <p className=" font-medium py-4">{active?.description}</p>
                   ) : (
                     <p className="text-sm py-4 text-gray/80">
                       ** A brief details about the board.

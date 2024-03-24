@@ -70,7 +70,7 @@ export default function AddColumn({ handleClose }: Props) {
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-2">Column(s)</h1>
+      <h1 className="font-medium text-lg pb-2">Column(s)</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem]">
         <Formik
           initialValues={{ columns: [{ _id: uuidv4(), name: "", tasks: [] }] }}
@@ -84,7 +84,7 @@ export default function AddColumn({ handleClose }: Props) {
           {({ values, errors, }) => (
             <Form>
               <div className="mb-6">
-                {/* <label className="text-sm font-bold">Columns</label> */}
+ 
                 <FieldArray
                   name="columns"
                   render={(arrayHelpers) => (
@@ -101,7 +101,7 @@ export default function AddColumn({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-gray/30 px mt-3 font-semibold text-sm py-3 w-36 rounded-full flex items-center justify-center "
+                        className="bg-gray/30 px mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -128,7 +128,7 @@ export default function AddColumn({ handleClose }: Props) {
                 />
               </div>
 
-              <div className="my-8 relative ">
+              <div className="mt-10 relative">
                 <button
                   aria-label="Board"
                   className="text-white bg-primary/70 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"

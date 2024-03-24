@@ -219,7 +219,7 @@
   height: 30px !important;
 }
 .ant-modal-close:hover {
-  color: white !important;
+  color: var(--color-secondary), !important;
   background-color: hsla(216, 15%, 57%, 0.2) !important;
 }
 .react-loading-skeleton {

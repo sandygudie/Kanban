@@ -74,6 +74,7 @@ export default function EditBoard({
         <Form>
           {isEdit === "description" ? (
             <div className="mb-6">
+              <h2 className="font-medium text-lg ">Board Description</h2>
               <TextArea
                 label=""
                 name="description"
@@ -82,6 +83,7 @@ export default function EditBoard({
             </div>
           ) : (
             <div className="mb-6">
+                <h2 className="font-medium text-lg">Board Description</h2>
               <TextInput
                 label=""
                 name="name"
@@ -94,7 +96,7 @@ export default function EditBoard({
           <div className="mt-8 flex items-center justify-end gap-x-4">
             <button
               aria-label="Save"
-              className="p-2 text-sm md:w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/80 font-bold"
+              className="p-2 text-sm w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/90 font-bold"
               type="submit"
             >
               {isLoading ? <Loader /> : "Save"}
@@ -102,7 +104,7 @@ export default function EditBoard({
             <button
               aria-label="cancel"
               onClick={handleClose}
-              className="p-2 text-sm md:w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
+              className="p-2 text-sm w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
               type="button"
             >
               Cancel

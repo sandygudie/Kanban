@@ -85,7 +85,7 @@ export default function Members({ workspaceId }: Props) {
             onClick={() => {
               setIsOpenInvite(true);
             }}
-            className="px-3 text-sm md:text-sm py-2 bg-success/70 hover:bg-success font-semibold text-sm rounded-md"
+            className="px-3 text-white text-sm md:text-sm py-2 bg-success/90 hover:bg-success font-semibold text-sm rounded-md"
           >
             Invite Members
           </button>

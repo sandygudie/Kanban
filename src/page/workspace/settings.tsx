@@ -97,7 +97,7 @@ export default function Index() {
 
   return (
     <>
-      <div className="h-full overflow-y-auto md:overflow-hidden relative pb-24 pt-16 px-8 md:px-20">
+      <div className="h-full overflow-y-auto md:overflow-hidden relative pb-24 pt-16 px-6 md:px-20">
         <div className="flex gap-x-4 items-center relative">
           <div className="absolute -top-[30px] mini:-top-[35px]">
             {" "}
@@ -110,7 +110,7 @@ export default function Index() {
             <img
               src={workspace.profilePics}
               alt="image"
-              className=" border-solid h-auto w-20"
+              className=" border-solid h-auto w-12 md:w-20"
             />
           </div>
           <div>

@@ -122,7 +122,7 @@ export default function ActiveBoard() {
                   className="w-[250px] cursor-pointer shrink-0"
                 >
                   <div className="flex h-10 mb-3 justify-between relative items-center">
-                    <div className="flex gap-x-1 items-center justify-between w-10/12 font-bold uppercase text-xs tracking-widest">
+                    <div className="flex gap-x-1 items-center justify-between w-10/12 uppercase text-xs tracking-widest">
                       <div className="flex items-center gap-x-1">
                         <BsCircleFill
                           style={{
@@ -159,7 +159,7 @@ export default function ActiveBoard() {
                         />
                       </div>
                       {item.tasks.length > 0 && (
-                        <p className="text-[14px]">({item.tasks.length})</p>
+                        <p className="text-[14px] font-medium">({item.tasks.length})</p>
                       )}
                     </div>
                     <div className={`absolute right-0 gap-x-1 items-center`}>

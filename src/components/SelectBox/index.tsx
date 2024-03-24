@@ -79,7 +79,7 @@ export default function Index({
         }`}
         onClick={toggleDropdown}
       >
-        <p className="text-sm">
+        <p className="text-sm font-medium">
           {" "}
           {selectedColumn ? selectedColumn : tasks?.status}
         </p>
@@ -89,7 +89,7 @@ export default function Index({
           <BiChevronUp className={`icon ${isOpen && "open"}`} />
         )}
         {isOpen && (
-          <div className={`dropdown-body bg-offwhite dark:bg-secondary`}>
+          <div className={`dropdown-body bg-gray/20`}>
             {active?.columns.map((item: IColumn, i: number) => (
               <div
                 className={`dropdown-item text-sm px-4 py-2.5 hover:text-primary cursor-pointer ${

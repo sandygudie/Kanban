@@ -177,7 +177,7 @@ export default function Header({ memberPics }: any) {
             <div className="flex items-center gap-x-8">
               <button
                 onClick={() => setIsOpenInvite(false)}
-                className="hidden md:block bg-success/70 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
+                className="hidden text-white md:block bg-success/90 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
               >
               Invite Members{" "}
               </button>
@@ -305,7 +305,7 @@ export default function Header({ memberPics }: any) {
                 </div>
               </button>{" "}
               <span>
-                <FaAnglesRight className="inline text-xs mx-4 text-gray-200" />{" "}
+                <FaAnglesRight className="inline text-xs mx-4 text-gray-300" />{" "}
               </span>
               <button
                 onClick={() => setIsOpenBoardDetails(true)}
@@ -320,7 +320,7 @@ export default function Header({ memberPics }: any) {
               {viewBoard && (
                 <div
                   ref={domRef}
-                  className={`bg-secondary absolute shadow-2xl rounded-br-lg left-0`}
+                  className={`bg-secondary absolute shadow-3xl rounded-br-lg left-0`}
                 >
                   <div className="h-full py-8  ">
                     {board && (
@@ -331,7 +331,7 @@ export default function Header({ memberPics }: any) {
                               key={options._id}
                               className={`h-10 w-52 px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${
                                 active?._id === options._id
-                                  ? "bg-gray-100 rounded-r-full text-white"
+                                  ? "bg-gray-100 rounded-r-full"
                                   : "rounded-r-full hover:bg-primary/20"
                               }  `}
                               onClick={() => {

@@ -76,7 +76,7 @@ function AddBoard({ handleClose }: Props) {
 
   return (
     <div>
-      <h1 className="font-bold text-lg pb-4">New Board</h1>
+      <h1 className="font-semibold text-lg pb-4">New Board</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem]">
         <Formik
           initialValues={{ name: "", columns: [{
@@ -100,7 +100,7 @@ function AddBoard({ handleClose }: Props) {
                 />
               </div>
               <div className="mb-6">
-                <label className="text-sm font-bold">Columns</label>
+                <label className="text-sm font-medium">Columns</label>
                 <FieldArray
                   name="columns"
                   render={(arrayHelpers) => (
@@ -118,7 +118,7 @@ function AddBoard({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-gray/30 px-4 mt-3 font-semibold text-xs py-3 w-40 rounded-full flex items-center justify-center"
+                        className="bg-gray/30 px-4 mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -145,7 +145,7 @@ function AddBoard({ handleClose }: Props) {
                 />
               </div>
 
-              <div className="my-8">
+              <div className="mt-10">
                 <button
                   aria-label="Board"
                   className="px-2 text-white h-12 bg-primary/80 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
