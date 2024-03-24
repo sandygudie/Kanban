@@ -207,7 +207,7 @@ export default function Index() {
 
                 <div className="w-full mt-10">
                   <button
-                    className="bg-secondary-dark flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
+                    className="bg-black flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
                     type="submit"
                   >
                     {isLoading ? <Loader /> : "Continue with Email"}
