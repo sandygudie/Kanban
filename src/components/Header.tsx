@@ -55,7 +55,7 @@ export default function Header({ memberPics }: any) {
   return (
     <>
       <header className="fixed w-full z-40">
-        <div className="bg-white h-[50px] mini:h-[65px] dark:bg-secondary flex items-center absolute w-full border-b-[1px] border-gray/20">
+        <div className="h-[50px] mini:h-[65px] flex items-center absolute w-full border-b-[1px] border-gray/20">
           <div
             className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
           >
