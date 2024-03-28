@@ -39,7 +39,7 @@ export default function TaskItem({
               className={`${
                 snapshot.isDragging
                   ? "!top-auto !left-auto bg-purple/20"
-                  : "bg-white dark:bg-secondary"
+                  : "bg-transparent"
               } select-none rounded-lg`}
               data-id={index}
               onClick={() => {
