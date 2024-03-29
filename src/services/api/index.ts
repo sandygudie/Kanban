@@ -1,17 +1,12 @@
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 import axios from "axios";
 import type { AxiosError, AxiosRequestConfig } from "axios";
-// import { handleDeviceDetection } from "utilis";
 import { getToken } from "utilis/token";
 
-// const deviceType = handleDeviceDetection();
-// if (deviceType === "mobile") {
   const token = getToken();
-
   if (token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
-// }
 
 const axiosBaseQuery =
   (

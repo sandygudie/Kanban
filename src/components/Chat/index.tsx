@@ -1,34 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { IoIosSend } from "react-icons/io";
-
+import { appData } from "redux/boardSlice";
+import { AppState } from "types";
+import { useSelector } from "react-redux";
 const serverURL = "http://localhost:4000";
 const socket = io(serverURL);
 
 export default function Index({ taskId }: any) {
-  const [username, setUsername] = useState("");
-  //   const [task, setRoom] = useState("");
+  const [chats, setChats] = useState<any>([]);
+  const [message, setMessage] = useState("");
+  const data: AppState = useSelector(appData);
+  const { user } = data;
 
-  const joinRoom = () => {
-    if (username !== "") {
-      socket.emit("join_room", { username, taskId });
+  useEffect(() => {
+    socket.emit("getmessage", taskId);
+    socket.on("all_tasks_chats", (data) => {
+      setChats(data);
+    });
+
+    return () => {
+      socket.off("receive_message");
+    };
+  }, [taskId]);
+
+  const sendMessage = () => {
+    if (message !== "") {
+      socket.emit("send_message", {
+        createdBy: user,
+        taskId,
+        message,
+      });
+      setMessage(" ");
     }
   };
+  console.log(chats.length);
   return (
-    <div className="mt-24 mb-12">
-      <div className="flex items-center gap-x-6">
+    <div className="mt-24 mb-12 text-center px-10">
+      {chats.length>0? (
+        chats?.map((ele: any) => {
+          return (
+            <div
+              key={ele.id}
+              className={` ${
+                ele.createdBy.id === user.id
+              } ml-auto my-6 bg-gray/20 rounded-lg w-fit px-4 py-2 font-medium`}
+            >
+              <p className="text-xs text-left">{ele.createdBy?.name}</p>
+              <p>{ele.message}</p>
+            </div>
+          );
+        })
+      ) : (
+        <div className="my-20">
+          <h2>No Conversation Yet!</h2>
+        </div>
+      )}
+
+      <div className="flex items-center gap-x-4">
         <input
           className="rounded-lg p-3 w-full placeholder:text-sm"
           placeholder="Start a conversation"
-          onChange={(e) => setUsername(e.target.value)}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <button
           className="bg-primary rounded-xl p-3"
           onClick={() => {
-            joinRoom();
+            sendMessage();
           }}
         >
-          <IoIosSend />
+          <IoIosSend className="text-white" />
         </button>
       </div>
     </div>

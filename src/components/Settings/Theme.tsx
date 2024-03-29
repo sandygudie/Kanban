@@ -11,7 +11,7 @@ export default function Theme() {
       <h2 className="font-bold text-sm md:text-base mb-6">Theme Selection</h2>
       {[
         { id: 1, title: "light" },
-        { id: 2, title: "dark" },
+        { id: 2, title: "dark" }
       ].map((ele) => {
         return (
           <div className="my-4" key={ele.id}>
@@ -22,10 +22,7 @@ export default function Theme() {
                 setTheme(ele.title), changeTheme(ele.title);
               }}
             >
-              <p className="font-medium !text-inherit">
-                {" "}
-                {TitleCase(ele.title)}{" "}
-              </p>
+              <p className="font-medium !text-inherit"> {TitleCase(ele.title)}</p>
             </Checkbox>
           </div>
         );
