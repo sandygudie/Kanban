@@ -349,7 +349,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-gray/20 hover:bg-gray/30 text-sm font-semibold py-2 px-4 rounded-md"
+                      className="bg-gray/20 hover:bg-gray/30 text-sm font-semibold py-2 mt-6 px-4 rounded-md"
                       onClick={() => {
                         setTime(true);
                       }}

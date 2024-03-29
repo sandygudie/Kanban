@@ -30,6 +30,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
       if (response) {
         message.success({
           content: "Invite Sent!",
+          className: "text-success",
         });
       }
       handleClose();

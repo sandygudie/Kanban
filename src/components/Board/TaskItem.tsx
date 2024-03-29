@@ -5,7 +5,7 @@ import AddTask from "./AddTask";
 import { Draggable } from "@hello-pangea/dnd";
 import { useNavigate } from "react-router-dom";
 import { taskColorMarker } from "utilis";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { Progress } from "antd";
 
 interface Props {
@@ -26,6 +26,10 @@ export default function TaskItem({
   const navigate = useNavigate();
 
   const [isOpenModal, setOpenModal] = useState(false);
+  const pendingDays = tasks?.dueDate?.length ? dayjs(tasks.dueDate[1]).diff(
+    dayjs(tasks.dueDate[0]),
+    "days"
+  ): null;
 
   return (
     <>
@@ -73,16 +77,16 @@ export default function TaskItem({
                       />
                     </div>
                   </div>
-                  {tasks?.dueDate?.length >0&& (
-                    <p className="text-[11px] font-medium">
-                      {tasks?.dueDate?.length &&
-                        dayjs(tasks.dueDate[1]).diff(
-                          dayjs(tasks.dueDate[0]),
-                          "day"
-                        )}{" "}
-                      days left
-                    </p>
-                  )}
+                  {tasks?.dueDate?.length > 0 &&
+                    (pendingDays! > 0 ? (
+                      <p className={`text-[11px] text-success font-medium`}>
+                        {tasks?.dueDate?.length && pendingDays} days left
+                      </p>
+                    ) : (
+                      <p className={`text-[11px] text-error font-medium`}>
+                        Tasks expired
+                      </p>
+                    ))}
                 </div>
               </div>
             </div>

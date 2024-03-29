@@ -176,7 +176,7 @@ export default function Header({ memberPics }: any) {
             </div>
             <div className="flex items-center gap-x-8">
               <button
-                onClick={() => setIsOpenInvite(false)}
+                onClick={() => setIsOpenInvite(true)}
                 className="hidden text-white md:block bg-success/90 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
               >
               Invite Members{" "}
