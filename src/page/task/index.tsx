@@ -22,11 +22,12 @@ import { DatePicker, DatePickerProps, TimePicker } from "antd";
 import { IoAdd } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import { RangePickerProps } from "antd/es/date-picker";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { DefaultImage } from "utilis";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import IconButton from "components/IconButton";
+import Chat from "components/Chat";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
@@ -154,7 +155,10 @@ export default function TaskDetails() {
             </div>
             <div>
               {" "}
-              <p className="text-2xl mini:text-3xl font-semibold"> {tasks?.data.title}</p>
+              <p className="text-2xl mini:text-3xl font-semibold">
+                {" "}
+                {tasks?.data.title}
+              </p>
               <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
                 created by {tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")}
@@ -361,6 +365,7 @@ export default function TaskDetails() {
               </div>
             </div>
           </div>
+          <Chat taskId={taskId}/>
         </div>
       ) : isLoading || isLoadingActiveBoard || !tasks ? (
         <div className="flex-col items-center justify-center h-full flex">

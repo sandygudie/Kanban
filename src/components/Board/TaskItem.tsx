@@ -50,12 +50,12 @@ export default function TaskItem({
                 style={{
                   borderColor: taskColorMarker[tasks.title.length + index],
                 }}
-                className="shadow-2xl hover:bg-gray-100
+                className="shadow-3xl hover:bg-gray-100
               cursor-pointer rounded-lg border-l-2 mb-4 py-3 px-4"
               >
                 <p className="font-semibold">{tasks.title} </p>
                 <div className="mt-4 mb-2 flex items-center justify-between">
-                  <div className="text-xs text-white/50 font-semibold w-16">
+                  <div className="text-xs font-semibold w-16">
                     {" "}
                     {filtered.length}/{tasks.subtasks.length}
                     <div>
@@ -74,7 +74,7 @@ export default function TaskItem({
                     </div>
                   </div>
                   {tasks?.dueDate?.length >0&& (
-                    <p className="text-[11px] font-medium text-white/50  ">
+                    <p className="text-[11px] font-medium">
                       {tasks?.dueDate?.length &&
                         dayjs(tasks.dueDate[1]).diff(
                           dayjs(tasks.dueDate[0]),

@@ -19,6 +19,7 @@ import Task from "page/task";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AppLoader } from "components/Spinner";
 
+
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   useEffect(() => {
@@ -112,6 +113,7 @@ function App() {
           }
         />
         <Route path="*" element={<NotFound />} />
+    
       </Routes>
     </React.Suspense>
   );
