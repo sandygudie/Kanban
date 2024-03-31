@@ -55,6 +55,7 @@ Users are able to:
 The application is built with 
 * Vite ReactJS
 * Redux Toolkit
+* Redux RTK
 * TypeScript
 * TailwindCSS
 * Formik
@@ -64,10 +65,10 @@ The application is built with
 * Eslint and Prettier
 * Docker Compose
 * GitHub Action
-* Netlify
+* Vercel
 
 
 ## Deployment pipeline(CI/CD)
- - From GitHub Actions to Netlify
+ - From GitHub Actions to Vercel
  - From GitHub Actions to Dockerhub
 
