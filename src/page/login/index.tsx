@@ -28,13 +28,7 @@ export default function Index() {
       ...prevFormData,
       [name]: value,
     }));
-    if (formData.email.length && formData.password === "") {
-      setInputError("passwordError");
-    } else if (formData.password.length && formData.email === "") {
-      setInputError("emailError");
-    } else {
-      setInputError("");
-    }
+
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
