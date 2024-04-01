@@ -5,10 +5,11 @@ import Cookies from "js-cookie";
 export default function ProtectedRoutes({ children }: any) {
   const navigate = useNavigate();
   const token = Cookies.get("access_token");
+  console.log(token);
   useEffect(() => {
     const verifyCookie = async () => {
       if (!token) {
-        navigate("/login");
+        // navigate("/login");
       }
     };
     verifyCookie();
