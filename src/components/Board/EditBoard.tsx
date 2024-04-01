@@ -74,7 +74,7 @@ export default function EditBoard({
         <Form>
           {isEdit === "description" ? (
             <div className="mb-6">
-              <h2 className="font-medium text-lg ">Board Description</h2>
+              <h2 className="font-medium text-lg ">Board Name</h2>
               <TextArea
                 label=""
                 name="description"

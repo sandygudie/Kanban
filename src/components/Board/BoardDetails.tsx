@@ -7,6 +7,8 @@ import EditBoard from "./EditBoard";
 import DeleteItem from "components/DeleteItem";
 import { CiEdit } from "react-icons/ci";
 import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat.js";
+dayjs.extend(advancedFormat);
 
 interface Props {
   handleClose: () => void;
@@ -54,7 +56,9 @@ export default function BoardDetails({ handleClose }: Props) {
         <div className="border-[1px] border-gray/10 rounded-md mt-1">
           {[
             {
-              title: <p className="text-base py-4 font-medium">{active.name}</p>,
+              title: (
+                <p className="text-base py-4 font-medium">{active.name}</p>
+              ),
               label: `Name`,
               handler: () => {
                 setIsOpenEdit(true);
@@ -83,7 +87,7 @@ export default function BoardDetails({ handleClose }: Props) {
               title: (
                 <p className="text-gray/90 text-sm py-5">
                   Created by {workspace.createdBy} on{" "}
-                 { dayjs(active.createdAt).format("MMMM Do, YYYY")}
+                  {dayjs(active.createdAt).format("MMMM Do, YYYY")}
                 </p>
               ),
             },
@@ -96,7 +100,7 @@ export default function BoardDetails({ handleClose }: Props) {
                 </p>
               ),
               handler: () => {
-                setIsOpenDelete(true); 
+                setIsOpenDelete(true);
               },
             },
           ].map((ele, index) => {
@@ -112,7 +116,9 @@ export default function BoardDetails({ handleClose }: Props) {
               >
                 <div className="justify-between flex items-center py-2 px-5">
                   <div className="text-left">
-                    <span className="text-gray/80 font-medium text-sm ">{ele.label}</span>
+                    <span className="text-gray/80 font-medium text-sm ">
+                      {ele.label}
+                    </span>
                     {ele.title}
                   </div>
                   {ele.label ? (
