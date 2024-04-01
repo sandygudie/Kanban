@@ -28,7 +28,6 @@ export default function ActiveBoard() {
   const [isAddColumn, setAddColumn] = useState(false);
   const [searchString, setSearchString] = useState<any>("");
   const [isEditColumn, setEditColumn] = useState<string | null>("");
-
   const [inputError, setInputError] = useState(false);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isDeleteColumn, setDeleteColumn] = useState(false);

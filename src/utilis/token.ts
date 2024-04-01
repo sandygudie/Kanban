@@ -1,6 +1,7 @@
 export const TOKEN_KEY = "APP_TOKEN";
 export const LOGOUT_KEY = "APP_LOGOUT";
 import axios from "axios";
+
 export function getToken() {
   if (typeof window !== "undefined") {
   return localStorage.getItem(TOKEN_KEY);

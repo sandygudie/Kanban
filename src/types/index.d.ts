@@ -22,8 +22,7 @@ export interface ITask {
   createdAt: Date;
   assignTo: string;
   dueDate: string[];
-  createdBy:string
-  
+  createdBy:string 
 }
 
 export interface ISubTask {
@@ -40,14 +39,13 @@ export interface IWorkspaceProfile {
   createdBy:string
   description:string
 }
+
 export interface IUser {
   id: string;
   name: string;
- email:string
+  email:string
   profilePics:string
-  
 }
-
 
 type AppState = {
   board: IBoard[];

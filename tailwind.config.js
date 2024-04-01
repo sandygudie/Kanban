@@ -6,8 +6,6 @@ module.exports = {
   theme: {
     colors: {
       primary: "hsl(242.31deg 48.15% 57.65%)",
-      // secondary: "hsla(0 ,0% ,12.55%,1)",
-      // "secondary-dark": "hsla(235, 16%, 15%,1)",
       gray: "hsla(216, 15%, 57%, 1)",
       success: "#44b774",
       white: "#ffffff",
