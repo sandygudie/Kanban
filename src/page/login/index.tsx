@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
 import { handleDeviceDetection, loadWorkspaceData } from "utilis";
@@ -18,10 +18,8 @@ export default function Index() {
     email: "",
     password: "",
   });
-  useEffect(() => {
-    localStorage.removeItem("currentWorkspace");
-    localStorage.removeItem("APP_TOKEN");
-  });
+
+  
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginError("");
     setInputError("");

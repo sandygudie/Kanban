@@ -1,7 +1,7 @@
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 import axios from "axios";
 import type { AxiosError, AxiosRequestConfig } from "axios";
-import { getToken } from "utilis/token";
+import { getToken, removeToken } from "utilis/token";
 
 const token = getToken();
 
@@ -38,6 +38,7 @@ const axiosBaseQuery =
       const err = axiosError as AxiosError;
       if (err.response) {
         if (err.response.status === 401) {
+          removeToken();
           window.location.replace("/login");
         }
       }
