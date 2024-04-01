@@ -156,10 +156,10 @@ export default function TaskDetails() {
               {" "}
               <p className="text-2xl mini:text-3xl font-semibold"> {tasks?.data.title}</p>
               <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
-                created by {tasks.data.createdBy} on{" "}
-                {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")}
+                Created by {tasks.data.createdBy} on{" "}
+                {dayjs(tasks.data.createdAt).format("MMM Do, YYYY")}
                 <span className="flex items-center mini:ml-3">
-                  <LuDot className="mini:text-sm text-gray" /> updated{" "}
+                  <LuDot className="mini:text-sm text-gray" /> Updated{" "}
                   {dayjs(tasks.data.updatedAt).fromNow()}
                 </span>
               </span>

@@ -119,7 +119,7 @@ export default function Index() {
             </h1>
             <p className="text-gray/80 font-medium text-xs">
               Created on {""}
-              {dayjs(workspace.createdAt).format(`MMMM DD, YYYY`)}
+              {dayjs(workspace.createdAt).format(`MMMM Do, YYYY`)}
             </p>
           </div>
         </div>

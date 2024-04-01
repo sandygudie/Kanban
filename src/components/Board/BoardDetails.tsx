@@ -1,4 +1,3 @@
-
 import { useSelector } from "react-redux";
 import { AppState } from "types";
 import { appData } from "redux/boardSlice";
@@ -84,7 +83,7 @@ export default function BoardDetails({ handleClose }: Props) {
               title: (
                 <p className="text-gray/90 text-sm py-5">
                   Created by {workspace.createdBy} on{" "}
-                 { dayjs(active.createdAt).format("MMMM DD, YYYY")}
+                 { dayjs(active.createdAt).format("MMMM Do, YYYY")}
                 </p>
               ),
             },
