@@ -168,7 +168,7 @@ export default function Header({ memberPics }: any) {
               ) : (
                 <Link
                   to={`/workspace/${workspace.id}`}
-                  className="mini:text-lg font-bold !text-white"
+                  className="mini:text-lg font-bold"
                 >
                   Board
                 </Link>

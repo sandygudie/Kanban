@@ -31,7 +31,7 @@ export default function Index() {
             src="https://res.cloudinary.com/dvpoiwd0t/image/upload/v1709390259/verify-email_gbc5z3.png"
             alt="success email verification"
           />
-          <p className="mb-4 mt-5 text-secondary text-xl font-semiBold">
+          <p className="mb-4 mt-5 text-secondary text-xl">
             {isVerify}
           </p>
           <Link
@@ -44,7 +44,7 @@ export default function Index() {
       ) : error ? (
         <div className="text-center">
           <RiErrorWarningFill className="text-8xl text-error mx-auto" />
-          <p className="text-xl font-semiBold text-error mb-8">{error}</p>
+          <p className="text-xl text-error mb-8">{error}</p>
           <Link className="text-black font-medium underline" to="/signup">
             {" "}
             Create an account{" "}

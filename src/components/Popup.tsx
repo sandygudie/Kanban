@@ -40,7 +40,7 @@ function Popup({ items, style, handleClose, description }: Props) {
               key={i}
               disabled={list.status === false}
               onClick={list.handler}
-              className={`block w-full font-medium text-left font-semiBold hover:bg-gray-200 text-[13.5px] 
+              className={`block w-full font-medium text-left hover:bg-gray-200 text-[13.5px] 
               ${
                 description
                   ? ` py-3 px-4 text-[0.91rem] hover:bg-gray-200 ${
