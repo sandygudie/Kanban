@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: "Plus Jakarta Sans";
   font-style: normal;
@@ -108,9 +107,11 @@
     color: var(--color-typography);
     background-color: var(--color-main);
   }
+
   a:hover {
     color: inherit;
   }
+
   input,
   textarea,
   select {
@@ -118,15 +119,18 @@
     background-color: transparent;
     @apply border-gray/40 border-[1px];
   }
+
   input:focus-visible,
   textarea:focus-visible {
     outline: none;
     @apply border-gray/40;
   }
+
   input::placeholder,
   textarea::placeholder {
     @apply text-gray/50;
   }
+
   button {
     cursor: pointer;
     font: inherit;
@@ -185,45 +189,53 @@
 .ant-picker-input > input::placeholder {
   color: rgb(111, 109, 109) !important;
 }
+
 .ant-picker-separator,
 .ant-picker-suffix {
-  color:  var(--color-typography) !important;
+  color: var(--color-typography) !important;
 }
+
 .ant-picker-panel-layout {
   background-color: rgb(219, 215, 215) !important;
 }
+
 .ant-picker-input {
   font-weight: 500;
 }
+
 .ant-picker-active-bar {
   display: none !important;
 }
+
 .ant-picker-outlined {
   background-color: hsla(216, 15%, 57%, 0.2) !important;
   border-radius: 0.125rem;
-
 }
-
 
 .ant-app {
   font-family: "Plus Jakarta Sans", sans-serif !important;
 }
+
 .ant-modal-content {
   padding: 0 !important;
   background-color: transparent !important;
 }
+
 .ant-modal-close {
   color: hsla(216, 15%, 57%, 0.9) !important;
   width: 30px !important;
   height: 30px !important;
 }
+
 .ant-modal-close:hover {
-  color: var(--color-secondary), !important;
+  color: var(--color-secondary) !important;
   background-color: hsla(216, 15%, 57%, 0.2) !important;
 }
+
 .react-loading-skeleton {
   background-color: hsla(216, 15%, 57%, 0.1);
 }
+
 .react-loading-skeleton::after {
   background-image: linear-gradient(
     90deg,
@@ -232,4 +244,3 @@
     var(--color-secondary)
   );
 }
-
