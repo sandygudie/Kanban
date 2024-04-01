@@ -290,7 +290,7 @@ export default function Header({ memberPics }: any) {
             </div>
           </div>
         </div>
-        {board.length && (
+        {board.length>0 && (
           <div className="h-auto xs:h-[45px] bg-secondary absolute top-[50px] left-0 mini:hidden flex flex-col pr-4 items-start bg-gray-100 justify-center w-full">
             <div className="relative">
               <button

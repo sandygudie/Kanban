@@ -2,12 +2,12 @@ import React, { useEffect, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "page/notFound";
 import AuthLayout from "components/AuthLayout";
-import Home from "page/home";
-import Login from "page/login";
-import Signup from "page/signup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AppLoader } from "components/Spinner";
 import BoardLayout from "components/BoardLayout";
+import Home from "page/home";
+import Login from "page/login";
+import Signup from "page/signup";
 const ForgotPassword = lazy(() => import("page/forgotPassword"));
 const ResetPassword = lazy(() => import("page/resetPassword"));
 const VerifyEmail = lazy(() => import("page/verifyEmail"));
@@ -19,7 +19,7 @@ const User = lazy(() => import("page/user"));
 const Task = lazy(() => import("page/task"));
 
 function App() {
-  
+
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
