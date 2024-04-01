@@ -164,7 +164,7 @@ export default function TaskDetails() {
                 </span>
               </span>
             </div>
-            <button className="text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2">
+            <button className="mini:text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2">
               <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
             </button>
             {isOpenMenu && (
@@ -198,7 +198,7 @@ export default function TaskDetails() {
           </div>
           <div className="mt-8">
             <p className="font-semibold text-sm mb-2">Description</p>
-            <p className="rounded-md w-8/12">
+            <p className="rounded-md mini:w-8/12">
               {tasks.data.description
                 ? tasks.data.description
                 : "No description"}

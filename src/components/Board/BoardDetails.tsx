@@ -7,8 +7,8 @@ import EditBoard from "./EditBoard";
 import DeleteItem from "components/DeleteItem";
 import { CiEdit } from "react-icons/ci";
 import dayjs from "dayjs";
-// import advancedFormat from "dayjs/plugin/advancedFormat.js";
-// dayjs.extend(advancedFormat);
+import advancedFormat from "dayjs/plugin/advancedFormat.js";
+dayjs.extend(advancedFormat);
 
 interface Props {
   handleClose: () => void;
