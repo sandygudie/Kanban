@@ -59,11 +59,11 @@ export default function Header({ memberPics }: any) {
           <div
             className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
           >
-            <div className="flex items-center justify-center gap-x-2">
-              <div className="w-8 h-auto overflow-hidden">
+            <div className="flex items-center justify-center">
+              <div className="w-auto h-auto overflow-hidden">
                 <img
                   src={workspace?.profilePics}
-                  className="w-auto h-auto object-contain"
+                  className="w-10 h-10 object-contain"
                   alt=""
                 />
               </div>
@@ -396,7 +396,7 @@ export default function Header({ memberPics }: any) {
         ) : isOpenInvite ? (
           <WorkspaceInvite
             handleClose={() => {
-              setIsOpenInvite(false), setWorkspaceMenu(true);
+              setIsOpenInvite(false);
             }}
             workspaceId={workspace.id}
           />

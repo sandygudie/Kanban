@@ -26,7 +26,7 @@ export default function Index() {
   const data: AppState = useSelector(appData);
   const [uploadError, setUploadError] = useState<any>();
   const { workspace } = data;
-  const [toggle, setToggle] = useState(location.state || "about");
+  const [toggle, setToggle] = useState(location.state.toLowerCase() || "about");
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<any>();
   const [editWorkspaceProfile, { isLoading }] =
@@ -56,6 +56,7 @@ export default function Index() {
       }),
     profilePics: Yup.string(),
   });
+
 
   const UpdateWorkSpace = async (values: any) => {
     let res;
@@ -110,7 +111,7 @@ export default function Index() {
             <img
               src={workspace.profilePics}
               alt="image"
-              className=" border-solid h-auto w-12 md:w-20"
+              className=" border-solid object-contain h-12 md:h-20 w-12 md:w-20"
             />
           </div>
           <div>
@@ -123,7 +124,7 @@ export default function Index() {
             </p>
           </div>
         </div>
-        <div className="h-full mt-8 md:mt-16">
+        <div className="h-full mt-14 md:mt-16">
           <div className="md:fixed my-6 md:my-0">
             <div className="flex md:flex-col w-40 md:w-36 items-start gap-y-3">
               {linkitems.map((ele: any) => {
@@ -133,7 +134,7 @@ export default function Index() {
                     key={ele.name}
                     className={`${
                       toggle === ele.name && "bg-gray-200"
-                    } border-none px-4 py-2 rounded-md text-[15px] font-medium w-full text-left`}
+                    } border-none px-4 py-2 rounded-md text-sm font-medium w-full text-left`}
                   >
                     {TitleCase(ele.name)}
                   </button>
@@ -142,7 +143,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="md:w-9/12 overflow-y-auto h-full pb-24 ml-auto pr-4">
+          <div className="md:w-9/12 overflow-y-auto h-full pb-24 ml-auto">
             {toggle === "about" ? (
               <div>
                 <div>

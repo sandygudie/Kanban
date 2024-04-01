@@ -6,7 +6,7 @@ import {
   useRemovePendingMemberMutation,
   useRemoveWorkspaceMemberMutation,
 } from "redux/apiSlice";
-import { TitleCase } from "utilis";
+import { DefaultImage, TitleCase } from "utilis";
 import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import Popup from "components/Popup";
 import Modal from "components/Modal";
@@ -99,23 +99,39 @@ export default function Members({ workspaceId }: Props) {
           </div>
         ) : (
           <>
-            <div className="mt-6 bg-secondary px-4 py-2 rounded-md">
+            <div className="mt-6 bg-secondary p-6 rounded-md">
               {workspace?.data.members.map((ele: any) => {
                 return (
                   <div
-                    className="md:flex items-center mt-2 justify-between text-sm"
+                    className="mini:flex items-center mb-7 md:mb-4 justify-between text-sm"
                     key={ele?.userId}
                   >
-                    <div className="">
-                      {" "}
-                      <p className="font-semibold">{ele.name}</p>{" "}
-                      <p className="text-gray/80 font-medium text-sm">
-                        {ele.email}
-                      </p>
+                    <div className="sm:flex items-center gap-x-3">
+                      <div className="py-1 font-bold text-[0.8rem]">
+                        {ele.profilePics ? (
+                          <img
+                            className="w-6 h-6 rounded-full"
+                            src={ele.profilePics}
+                            alt="profile pic"
+                          />
+                        ) : (
+                          <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] flex items-center justify-center flex-col font-bold">
+                            {DefaultImage(ele.name)}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-semibold">{ele.name}</p>{" "}
+                        <p className="text-gray/80 font-medium text-sm">
+                          {ele.email}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex gap-x-3 justify-between items-center mt-4">
+                    <div className="flex gap-x-1 justify-between items-center mt-4">
                       {" "}
-                      <p className="font-bold pr-6">{TitleCase(ele?.role)}</p>
+                      <p className="font-bold mini:pr-4">
+                        {TitleCase(ele?.role)}
+                      </p>
                       <div className="relative">
                         <button
                           onClick={() => {

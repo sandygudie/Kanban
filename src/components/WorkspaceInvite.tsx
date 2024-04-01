@@ -68,7 +68,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
               placeholder="Send invite note"
             />
             {error && (
-              <p className="text-error text-xs absolute -bottom-12 flex items-center gap-x-2">
+              <p className="text-error text-xs absolute -bottom-12 flex items-center gap-x-1">
                 {" "}
                 <RiErrorWarningLine />
                 {error}
