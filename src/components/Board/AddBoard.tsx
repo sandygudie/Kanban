@@ -10,9 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 import { IoIosAdd } from "react-icons/io";
 import { useCreateBoardMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
+
 interface Props {
   handleClose: () => void;
 }
+
 function AddBoard({ handleClose }: Props) {
   const { message } = AntDesign.useApp();
   const [createBoard, { isLoading }] = useCreateBoardMutation();
@@ -79,11 +81,16 @@ function AddBoard({ handleClose }: Props) {
       <h1 className="font-semibold text-lg pb-4">New Board</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem]">
         <Formik
-          initialValues={{ name: "", columns: [{
-            _id: uuidv4(),
+          initialValues={{
             name: "",
-            tasks: [],
-          }] }}
+            columns: [
+              {
+                _id: uuidv4(),
+                name: "",
+                tasks: [],
+              },
+            ],
+          }}
           validationSchema={BoardSchema}
           validateOnChange={false}
           validateOnBlur={false}
@@ -128,7 +135,7 @@ function AddBoard({ handleClose }: Props) {
                           });
                         }}
                       >
-                           <IoIosAdd  className="font-bold" size={20} />{" "} Add Column
+                        <IoIosAdd className="font-bold" size={20} /> Add Column
                       </button>
 
                       {values.columns.length >= 0 ? (

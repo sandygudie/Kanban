@@ -7,6 +7,7 @@ export interface IJoinWorkspace {
   email: string;
   description: string;
 }
+
 export interface IWorkspace {
   id:string;
   name:string

@@ -63,8 +63,8 @@ export default function Index() {
               <div
                 className={`${
                   showSidebar
-                    ? "bg-main mini:translate-x-[220px] mini:w-[calc(100%_-_220px)] transition-all duration-700 ease-in-out"
-                    : "translate-x-0 transition-auto duration-500 ease-in"
+                    ? "bg-main mini:translate-x-[220px] mini:w-[calc(100%_-_220px)]"
+                    : "translate-x-0 "
                 }  h-full `}
               >
                 <Outlet />
@@ -77,7 +77,7 @@ export default function Index() {
               setShowSidebar(true);
             }}
             className={` ${
-              showSidebar ? "opacity-0 delay-50" : "opacity-100 delay-500"
+              showSidebar ? "opacity-0 delay-50" : "opacity-100 delay-50"
             } cursor-pointer z-20 hidden mini:block fixed top-16 hover:bg-gray/50 bg-gray-200 text-gray hover:text-white rounded-r-full p-2 transition ease-in-out`}
           >
             {" "}

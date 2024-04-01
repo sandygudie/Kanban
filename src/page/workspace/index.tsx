@@ -11,7 +11,7 @@ export default function Index() {
 
   return (
     <>
-      <div className={`w-full h-screen overflow-auto `}>
+      <div className={`w-full h-screen overflow-auto`}>
         <header className="bg-secondary h-[65px] z-20 flex items-center w-full border-b-[1px] border-gray/20">
           <div
             className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
@@ -43,15 +43,15 @@ export default function Index() {
                 <Skeleton width={200} height={10} />
               </h2>
               <div className="grid w-10/12 mx-auto mini:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-2">
-                <Skeleton height={120} className=" w-full mini:w-[250px]" />
-                <Skeleton height={120} className=" w-full mini:w-[250px]" />
+                <Skeleton height={120} className="w-full mini:w-[250px]" />
+                <Skeleton height={120} className="w-full mini:w-[250px]" />
                 <Skeleton
                   height={120}
                   className="hidden mini:block mini:w-[250px]"
                 />
                 <Skeleton
                   height={120}
-                  className="hidden mini:block  mini:w-[250px]"
+                  className="hidden mini:block mini:w-[250px]"
                 />
                 <Skeleton
                   height={120}

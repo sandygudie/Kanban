@@ -31,7 +31,7 @@ export default function Index({
     <>
       <>
         <div
-          className={`hidden mini:block h-screen fixed z-20 w-[220px] transition-all duration-700 ease-in-out ${
+          className={`hidden mini:block h-screen fixed z-20 w-[220px] ${
             showSidebar ? "translate-x-0" : "-translate-x-64"
           }`}
         >

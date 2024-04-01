@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { appData, updateWorkspace } from "redux/boardSlice";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { useUpdateWorkspaceProfileMutation } from "redux/apiSlice";
-import Spinner from "components/Spinner/index";
+import { Loader } from "components/Spinner/index";
 import Modal from "components/Modal";
 import DeleteItem from "components/DeleteItem";
 import IconButton from "components/IconButton";
@@ -245,7 +245,7 @@ export default function Index() {
                               className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
                               type="submit"
                             >
-                              {isLoading ? <Spinner /> : "Update"}
+                              {isLoading ? <Loader/> : "Update"}
                             </button>
                           </div>
                         </div>

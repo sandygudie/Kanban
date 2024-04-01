@@ -78,7 +78,7 @@ export default function EditBoard({
               <TextArea
                 label=""
                 name="description"
-                placeholder="Tell us more about the board"
+                placeholder="Tell us more about the board."
               />
             </div>
           ) : (

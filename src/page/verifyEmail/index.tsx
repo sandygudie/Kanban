@@ -11,25 +11,23 @@ export default function Index() {
   const [verifyEmail] = useVerifyEmailMutation();
 
   useEffect(() => {
+    const emailVerify = async () => {
+      try {
+        const response = await verifyEmail(confirmationCode).unwrap();
+        setVerify(response.message);
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
     emailVerify();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [confirmationCode, verifyEmail]);
 
-  const emailVerify = async () => {
-    try {
-      const response = await verifyEmail(confirmationCode).unwrap();
-      setVerify(response.message);
-    } catch (error: any) {
-      console.log(error);
-      setError(error.message);
-    }
-  };
   return (
     <div className="flex bg-white text-black items-center justify-center h-[36rem]">
       {isVerify ? (
         <div>
           <img
-          className="w-36 h-36 m-auto"
+            className="w-36 h-36 m-auto"
             src="https://res.cloudinary.com/dvpoiwd0t/image/upload/v1709390259/verify-email_gbc5z3.png"
             alt="success email verification"
           />
@@ -53,7 +51,10 @@ export default function Index() {
           </Link>
         </div>
       ) : (
-   <p>     <Spinner /> loading data...</p>
+        <p>
+          {" "}
+          <Spinner /> loading data...
+        </p>
       )}
     </div>
   );

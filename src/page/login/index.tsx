@@ -5,14 +5,12 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
 import { handleDeviceDetection, loadWorkspaceData } from "utilis";
 import { useLoginUserMutation } from "redux/authSlice";
-
 import GoogleLogin from "components/GoogleLogin";
 import { setToken } from "utilis/token";
 
 export default function Index() {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginUserMutation();
-
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -87,12 +85,12 @@ export default function Index() {
           <h1 className="font-semibold text-2xl pt-6 pb-4 md:pb-12 text-center">
             Log In
           </h1>
-          <div className="">
+          <div>
             <form
               onSubmit={handleSubmit}
               className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center mini:shadow-3xl rounded-md"
             >
-              <div className="">
+              <div>
                 <GoogleLogin />
               </div>
               <p className="text-sm text-gray">OR</p>
@@ -161,7 +159,7 @@ export default function Index() {
                     Create account
                   </Link>
                   <Link
-                    className="text-xs underline text-gray  hover:text-gray"
+                    className="text-xs underline text-gray hover:text-gray"
                     to="/forgotpassword"
                   >
                     forgot password?

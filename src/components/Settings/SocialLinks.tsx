@@ -40,15 +40,15 @@ export default function Index() {
                   {values.socialLinks &&
                     values.socialLinks.length > 0 &&
                     values.socialLinks.map((ele: any, index: number) => (
-                     <div key={index} className="flex items-center w-auto gap-x-2">
-                        <BiLink className="text-xl text-gray"/>
-                         <SubtaskInput
-                        index={index}
-                        name={`socialLinks.${index}.name`}
-                        arrayHelpers={arrayHelpers}
-                        placeholder="social link"
-                      />
-                     </div>
+                      <div key={index} className="flex items-center w-auto gap-x-2">
+                        <BiLink className="text-xl text-gray" />
+                        <SubtaskInput
+                          index={index}
+                          name={`socialLinks.${index}.name`}
+                          arrayHelpers={arrayHelpers}
+                          placeholder="social link"
+                        />
+                      </div>
                     ))}
                   <button
                     aria-label="Add"
@@ -61,7 +61,7 @@ export default function Index() {
                       });
                     }}
                   >
-                   Add Link
+                    Add Link
                   </button>
 
                   {values.socialLinks.length >= 0 ? (
@@ -79,10 +79,10 @@ export default function Index() {
 
             <div className="ml-auto mt-6 md:w-20">
               <button
-                  className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
+                className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
                 type="submit"
               >
-             Update
+                Update
               </button>
             </div>
           </Form>

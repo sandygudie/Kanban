@@ -80,7 +80,9 @@ export default function Members({ workspaceId }: Props) {
     <>
       <div className="h-screen">
         <div className="flex items-center pb-2 justify-between border-b-[1px] border-gray/20">
-          <h1 className="font-semibold text-sm md:text-base">Workspace Members</h1>
+          <h1 className="font-semibold text-sm md:text-base">
+            Workspace Members
+          </h1>
           <button
             onClick={() => {
               setIsOpenInvite(true);
@@ -91,7 +93,10 @@ export default function Members({ workspaceId }: Props) {
           </button>
         </div>
         {isLoading ? (
-          <Spinner />
+          <div className="mt-4">
+            {" "}
+            <Spinner />
+          </div>
         ) : (
           <>
             <div className="mt-6 bg-secondary px-4 py-2 rounded-md">
@@ -103,8 +108,10 @@ export default function Members({ workspaceId }: Props) {
                   >
                     <div className="">
                       {" "}
-                      <p className="font-semibold text-lg">{ele.name}</p>{" "}
-                      <p className="text-gray/80 font-medium text-sm">{ele.email}</p>
+                      <p className="font-semibold">{ele.name}</p>{" "}
+                      <p className="text-gray/80 font-medium text-sm">
+                        {ele.email}
+                      </p>
                     </div>
                     <div className="flex gap-x-3 justify-between items-center mt-4">
                       {" "}
@@ -122,7 +129,7 @@ export default function Members({ workspaceId }: Props) {
                           (isUpdateRoleLoading && memberId === ele.userId) ? (
                             <Spinner />
                           ) : (
-                            <span className="flex gap-x-2 items-center">
+                            <span className="flex gap-x-2 text-xs items-center">
                               {" "}
                               Options
                               {isOption === ele?.userId ? (
@@ -204,7 +211,9 @@ export default function Members({ workspaceId }: Props) {
                   }
                 )
               ) : (
-                <p className="text-gray/80 font-medium text-sm mt-3">No pending request</p>
+                <p className="text-gray/80 font-medium text-sm mt-3">
+                  No pending request
+                </p>
               )}
             </div>
           </>
