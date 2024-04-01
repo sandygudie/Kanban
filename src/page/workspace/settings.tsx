@@ -26,7 +26,7 @@ export default function Index() {
   const data: AppState = useSelector(appData);
   const [uploadError, setUploadError] = useState<any>();
   const { workspace } = data;
-  const [toggle, setToggle] = useState(location.state.toLowerCase() || "about");
+  const [toggle, setToggle] = useState(location.state || "about");
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<any>();
   const [editWorkspaceProfile, { isLoading }] =
@@ -266,7 +266,7 @@ export default function Index() {
                   </button>
                 </div>
               </div>
-            ) : toggle === "members" ? (
+            ) : toggle.toLowerCase() === "members" ? (
               <Members workspaceId={workspace.id} />
             ) : (
               <Theme />
