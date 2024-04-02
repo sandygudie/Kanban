@@ -63,7 +63,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
           </div>
           <div className="mb-5 relative">
             <TextArea
-              label="Add Note(optional)"
+              label="Add Note (optional)"
               name="inviteNote"
               placeholder="Send invite note"
             />

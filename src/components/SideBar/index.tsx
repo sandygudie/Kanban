@@ -47,9 +47,9 @@ export default function Index({
                 </p>
               )}
 
-              <div className="pt-1">
-                {board && (
-                  <>
+         
+                {board.length>0 && (
+                  <div className="py-4">
                     {board.map((options: IBoard) => {
                       return (
                         <button
@@ -83,7 +83,7 @@ export default function Index({
                         </button>
                       );
                     })}
-                  </>
+                  </div>
                 )}
 
                 {workspace.id ? (
@@ -91,7 +91,7 @@ export default function Index({
                     onClick={() => {
                       setOpenBoard(true);
                     }}
-                    className="pl-4 mt-8 font-bold cursor-pointer font-medium text-gray hover:text-typography px-3 text-sm"
+                    className="pl-4 pt-1 font-bold cursor-pointer font-medium text-gray hover:text-typography px-3 text-sm"
                   >
                     <div className="flex items-center">
                       {" "}
@@ -103,7 +103,7 @@ export default function Index({
                     </div>
                   </button>
                 ) : null}
-              </div>
+         
             </div>
 
             <div className="mb-4 absolute top-0 right-0 md:mb-0">
