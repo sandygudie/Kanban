@@ -226,7 +226,7 @@ export default function TaskDetails() {
                           />
                           <p
                             className={`${
-                              checkedState[index]! && "line-through"
+                              checkedState[index]! && "line-through opacity-50"
                             } text-xs font-medium`}
                           >
                             {subtask.title}

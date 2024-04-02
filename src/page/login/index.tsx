@@ -81,7 +81,7 @@ export default function Index() {
               onSubmit={handleSubmit}
               className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
             >
-              <div>
+              <div className="w-full">
                 <GoogleLogin />
               </div>
               <p className="text-sm text-gray font-medium">OR</p>

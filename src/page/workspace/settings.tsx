@@ -166,13 +166,12 @@ export default function Index() {
                         <div className="mb-10">
                           <TextInput
                             label="Workspace Name"
+                            subLabel="(Your organization or company name.)"
                             name="name"
                             type="text"
                             placeholder="E.g Development, Marketing"
                           />
-                          <span className="text-gray/70 text-xs">
-                            Your organization or company name.
-                          </span>
+                         
                         </div>
 
                         <div className="">

@@ -13,7 +13,6 @@ import IconButton from "components/IconButton";
 import AddColumn from "./AddColumn";
 import { PiDotsThreeBold } from "react-icons/pi";
 import Popup from "components/Popup";
-import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import {
   useCreateTaskMutation,
@@ -182,8 +181,7 @@ export default function ActiveBoard() {
                               {
                                 title: (
                                   <p className="flex py-1 items-center gap-x-2.5">
-                                    <CiEdit className="text-gray text-sm" /> Add
-                                    Card
+                                       <IoIosAdd size={20} />{" "} Add Card
                                   </p>
                                 ),
                                 handler: () => {

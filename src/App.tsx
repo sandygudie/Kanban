@@ -19,6 +19,7 @@ const User = lazy(() => import("page/user"));
 const Task = lazy(() => import("page/task"));
 
 function App() {
+
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
@@ -58,7 +59,6 @@ function App() {
           />
         </Route>
         <Route element={<BoardLayout />}>
-          <Route path="/workspaces" element={<AvailableWorkspace />} />
           <Route path="/workspace/settings" element={<Settings />} />
           <Route path="/workspace/user" element={<User />} />
           <Route path="/workspace/:workspaceId" element={<Board />} />
@@ -68,7 +68,7 @@ function App() {
           />
         </Route>
         <Route path="/workspace/new" element={<NewWorkspace />} />
-
+        <Route path="/workspaces" element={<AvailableWorkspace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </React.Suspense>

@@ -155,7 +155,7 @@ function AddBoard({ handleClose }: Props) {
               <div className="mt-10">
                 <button
                   aria-label="Board"
-                  className="px-2 text-white h-12 bg-primary/80 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
+                  className="px-2 text-white h-12 bg-primary-dark hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Create Board"}

@@ -110,7 +110,7 @@ export default function Index() {
                 onSubmit={(e) => handleSubmit(e)}
                 className="w-full md:w-[50%] relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
               >
-                <div className="block md:hidden">
+                <div className="block md:hidden w-full">
                   <GoogleLogin />
                 </div>
 

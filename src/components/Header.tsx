@@ -59,7 +59,7 @@ export default function Header({ memberPics }: any) {
           <div
             className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
           >
-            <div className="flex items-center justify-center">
+            <div className="flex gap-x-2 items-center justify-center">
               <div className="w-auto h-auto overflow-hidden">
                 <img
                   src={workspace?.profilePics}
@@ -76,13 +76,13 @@ export default function Header({ memberPics }: any) {
                 <h3
                   className={`${
                     workspace?.name.length > 10
-                      ? "truncate w-[9ch] text-left"
+                      ? "truncate w-[100px] text-left"
                       : "w-auto"
                   } font-bold sm:text-base md:text-xl`}
                 >
                   {TitleCase(workspace?.name)}
                 </h3>{" "}
-                <HiOutlineChevronDown className="mt-1 text-sm" />
+                <HiOutlineChevronDown className="mt-1 ml-1 text-sm" />
               </button>
             </div>
             {isWorkspaceMenu && (
@@ -165,7 +165,7 @@ export default function Header({ memberPics }: any) {
                     #{TitleCase(active?.name)}{" "}
                     <span className="hidden sm:inline">Board</span>
                   </span>{" "}
-                  <HiOutlineChevronDown className="mt-1 text-sm" />
+                  <HiOutlineChevronDown className="mt-[0.5px] ml-1 text-sm" />
                 </button>
               ) : (
                 <Link
@@ -303,7 +303,7 @@ export default function Header({ memberPics }: any) {
                   <span className="text-xs sm:inline">
                     ALL BOARDS ({board.length})
                   </span>
-                  <HiOutlineChevronDown className="mt-0.5 text-sm inline " />
+                  <HiOutlineChevronDown className="mt-0.5 ml-1 text-sm inline " />
                 </div>
               </button>{" "}
               <span>

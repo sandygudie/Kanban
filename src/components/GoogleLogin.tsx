@@ -52,7 +52,7 @@ export default function GoogleLogin() {
       <button
         type="button"
         onClick={() => loginWithGoggle()}
-        className="bg-white hover:border-primary text-sm font-semibold flex border border-gray/40 justify-between gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
+        className="bg-white w-full hover:border-primary text-sm font-semibold flex border border-gray/40 justify-center gap-x-4 md:gap-x-8 items-center rounded-full pl-4 pr-10 py-2"
       >
         <div className="w-10 h-10">
           <img
@@ -64,7 +64,13 @@ export default function GoogleLogin() {
           />
         </div>
         <div className="text-sm font-medium">
-          {isGoogleLoginLoading ? <Loader /> : "Continue with Google"}
+          {isGoogleLoginLoading ? (
+            <div className="w-24">
+              <Loader />
+            </div>
+          ) : (
+            "Continue with Google"
+          )}
         </div>
       </button>
       {loginError ? (

@@ -5,9 +5,11 @@ import {
   Field,
 } from "formik";
 import { MdClose } from "react-icons/md";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 interface LabelProps {
   label: string;
+  subLabel?:string
 }
 interface OtherProps {
   index: number;
@@ -22,6 +24,7 @@ interface DisplayProps {
 
 export const TextInput = ({
   label,
+  subLabel,
   ...props
 }: LabelProps & FieldHookConfig<string>) => {
   const [field, meta] = useField(props);
@@ -31,7 +34,7 @@ export const TextInput = ({
         className="font-medium text-[15px]"
         htmlFor={props.id || props.name}
       >
-        {label}
+        {label} <span className="text-gray/70 text-xs">{ subLabel}</span>
       </label>
       <Field
         {...field}
@@ -41,9 +44,9 @@ export const TextInput = ({
           meta.error ? "border-error/70 border-solid" : null
         } px-4 py-4 w-full mt-2 rounded-md outline-none placeholder:text-xs`}
       />
-      {meta.touched || meta.error ? (
-        <div className="absolute -bottom-3 text-error/70 text-xs">
-          {meta.error}
+      {meta.error ? (
+        <div className="absolute -bottom-3 text-error/70 text-xs flex items-center gap-x-1">
+         <IoAlertCircleOutline/> {meta.error}
         </div>
       ) : null}
     </div>
