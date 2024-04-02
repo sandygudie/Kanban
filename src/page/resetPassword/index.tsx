@@ -82,7 +82,7 @@ export default function Index() {
     <main className="h-full flex items-center flex-col gap-y-4 justify-start md:justify-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="w-11/12 mini:w-4/6 md:w-1/2 relative pb-10 mini:px-8 md:p-10 rounded-md mini:shadow-3xl"
+        className="w-11/12 mini:w-4/6 md:w-1/2 relative py-10 rounded-[10px] mini:px-8 md:p-10 mini:border border-gray/40 md:bg-white"
       >
         <h1 className="font-semibold text-2xl py-3 text-center">
           Reset password?
@@ -155,7 +155,7 @@ export default function Index() {
           </div>
         </div>
         <button
-          className="mb-4 bg-secondary-dark min-w-48 flex justify-center items-center flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
+         className="mb-4 mt-12 bg-primary-dark hover:bg-primary flex justify-center items-center min-w-48 flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
           type="submit"
         >
           {isLoading ? <Loader /> : "Reset Password"}

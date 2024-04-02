@@ -12,26 +12,26 @@ export default function Index() {
   useGSAP(
     () => {
       gsap.from(".header", {
-        duration: 1.5,
+        duration: 0.5,
         opacity: 0,
         y: -50,
         ease: "back",
       });
       gsap.from(".title-left", {
-        duration: 1.5,
+        duration: 0.5,
         opacity: 0,
         delay: 0.5,
 
         y: 10,
       });
       gsap.from(".title-right", {
-        duration: 1.8,
+        duration: 0.8,
         delay: 0.8,
         opacity: 0,
         y: 20,
       });
       gsap.from(".description", {
-        duration: 2,
+        duration: 1,
         opacity: 0,
         delay: 1.2,
         y: 40,
@@ -40,7 +40,6 @@ export default function Index() {
 
     { scope: hero }
   );
-
 
   return (
     <div
@@ -57,7 +56,6 @@ export default function Index() {
             />
             <span className="font-bold text-3xl">Kanban</span>
           </Link>
-
 
           <div className="flex items-center ">
             <Link
@@ -83,9 +81,9 @@ export default function Index() {
           </h1>
           <div className="description">
             <p className="md:px-8 lg:p-0 text-[20px] my-8 font-normal leading-[2.5rem]">
-              <span className="font-bold text-2xl">Kanban</span> offers a
-              visual view for teams to manage tasks, quickly shift priorities,
-              track project progress, and stay on top of deadlines.
+              <span className="font-bold text-2xl">Kanban</span> offers a visual
+              view for teams to manage tasks, quickly shift priorities, track
+              project progress, and stay on top of deadlines.
             </p>
 
             <div className="w-auto md:w-fit mx-auto relative">
@@ -94,11 +92,11 @@ export default function Index() {
                 required
                 type="email"
                 placeholder="Email address"
-                className="rounded-full w-full border focus:border-black/40 border-black/20 placeholder:text-black/50 md:w-[30rem] py-4 px-6"
+                className="rounded-full w-full border focus:border-black/70 border-black/40 placeholder:text-black/50 md:w-[30rem] h-12 px-6"
               />
               <button
                 onClick={() => navigate("/signup", { state: email })}
-                className="text-sm bg-black text-white absolute top-[0.55rem] right-3 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full px-4 py-2.5 font-medium"
+                className="mt-4 mini:mt-0 w-full mini:w-auto text-sm bg-black text-white mini:absolute top-0 right-0 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full px-4 h-12 font-medium"
               >
                 Get Started
               </button>

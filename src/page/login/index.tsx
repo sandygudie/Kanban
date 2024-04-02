@@ -75,17 +75,17 @@ export default function Index() {
       <div className="h-full">
         <div className="w-full mini:w-9/12 md:w-[40%] mx-auto">
           <h1 className="font-semibold text-2xl pt-6 pb-4 md:pb-12 text-center">
-            Log In
+          Login to your account
           </h1>
           <div>
             <form
               onSubmit={handleSubmit}
-              className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center mini:shadow-3xl rounded-md"
+              className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
             >
               <div>
                 <GoogleLogin />
               </div>
-              <p className="text-sm text-gray">OR</p>
+              <p className="text-sm text-gray font-medium">OR</p>
 
               <input
                 type="email"
@@ -136,9 +136,9 @@ export default function Index() {
                   ) : null}
                 </div>
               </div>
-              <div className="w-full mt-4">
+              <div className="w-full mt-2">
                 <button
-                  className="bg-black flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
+                  className="bg-primary-dark hover:bg-primary flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Continue with email"}

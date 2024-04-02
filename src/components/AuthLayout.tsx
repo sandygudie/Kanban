@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 
 export default function Header() {
   return (
-    <div className="bg-white h-screen text-black">
+    <div className="bg-[#f7f7f7] h-screen text-black">
       <header className="px-4 lg:px-16 py-4">
         <Link className="inline-flex items-center gap-x-2" to="/">
           <img

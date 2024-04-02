@@ -123,12 +123,12 @@
   input:focus-visible,
   textarea:focus-visible {
     outline: none;
-    @apply border-gray/40;
+    @apply border-primary;
   }
 
   input::placeholder,
   textarea::placeholder {
-    @apply text-gray/50;
+    @apply text-gray/80;
   }
 
   button {
