@@ -133,12 +133,9 @@ export default function ActiveBoard() {
                         <input
                           onMouseOver={() => {
                             setEditColumn(item._id);
-
-                            setOpenMenu(false);
                           }}
                           onMouseOut={() => {
                             setEditColumn("");
-                            setOpenMenu(false);
                           }}
                           type="text"
                           value={
@@ -157,31 +154,31 @@ export default function ActiveBoard() {
                         />
                       </div>
                       {item.tasks.length > 0 && (
-                        <p className="text-[14px] font-medium">({item.tasks.length})</p>
+                        <p className="text-[14px] font-medium">
+                          ({item.tasks.length})
+                        </p>
                       )}
                     </div>
                     <div className={`absolute right-0 gap-x-1 items-center`}>
                       <div className="flex flex-col">
                         <IconButton
                           handleClick={() => {
-                            setOpenMenu(true);
-                            setSelectedColumn(item);
-                            setEditColumn(item._id);
+                            setOpenMenu(true), setSelectedColumn(item);
                           }}
                         >
-                          <div className="hover:bg-gray-200 px-1.5 mt-1.5 rounded-md">
+                          <div className="hover:bg-gray-200 mt-1.5 rounded-md">
                             <PiDotsThreeBold className="text-2xl font-bold" />
                           </div>
                         </IconButton>
 
-                        {isOpenMenu && isEditColumn === item._id && (
+                        {isOpenMenu && selectedColumn?._id === item._id && (
                           <Popup
-                            style={{ right: "-60px" }}
+                            className="right-0 top-7"
                             items={[
                               {
                                 title: (
-                                  <p className="flex py-1 items-center gap-x-2.5">
-                                       <IoIosAdd size={20} />{" "} Add Card
+                                  <p className="flex py-1 items-center text-xs gap-x-2">
+                                    <IoIosAdd size={20} /> Add Card
                                   </p>
                                 ),
                                 handler: () => {
@@ -190,8 +187,12 @@ export default function ActiveBoard() {
                               },
                               {
                                 title: (
-                                  <p className="flex py-1 items-center gap-x-2.5">
-                                    <MdDelete className="text-error" /> Delete
+                                  <p className="flex py-1 text-xs items-center gap-x-2">
+                                    <MdDelete
+                                      size={20}
+                                      className="text-error"
+                                    />{" "}
+                                    Delete
                                   </p>
                                 ),
                                 handler: () => {
@@ -199,7 +200,9 @@ export default function ActiveBoard() {
                                 },
                               },
                             ]}
-                            handleClose={() => setEditColumn("")}
+                            handleClose={() => {
+                              setOpenMenu(false);
+                            }}
                           />
                         )}
                       </div>
@@ -214,12 +217,12 @@ export default function ActiveBoard() {
                         className="h-full"
                       >
                         {item.tasks?.length > 0 ? (
-                          <div className="h-[75vh] px-3 pb-6 overflow-y-auto">
+                          <div className="h-[75vh] pb-6 overflow-y-auto">
                             <button
                               onClick={() => {
                                 setSelectedColumn(item), setAddTask(true);
                               }}
-                              className="flex font-medium items-center justify-center w-full my-3 mx-auto text-center px-3 text-xs py-2 rounded-md bg-gray-200 hover:bg-gray-300"
+                              className="flex font-medium items-center justify-center w-full my-3 mx-auto text-center text-xs py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                             >
                               {" "}
                               <span>
@@ -290,7 +293,7 @@ export default function ActiveBoard() {
       <Modal
         open={isAddTask || isAddColumn || isDeleteColumn}
         handleClose={() => {
-          setAddTask(false), setAddColumn(false);
+          setAddTask(false), setAddColumn(false), setDeleteColumn(false);
         }}
       >
         {isAddColumn ? (

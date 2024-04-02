@@ -158,7 +158,7 @@ export default function Members({ workspaceId }: Props) {
                         </button>
                         {isOption === ele?.userId && (
                           <Popup
-                            style={{ top: 40, right: 0 }}
+                            className="top-[40px] right-0"
                             handleClose={() => setOption("")}
                             items={[
                               {

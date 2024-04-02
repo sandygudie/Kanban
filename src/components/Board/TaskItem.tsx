@@ -24,7 +24,6 @@ export default function TaskItem({
   boardId,
 }: Props) {
   const navigate = useNavigate();
-
   const [isOpenModal, setOpenModal] = useState(false);
   const pendingDays = tasks?.dueDate?.length ? dayjs(tasks.dueDate[1]).diff(
     dayjs(tasks.dueDate[0]),
@@ -72,7 +71,7 @@ export default function TaskItem({
                           (filtered.length / tasks.subtasks.length) * 100
                         }
                         strokeColor="#44b774"
-                        trailColor="#3d3a3a80"
+                        trailColor="gray"
                         strokeWidth={5}
                       />
                     </div>

@@ -73,7 +73,7 @@ export default function Index({
                             <span
                               className={`${
                                 options.name.length > 12
-                                  ? "truncate w-[11ch]"
+                                  ? "truncate w-[130px] text-left"
                                   : "w-auto"
                               } block `}
                             >

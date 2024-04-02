@@ -22,7 +22,7 @@ import { DatePicker, DatePickerProps, TimePicker } from "antd";
 import { IoAdd } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import { RangePickerProps } from "antd/es/date-picker";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { DefaultImage } from "utilis";
 import { HiOutlineChevronLeft } from "react-icons/hi";
@@ -154,7 +154,10 @@ export default function TaskDetails() {
             </div>
             <div>
               {" "}
-              <p className="text-2xl mini:text-3xl font-semibold"> {tasks?.data.title}</p>
+              <p className="text-2xl mini:text-3xl font-semibold">
+                {" "}
+                {tasks?.data.title}
+              </p>
               <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
                 Created by {tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM Do, YYYY")}
@@ -169,7 +172,7 @@ export default function TaskDetails() {
             </button>
             {isOpenMenu && (
               <Popup
-                style={{}}
+              className="right-0 top-10"
                 items={[
                   {
                     title: (
@@ -249,7 +252,7 @@ export default function TaskDetails() {
 
                 {isAssign && (
                   <Popup
-                    style={{ left: 0, top: 65 }}
+                    className="left-0 top-[65px]"
                     handleClose={() => setAssign(false)}
                     items={workspace?.data.members.map((ele: any) => {
                       return {

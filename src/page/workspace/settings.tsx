@@ -182,7 +182,7 @@ export default function Index() {
                               htmlFor="file_input"
                             >
                               <div className="relative w-24 h-auto">
-                                <div className="w-24 absolute top-0 bg-gray/50 opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-4">
+                                <div className="w-24 absolute top-0 bg-gray opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-4">
                                   Click to upload image
                                 </div>
                                 <img

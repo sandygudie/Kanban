@@ -110,7 +110,6 @@ const boardSlice = createSlice({
     },
 
     editColumnName: (state, action) => {
-      console.log(action.payload);
       state.board.find((ele: IBoard) =>
         ele._id === state.active._id
           ? ele.columns.find((o: IColumn) =>

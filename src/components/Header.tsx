@@ -88,7 +88,7 @@ export default function Header({ memberPics }: any) {
             {isWorkspaceMenu && (
               <Popup
                 description={
-                  <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 font-medium px-6 justify-start">
+                  <div className="flex gap-x-3 items-center border-b-[1px] border-gray/10 py-4 font-medium px-4 justify-start">
                     <div className="w-8 h-auto overflow-hidden">
                       <img
                         src={workspace?.profilePics}
@@ -103,7 +103,7 @@ export default function Header({ memberPics }: any) {
                     </div>
                   </div>
                 }
-                style={{ top: 55, right: -120 }}
+                className="top-[55px] -right-[150px] mini:-right-[100px]"
                 handleClose={() => setWorkspaceMenu(false)}
                 items={[
                   {
@@ -249,13 +249,13 @@ export default function Header({ memberPics }: any) {
                 )}
                 {isOpenUser && (
                   <Popup
-                    style={{ top: 42, right: "-6px" }}
+                    className="top-[42px] -right-[6px]"
                     handleClose={() => setOpenUser(false)}
                     items={[
                       {
                         title: (
                           <div className="px-2 py-1">
-                            <p className="font-bold mini:text-lg">
+                            <p className="font-semibold mini:text-lg">
                               {user.name}
                             </p>
                             <span className="text-gray/80 font-medium text-xs">
@@ -313,7 +313,7 @@ export default function Header({ memberPics }: any) {
                 onClick={() => setIsOpenBoardDetails(true)}
                 className={`${
                   active?.name.length > 9
-                    ? "truncate w-[9ch] sm:w-auto"
+                    ? "truncate w-auto"
                     : "w-auto"
                 } hidden xs:inline text-sm font-medium bg-gray/20 py-2 px-4 rounded`}
               >
@@ -324,7 +324,7 @@ export default function Header({ memberPics }: any) {
                   ref={domRef}
                   className={`bg-secondary absolute shadow-3xl rounded-br-lg left-0`}
                 >
-                  <div className="h-full py-8  ">
+                  <div className="h-full py-4">
                     {board && (
                       <>
                         {board.map((options: IBoard) => {
@@ -351,9 +351,9 @@ export default function Header({ memberPics }: any) {
                                 <span
                                   className={`${
                                     options.name.length > 13
-                                      ? "truncate w-[13ch]"
+                                      ? "truncate w-auto"
                                       : "w-auto"
-                                  } block text-base`}
+                                  } block text-sm`}
                                 >
                                   {options.name}
                                 </span>
