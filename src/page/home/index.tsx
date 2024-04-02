@@ -87,19 +87,21 @@ export default function Index() {
             </p>
 
             <div className="w-auto md:w-fit mx-auto relative">
-              <input
-                onChange={(e) => (e.target ? setEmail(e.target.value) : null)}
-                required
-                type="email"
-                placeholder="Email address"
-                className="rounded-full w-full border focus:border-black/70 border-black/40 placeholder:text-black/50 md:w-[30rem] h-12 px-6"
-              />
-              <button
-                onClick={() => navigate("/signup", { state: email })}
-                className="mt-4 mini:mt-0 w-full mini:w-auto text-sm bg-black text-white mini:absolute top-0 right-0 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full px-4 h-12 font-medium"
-              >
-                Get Started
-              </button>
+              <form onSubmit={() => navigate("/signup", { state: email })}>
+                <input
+                  onChange={(e) => (e.target ? setEmail(e.target.value) : null)}
+                  required
+                  type="email"
+                  placeholder="Email address"
+                  className="rounded-full w-full border focus:border-black/70 border-black/40 placeholder:text-black/50 md:w-[30rem] h-12 px-6"
+                />
+                <button
+                  type="submit"
+                  className="mt-4 mini:mt-0 w-full mini:w-auto text-sm bg-black text-white mini:absolute top-0 right-0 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full px-4 h-12 font-medium"
+                >
+                  Get Started
+                </button>
+              </form>
             </div>
           </div>
         </main>
