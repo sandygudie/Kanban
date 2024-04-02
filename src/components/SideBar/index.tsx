@@ -56,8 +56,8 @@ export default function Index({
                           key={options._id}
                           className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${`${
                             active?._id === options._id
-                              ? "bg-gray-200 rounded-r-full"
-                              : "rounded-r-full hover:bg-primary/20"
+                              ? "bg-gray-300 rounded-r-full"
+                              : "rounded-r-full hover:bg-gray/10"
                           } `} `}
                           onClick={() => {
                             navigate(`/workspace/${workspace.id}`);
@@ -91,7 +91,7 @@ export default function Index({
                     onClick={() => {
                       setOpenBoard(true);
                     }}
-                    className="pl-4 mt-8 font-bold cursor-pointer font-medium text-gray/90 hover:text-gray px-3 text-sm "
+                    className="pl-4 mt-8 font-bold cursor-pointer font-medium text-gray hover:text-typography px-3 text-sm"
                   >
                     <div className="flex items-center">
                       {" "}

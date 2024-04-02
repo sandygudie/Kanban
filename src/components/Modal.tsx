@@ -10,15 +10,14 @@ export default function ModalPopup({ children, open, handleClose }: Props) {
   return (
     <Modal
       open={open}
-      onCancel={()=>handleClose()}
+      onCancel={() => handleClose()}
       className="w-fit"
       centered={true}
       footer={null}
-      
     >
       <div
         className={`rounded-lg 
-              w-auto px-6 pb-6 pt-8 top-[50%] bg-white dark:bg-secondary 
+              w-auto px-6 pb-6 pt-8 top-[50%] bg-main
             rounded-lg h-auto overflow-auto md:overflow-hidden`}
       >
         {children}

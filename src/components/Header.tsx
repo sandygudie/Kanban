@@ -75,7 +75,9 @@ export default function Header({ memberPics }: any) {
               >
                 <h3
                   className={`${
-                    workspace?.name.length > 10 ? "truncate w-[9ch] text-left" : "w-auto"
+                    workspace?.name.length > 10
+                      ? "truncate w-[9ch] text-left"
+                      : "w-auto"
                   } font-bold sm:text-base md:text-xl`}
                 >
                   {TitleCase(workspace?.name)}
@@ -111,7 +113,7 @@ export default function Header({ memberPics }: any) {
                       </p>
                     ),
                     handler: () => {
-                      setIsOpenInvite(true);
+                      setIsOpenInvite(true), setWorkspaceMenu(false);
                     },
                   },
                   {
@@ -132,7 +134,7 @@ export default function Header({ memberPics }: any) {
                       </p>
                     ),
                     handler: () => {
-                      navigate("/workspaces");
+                      navigate("/workspaces"), setWorkspaceMenu(false);
                     },
                   },
                   {
@@ -179,7 +181,7 @@ export default function Header({ memberPics }: any) {
                 onClick={() => setIsOpenInvite(true)}
                 className="hidden text-white md:block bg-success/90 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
               >
-              Invite Members{" "}
+                Invite Members{" "}
               </button>
               <div
                 onClick={() =>
@@ -290,7 +292,7 @@ export default function Header({ memberPics }: any) {
             </div>
           </div>
         </div>
-        {board.length>0 && (
+        {board.length > 0 && (
           <div className="h-auto xs:h-[45px] bg-secondary absolute top-[50px] left-0 mini:hidden flex flex-col pr-4 items-start bg-gray-100 justify-center w-full">
             <div className="relative">
               <button

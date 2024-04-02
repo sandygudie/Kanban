@@ -11,30 +11,7 @@ export default function Index() {
 
   return (
     <>
-      <div className={`w-full h-screen overflow-auto`}>
-        <header className="bg-secondary h-[65px] z-20 flex items-center w-full border-b-[1px] border-gray/20">
-          <div
-            className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
-          >
-            <div className="inline-flex items-center gap-x-2">
-              <img
-                src="/track_logo.webp"
-                className="w-6 h-auto"
-                alt="mutiple-projects-image"
-              />
-
-              <span className="hidden md:block font-bold text-2xl">Kanban</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between w-full pr-2 px-4">
-            <h1 className="font-bold mini:text-lg">
-              {response?.data?.workspace.length > 0
-                ? "Workspace(s)"
-                : "No Workspace"}
-            </h1>
-          </div>
-        </header>
+      <div className={`w-full`}>
         {isLoading ? (
           <div className="mx-auto mt-10 flex mt-10 flex-col items-center justify-start">
             <SkeletonTheme height={12} borderRadius={10}>
@@ -78,9 +55,9 @@ export default function Index() {
                           });
                           window.location.href = `workspace/${ele._id}`;
                         }}
-                        className="px-5 py-4 font-semibold rounded-md border-[1px] border-solid border-gray/20 bg-gray-100 hover:bg-gray/15 gap-x-4"
+                        className="px-5 py-4 mini:w-64 font-semibold rounded-md border-[1px] border-solid border-gray/20 bg-gray-100 hover:bg-gray/15 gap-x-4"
                       >
-                        <div className="flex items-center gap-x-3 md:gap-x-4">
+                        <div className="flex items-center gap-x-2">
                           <img
                             src={ele.profilePics}
                             className="w-8 h-auto"
@@ -92,10 +69,12 @@ export default function Index() {
                         </div>
                         <div className="font-semibold text-sm mt-4 text-left">
                           <p className="flex items-center gap-x-2">
-                            <MdSpaceDashboard /> {ele.boards.length} boards
+                            <MdSpaceDashboard /> {ele.boards.length}{" "}
+                            {ele.boards.length > 1 ? "boards" : "board"}
                           </p>
                           <p className="flex gap-x-2 items-center">
-                            <BsPeople /> {ele.members.length} members
+                            <BsPeople /> {ele.members.length}{" "}
+                            {ele.members.length > 1 ? "members" : "member"}
                           </p>
                         </div>
                       </button>
