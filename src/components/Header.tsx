@@ -71,14 +71,14 @@ export default function Header({ memberPics }: any) {
                 onClick={() => {
                   setWorkspaceMenu(!isWorkspaceMenu);
                 }}
-                className="flex items-center rounded-sm relative"
+                className="flex items-center w-auto rounded-sm relative"
               >
                 <h3
                   className={`${
                     workspace?.name.length > 10
-                      ? "truncate w-[100px] text-left"
+                      ? "truncate w-[120px] text-left"
                       : "w-auto"
-                  } font-bold sm:text-base md:text-xl`}
+                  } font-semibold sm:text-base md:text-lg`}
                 >
                   {TitleCase(workspace?.name)}
                 </h3>{" "}
