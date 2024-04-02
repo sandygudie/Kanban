@@ -61,5 +61,3 @@ export default function Index() {
     </main>
   );
 }
-
-//react hooks for google and password checks

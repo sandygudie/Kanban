@@ -19,7 +19,6 @@ export default function Index() {
     password: "",
   });
 
-  
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginError("");
     setInputError("");
@@ -28,12 +27,11 @@ export default function Index() {
       ...prevFormData,
       [name]: value,
     }));
-
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const currentWorkspace = loadWorkspaceData();
+
     if (formData.email === "" && formData.password === "") {
       setInputError("error");
     } else if (formData.email === "") {
@@ -43,6 +41,7 @@ export default function Index() {
     } else {
       try {
         const response = await login(formData).unwrap();
+        const currentWorkspace = loadWorkspaceData();
         const { workspace, access_token } = response.data.userdetails;
         const deviceType = handleDeviceDetection();
         if (deviceType === "mobile") {
@@ -75,7 +74,7 @@ export default function Index() {
       <div className="h-full">
         <div className="w-full mini:w-9/12 md:w-[40%] mx-auto">
           <h1 className="font-semibold text-2xl pt-6 pb-4 md:pb-12 text-center">
-          Login to your account
+            Login to your account
           </h1>
           <div>
             <form
