@@ -133,7 +133,7 @@ export default function Index() {
                     onClick={() => setToggle((ele.name))}
                     key={ele.name}
                     className={`${
-                      toggle === ele.name && "bg-gray-200"
+                      toggle.toLowerCase() === ele.name && "bg-gray-200"
                     } border-none px-4 py-2 rounded-md text-sm font-medium w-full text-left`}
                   >
                     {TitleCase(ele.name)}
@@ -175,7 +175,7 @@ export default function Index() {
                         </div>
 
                         <div className="">
-                          <p className="mb-2 font-bold text-sm">Company logo</p>
+                          <p className="mb-2 font-medium text-lg text-sm">Company logo</p>
                           <div className="relative">
                             <label
                               className="text-white relative block w-fit cursor-pointer h-full"

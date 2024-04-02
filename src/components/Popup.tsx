@@ -6,7 +6,7 @@ interface Props {
     handler: () => void;
     status?: boolean;
   }[];
- className?:string;
+  className?: string;
   description?: ReactElement;
   handleClose: () => void;
 }
@@ -27,8 +27,7 @@ function Popup({ items, className, handleClose, description }: Props) {
   return (
     <div
       ref={domRef}
-
-      className={`${className} z-10 absolute bg-secondary rounded-md shadow-gray/10 shadow-3xl
+      className={`${className} z-10 absolute bg-secondary rounded-md shadow-3xl
       w-fit`}
     >
       <div className={`${description ? "w-[280px]" : "w-max"}`}>

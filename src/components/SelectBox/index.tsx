@@ -92,7 +92,7 @@ export default function Index({
           <div className={`dropdown-body bg-gray/20`}>
             {active?.columns.map((item: IColumn, i: number) => (
               <div
-                className={`dropdown-item text-sm px-4 py-2.5 hover:text-primary cursor-pointer ${
+                className={`dropdown-item text-sm px-4 py-2.5 hover:text-gray cursor-pointer ${
                   i < 2 && "border-b-[1px] border-gray/10"
                 }`}
                 onClick={(e) =>

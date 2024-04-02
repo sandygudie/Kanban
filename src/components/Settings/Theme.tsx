@@ -8,7 +8,7 @@ export default function Theme() {
 
   return (
     <div className="py-5 px-8 bg-secondary rounded-md">
-      <h2 className="font-bold text-sm md:text-base mb-6">Theme Selection</h2>
+      <h2 className="font-medium text-sm md:text-base mb-6">Theme Selection</h2>
       {[
         { id: 1, title: "light" },
         { id: 2, title: "dark" }

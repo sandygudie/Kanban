@@ -125,7 +125,7 @@ function AddBoard({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-gray/30 px-4 mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
+                        className="bg-gray/30 hover:bg-gray/50 px-4 mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({

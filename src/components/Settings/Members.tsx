@@ -129,7 +129,7 @@ export default function Members({ workspaceId }: Props) {
                     </div>
                     <div className="flex gap-x-1 justify-between items-center mt-4">
                       {" "}
-                      <p className="font-bold mini:pr-4">
+                      <p className="font-semibold mini:pr-4">
                         {TitleCase(ele?.role)}
                       </p>
                       <div className="relative">
@@ -137,9 +137,7 @@ export default function Members({ workspaceId }: Props) {
                           onClick={() => {
                             setOption(ele?.userId);
                           }}
-                          className={`${
-                            isOption === ele?.userId && "bg-gray/50"
-                          } border-2 border-gray/30 font-semibold flex flex-col justify-center items-center rounded-md hover:bg-gray-200 h-10 w-24 px-2.5`}
+                          className={`border-[1px] border-gray/30 font-semibold flex flex-col justify-center items-center rounded-md hover:bg-gray-200 h-10 w-24 px-2.5`}
                         >
                           {isRemovingLoading ||
                           (isUpdateRoleLoading && memberId === ele.userId) ? (
@@ -163,7 +161,7 @@ export default function Members({ workspaceId }: Props) {
                             items={[
                               {
                                 title: (
-                                  <p className="py-2 font-bold text-[0.95rem] px-2">
+                                  <p className="py-2 font-medium text-sm px-2">
                                     Make{" "}
                                     {ele.role === "admin" ? "Member" : "Admin"}
                                   </p>
@@ -174,7 +172,7 @@ export default function Members({ workspaceId }: Props) {
                               },
                               {
                                 title: (
-                                  <p className="py-2 px-2  font-bold text-error text-[0.95rem]">
+                                  <p className="py-2 px-2 font-medium text-error text-sm">
                                     Remove from Team
                                   </p>
                                 ),

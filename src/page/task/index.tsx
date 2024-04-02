@@ -161,18 +161,21 @@ export default function TaskDetails() {
               <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
                 Created by {tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM Do, YYYY")}
-                <span className="flex items-center mini:ml-3">
+                <span className="flex items-center">
                   <LuDot className="mini:text-sm text-gray" /> Updated{" "}
                   {dayjs(tasks.data.updatedAt).fromNow()}
                 </span>
               </span>
             </div>
-            <button className="mini:text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2">
-              <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
+            <button
+              onClick={() => setOpenMenu(!isOpenMenu)}
+              className="mini:text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2"
+            >
+              <FiMoreVertical />
             </button>
             {isOpenMenu && (
               <Popup
-              className="right-0 top-10"
+                className="right-0 top-10"
                 items={[
                   {
                     title: (

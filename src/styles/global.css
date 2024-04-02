@@ -75,6 +75,7 @@
 }
 
 @layer base {
+  
   @import "./loader.css";
   html {
     --color-secondary: #202020;
@@ -201,6 +202,18 @@
 
 .ant-picker-input {
   font-weight: 500;
+}
+
+.ant-picker-dropdown{
+  color: var(--color-typography)!important;
+}
+
+.ant-picker-header button{
+  color: var(--color-typography)!important;
+}
+
+.ant-picker-panel-layout{
+  background-color:var(--color-secondary) !important;
 }
 
 .ant-picker-active-bar {
