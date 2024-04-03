@@ -60,7 +60,7 @@ export default function Header({ memberPics }: any) {
             className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
           >
             <div className="flex gap-x-2 items-center justify-center">
-              <div className="w-auto h-auto overflow-hidden">
+              <div className="hidden mini:block w-auto h-auto overflow-hidden">
                 <img
                   src={workspace?.profilePics}
                   className="w-10 h-10 object-contain"
@@ -76,7 +76,7 @@ export default function Header({ memberPics }: any) {
                 <h3
                   className={`${
                     workspace?.name.length > 10
-                      ? "truncate w-[120px] text-left"
+                      ? "truncate w-auto text-left"
                       : "w-auto"
                   } font-semibold sm:text-base md:text-lg`}
                 >
@@ -103,7 +103,7 @@ export default function Header({ memberPics }: any) {
                     </div>
                   </div>
                 }
-                className="top-[55px] -right-[150px] mini:-right-[100px]"
+                className="top-[55px] -right-[10rem] mini:-right-[6rem]"
                 handleClose={() => setWorkspaceMenu(false)}
                 items={[
                   {
@@ -312,9 +312,7 @@ export default function Header({ memberPics }: any) {
               <button
                 onClick={() => setIsOpenBoardDetails(true)}
                 className={`${
-                  active?.name.length > 9
-                    ? "truncate w-auto"
-                    : "w-auto"
+                  active?.name.length > 9 ? "truncate w-auto" : "w-auto"
                 } hidden xs:inline text-sm font-medium bg-gray/20 py-2 px-4 rounded`}
               >
                 #{TitleCase(active?.name)}

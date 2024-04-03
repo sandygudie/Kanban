@@ -11,7 +11,7 @@ export default function Index() {
 
   return (
     <>
-      <div className={`w-full`}>
+      <div className={`w-full h-screen  overflow-auto`}>
         <header className="bg-secondary h-[65px] z-20 flex items-center w-full border-b-[1px] border-gray/20">
           <div
             className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
@@ -36,7 +36,7 @@ export default function Index() {
           </div>
         </header>
         {isLoading ? (
-          <div className="mx-auto mt-10 flex mt-10 flex-col items-center justify-start">
+          <div className="mx-auto mt-10 overflow-auto flex mt-10 flex-col items-center justify-start">
             <SkeletonTheme height={12} borderRadius={10}>
               <h2 className="mb-10">
                 {" "}
@@ -64,7 +64,7 @@ export default function Index() {
           response?.data.workspace.length > 0 && (
             <div className="bg-main">
               <div className="mx-auto mt-16">
-                <h1 className="text-center md:text-lg font-semibold mb-8">
+                <h1 className="text-center mini:text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
                 </h1>
 

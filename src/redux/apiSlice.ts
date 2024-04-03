@@ -139,7 +139,7 @@ export const apiSlice = createApi({
         url: `/board/${payload.workspaceId}/${payload.boardId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Board"],
+      invalidatesTags: ["Board","Workspace"],
     }),
 
     createColumn: builder.mutation({
