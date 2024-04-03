@@ -63,12 +63,12 @@ export default function Index() {
         ) : (
           response?.data.workspace.length > 0 && (
             <div className="bg-main">
-              <div className="mx-auto mt-16">
+              <div className="mx-auto mt-4 mini:mt-16">
                 <h1 className="text-center mini:text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
                 </h1>
 
-                <div className="grid w-4/6 mini:w-10/12 mx-auto mini:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
+                <div className="grid w-5/6 mini:w-10/12 mx-auto mini:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-4">
                   {response.data.workspace.map((ele: any) => {
                     return (
                       <button
@@ -88,7 +88,7 @@ export default function Index() {
                             alt=""
                           />
                           <div>
-                            <h2 className="font-bold text-base">{ele.name}</h2>
+                            <h2 className="font-bold text-sm mini:text-base">{ele.name}</h2>
                           </div>
                         </div>
                         <div className="font-semibold text-sm mt-4 text-left">
