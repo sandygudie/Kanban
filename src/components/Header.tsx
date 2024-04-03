@@ -367,7 +367,7 @@ export default function Header({ memberPics }: any) {
                     {workspace.id ? (
                       <button
                         onClick={() => setOpenBoard(true)}
-                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
+                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-typography"
                       >
                         <div className="flex items-center text-sm mini:text-base mt-4">
                           <span>
