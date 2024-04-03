@@ -97,7 +97,7 @@ export default function Index() {
                 />
                 <button
                   type="submit"
-                  className="mt-4 mini:mt-0 w-full mini:w-auto text-sm bg-black text-white mini:absolute top-0 right-0 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full px-4 h-12 font-medium"
+                  className="mt-2 mini:mt-0 w-full mini:w-auto text-sm bg-black text-white mini:absolute top-0 right-0 transition ease-in-out delay-100 duration-300 hover:scale-110 text-black rounded-full px-4 h-12 font-medium"
                 >
                   Get Started
                 </button>
