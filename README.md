@@ -1,12 +1,15 @@
-# Kanban-Board
+# Kanban Board
 
-The Kanban App is a project management application for managing and tracking project development progress similar to Trello and Asana. The projects are created as boards, and each board shows the progress of the project. The board includes tasks and subtasks for the project. 
+The Kanban application is a web-based project management tool designed to facilitate task management and track project progress. Users can create workspace and project boards, and organize tasks and subtasks within these boards.
+
+The application features a user-friendly interface with drag-and-drop functionality for easy task management. It also includes features for real-time collaboration, task assignment, due dates, and progress tracking.
+
 
 ## Live Site
 [https://kanban-track.vercel.app/](https://kanban-track.vercel.app/)
 
 ## Views
-<img width="1280" alt="Screenshot 2023-12-11 at 10 04 45" src="https://github.com/sandygudie/Kanban-App/assets/54219127/d6ff1bbd-8dbf-490a-ae5f-3a2edc207ff3">
+<img width="1280" alt="Screenshot 2024-04-08 at 10 26 51" src="https://github.com/sandygudie/Kanban/assets/54219127/3a1bc34c-3faf-4e4a-b5ab-f098d6dc3419">
 
 ![image](https://github.com/sandygudie/Kanban-App/assets/54219127/3edd0818-9867-4573-893d-1aaf0e561097)
 
