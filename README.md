@@ -1,7 +1,6 @@
 <p align="center">
-  <img width=40 src="https://github.com/sandygudie/Kanban-App/assets/54219127/7017c6f1-0e28-48ef-9c26-25ca558c91ba" alt="Track logo"/>
+  <img width=40% src="https://github.com/sandygudie/Kanban/assets/54219127/8715c416-f01b-4cf5-980d-154525d5ecf9" alt="Track logo"/>
 </p>
-<h1 align="center"> Kanban</h2>
 
 <br/> 
 
