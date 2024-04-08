@@ -36,18 +36,12 @@ The application is built using several technologies and tools
 <br/>
 
 ## Features 🚀
-Users are able to:
 
-- Create, read, update, and delete workspace, boards and tasks.
-- View the optimal layout for the app depending on their device's screen size.
+- Access to mutiple workspace and project boards.
 - Invite members and join existing workspace for collaboration.
-- Receive form validations when trying to create/edit boards and tasks.
-- Mark subtasks as complete and move tasks between columns.
-- Hide/show the board sidebar.
-- Toggle the theme between light/dark modes.
-- To drag and drop tasks to change their status and re-order them in a column.
-- Keep track of any changes, even after refreshing the browser.
-
+- Track task and project progress.
+- Drag and drop tasks to change their status and re-order them in a column.
+  
 <br/>
 
 ## Installation 🛠
