@@ -19,7 +19,6 @@ const User = lazy(() => import("page/user"));
 const Task = lazy(() => import("page/task"));
 
 function App() {
-
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");

@@ -117,5 +117,11 @@ export const handleDeviceDetection = () => {
 
 export const changeTheme = (theme: string) => {
   localStorage.setItem("theme", theme.toLowerCase());
-  document.querySelector("html")?.setAttribute("data-theme", theme.toLowerCase());
+  document
+    .querySelector("html")
+    ?.setAttribute("data-theme", theme.toLowerCase());
+};
+
+export const getCurrentTheme = () => {
+  return localStorage.getItem("theme");
 };
