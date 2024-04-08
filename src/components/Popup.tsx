@@ -6,12 +6,12 @@ interface Props {
     handler: () => void;
     status?: boolean;
   }[];
-  style: any;
+  className?: string;
   description?: ReactElement;
   handleClose: () => void;
 }
 
-function Popup({ items, style, handleClose, description }: Props) {
+function Popup({ items, className, handleClose, description }: Props) {
   const domRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,9 +27,8 @@ function Popup({ items, style, handleClose, description }: Props) {
   return (
     <div
       ref={domRef}
-      style={style}
-      className={`z-10 absolute bg-secondary rounded-md shadow-3xl
-      w-fit right-6 top-5`}
+      className={`${className} z-10 absolute bg-secondary rounded-md shadow-3xl
+      w-fit`}
     >
       <div className={`${description ? "w-[280px]" : "w-max"}`}>
         {description ? description : null}
@@ -40,7 +39,7 @@ function Popup({ items, style, handleClose, description }: Props) {
               key={i}
               disabled={list.status === false}
               onClick={list.handler}
-              className={`block w-full font-medium text-left font-semiBold hover:bg-gray-200 text-[13.5px] 
+              className={`block w-full font-medium text-left hover:bg-gray-200 text-[13.5px] 
               ${
                 description
                   ? ` py-3 px-4 text-[0.91rem] hover:bg-gray-200 ${

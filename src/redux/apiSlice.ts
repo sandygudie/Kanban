@@ -18,8 +18,6 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["User","Workspace",],
     }),
-    
-    // Workspace
     createWorkspace: builder.mutation({
       query: (payload) => ({
         url: `/workspace`,
@@ -107,7 +105,6 @@ export const apiSlice = createApi({
         url: `/workspace/${payload.workspaceId}`,
         method: "DELETE",
       }),
-      // invalidatesTags: ["Workspace"],
     }),
 
     createBoard: builder.mutation({
@@ -141,10 +138,9 @@ export const apiSlice = createApi({
         url: `/board/${payload.workspaceId}/${payload.boardId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Board"],
+      invalidatesTags: ["Board","Workspace"],
     }),
 
-    // Column
     createColumn: builder.mutation({
       query: (payload) => ({
         url: `/column/${payload.workspaceId}/${payload.boardId}`,
@@ -171,7 +167,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Column","Board","Workspace"],
     }),
 
-    // Task
+
     createTask: builder.mutation({
       query: (payload: any) => ({
         url: `/task/${payload.workspaceId}/${payload.columnId}`,

@@ -2,11 +2,12 @@ import React, { useEffect, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "page/notFound";
 import AuthLayout from "components/AuthLayout";
-import ProtectedRoutes from "components/ProtectedRoutes";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { AppLoader } from "components/Spinner";
+import BoardLayout from "components/BoardLayout";
 import Home from "page/home";
 import Login from "page/login";
 import Signup from "page/signup";
-import BoardLayout from "components/BoardLayout";
 const ForgotPassword = lazy(() => import("page/forgotPassword"));
 const ResetPassword = lazy(() => import("page/resetPassword"));
 const VerifyEmail = lazy(() => import("page/verifyEmail"));
@@ -15,12 +16,11 @@ const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
 const AvailableWorkspace = lazy(() => import("page/workspace"));
 const Settings = lazy(() => import("page/workspace/settings"));
 const User = lazy(() => import("page/user"));
-import Task from "page/task";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { AppLoader } from "components/Spinner";
+const Task = lazy(() => import("page/task"));
 
 
 function App() {
+
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   useEffect(() => {
     const currentTheme = localStorage.getItem("theme");
@@ -59,59 +59,17 @@ function App() {
             element={<VerifyEmail />}
           />
         </Route>
-
         <Route element={<BoardLayout />}>
-          <Route
-            path="/workspace/settings"
-            element={
-              <ProtectedRoutes>
-                <Settings />{" "}
-              </ProtectedRoutes>
-            }
-          />
-          <Route
-            path="/workspace/user"
-            element={
-              <ProtectedRoutes>
-                <User />{" "}
-              </ProtectedRoutes>
-            }
-          />
-          <Route
-            path="/workspace/:workspaceId"
-            element={
-              <ProtectedRoutes>
-                <Board />{" "}
-              </ProtectedRoutes>
-            }
-          />
-
+          <Route path="/workspace/settings" element={<Settings />} />
+          <Route path="/workspace/user" element={<User />} />
+          <Route path="/workspace/:workspaceId" element={<Board />} />
           <Route
             path="/workspace/:workspaceId/:boardId/:taskId"
-            element={
-              <ProtectedRoutes>
-                <Task />{" "}
-              </ProtectedRoutes>
-            }
+            element={<Task />}
           />
         </Route>
-
-        <Route
-          path="/workspace/new"
-          element={
-            <ProtectedRoutes>
-              <NewWorkspace />
-            </ProtectedRoutes>
-          }
-        />
-        <Route
-          path="/workspaces"
-          element={
-            <ProtectedRoutes>
-              <AvailableWorkspace />
-            </ProtectedRoutes>
-          }
-        />
+        <Route path="/workspace/new" element={<NewWorkspace />} />
+        <Route path="/workspaces" element={<AvailableWorkspace />} />
         <Route path="*" element={<NotFound />} />
     
       </Routes>

@@ -30,6 +30,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
       if (response) {
         message.success({
           content: "Invite Sent!",
+          className: "text-success",
         });
       }
       handleClose();
@@ -62,12 +63,12 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
           </div>
           <div className="mb-5 relative">
             <TextArea
-              label="Add Note(optional)"
+              label="Add Note (optional)"
               name="inviteNote"
               placeholder="Send invite note"
             />
             {error && (
-              <p className="text-error text-xs absolute -bottom-12 flex items-center gap-x-2">
+              <p className="text-error text-xs absolute -bottom-12 flex items-center gap-x-1">
                 {" "}
                 <RiErrorWarningLine />
                 {error}

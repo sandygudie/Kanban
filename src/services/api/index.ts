@@ -1,12 +1,13 @@
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 import axios from "axios";
 import type { AxiosError, AxiosRequestConfig } from "axios";
-import { getToken } from "utilis/token";
+import { getToken, removeToken } from "utilis/token";
 
-  const token = getToken();
-  if (token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  }
+const token = getToken();
+
+if (token) {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
 
 const axiosBaseQuery =
   (
@@ -32,12 +33,12 @@ const axiosBaseQuery =
         headers,
         withCredentials: true,
       });
-
       return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as AxiosError;
       if (err.response) {
         if (err.response.status === 401) {
+          removeToken();
           window.location.replace("/login");
         }
       }

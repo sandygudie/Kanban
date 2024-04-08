@@ -101,7 +101,7 @@ export default function AddColumn({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-gray/30 px mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
+                        className="bg-gray/30 hover:bg-gray/50 px mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -131,7 +131,7 @@ export default function AddColumn({ handleClose }: Props) {
               <div className="mt-10 relative">
                 <button
                   aria-label="Board"
-                  className="text-white bg-primary/70 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
+                  className="text-white bg-primary-dark hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Create Column(s)"}

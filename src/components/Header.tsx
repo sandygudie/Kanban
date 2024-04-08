@@ -59,11 +59,11 @@ export default function Header({ memberPics }: any) {
           <div
             className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
           >
-            <div className="flex items-center justify-center gap-x-2">
-              <div className="w-8 h-auto overflow-hidden">
+            <div className="flex gap-x-2 items-center justify-center">
+              <div className="hidden mini:block w-auto h-auto overflow-hidden">
                 <img
                   src={workspace?.profilePics}
-                  className="w-auto h-auto object-contain"
+                  className="w-10 h-10 object-contain"
                   alt=""
                 />
               </div>
@@ -71,22 +71,24 @@ export default function Header({ memberPics }: any) {
                 onClick={() => {
                   setWorkspaceMenu(!isWorkspaceMenu);
                 }}
-                className="flex items-center rounded-sm relative"
+                className="flex items-center w-auto rounded-sm relative"
               >
                 <h3
                   className={`${
-                    workspace?.name.length > 10 ? "truncate w-[9ch] text-left" : "w-auto"
-                  } font-bold sm:text-base md:text-xl`}
+                    workspace?.name.length > 10
+                      ? "truncate w-auto text-left"
+                      : "w-auto"
+                  } font-semibold sm:text-base md:text-lg`}
                 >
                   {TitleCase(workspace?.name)}
                 </h3>{" "}
-                <HiOutlineChevronDown className="mt-1 text-sm" />
+                <HiOutlineChevronDown className="mt-1 ml-1 text-sm" />
               </button>
             </div>
             {isWorkspaceMenu && (
               <Popup
                 description={
-                  <div className="flex gap-x-6 items-center border-b-[1px] border-gray/10 py-4 font-medium px-6 justify-start">
+                  <div className="flex gap-x-3 items-center border-b-[1px] border-gray/10 py-4 font-medium px-4 justify-start">
                     <div className="w-8 h-auto overflow-hidden">
                       <img
                         src={workspace?.profilePics}
@@ -101,7 +103,7 @@ export default function Header({ memberPics }: any) {
                     </div>
                   </div>
                 }
-                style={{ top: 55, right: -120 }}
+                className="top-[55px] -right-[10rem] mini:-right-[6rem]"
                 handleClose={() => setWorkspaceMenu(false)}
                 items={[
                   {
@@ -111,7 +113,7 @@ export default function Header({ memberPics }: any) {
                       </p>
                     ),
                     handler: () => {
-                      setIsOpenInvite(true);
+                      setIsOpenInvite(true), setWorkspaceMenu(false);
                     },
                   },
                   {
@@ -132,7 +134,7 @@ export default function Header({ memberPics }: any) {
                       </p>
                     ),
                     handler: () => {
-                      navigate("/workspaces");
+                      navigate("/workspaces"), setWorkspaceMenu(false);
                     },
                   },
                   {
@@ -163,12 +165,12 @@ export default function Header({ memberPics }: any) {
                     #{TitleCase(active?.name)}{" "}
                     <span className="hidden sm:inline">Board</span>
                   </span>{" "}
-                  <HiOutlineChevronDown className="mt-1 text-sm" />
+                  <HiOutlineChevronDown className="mt-[0.5px] ml-1 text-sm" />
                 </button>
               ) : (
                 <Link
                   to={`/workspace/${workspace.id}`}
-                  className="mini:text-lg font-bold !text-white"
+                  className="mini:text-lg font-bold"
                 >
                   Board
                 </Link>
@@ -176,10 +178,10 @@ export default function Header({ memberPics }: any) {
             </div>
             <div className="flex items-center gap-x-8">
               <button
-                onClick={() => setIsOpenInvite(false)}
+                onClick={() => setIsOpenInvite(true)}
                 className="hidden text-white md:block bg-success/90 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
               >
-              Invite Members{" "}
+                Invite Members{" "}
               </button>
               <div
                 onClick={() =>
@@ -247,13 +249,13 @@ export default function Header({ memberPics }: any) {
                 )}
                 {isOpenUser && (
                   <Popup
-                    style={{ top: 42, right: "-6px" }}
+                    className="top-[42px] -right-[6px]"
                     handleClose={() => setOpenUser(false)}
                     items={[
                       {
                         title: (
                           <div className="px-2 py-1">
-                            <p className="font-bold mini:text-lg">
+                            <p className="font-semibold mini:text-lg">
                               {user.name}
                             </p>
                             <span className="text-gray/80 font-medium text-xs">
@@ -290,7 +292,7 @@ export default function Header({ memberPics }: any) {
             </div>
           </div>
         </div>
-        {board.length && (
+        {board.length > 0 && (
           <div className="h-auto xs:h-[45px] bg-secondary absolute top-[50px] left-0 mini:hidden flex flex-col pr-4 items-start bg-gray-100 justify-center w-full">
             <div className="relative">
               <button
@@ -301,7 +303,7 @@ export default function Header({ memberPics }: any) {
                   <span className="text-xs sm:inline">
                     ALL BOARDS ({board.length})
                   </span>
-                  <HiOutlineChevronDown className="mt-0.5 text-sm inline " />
+                  <HiOutlineChevronDown className="mt-0.5 ml-1 text-sm inline " />
                 </div>
               </button>{" "}
               <span>
@@ -310,9 +312,7 @@ export default function Header({ memberPics }: any) {
               <button
                 onClick={() => setIsOpenBoardDetails(true)}
                 className={`${
-                  active?.name.length > 9
-                    ? "truncate w-[9ch] sm:w-auto"
-                    : "w-auto"
+                  active?.name.length > 9 ? "truncate w-auto" : "w-auto"
                 } hidden xs:inline text-sm font-medium bg-gray/20 py-2 px-4 rounded`}
               >
                 #{TitleCase(active?.name)}
@@ -322,7 +322,7 @@ export default function Header({ memberPics }: any) {
                   ref={domRef}
                   className={`bg-secondary absolute shadow-3xl rounded-br-lg left-0`}
                 >
-                  <div className="h-full py-8  ">
+                  <div className="h-full py-4">
                     {board && (
                       <>
                         {board.map((options: IBoard) => {
@@ -349,9 +349,9 @@ export default function Header({ memberPics }: any) {
                                 <span
                                   className={`${
                                     options.name.length > 13
-                                      ? "truncate w-[13ch]"
+                                      ? "truncate w-auto"
                                       : "w-auto"
-                                  } block text-base`}
+                                  } block text-sm`}
                                 >
                                   {options.name}
                                 </span>
@@ -365,7 +365,7 @@ export default function Header({ memberPics }: any) {
                     {workspace.id ? (
                       <button
                         onClick={() => setOpenBoard(true)}
-                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-white"
+                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-typography"
                       >
                         <div className="flex items-center text-sm mini:text-base mt-4">
                           <span>
@@ -396,7 +396,7 @@ export default function Header({ memberPics }: any) {
         ) : isOpenInvite ? (
           <WorkspaceInvite
             handleClose={() => {
-              setIsOpenInvite(false), setWorkspaceMenu(true);
+              setIsOpenInvite(false);
             }}
             workspaceId={workspace.id}
           />

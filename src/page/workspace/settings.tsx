@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { appData, updateWorkspace } from "redux/boardSlice";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { useUpdateWorkspaceProfileMutation } from "redux/apiSlice";
-import Spinner from "components/Spinner/index";
+import { Loader } from "components/Spinner/index";
 import Modal from "components/Modal";
 import DeleteItem from "components/DeleteItem";
 import IconButton from "components/IconButton";
@@ -56,6 +56,7 @@ export default function Index() {
       }),
     profilePics: Yup.string(),
   });
+
 
   const UpdateWorkSpace = async (values: any) => {
     let res;
@@ -110,7 +111,7 @@ export default function Index() {
             <img
               src={workspace.profilePics}
               alt="image"
-              className=" border-solid h-auto w-12 md:w-20"
+              className=" border-solid object-contain h-12 md:h-20 w-12 md:w-20"
             />
           </div>
           <div>
@@ -119,11 +120,11 @@ export default function Index() {
             </h1>
             <p className="text-gray/80 font-medium text-xs">
               Created on {""}
-              {dayjs(workspace.createdAt).format(`MMMM DD, YYYY`)}
+              {dayjs(workspace.createdAt).format(`MMMM Do, YYYY`)}
             </p>
           </div>
         </div>
-        <div className="h-full mt-8 md:mt-16">
+        <div className="h-full mt-14 md:mt-16">
           <div className="md:fixed my-6 md:my-0">
             <div className="flex md:flex-col w-40 md:w-36 items-start gap-y-3">
               {linkitems.map((ele: any) => {
@@ -132,8 +133,8 @@ export default function Index() {
                     onClick={() => setToggle((ele.name))}
                     key={ele.name}
                     className={`${
-                      toggle === ele.name && "bg-gray-200"
-                    } border-none px-4 py-2 rounded-md text-[15px] font-medium w-full text-left`}
+                      toggle.toLowerCase() === ele.name && "bg-gray-200"
+                    } border-none px-4 py-2 rounded-md text-sm font-medium w-full text-left`}
                   >
                     {TitleCase(ele.name)}
                   </button>
@@ -142,7 +143,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="md:w-9/12 overflow-y-auto h-full pb-24 ml-auto pr-4">
+          <div className="md:w-9/12 overflow-y-auto h-full pb-24 ml-auto">
             {toggle === "about" ? (
               <div>
                 <div>
@@ -165,24 +166,23 @@ export default function Index() {
                         <div className="mb-10">
                           <TextInput
                             label="Workspace Name"
+                            subLabel="(Your organization or company name.)"
                             name="name"
                             type="text"
                             placeholder="E.g Development, Marketing"
                           />
-                          <span className="text-gray/70 text-xs">
-                            Your organization or company name.
-                          </span>
+                         
                         </div>
 
                         <div className="">
-                          <p className="mb-2 font-bold text-sm">Company logo</p>
+                          <p className="mb-2 font-medium text-lg text-sm">Company logo</p>
                           <div className="relative">
                             <label
                               className="text-white relative block w-fit cursor-pointer h-full"
                               htmlFor="file_input"
                             >
                               <div className="relative w-24 h-auto">
-                                <div className="w-24 absolute top-0 bg-gray/50 opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-4">
+                                <div className="w-24 absolute top-0 bg-gray opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-4">
                                   Click to upload image
                                 </div>
                                 <img
@@ -245,7 +245,7 @@ export default function Index() {
                               className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
                               type="submit"
                             >
-                              {isLoading ? <Spinner /> : "Update"}
+                              {isLoading ? <Loader/> : "Update"}
                             </button>
                           </div>
                         </div>
@@ -265,7 +265,7 @@ export default function Index() {
                   </button>
                 </div>
               </div>
-            ) : toggle === "members" ? (
+            ) : toggle.toLowerCase() === "members" ? (
               <Members workspaceId={workspace.id} />
             ) : (
               <Theme />

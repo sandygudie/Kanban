@@ -41,7 +41,7 @@ export default function Index() {
                 className="font-bold bg-primary/70 hover:bg-primary rounded-full px-6 py-3 cursor-pointer text-white bg-blue-500">
                 <div className="flex items-center justify-center gap-x-2">
                   <span>
-                    <IoIosAdd />
+                    <IoIosAdd size={22} />
                   </span>{" "}
                   Add Board
                 </div>

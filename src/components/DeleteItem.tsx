@@ -90,7 +90,7 @@ export default function Delete({
   };
 
   return (
-    <div className="p-4">
+    <div className="md:p-4">
       <h1 className="text-left text-xl text-error font-bold mb-4">
         {" "}
         <span className=""> Delete</span>{" "}
@@ -104,7 +104,7 @@ export default function Delete({
       </h1>
       <p className="text-base">
         Are you sure you want to delete this{" "}
-        <span className="font-bold text-lg ">
+        <span className="font-bold text-lg text-error">
           {selectedColumn
             ? "column"
             : boardname

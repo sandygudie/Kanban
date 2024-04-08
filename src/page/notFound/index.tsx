@@ -15,10 +15,10 @@ export default function Index() {
 
         <button
           onClick={() => navigate(-1)}
-          className="bg-secondary/70 mt-4 shadow-lg px-4 md:px-8 py-2 md:py-3 rounded-lg text-white"
+          className="bg-primary-dark hover:scale-110 transition mt-4 px-4 md:px-8 py-2 md:py-3 rounded-lg text-white"
         >
           {" "}
-          <span className="text-xs md:text-base flex items-center justify-center gap-x-3">
+          <span className="text-xs md:text-base font-medium flex items-center justify-center gap-x-3">
             <IoMdArrowBack /> Back
           </span>
         </button>
@@ -26,4 +26,3 @@ export default function Index() {
     </div>
   );
 }
-

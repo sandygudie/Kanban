@@ -10,9 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 import { IoIosAdd } from "react-icons/io";
 import { useCreateBoardMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
+
 interface Props {
   handleClose: () => void;
 }
+
 function AddBoard({ handleClose }: Props) {
   const { message } = AntDesign.useApp();
   const [createBoard, { isLoading }] = useCreateBoardMutation();
@@ -79,11 +81,16 @@ function AddBoard({ handleClose }: Props) {
       <h1 className="font-semibold text-lg pb-4">New Board</h1>
       <div className="overflow-y-auto h-auto max-h-[30rem]">
         <Formik
-          initialValues={{ name: "", columns: [{
-            _id: uuidv4(),
+          initialValues={{
             name: "",
-            tasks: [],
-          }] }}
+            columns: [
+              {
+                _id: uuidv4(),
+                name: "",
+                tasks: [],
+              },
+            ],
+          }}
           validationSchema={BoardSchema}
           validateOnChange={false}
           validateOnBlur={false}
@@ -118,7 +125,7 @@ function AddBoard({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-gray/30 px-4 mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
+                        className="bg-gray/30 hover:bg-gray/50 px-4 mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -128,7 +135,7 @@ function AddBoard({ handleClose }: Props) {
                           });
                         }}
                       >
-                           <IoIosAdd  className="font-bold" size={20} />{" "} Add Column
+                        <IoIosAdd className="font-bold" size={20} /> Add Column
                       </button>
 
                       {values.columns.length >= 0 ? (
@@ -148,7 +155,7 @@ function AddBoard({ handleClose }: Props) {
               <div className="mt-10">
                 <button
                   aria-label="Board"
-                  className="px-2 text-white h-12 bg-primary/80 hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
+                  className="px-2 text-white h-12 bg-primary-dark hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Create Board"}

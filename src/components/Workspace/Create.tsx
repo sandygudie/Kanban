@@ -14,6 +14,7 @@ import { Loader } from "components/Spinner";
 
 export default function CreateWorkspace() {
   const { message } = AntDesign.useApp();
+  const navigate = useNavigate();
   const { data: workspaces } = useGetAllWorkspacesQuery();
   const upload_preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -22,7 +23,6 @@ export default function CreateWorkspace() {
   const [uploadError, setUploadError] = useState<any>();
   const [createWorkspace, { isLoading }] = useCreateWorkspaceMutation();
   
-  const navigate = useNavigate();
 
   const createWorkspaceSchema = Yup.object().shape({
     workspaceName: Yup.string()

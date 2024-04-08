@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: "jit",
   content: ["./src/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
@@ -6,8 +5,7 @@ module.exports = {
   theme: {
     colors: {
       primary: "hsl(242.31deg 48.15% 57.65%)",
-      // secondary: "hsla(0 ,0% ,12.55%,1)",
-      // "secondary-dark": "hsla(235, 16%, 15%,1)",
+      "primary-dark": "#4946aa",
       gray: "hsla(216, 15%, 57%, 1)",
       success: "#44b774",
       white: "#ffffff",
@@ -26,7 +24,7 @@ module.exports = {
       },
       boxShadow: {
         "3xl":
-          "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, var(--color-secondary) 0px 2px 16px 0px",
+          "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;",
       },
     },
     screens: {

@@ -3,7 +3,7 @@
 The Kanban App is a project management application for managing and tracking project development progress similar to Trello and Asana. The projects are created as boards, and each board shows the progress of the project. The board includes tasks and subtasks for the project. 
 
 ## Live Site
-https://kanban-management-app.netlify.app/
+[https://kanban-track.vercel.app/](https://kanban-track.vercel.app/)
 
 ## Views
 <img width="1280" alt="Screenshot 2023-12-11 at 10 04 45" src="https://github.com/sandygudie/Kanban-App/assets/54219127/d6ff1bbd-8dbf-490a-ae5f-3a2edc207ff3">
@@ -55,6 +55,7 @@ Users are able to:
 The application is built with 
 * Vite ReactJS
 * Redux Toolkit
+* Redux RTK
 * TypeScript
 * TailwindCSS
 * Formik
@@ -64,10 +65,10 @@ The application is built with
 * Eslint and Prettier
 * Docker Compose
 * GitHub Action
-* Netlify
+* Vercel
 
 
 ## Deployment pipeline(CI/CD)
- - From GitHub Actions to Netlify
+ - From GitHub Actions to Vercel
  - From GitHub Actions to Dockerhub
 

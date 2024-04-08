@@ -5,7 +5,7 @@ import AddTask from "./AddTask";
 import { Draggable } from "@hello-pangea/dnd";
 import { useNavigate } from "react-router-dom";
 import { taskColorMarker } from "utilis";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import { Progress } from "antd";
 
 interface Props {
@@ -24,8 +24,11 @@ export default function TaskItem({
   boardId,
 }: Props) {
   const navigate = useNavigate();
-
   const [isOpenModal, setOpenModal] = useState(false);
+  const pendingDays = tasks?.dueDate?.length ? dayjs(tasks.dueDate[1]).diff(
+    dayjs(tasks.dueDate[0]),
+    "days"
+  ): null;
 
   return (
     <>
@@ -50,7 +53,7 @@ export default function TaskItem({
                 style={{
                   borderColor: taskColorMarker[tasks.title.length + index],
                 }}
-                className="shadow-3xl hover:bg-gray-100
+                className="bg-gray-200 hover:bg-gray-300
               cursor-pointer rounded-lg border-l-2 mb-4 py-3 px-4"
               >
                 <p className="font-semibold">{tasks.title} </p>
@@ -68,21 +71,21 @@ export default function TaskItem({
                           (filtered.length / tasks.subtasks.length) * 100
                         }
                         strokeColor="#44b774"
-                        trailColor="#3d3a3a80"
+                        trailColor="gray"
                         strokeWidth={5}
                       />
                     </div>
                   </div>
-                  {tasks?.dueDate?.length >0&& (
-                    <p className="text-[11px] font-medium">
-                      {tasks?.dueDate?.length &&
-                        dayjs(tasks.dueDate[1]).diff(
-                          dayjs(tasks.dueDate[0]),
-                          "day"
-                        )}{" "}
-                      days left
-                    </p>
-                  )}
+                  {tasks?.dueDate?.length > 0 &&
+                    (pendingDays! > 0 ? (
+                      <p className={`text-[11px] text-success font-medium`}>
+                        {tasks?.dueDate?.length && pendingDays} days left
+                      </p>
+                    ) : (
+                      <p className={`text-[11px] text-error font-medium`}>
+                        Tasks expired
+                      </p>
+                    ))}
                 </div>
               </div>
             </div>

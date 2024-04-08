@@ -4,6 +4,7 @@ import { IoIosSend } from "react-icons/io";
 import { appData } from "redux/boardSlice";
 import { AppState } from "types";
 import { useSelector } from "react-redux";
+import { taskColorMarker } from "utilis";
 const serverURL = "http://localhost:4000";
 const socket = io(serverURL);
 
@@ -34,24 +35,39 @@ export default function Index({ taskId }: any) {
       setMessage(" ");
     }
   };
-  console.log(chats[chats.length - 1]);
+  // design the message view
   return (
     <div className="mt-24 mb-12 text-center px-10">
       {chats.length > 0 ? (
-        chats?.map((ele: any,i:number) => {
+        chats?.map((ele: any, i: number, array: any) => {
           return (
-            <div
+            <button
               key={ele.id}
               className={` ${
-                ele.createdBy?.id === user.id ? "ml-auto" : "mr-auto"
-              }  my-6 bg-gray/20 rounded-lg w-fit px-4 py-2 font-medium`}
+                ele.createdBy?.id === user.id
+                  ? "ml-auto mr-6 rounded-l-2xl rounded-br-2xl"
+                  : "mr-auto ml-6 rounded-r-2xl rounded-bl-2xl"
+              }  my-4 bg-gray/20 relative w-fit px-4 py-2 font-medium block`}
             >
-              {
-                ele.createdBy?.name  && (
-                <p className="text-xs text-left pb-2">{ele[i]}{ele.createdBy?.name}</p>
+              {array[i - 1]?.createdBy.name !== ele.createdBy?.name && (
+                <div>
+                  <div className="absolute -left-10">
+                    <img src="" alt="user-pics" />
+                  </div>
+                  <p
+                    style={{
+                      color:
+                        i < taskColorMarker.length ? taskColorMarker[i] : "",
+                    }}
+                    className="text-sm text-left pb-2"
+                  >
+                    {ele[i]}
+                    {ele.createdBy?.name}
+                  </p>
+                </div>
               )}
               <p className="text-sm">{ele.message}</p>
-            </div>
+            </button>
           );
         })
       ) : (

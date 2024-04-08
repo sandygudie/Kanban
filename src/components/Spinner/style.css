@@ -1,12 +1,11 @@
 .loading-spinner {
   width: 30px;
   height: 30px;
-  border: 2px solid #ffffff;
-  border-top: 2px solid #5350a9;
+  border: 3px solid #ffffff;
+  border-top: 3px solid hsl(242.31deg 48.15% 57.65%);
   border-radius: 50%;
   animation: spinner 1.5s linear infinite;
 }
-
 
 .bar-loader {
   width: 40px;
@@ -16,6 +15,7 @@
   clip-path: inset(0 100% 0 0);
   animation: l1 1s steps(4) infinite;
 }
+
 @keyframes l1 {
   to {
     clip-path: inset(0 -34% 0 0);

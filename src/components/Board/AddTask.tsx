@@ -261,7 +261,7 @@ export default function AddTask({
                         ))}
                       <button
                         aria-label="Add Subtasks"
-                        className="bg-gray/30 px-4 mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
+                        className="bg-gray/30 hover:bg-gray/50 px-4 mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -292,7 +292,7 @@ export default function AddTask({
               <div className="mt-10">
                 <button
                   aria-label="Create Task"
-                  className="text-white bg-primary/80 hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
+                  className="text-white bg-primary-dark hover:bg-primary  h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
                   {isLoading || isLoadingEdit ? (

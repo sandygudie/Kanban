@@ -6,7 +6,7 @@ import {
   useRemovePendingMemberMutation,
   useRemoveWorkspaceMemberMutation,
 } from "redux/apiSlice";
-import { TitleCase } from "utilis";
+import { DefaultImage, TitleCase } from "utilis";
 import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 import Popup from "components/Popup";
 import Modal from "components/Modal";
@@ -80,7 +80,9 @@ export default function Members({ workspaceId }: Props) {
     <>
       <div className="h-screen">
         <div className="flex items-center pb-2 justify-between border-b-[1px] border-gray/20">
-          <h1 className="font-semibold text-sm md:text-base">Workspace Members</h1>
+          <h1 className="font-semibold text-sm md:text-base">
+            Workspace Members
+          </h1>
           <button
             onClick={() => {
               setIsOpenInvite(true);
@@ -91,38 +93,57 @@ export default function Members({ workspaceId }: Props) {
           </button>
         </div>
         {isLoading ? (
-          <Spinner />
+          <div className="mt-4">
+            {" "}
+            <Spinner />
+          </div>
         ) : (
           <>
-            <div className="mt-6 bg-secondary px-4 py-2 rounded-md">
+            <div className="mt-6 bg-secondary p-6 rounded-md">
               {workspace?.data.members.map((ele: any) => {
                 return (
                   <div
-                    className="md:flex items-center mt-2 justify-between text-sm"
+                    className="mini:flex items-center mb-7 md:mb-4 justify-between text-sm"
                     key={ele?.userId}
                   >
-                    <div className="">
-                      {" "}
-                      <p className="font-semibold text-lg">{ele.name}</p>{" "}
-                      <p className="text-gray/80 font-medium text-sm">{ele.email}</p>
+                    <div className="sm:flex items-center gap-x-3">
+                      <div className="py-1 font-bold text-[0.8rem]">
+                        {ele.profilePics ? (
+                          <img
+                            className="w-6 h-6 rounded-full"
+                            src={ele.profilePics}
+                            alt="profile pic"
+                          />
+                        ) : (
+                          <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] flex items-center justify-center flex-col font-bold">
+                            {DefaultImage(ele.name)}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-semibold">{ele.name}</p>{" "}
+                        <p className="text-gray/80 font-medium text-sm">
+                          {ele.email}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex gap-x-3 justify-between items-center mt-4">
+                    <div className="flex gap-x-1 justify-between items-center mt-4">
                       {" "}
-                      <p className="font-bold pr-6">{TitleCase(ele?.role)}</p>
+                      <p className="font-semibold mini:pr-4">
+                        {TitleCase(ele?.role)}
+                      </p>
                       <div className="relative">
                         <button
                           onClick={() => {
                             setOption(ele?.userId);
                           }}
-                          className={`${
-                            isOption === ele?.userId && "bg-gray/50"
-                          } border-2 border-gray/30 font-semibold flex flex-col justify-center items-center rounded-md hover:bg-gray-200 h-10 w-24 px-2.5`}
+                          className={`border-[1px] border-gray/30 font-semibold flex flex-col justify-center items-center rounded-md hover:bg-gray-200 h-10 w-24 px-2.5`}
                         >
                           {isRemovingLoading ||
                           (isUpdateRoleLoading && memberId === ele.userId) ? (
                             <Spinner />
                           ) : (
-                            <span className="flex gap-x-2 items-center">
+                            <span className="flex gap-x-2 text-xs items-center">
                               {" "}
                               Options
                               {isOption === ele?.userId ? (
@@ -135,12 +156,12 @@ export default function Members({ workspaceId }: Props) {
                         </button>
                         {isOption === ele?.userId && (
                           <Popup
-                            style={{ top: 40, right: 0 }}
+                            className="top-[40px] right-0"
                             handleClose={() => setOption("")}
                             items={[
                               {
                                 title: (
-                                  <p className="py-2 font-bold text-[0.95rem] px-2">
+                                  <p className="py-2 font-medium text-sm px-2">
                                     Make{" "}
                                     {ele.role === "admin" ? "Member" : "Admin"}
                                   </p>
@@ -151,7 +172,7 @@ export default function Members({ workspaceId }: Props) {
                               },
                               {
                                 title: (
-                                  <p className="py-2 px-2  font-bold text-error text-[0.95rem]">
+                                  <p className="py-2 px-2 font-medium text-error text-sm">
                                     Remove from Team
                                   </p>
                                 ),
@@ -204,7 +225,9 @@ export default function Members({ workspaceId }: Props) {
                   }
                 )
               ) : (
-                <p className="text-gray/80 font-medium text-sm mt-3">No pending request</p>
+                <p className="text-gray/80 font-medium text-sm mt-3">
+                  No pending request
+                </p>
               )}
             </div>
           </>

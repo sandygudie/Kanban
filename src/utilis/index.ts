@@ -84,6 +84,7 @@ export function DefaultImage(str: string) {
   str.toLowerCase().split(" ");
   return str.charAt(0).toUpperCase() + str.charAt(1).toUpperCase();
 }
+
 export const colorMarker = [
   "#FFEB3B",
   "#44c3c3",
@@ -95,6 +96,7 @@ export const colorMarker = [
   "#3b61ff",
   "#03A9F4",
 ];
+
 export const taskColorMarker = [
   "#ed8936",
   "#48bb78",

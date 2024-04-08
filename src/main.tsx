@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
+import { App as AppDesign } from 'antd';
 import App from "./App";
 import "styles/global.css";
 import { BrowserRouter } from "react-router-dom";
@@ -29,7 +29,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       >
         <Provider store={store}>
           <CookiesProvider defaultSetOptions={{ path: "/" }}>
+            <AppDesign>
             <App />
+            </AppDesign>
           </CookiesProvider>
         </Provider>
       </ConfigProvider>

@@ -123,7 +123,7 @@ export default function NewWorkspace() {
           />
           <div className="w-96 mx-6 md:mx-0 h-[34rem]">
             <div>
-              <h1 className="text-xl sm:text-3xl font-bold ">
+              <h1 className="text-xl sm:text-3xl font-bold">
                 Welcome to Kanban!
               </h1>
               <p className="text-gray/70 font-medium mt-1 text-sm mb-5">

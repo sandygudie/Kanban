@@ -160,20 +160,23 @@ export default function TaskDetails() {
                 {tasks?.data.title}
               </p>
               <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
-                created by {tasks.data.createdBy} on{" "}
-                {dayjs(tasks.data.createdAt).format("MMM DD, YYYY")}
-                <span className="flex items-center mini:ml-3">
-                  <LuDot className="mini:text-sm text-gray" /> updated{" "}
+                Created by {tasks.data.createdBy} on{" "}
+                {dayjs(tasks.data.createdAt).format("MMM Do, YYYY")}
+                <span className="flex items-center">
+                  <LuDot className="mini:text-sm text-gray" /> Updated{" "}
                   {dayjs(tasks.data.updatedAt).fromNow()}
                 </span>
               </span>
             </div>
-            <button className="text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2">
-              <FiMoreVertical onClick={() => setOpenMenu(!isOpenMenu)} />
+            <button
+              onClick={() => setOpenMenu(!isOpenMenu)}
+              className="mini:text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2"
+            >
+              <FiMoreVertical />
             </button>
             {isOpenMenu && (
               <Popup
-                style={{}}
+                className="right-0 top-10"
                 items={[
                   {
                     title: (
@@ -202,7 +205,7 @@ export default function TaskDetails() {
           </div>
           <div className="mt-8">
             <p className="font-semibold text-sm mb-2">Description</p>
-            <p className="rounded-md w-8/12">
+            <p className="rounded-md mini:w-8/12">
               {tasks.data.description
                 ? tasks.data.description
                 : "No description"}
@@ -230,7 +233,7 @@ export default function TaskDetails() {
                           />
                           <p
                             className={`${
-                              checkedState[index]! && "line-through"
+                              checkedState[index]! && "line-through opacity-50"
                             } text-xs font-medium`}
                           >
                             {subtask.title}
@@ -253,7 +256,7 @@ export default function TaskDetails() {
 
                 {isAssign && (
                   <Popup
-                    style={{ left: 0, top: 65 }}
+                    className="left-0 top-[65px]"
                     handleClose={() => setAssign(false)}
                     items={workspace?.data.members.map((ele: any) => {
                       return {
@@ -353,7 +356,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-gray/20 hover:bg-gray/30 text-sm font-semibold py-2 px-4 rounded-md"
+                      className="bg-gray/20 hover:bg-gray/30 text-sm font-semibold py-2 mt-6 px-4 rounded-md"
                       onClick={() => {
                         setTime(true);
                       }}

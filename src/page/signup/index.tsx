@@ -102,20 +102,19 @@ export default function Index() {
       <div className="h-full flex items-center flex-col">
         <div className="w-9/12 md:w-[60rem] mx-auto">
           <h1 className="font-semibold text-2xl md:mt-8 md:pb-12 text-center">
-            Sign Up
+            Register your account
           </h1>
           <div className=" relative">
             <div className="flex gap-x-20 items-center">
               <form
-
                 onSubmit={(e) => handleSubmit(e)}
-                className="w-full md:w-[50%] relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-md mini:shadow-3xl "
+                className="w-full md:w-[50%] relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
               >
-                <div className="block md:hidden">
+                <div className="block md:hidden w-full">
                   <GoogleLogin />
                 </div>
 
-                <p className="pb-4 md:hidden text-sm text-gray">OR</p>
+                <p className="pb-4 md:hidden text-sm text-gray font-medium">OR</p>
                 <input
                   type="text"
                   minLength={5}
@@ -207,7 +206,7 @@ export default function Index() {
 
                 <div className="w-full mt-10">
                   <button
-                    className="bg-black flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
+                    className="bg-primary-dark hover:bg-primary flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
                     type="submit"
                   >
                     {isLoading ? <Loader /> : "Continue with Email"}
@@ -218,7 +217,7 @@ export default function Index() {
                       className="text-xs underline text-gray hover:text-gray"
                       to="/login"
                     >
-                      You have an account? log in
+                      You have an account? Login
                     </Link>
                   </div>
                 </div>

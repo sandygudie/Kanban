@@ -78,12 +78,12 @@ export default function EditBoard({
               <TextArea
                 label=""
                 name="description"
-                placeholder="Tell us more about the board"
+                placeholder="Tell us more about the board."
               />
             </div>
           ) : (
             <div className="mb-6">
-                <h2 className="font-medium text-lg">Board Description</h2>
+                <h2 className="font-medium text-lg">Board Name</h2>
               <TextInput
                 label=""
                 name="name"

@@ -1,18 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner";
 import { handleDeviceDetection, loadWorkspaceData } from "utilis";
 import { useLoginUserMutation } from "redux/authSlice";
-
 import GoogleLogin from "components/GoogleLogin";
 import { setToken } from "utilis/token";
 
 export default function Index() {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginUserMutation();
-
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [inputError, setInputError] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -20,10 +18,7 @@ export default function Index() {
     email: "",
     password: "",
   });
-  useEffect(() => {
-    localStorage.removeItem("currentWorkspace");
-    localStorage.removeItem("APP_TOKEN");
-  });
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginError("");
     setInputError("");
@@ -32,18 +27,11 @@ export default function Index() {
       ...prevFormData,
       [name]: value,
     }));
-    if (formData.email.length && formData.password === "") {
-      setInputError("passwordError");
-    } else if (formData.password.length && formData.email === "") {
-      setInputError("emailError");
-    } else {
-      setInputError("");
-    }
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const currentWorkspace = loadWorkspaceData();
+
     if (formData.email === "" && formData.password === "") {
       setInputError("error");
     } else if (formData.email === "") {
@@ -53,6 +41,7 @@ export default function Index() {
     } else {
       try {
         const response = await login(formData).unwrap();
+        const currentWorkspace = loadWorkspaceData();
         const { workspace, access_token } = response.data.userdetails;
         const deviceType = handleDeviceDetection();
         if (deviceType === "mobile") {
@@ -85,17 +74,17 @@ export default function Index() {
       <div className="h-full">
         <div className="w-full mini:w-9/12 md:w-[40%] mx-auto">
           <h1 className="font-semibold text-2xl pt-6 pb-4 md:pb-12 text-center">
-            Log In
+            Login to your account
           </h1>
-          <div className="">
+          <div>
             <form
               onSubmit={handleSubmit}
-              className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center mini:shadow-3xl rounded-md"
+              className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
             >
-              <div className="">
+              <div className="w-full">
                 <GoogleLogin />
               </div>
-              <p className="text-sm text-gray">OR</p>
+              <p className="text-sm text-gray font-medium">OR</p>
 
               <input
                 type="email"
@@ -146,9 +135,9 @@ export default function Index() {
                   ) : null}
                 </div>
               </div>
-              <div className="w-full mt-4">
+              <div className="w-full mt-2">
                 <button
-                  className="bg-black flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
+                  className="bg-primary-dark hover:bg-primary flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Continue with email"}
@@ -161,7 +150,7 @@ export default function Index() {
                     Create account
                   </Link>
                   <Link
-                    className="text-xs underline text-gray  hover:text-gray"
+                    className="text-xs underline text-gray hover:text-gray"
                     to="/forgotpassword"
                   >
                     forgot password?
