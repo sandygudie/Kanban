@@ -89,7 +89,7 @@ export default function Members({ workspaceId }: Props) {
             }}
             className="px-3 text-white text-sm md:text-sm py-2 bg-success/90 hover:bg-success font-semibold text-sm rounded-md"
           >
-            Invite Members
+            Invite members
           </button>
         </div>
         {isLoading ? (

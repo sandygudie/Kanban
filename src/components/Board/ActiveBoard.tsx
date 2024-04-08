@@ -117,7 +117,7 @@ export default function ActiveBoard() {
               return (
                 <div
                   key={item._id}
-                  className="w-[250px] cursor-pointer shrink-0"
+                  className="w-[240px] cursor-pointer shrink-0"
                 >
                   <div className="flex h-10 mb-3 justify-between relative items-center">
                     <div className="flex gap-x-1 items-center justify-between w-10/12 uppercase text-xs tracking-widest">

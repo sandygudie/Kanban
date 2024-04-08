@@ -28,7 +28,7 @@ export default function TaskItem({
   const pendingDays = tasks?.dueDate?.length ? dayjs(tasks.dueDate[1]).diff(
     dayjs(tasks.dueDate[0]),
     "days"
-  ): null;
+  ) : null;
 
   return (
     <>
@@ -39,11 +39,10 @@ export default function TaskItem({
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className={`${
-                snapshot.isDragging
+              className={`${snapshot.isDragging
                   ? "!top-auto !left-auto bg-purple/20"
                   : "bg-transparent"
-              } select-none rounded-lg`}
+                } select-none rounded-lg`}
               data-id={index}
               onClick={() => {
                 navigate(`/workspace/${workspaceId}/${boardId}/${tasks._id}`);
@@ -51,7 +50,7 @@ export default function TaskItem({
             >
               <div
                 style={{
-                  borderColor: taskColorMarker[tasks.title.length + index],
+                  borderColor: taskColorMarker[tasks.subtasks.length],
                 }}
                 className="bg-gray-200 hover:bg-gray-300
               cursor-pointer rounded-lg border-l-2 mb-4 py-3 px-4"

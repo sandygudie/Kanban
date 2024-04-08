@@ -60,7 +60,7 @@ export default function Header({ memberPics }: any) {
             className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
           >
             <div className="flex gap-x-2 items-center justify-center">
-              <div className="hidden mini:block w-auto h-auto overflow-hidden">
+              <div className="hidden mini:block w-10 h-10 overflow-hidden">
                 <img
                   src={workspace?.profilePics}
                   className="w-10 h-10 object-contain"
@@ -75,14 +75,18 @@ export default function Header({ memberPics }: any) {
               >
                 <h3
                   className={`${
-                    workspace?.name.length > 10
-                      ? "truncate w-auto text-left"
-                      : "w-auto"
-                  } font-semibold sm:text-base md:text-lg`}
+                    workspace?.name.length >= 10
+                      ? "truncate overflow-hidden w-[8ch]"
+                      : "w-fit"
+                  } font-semibold text-left sm:text-base md:text-lg`}
                 >
                   {TitleCase(workspace?.name)}
                 </h3>{" "}
-                <HiOutlineChevronDown className="mt-1 ml-1 text-sm" />
+                <HiOutlineChevronDown
+                  className={`${
+                    workspace?.name.length >= 10 ? "-right-1" : "-right-4"
+                  } absolute  mt-1 text-sm`}
+                />
               </button>
             </div>
             {isWorkspaceMenu && (
@@ -181,7 +185,7 @@ export default function Header({ memberPics }: any) {
                 onClick={() => setIsOpenInvite(true)}
                 className="hidden text-white md:block bg-success/90 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
               >
-                Invite Members{" "}
+                Invite members{" "}
               </button>
               <div
                 onClick={() =>
