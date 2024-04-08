@@ -54,17 +54,17 @@ export default function Index() {
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />
-            <span className="font-bold text-3xl">Kanban</span>
+            <span className="hidden mini:block font-bold text-3xl">Kanban</span>
           </Link>
 
-          <div className="flex items-center ">
+          <div className="flex items-center">
             <Link
               to="/login"
               className="hover:scale-110 p-2 rounded-lg font-normal transition ease-in-out delay-100 duration-300"
             >
               Log In
             </Link>
-            <span> | </span>
+<span> | </span>
             <Link
               to="/signup"
               className="hover:scale-110 p-2 rounded-lg font-normal transition ease-in-out delay-100 duration-300"
@@ -74,13 +74,13 @@ export default function Index() {
           </div>
         </header>
 
-        <main className="h-full md:h-screen px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto py-16 text-center">
+        <main className="h-full md:h-screen px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto pt-28 pb-16 text-center">
           <h1 className="font-bold text-[2.5rem] md:text-6xl">
             <p className="title-left"> Effortlessly Manage </p>
             <p className="title-right">Your Projects.</p>
           </h1>
           <div className="description">
-            <p className="md:px-8 lg:p-0 text-[20px] my-8 font-normal leading-[2.5rem]">
+            <p className="md:px-8 lg:p-0 text-[24px] my-8 font-normal leading-[2.5rem]">
               <span className="font-bold text-2xl">Kanban</span> offers a visual
               view for teams to manage tasks, quickly shift priorities, track
               project progress, and stay on top of deadlines.
