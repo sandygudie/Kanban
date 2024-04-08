@@ -53,11 +53,15 @@ Users are able to:
 
 ## Installation
 
-1. Clone this repository into your local machine:
+1. Clone this repository into your local machine.
 ```
 git clone https://github.com/sandygudie/Kanban-App.git
 ```
-2. Install dependencies 
+2. Navigate to the project directory.
+```
+Cd Kanban
+```
+3. Install dependencies.
 ```
 yarn install
 ```
@@ -79,6 +83,7 @@ docker pull sandy8169/kanban:latest
 
 
 ## Deployment pipeline(CI/CD)
- - From GitHub Actions to Vercel
- - From GitHub Actions to Dockerhub
+ - From GitHub Actions to Vercel.
+ - From Github to Render.
+ - From GitHub Actions to Dockerhub.
 
