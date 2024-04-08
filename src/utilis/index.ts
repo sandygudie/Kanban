@@ -95,19 +95,34 @@ export const colorMarker = [
   "#8bc34a",
   "#3b61ff",
   "#03A9F4",
-];
-
-export const taskColorMarker = [
-  "#ed8936",
-  "#48bb78",
-  "#9c27b0",
-  "#3b61ff",
+  "#9c23F0",
+  "#ff387b",
   "#ed8936",
   "#44c3c3",
   "#9c27b0",
   "#ff380b",
   "#03A9F4",
-  "#8bc34a",
+  "#8Yc34a",
+];
+
+export const taskColorMarker = [
+  "#44c3c3",
+  "#9c27b0",
+  "#ff380b",
+  "#03A9F4",
+  "#8Yc34a",
+  "#FFEB3B",
+  "#44c3c3",
+  "#e3A9F4",
+  "#8bc2Da",
+  "#e68996",
+  "#ed8936",
+  "#48bb78",
+  "#9c27b0",
+  "#9c27b0",
+  "#8bc3fa",
+  "#3b61ff",
+  "#ed8936",
 ];
 
 export const handleDeviceDetection = () => {
