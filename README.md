@@ -1,5 +1,5 @@
 <p align="center">
-  <img width=40% src="https://github.com/sandygudie/Kanban/assets/54219127/8715c416-f01b-4cf5-980d-154525d5ecf9" alt="Track logo"/>
+  <img width=30% src="https://github.com/sandygudie/Kanban/assets/54219127/8715c416-f01b-4cf5-980d-154525d5ecf9" alt="Track logo"/>
 </p>
 
 <br/> 
@@ -31,7 +31,8 @@ The application is built using several technologies and tools
 ## Views
 <img width="1280" alt="Screenshot 2024-04-08 at 10 26 51" src="https://github.com/sandygudie/Kanban/assets/54219127/3a1bc34c-3faf-4e4a-b5ab-f098d6dc3419">
 
-![image](https://github.com/sandygudie/Kanban-App/assets/54219127/3edd0818-9867-4573-893d-1aaf0e561097)
+<img width="1276" alt="Screenshot 2024-04-08 at 15 08 08" src="https://github.com/sandygudie/Kanban/assets/54219127/c7aab631-b66a-4c11-8365-a8f14e6c4ba4">
+
 
 <br/>
 
