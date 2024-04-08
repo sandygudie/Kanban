@@ -12,15 +12,15 @@ The application features a user-friendly interface with drag-and-drop functional
 
 <br/>
 
-## Tech Stack
+## Technologies used
 
-The application is built with 
-* Frontend: Vite ReactJS, TypeScript, TailwindCSS, Redux RTK, Ant Design
-* Backend: NodeJs ExpressJS, MongoDB, JWT
-* Formatter: ESlint, Prettier
-* Testing: Cypress
-* Deployment: Vercel, Render
-* CI/CD: Docker Compose, GitHub Action
+The application is built using several technologies and tools
+* **Frontend** : Vite ReactJS, TypeScript, TailwindCSS, Redux RTK, Ant Design, GSAP
+* **[Backend](https://github.com/sandygudie/kanban-api)** : NodeJs ExpressJS, MongoDB, Nodemon, BycrptJs, JWT, Cors, EJS, Nodemailer 
+* **Formatting and code syntax** : ESlint, Prettier
+* **Testing** : Cypress
+* **Deployment** : Vercel, Render
+* **CI/CD** : Docker Compose, GitHub Action
 
 <br/>
 
@@ -39,9 +39,9 @@ The application is built with
 ## Features
 Users are able to:
 
+- Create, read, update, and delete workspace, boards and tasks.
 - View the optimal layout for the app depending on their device's screen size.
-- See hover states for all interactive elements on the page.
-- Create, read, update, and delete boards and tasks.
+- Invite members and join existing workspace for collaboration.
 - Receive form validations when trying to create/edit boards and tasks.
 - Mark subtasks as complete and move tasks between columns.
 - Hide/show the board sidebar.
