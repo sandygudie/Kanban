@@ -94,7 +94,7 @@ export const SubtaskInput = ({
             meta.error ? " border-error/70 border-solid" : null
           } px-4 py-3 w-full text-sm placeholder:text-xs border-[1px] rounded-md outline-none`}
         />
-        <button onClick={() => arrayHelpers.remove(index)}>
+        <button type="button" onClick={() => arrayHelpers.remove(index)}>
           <MdClose className="text-lg hover:text-primary font-bold" />
         </button>
       </div>

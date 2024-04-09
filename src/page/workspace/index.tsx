@@ -2,23 +2,28 @@ import { Link } from "react-router-dom";
 import { useGetAllWorkspacesQuery } from "redux/apiSlice";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { saveloadWorkspaceData } from "utilis";
+import { getCurrentTheme, saveloadWorkspaceData } from "utilis";
 import { BsPeople } from "react-icons/bs";
 import { MdSpaceDashboard } from "react-icons/md";
 
 export default function Index() {
+  const currentTheme = getCurrentTheme();
   const { data: response, isLoading } = useGetAllWorkspacesQuery();
 
   return (
     <>
-      <div className={`w-full h-screen  overflow-auto`}>
+      <div className={`w-full h-screen overflow-auto`}>
         <header className="bg-secondary h-[65px] z-20 flex items-center w-full border-b-[1px] border-gray/20">
           <div
             className={`border-r-[1px] border-gray/20 h-[65px] flex flex-col justify-center px-4 md:min-w-[14rem] cursor-pointer`}
           >
             <div className="inline-flex items-center gap-x-2">
               <img
-                src="/track_logo.webp"
+                src={
+                  currentTheme === "dark"
+                    ? "/track_logo.webp"
+                    : "/track_black_logo.webp"
+                }
                 className="w-6 h-auto"
                 alt="mutiple-projects-image"
               />
@@ -62,7 +67,7 @@ export default function Index() {
           </div>
         ) : (
           response?.data.workspace.length > 0 && (
-            <div className="bg-main">
+            <div className="bg-main h-full">
               <div className="mx-auto mt-4 mini:mt-16">
                 <h1 className="text-center mini:text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
@@ -88,7 +93,9 @@ export default function Index() {
                             alt=""
                           />
                           <div>
-                            <h2 className="font-bold text-sm mini:text-base">{ele.name}</h2>
+                            <h2 className="font-bold text-sm mini:text-base">
+                              {ele.name}
+                            </h2>
                           </div>
                         </div>
                         <div className="font-semibold text-sm mt-4 text-left">

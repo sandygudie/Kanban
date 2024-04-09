@@ -253,7 +253,7 @@ export default function Index() {
                     )}
                   </Formik>
                 </div>
-                <SocialLinks />
+                <SocialLinks links={workspace.socialLinks} workspaceId={workspace.id}/>
                 <div className="rounded-md px-8 py-7 bg-secondary md:mb-12 mt-20">
                   <button
                     onClick={() => {

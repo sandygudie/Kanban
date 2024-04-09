@@ -1,7 +1,7 @@
 module.exports = {
   mode: "jit",
   content: ["./src/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
-
+  
   theme: {
     colors: {
       primary: "hsl(242.31deg 48.15% 57.65%)",

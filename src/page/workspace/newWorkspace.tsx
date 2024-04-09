@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { TextInput } from "components/InputField";
 import { Loader } from "components/Spinner/index";
 import { useNavigate } from "react-router-dom";
-import { saveloadWorkspaceData } from "utilis";
+import { getCurrentTheme, saveloadWorkspaceData } from "utilis";
 import {
   useGetAllWorkspacesQuery,
   useJoinWorkspaceMutation,
@@ -79,6 +79,7 @@ const JoinWorkspaceForm = () => {
 };
 
 export default function NewWorkspace() {
+  const currentTheme = getCurrentTheme();
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(true);
   const { data: response, isLoading } = useGetAllWorkspacesQuery();
@@ -91,7 +92,11 @@ export default function NewWorkspace() {
         >
           <div className="inline-flex items-center gap-x-2">
             <img
-              src="/track_logo.webp"
+              src={
+                currentTheme === "dark"
+                  ? "/track_logo.webp"
+                  : "/track_black_logo.webp"
+              }
               className="w-6 h-auto"
               alt="mutiple-projects-image"
             />

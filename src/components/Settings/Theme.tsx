@@ -1,9 +1,9 @@
 import { Checkbox } from "antd";
 import { useState } from "react";
-import { TitleCase, changeTheme } from "utilis";
+import { TitleCase, changeTheme, getCurrentTheme } from "utilis";
 
 export default function Theme() {
-  const currentTheme = localStorage.getItem("theme");
+  const currentTheme = getCurrentTheme()
   const [theme, setTheme] = useState(currentTheme ? currentTheme : "");
 
   return (

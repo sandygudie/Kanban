@@ -1,10 +1,17 @@
-import { v4 as uuidv4 } from "uuid";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { SubtaskInput } from "components/InputField";
 import { BiLink } from "react-icons/bi";
+import { useUpdateSocialLinksMutation } from "redux/apiSlice";
+import { Loader } from "components/Spinner";
 
-export default function Index() {
+interface Props {
+  workspaceId: string;
+  links: string[];
+}
+
+export default function Index({ workspaceId, links }: Props) {
+  const [updateSocialLinks, { isLoading }] = useUpdateSocialLinksMutation();
   const LinkSchema = Yup.object().shape({
     socialLinks: Yup.array()
       .of(
@@ -12,17 +19,34 @@ export default function Index() {
           name: Yup.string().required("Required"),
         })
       )
-      .min(1, "Add a column."),
+      .min(1, "Add a link."),
   });
 
   const editSocials = async (values: any) => {
-    console.log(values);
+    const links = values.socialLinks.map((ele: any) => {
+      return ele.name;
+    });
+    try {
+      const payload = {
+        workspaceId,
+        links,
+      };
+      await updateSocialLinks(payload).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div>
       <Formik
         initialValues={{
-          socialLinks: [{ name: "" }],
+          socialLinks:
+           links.length > 0
+              ? links.map((ele) => {
+                  return { name: ele };
+                })
+              : [{ name: "" }],
         }}
         validationSchema={LinkSchema}
         validateOnChange={false}
@@ -40,9 +64,13 @@ export default function Index() {
                   {values.socialLinks &&
                     values.socialLinks.length > 0 &&
                     values.socialLinks.map((ele: any, index: number) => (
-                      <div key={index} className="flex items-center w-auto gap-x-2">
+                      <div
+                        key={index}
+                        className="flex items-center w-auto gap-x-2"
+                      >
                         <BiLink className="text-xl text-gray" />
                         <SubtaskInput
+                          type="url"
                           index={index}
                           name={`socialLinks.${index}.name`}
                           arrayHelpers={arrayHelpers}
@@ -56,7 +84,6 @@ export default function Index() {
                     type="button"
                     onClick={() => {
                       arrayHelpers.push({
-                        _id: uuidv4(),
                         name: "",
                       });
                     }}
@@ -82,7 +109,7 @@ export default function Index() {
                 className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
                 type="submit"
               >
-                Update
+                {isLoading ? <Loader /> : "Update"}
               </button>
             </div>
           </Form>
