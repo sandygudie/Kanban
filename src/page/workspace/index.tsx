@@ -67,7 +67,7 @@ export default function Index() {
           </div>
         ) : (
           response?.data.workspace.length > 0 && (
-            <div className="bg-main">
+            <div className="bg-main h-full">
               <div className="mx-auto mt-4 mini:mt-16">
                 <h1 className="text-center mini:text-lg font-semibold mb-8">
                   ({response.data.workspace.length} ) Available Workspace(s)
