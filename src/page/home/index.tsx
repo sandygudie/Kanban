@@ -74,13 +74,13 @@ export default function Index() {
           </div>
         </header>
 
-        <main className="h-full md:h-screen px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto pt-28 pb-16 text-center">
+        <main className="h-full overflow-auto md:h-screen px-4 sm:px-8 lg:px-0 lg:w-3/6 mx-auto pt-12 mini:pt-28 pb-16 text-center">
           <h1 className="font-bold text-[2.5rem] md:text-6xl">
             <p className="title-left"> Effortlessly Manage </p>
             <p className="title-right">Your Projects.</p>
           </h1>
           <div className="description">
-            <p className="md:px-8 lg:p-0 text-[24px] my-8 font-normal leading-[2.5rem]">
+            <p className="md:px-8 lg:p-0 text-[24px] my-4 mini:my-8 font-normal leading-[2.5rem]">
               <span className="font-bold text-2xl">Kanban</span> offers a visual
               view for teams to manage tasks, quickly shift priorities, track
               project progress, and stay on top of deadlines.
