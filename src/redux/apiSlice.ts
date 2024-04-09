@@ -93,6 +93,15 @@ export const apiSlice = createApi({
       invalidatesTags: ["Workspace"],
     }),
 
+    updateSocialLinks: builder.mutation({
+      query: (payload) => ({
+        url: `/workspace/socials/${payload.workspaceId}`,
+        method: "POST",
+        data: payload.links,
+      }),
+      invalidatesTags: ["Workspace"],
+    }),
+
     removePendingMember: builder.mutation({
       query: (payload) => ({
         url: `/workspace/delete-pendingmember/${payload.workspaceId}/${payload.userEmail}`,
@@ -229,4 +238,5 @@ export const {
   useDeleteWorkspaceMutation,
   useRemovePendingMemberMutation,
   useUpdateMemberRoleMutation,
+  useUpdateSocialLinksMutation
 } = apiSlice;

@@ -13,6 +13,7 @@ export const loadState = () => {
       profilePics: "",
       createdBy: "",
       description: "",
+      socialLinks:[]
     },
     user: {
       id: "",

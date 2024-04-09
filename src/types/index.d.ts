@@ -38,6 +38,7 @@ export interface IWorkspaceProfile {
   profilePics:string
   createdBy:string
   description:string
+  socialLinks:string[]
 }
 
 export interface IUser {
