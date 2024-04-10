@@ -1,5 +1,6 @@
 import { FiMoreVertical } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import io from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import Popup from "components/Popup";
 import { useDispatch } from "react-redux";
@@ -31,9 +32,13 @@ import Chat from "components/Chat";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
+  const serverURL = "http://localhost:4000";
+  const socket = io(serverURL);
+
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
   const dispatch = useDispatch();
+  const [chats, setChats] = useState<any>([]);
   const [isAssign, setAssign] = useState(false);
   const [currentTime, setTime] = useState<null | any>(null);
   const [isDate, setDate] = useState<null | any>(null);
@@ -58,6 +63,23 @@ export default function TaskDetails() {
     }
   }, [tasks]);
 
+
+  useEffect(() => {
+    const socket: any = io("http://localhost:4000");
+    socket.emit("getmessage", taskId);
+    socket.on("all_tasks_chats", (data: any) => {
+      setChats(data);
+    });
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, [taskId]);
+
+  const updatedChatsHandler = (chats: any) => {
+    setChats(chats);
+  };
   const handleSelectedColumn = (selectedColumn: string) => {
     setSelectedColumn(selectedColumn);
   };
@@ -368,7 +390,12 @@ export default function TaskDetails() {
               </div>
             </div>
           </div>
-          <Chat taskId={taskId}/>
+          <Chat
+            updatedChatsHandler={updatedChatsHandler}
+            taskId={taskId}
+            chats={chats}
+            socket={socket}
+          />
         </div>
       ) : isLoading || isLoadingActiveBoard || !tasks ? (
         <div className="flex-col items-center justify-center h-full flex">
