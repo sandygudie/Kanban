@@ -49,7 +49,7 @@ export default function Index({
 
          
                 {board.length>0 && (
-                  <div className="py-4">
+                  <div className="pt-1 pb-4">
                     {board.map((options: IBoard) => {
                       return (
                         <button

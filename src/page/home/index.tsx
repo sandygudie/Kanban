@@ -44,7 +44,7 @@ export default function Index() {
   return (
     <div
       style={{ backgroundImage: `url("download.webp")` }}
-      className="bg-no-repeat bg-cover w-full home-container bg-primary/10 h-screen text-black overflow-y-auto bg-white relative w-full"
+      className="bg-no-repeat bg-cover w-full novisible-scroll bg-primary/10 h-screen text-black overflow-y-auto bg-white relative w-full"
     >
       <div ref={hero} className="">
         <header className="header flex items-center justify-between px-4 lg:px-16 py-4">
