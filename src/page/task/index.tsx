@@ -154,7 +154,7 @@ export default function TaskDetails() {
             </div>
             <div>
               {" "}
-              <p className="text-2xl mini:text-3xl font-semibold">
+              <p className="text-2xl mini:text-2xl font-semibold">
                 {" "}
                 {tasks?.data.title}
               </p>
@@ -203,13 +203,15 @@ export default function TaskDetails() {
             )}{" "}
           </div>
           <div className="mt-8">
-            <p className="font-semibold text-sm mb-2">Description</p>
-            <p className="rounded-md mini:w-8/12">
-              {tasks.data.description
-                ? tasks.data.description
-                : "No description"}
-            </p>
-            <div className="mt-10 md:my-14 flex flex-col md:flex-row gap-x-36 gap-y-8 md:items-center">
+            <div className="my-8 md:mb-12">
+              <p className="font-semibold mb-2">Description</p>
+              <p className="rounded-md mini:w-8/12">
+                {tasks.data.description
+                  ? tasks.data.description
+                  : "No description"}
+              </p>
+            </div>
+            <div className="my-10 flex flex-col md:flex-row gap-x-36 gap-y-8 md:items-start">
               <div className="md:w-[40%]">
                 <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
@@ -222,7 +224,7 @@ export default function TaskDetails() {
                       return (
                         <div
                           key={subtask._id}
-                          className="bg-gray/20 flex items-center gap-x-4 rounded-sm p-4 mt-2"
+                          className="bg-gray/20 flex items-center gap-x-2 rounded-sm p-3 mt-2"
                         >
                           <input
                             type="checkbox"
@@ -233,7 +235,7 @@ export default function TaskDetails() {
                           <p
                             className={`${
                               checkedState[index]! && "line-through opacity-50"
-                            } text-xs font-medium`}
+                            } text-sm font-medium`}
                           >
                             {subtask.title}
                           </p>
@@ -283,7 +285,7 @@ export default function TaskDetails() {
               </div>
             </div>
             <div className="flex flex-col md:flex-row gap-x-36 gap-y-8 items-start mt-10">
-              <div className="pb-6 w-full md:w-[40%]">
+              <div className="md:pb-6 w-full md:w-[40%]">
                 <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
@@ -299,10 +301,19 @@ export default function TaskDetails() {
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center relative gap-x-4">
-                      <p className="text-xs md:text-sm font-bold mb-2 w-16">
+                      <p className="text-sm md:text-sm font-bold mb-2 w-16">
                         Due Date
                       </p>
                       <div className="">
+                        {tasks?.data.dueDate.length > 0 && (
+                          <p
+                            className={`${
+                              pendingDate > 1 ? "text-success" : "text-error"
+                            } font-bold absolute -top-7 text-xs my-2`}
+                          >
+                            {pendingDate} days left
+                          </p>
+                        )}
                         <RangePicker
                           onChange={onChangeDate}
                           defaultValue={
@@ -315,20 +326,11 @@ export default function TaskDetails() {
                           }
                           className="px-3 py-[10px] hover:!bg-gray/30 focus:!gray/30 outline-none border-none hover:border-none bg-gray"
                         />
-                        {tasks?.data.dueDate.length > 0 && (
-                          <p
-                            className={`${
-                              pendingDate > 1 ? "text-success" : "text-error"
-                            } font-bold absolute text-xs my-2`}
-                          >
-                            {pendingDate} days left
-                          </p>
-                        )}
                       </div>
                     </div>
                   ) : (
                     <button
-                      className="font-semibold bg-gray/20 hover:bg-gray/30 py-2 px-4 text-sm rounded-md"
+                      className="font-medium bg-gray/20 hover:bg-gray/30 py-2 px-4 text-sm rounded-md"
                       onClick={() => {
                         setDate(true);
                       }}
@@ -337,7 +339,7 @@ export default function TaskDetails() {
                     </button>
                   )}
                   {tasks?.data.dueTime || currentTime ? (
-                    <div className="flex items-center gap-x-2 md:gap-x-4 mt-8">
+                    <div className="flex items-center gap-x-2 md:gap-x-4 mt-2">
                       <p className="text-xs md:text-sm font-bold mb-2 w-16">
                         Time
                       </p>
@@ -355,7 +357,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-gray/20 hover:bg-gray/30 text-sm font-semibold py-2 mt-6 px-4 rounded-md"
+                      className="bg-gray/20 hover:bg-gray/30 text-sm font-medium py-2 mt-2 px-4 rounded-md"
                       onClick={() => {
                         setTime(true);
                       }}
