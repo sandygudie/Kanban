@@ -31,7 +31,9 @@ function App() {
         ?.setAttribute("data-theme", currentTheme.toLowerCase());
     }
   }, []);
-
+  window.addEventListener('vite:preloadError', () => {
+    window.location.reload() // for example, refresh the page
+  })
   return (
     <React.Suspense
       fallback={

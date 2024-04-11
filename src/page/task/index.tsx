@@ -32,9 +32,8 @@ import Chat from "components/Chat";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
-  const serverURL = "http://localhost:4000";
+  const serverURL = import.meta.env.VITE_CHAT_API;
   const socket = io(serverURL);
-
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
   const dispatch = useDispatch();
@@ -55,6 +54,7 @@ export default function TaskDetails() {
   const [editATask] = useEditTaskMutation();
   const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
   const [selectedColumn, setSelectedColumn] = useState<string>();
+  const [startChat, setStartChat] = useState(false);
 
   useEffect(() => {
     if (tasks?.data) {
@@ -63,22 +63,25 @@ export default function TaskDetails() {
     }
   }, [tasks]);
 
-
   useEffect(() => {
-    const socket: any = io("http://localhost:4000");
+    const socket = io(serverURL);
     socket.emit("getmessage", taskId);
     socket.on("all_tasks_chats", (data: any) => {
       setChats(data);
+      data.length > 0 ? setStartChat(true) : setStartChat(false);
     });
     return () => {
       if (socket) {
         socket.disconnect();
       }
     };
-  }, [taskId]);
+  }, [serverURL, taskId]);
 
   const updatedChatsHandler = (chats: any) => {
     setChats(chats);
+  };
+  const startChathandler = () => {
+    setStartChat(true);
   };
   const handleSelectedColumn = (selectedColumn: string) => {
     setSelectedColumn(selectedColumn);
@@ -234,8 +237,8 @@ export default function TaskDetails() {
                   : "No description"}
               </p>
             </div>
-            <div className="my-10 flex flex-col md:flex-row gap-x-36 gap-y-8 md:items-start">
-              <div className="md:w-[40%]">
+            <div className="my-10 flex flex-col md:flex-row justify-between gap-x-36 gap-y-8 md:items-start">
+              <div className="md:w-[50%]">
                 <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
@@ -269,7 +272,7 @@ export default function TaskDetails() {
                 </div>
               </div>
 
-              <div className="relative md:w-[50%]">
+              <div className="relative md:w-[40%]">
                 <p className="font-semibold mb-2 text-sm">Assignees</p>
                 <button
                   onClick={() => setAssign(true)}
@@ -307,8 +310,8 @@ export default function TaskDetails() {
                 )}
               </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-x-36 gap-y-8 items-start mt-10">
-              <div className="md:pb-6 w-full md:w-[40%]">
+            <div className="flex flex-col md:flex-row gap-x-36 justify-between gap-y-8 items-start mt-10">
+              <div className="md:pb-6 w-full md:w-[50%]">
                 <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
@@ -319,7 +322,7 @@ export default function TaskDetails() {
                   workspaceId={workspaceId}
                 />
               </div>
-              <div className="md:w-[50%]">
+              <div className="md:w-[40%]">
                 <p className="text-sm font-semibold mb-4">Labels</p>
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
@@ -393,10 +396,12 @@ export default function TaskDetails() {
             </div>
           </div>
           <Chat
+            startChathandler={startChathandler}
             updatedChatsHandler={updatedChatsHandler}
             taskId={taskId}
             chats={chats}
             socket={socket}
+            startChat={startChat}
           />
         </div>
       ) : isLoading || isLoadingActiveBoard || !tasks ? (

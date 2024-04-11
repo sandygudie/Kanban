@@ -18,6 +18,7 @@ import { DefaultImage, TitleCase, saveloadWorkspaceData } from "utilis";
 import { IoIosAdd } from "react-icons/io";
 import { FaAnglesRight } from "react-icons/fa6";
 import AddBoard from "./Board/AddBoard";
+import { removeToken } from "utilis/token";
 
 export default function Header({ memberPics }: any) {
   const domRef = useRef<HTMLDivElement>(null);
@@ -284,6 +285,7 @@ export default function Header({ memberPics }: any) {
                           </p>
                         ),
                         handler: () => {
+                          removeToken();
                           navigate("/login"),
                             setWorkspaceMenu(false),
                             setOpenUser(false);
