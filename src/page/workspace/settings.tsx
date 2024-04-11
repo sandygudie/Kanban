@@ -98,7 +98,7 @@ export default function Index() {
 
   return (
     <>
-      <div className="h-full overflow-y-auto md:overflow-hidden relative pb-24 pt-16 px-6 md:px-20">
+      <div className="h-full novisible-scroll overflow-y-auto md:overflow-hidden relative pb-24 pt-16 px-6 md:px-20">
         <div className="flex gap-x-4 items-center relative">
           <div className="absolute -top-[30px] mini:-top-[35px]">
             {" "}
@@ -143,7 +143,7 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="md:w-9/12 overflow-y-auto h-full pb-24 ml-auto">
+          <div className="md:w-9/12 novisible-scroll overflow-y-auto h-full md:pr-4 pb-24 ml-auto">
             {toggle === "about" ? (
               <div>
                 <div>

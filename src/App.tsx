@@ -31,6 +31,10 @@ function App() {
     }
   }, []);
 
+  window.addEventListener("vite:preloadError", () => {
+    window.location.reload();
+  });
+
   return (
     <React.Suspense
       fallback={
