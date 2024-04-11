@@ -1,11 +1,11 @@
 export interface ICreateWorkspace {
-  email: string;
-  description: string;
+  workspaceName: string;
+  image: File|any;
 }
 
 export interface IJoinWorkspace {
-  email: string;
-  description: string;
+  workspaceName: string;
+  inviteCode: string;
 }
 
 export interface IWorkspace {
