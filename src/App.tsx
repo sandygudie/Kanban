@@ -16,8 +16,7 @@ const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
 const AvailableWorkspace = lazy(() => import("page/workspace"));
 const Settings = lazy(() => import("page/workspace/settings"));
 const User = lazy(() => import("page/user"));
-const Task = lazy(() => import("page/task"));
-
+import Task from "page/task";
 
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -31,9 +30,11 @@ function App() {
         ?.setAttribute("data-theme", currentTheme.toLowerCase());
     }
   }, []);
-  window.addEventListener('vite:preloadError', () => {
-    window.location.reload() // for example, refresh the page
-  })
+
+  window.addEventListener("vite:preloadError", () => {
+    window.location.reload();
+  });
+
   return (
     <React.Suspense
       fallback={
@@ -72,7 +73,6 @@ function App() {
         <Route path="/workspace/new" element={<NewWorkspace />} />
         <Route path="/workspaces" element={<AvailableWorkspace />} />
         <Route path="*" element={<NotFound />} />
-    
       </Routes>
     </React.Suspense>
   );

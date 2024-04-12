@@ -11,6 +11,7 @@ import {
 } from "redux/apiSlice";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import CreateWorkspace from "components/Workspace/Create";
+import { IJoinWorkspace } from "types/workspace";
 
 const JoinWorkspaceForm = () => {
   const [joinWorkspace, { isLoading }] = useJoinWorkspaceMutation();
@@ -21,7 +22,7 @@ const JoinWorkspaceForm = () => {
     inviteCode: Yup.string().required("Required"),
   });
 
-  const joinWorkspaceHandler = async (values: any) => {
+  const joinWorkspaceHandler = async (values:IJoinWorkspace) => {
     try {
       const response = await joinWorkspace(values).unwrap();
       if (response) {

@@ -327,7 +327,7 @@ export default function TaskDetails() {
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center relative gap-x-4">
-                      <p className="text-sm md:text-sm font-bold mb-2 w-16">
+                      <p className="text-xs md:text-sm font-medium mb-2 w-16">
                         Due Date
                       </p>
                       <div className="">
@@ -366,7 +366,7 @@ export default function TaskDetails() {
                   )}
                   {tasks?.data.dueTime || currentTime ? (
                     <div className="flex items-center gap-x-2 md:gap-x-4 mt-2">
-                      <p className="text-xs md:text-sm font-bold mb-2 w-16">
+                      <p className="text-xs md:text-sm font-medium mb-2 w-16">
                         Time
                       </p>
                       <TimePicker

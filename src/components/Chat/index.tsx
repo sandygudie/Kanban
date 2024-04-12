@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import { IoIosSend } from "react-icons/io";
 import { appData } from "redux/boardSlice";
@@ -10,8 +10,8 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { IChat } from "types/chat";
 import relativeTime from "dayjs/plugin/localizedFormat";
-import { taskColorMarker } from "utilis";
 dayjs.extend(relativeTime);
+import { MdClose } from "react-icons/md";
 
 interface Props {
   taskId: string;
@@ -32,6 +32,8 @@ export default function Index({
   const data: AppState = useSelector(appData);
   const { user } = data;
   const [message, setMessage] = useState("");
+  const [reply, setReply] = useState<IChat | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     socket.on("messages", (data: any) => {
@@ -44,14 +46,17 @@ export default function Index({
 
   const sendMessage = (event: any) => {
     event.preventDefault();
-    if (socket && message) {
-      socket.emit("send_message", {
-        createdBy: user,
-        taskId,
-        message,
-      });
-      setMessage(" ");
-    }
+    // if (socket && message) {
+    //   socket.emit("send_message", {
+    //     createdBy: user,
+    //     taskId,
+    //     message,
+    //   });
+    //   setMessage(" ");
+    // }
+    
+    setMessage(" ");
+    console.log(taskId)
   };
 
   return (
@@ -66,7 +71,7 @@ export default function Index({
             return (
               <div
                 key={ele?._id}
-                className={`cursor-pointer relative text-left font-medium block`}
+                className={`cursor-pointer relative text-left mt-2 font-medium block`}
               >
                 {dayjs(array[i]?.createdAt).isSame(
                   array[i - 1]?.createdAt,
@@ -74,7 +79,7 @@ export default function Index({
                 ) ? (
                   ""
                 ) : (
-                  <h2 className="text-gray/50 text-center my-6">
+                  <h2 className="text-sm text-gray/50 text-center my-6">
                     {dayjs(array[i]?.createdAt).format("dddd, MMMM Do, YYYY")}
                   </h2>
                 )}
@@ -97,12 +102,6 @@ export default function Index({
                       </div>
                     )}
                     <p
-                      style={{
-                        color:
-                          ele.createdBy?.id === user.id
-                            ? ""
-                            : taskColorMarker[i],
-                      }}
                       className={`${
                         ele.createdBy?.id === user.id
                           ? "text-right"
@@ -122,12 +121,16 @@ export default function Index({
                       : " rounded-r-2xl mr-auto rounded-bl-2xl"
                   } ${
                     ele.message.length > 30 ? "py-4" : "py-2"
-                  } bg-gray/20 min-w-24 w-fit max-w-72 px-3  mt-2 text-sm relative group`}
+                  } bg-gray/20 w-fit max-w-lg px-3 text-sm relative group`}
                 >
                   <div
-                    className={`-right-10 hidden group-hover:flex rounded-lg shadow-3xl gap-x-2 bg-secondary -top-5 px-2 py-2 absolute`}
+                    className={`-right-10 hidden group-hover:flex rounded-lg shadow-3xl gap-x-2 bg-secondary -top-5 px-2 py-3 absolute`}
                   >
-                    <IconButton handleClick={() => ""}>
+                    <IconButton
+                      handleClick={() => {
+                        setReply(ele), inputRef.current?.focus();
+                      }}
+                    >
                       <CgMailReply />
                     </IconButton>
                     <IconButton handleClick={() => ""}>
@@ -165,19 +168,38 @@ export default function Index({
           </button>
         </div>
       ) : (
-        <form
-          onSubmit={(e) => sendMessage(e)}
-          className="flex mt-36 items-center gap-x-4"
-        >
-          <input
-            className="rounded-lg p-3 w-full placeholder:text-sm"
-            placeholder="Start a conversation"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button type="submit" className="bg-primary rounded-xl p-3">
-            <IoIosSend className="text-white" />
-          </button>
+        <form onSubmit={(e) => sendMessage(e)} className="mt-36">
+          {reply && (
+            <div className="text-left flex mb-2 relative">
+              <IconButton handleClick={() => setReply(null)}>
+                <MdClose className="absolute right-20 rounded-lg p-2 top-0 hover:bg-gray/20 text-3xl" />
+              </IconButton>
+              <div className="bg-transparent border-l-2 min-w-4 border-primary border-t-2 rounded-tl-lg"></div>
+              <div className="py-1">
+                <div className="flex gap-x-1">
+                  <img
+                    className="h-6 w-6 p-1 rounded-full overflow-hidden"
+                    src={reply.createdBy.profilePics}
+                    alt="user-pics"
+                  />
+                  <p className="text-sm">{reply.createdBy.name}</p>
+                </div>
+                {reply.message}
+              </div>
+            </div>
+          )}
+          <div className="flex items-center relative gap-x-4">
+            <input
+              ref={inputRef}
+              className={`rounded-lg p-3 w-full placeholder:text-sm`}
+              placeholder="Start a conversation"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button type="submit" className="bg-primary rounded-xl p-3">
+              <IoIosSend className="text-white" />
+            </button>
+          </div>
         </form>
       )}
     </div>

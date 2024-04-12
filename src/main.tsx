@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { App as AppDesign } from 'antd';
+import { App as AppDesign } from "antd";
 import App from "./App";
 import "styles/global.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import { CookiesProvider } from "react-cookie";
 import { ConfigProvider } from "antd";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -21,18 +20,14 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           components: {
             Modal: {
               colorText: "unset",
-     
-              
             },
           },
         }}
       >
         <Provider store={store}>
-          <CookiesProvider defaultSetOptions={{ path: "/" }}>
-            <AppDesign>
+          <AppDesign>
             <App />
-            </AppDesign>
-          </CookiesProvider>
+          </AppDesign>
         </Provider>
       </ConfigProvider>
     </BrowserRouter>
