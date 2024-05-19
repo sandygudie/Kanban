@@ -22,6 +22,7 @@
     "bowser": "^2.11.0",
     "cloudinary-react": "^1.8.1",
     "dayjs": "^1.11.10",
+    "emoji-picker-react": "^4.9.2",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.7",
     "gsap": "^3.12.3",

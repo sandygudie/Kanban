@@ -29,6 +29,8 @@ import { DefaultImage } from "utilis";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import IconButton from "components/IconButton";
 import Chat from "components/Chat";
+import { getTaskChat } from "services/api/chat";
+import { IChat } from "types/chat";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
@@ -61,28 +63,46 @@ export default function TaskDetails() {
       setSelectedColumn(tasks?.data.status);
       setCheckedState(tasks?.data.subtasks.map((o: ISubTask) => o.isCompleted));
     }
-  }, [tasks]);
 
-  useEffect(() => {
-    const socket = io(serverURL);
-    socket.emit("getmessage", taskId);
-    socket.on("all_tasks_chats", (data: any) => {
-      setChats(data);
-      data.length > 0 ? setStartChat(true) : setStartChat(false);
-    });
-    return () => {
-      if (socket) {
-        socket.disconnect();
+    loadmessages();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskId, tasks]);
+
+  const loadmessages = async () => {
+    try {
+      const res: any = await getTaskChat(taskId);
+      if (res.chats && res.chats.chats.length > 0) {
+        setChats(res.chats.chats);
+        setStartChat(true);
+      } else {
+        setChats([]);
+        setStartChat(false);
       }
-    };
-  }, [serverURL, taskId]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const updatedChatsHandler = (chats: any) => {
-    setChats(chats);
+  const updatedChatsHandler = async (updatedChats: any) => {
+    if (updatedChats._id) {
+      const existingChat = chats.find(
+        (chat: { _id: string }) => chat._id === updatedChats._id
+      );
+      setChats(
+        existingChat
+          ? chats.map((chat: IChat) =>
+              chat._id === updatedChats._id ? (chat = updatedChats) : chat
+            )
+          : [...chats, updatedChats]
+      );
+    } else {
+      await loadmessages();
+    }
   };
   const startChathandler = () => {
     setStartChat(true);
   };
+
   const handleSelectedColumn = (selectedColumn: string) => {
     setSelectedColumn(selectedColumn);
   };

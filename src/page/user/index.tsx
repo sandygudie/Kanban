@@ -27,11 +27,11 @@ export default function Index() {
     if (e.target.name === "profilePics") {
       if (e.currentTarget.files && e.currentTarget.files[0].size > 100000) {
         message.error({
-          content:"image should be less than 100kb.",
+          content: "image should be less than 100kb.",
           className: "text-error",
         });
-       
-        return null
+
+        return null;
       }
       setSelectedImage(e.currentTarget.files);
       const data = new FormData();
@@ -73,7 +73,6 @@ export default function Index() {
     } catch (error) {
       console.log(error);
     }
-
   };
 
   return (
@@ -91,7 +90,9 @@ export default function Index() {
         </h1>
         <div className="h-auto">
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray/80 font-medium md:w-64 text-sm ">Name</label>
+            <label className="text-gray/80 font-medium md:w-64 text-sm ">
+              Name
+            </label>
             <input
               name="name"
               value={editedText.name ? editedText.name : user.name}
@@ -102,12 +103,15 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "name" ? "bg-gray/5" : "border-gray/0"
-                }`}
+              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${
+                isEdit === "name" ? "bg-gray/5" : "border-gray/0"
+              }`}
             />
           </div>
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray/80 font-medium text-sm md:w-64">Email</label>
+            <label className="text-gray/80 font-medium text-sm md:w-64">
+              Email
+            </label>
             <input
               name="email"
               value={editedText.email ? editedText.email : user.email}
@@ -118,8 +122,9 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
-                }`}
+              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${
+                isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
+              }`}
             />
           </div>
           <div className="flex items-start my-6">
@@ -150,7 +155,6 @@ export default function Index() {
                         {DefaultImage(user.name)}
                       </span>
                     )}
-
                   </div>
 
                   <input
@@ -177,12 +181,12 @@ export default function Index() {
             Delete user
           </h2>
           <div className="px-4 md:px-8 py-5">
-          <p className="text-gray/80 text-sm mb-4">
-            Once you delete your account, there is no going back.
-          </p>
-          <button className="text-white px-4 font-bold rounded-md text-sm bg-error py-2">
-            Delete Account
-          </button>
+            <p className="text-gray/80 text-sm mb-4">
+              Once you delete your account, there is no going back.
+            </p>
+            <button className="text-white px-4 font-bold rounded-md text-sm bg-error py-2">
+              Delete Account
+            </button>
           </div>
         </div>
       </div>
