@@ -83,8 +83,7 @@ export default function Index({
       setReply(null);
     }
   };
-  // http://localhost:3000/workspace/660c05bb8bad0e3f5c1dbe58/660d3dc51b7a3a8ca4a7e3e1/6648a56d6c85771d6ebcc437
-  // http://localhost:3000/workspace/660c05bb8bad0e3f5c1dbe58/660d3dc51b7a3a8ca4a7e3e1/6649db4bacd54dc5b7ee34b9
+
   const handlePostEmoji = (post: IChat, emojiData: any) => {
     const tempData: {
       emoji: string;
@@ -139,7 +138,7 @@ export default function Index({
     const editValue: IChat | any = { ...editPost, message: e.target.value };
     setEditPost(editValue);
   };
-
+  
   const deletePostHandler = (postId: string) => {
     // if (socket && postEmoji) {
     socket.emit("delete_post", postId);

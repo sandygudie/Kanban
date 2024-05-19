@@ -37,6 +37,7 @@ export default function ActiveBoard() {
   const data: AppState = useSelector(appData);
   const { active, workspace } = data;
 
+  console.log(active);
   const onDragEnd = async (result: any) => {
     if (!result.destination) {
       return;
@@ -68,13 +69,16 @@ export default function ActiveBoard() {
     };
     const position = result.destination.index;
     dispatch(addTask({ updatedTasks, position }));
+    
     await deleteATask({
       taskId: sourceTask?._id,
       columnId: sourceTask?.columnId,
       workspaceId: workspace.id,
     }).unwrap();
+
     const payload = {
       formdata: {
+        taskId: sourceTask._id,
         title: sourceTask.title,
         description: sourceTask.description,
         subtasks: updatedSubstasks,

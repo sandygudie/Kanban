@@ -82,9 +82,9 @@ export default function TaskDetails() {
       console.log(err);
     }
   };
-
+console.log(chats)
   const updatedChatsHandler = async (updatedChats: any) => {
-    if (updatedChats._id) {
+    if (updatedChats?._id) {
       const existingChat = chats.find(
         (chat: { _id: string }) => chat._id === updatedChats._id
       );
