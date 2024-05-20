@@ -1,7 +1,8 @@
 import axios from "axios";
-const baseURL = "http://localhost:4000/api/v1";
+const chatBaseURL = import.meta.env.VITE_API_BASEURL;
+
 
 export const getTaskChat = async(taskId: string) => {
-  const response =await axios.get(`${baseURL}/chat/${taskId}`);
+  const response =await axios.get(`${chatBaseURL}/api/v1/chat/${taskId}`);
  return response.data
 };
