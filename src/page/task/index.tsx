@@ -6,6 +6,7 @@ import Popup from "components/Popup";
 import { useDispatch } from "react-redux";
 import SelectBox from "components/SelectBox";
 import {
+  useAssignTaskMutation,
   useEditTaskMutation,
   useGetBoardQuery,
   useGetTaskQuery,
@@ -31,6 +32,8 @@ import IconButton from "components/IconButton";
 import Chat from "components/Chat";
 import { getTaskChat } from "services/api/chat";
 import { IChat } from "types/chat";
+import { RxCheck } from "react-icons/rx";
+
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
@@ -54,6 +57,7 @@ export default function TaskDetails() {
     boardId,
   });
   const [editATask] = useEditTaskMutation();
+  const [assignTask] = useAssignTaskMutation();
   const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
   const [selectedColumn, setSelectedColumn] = useState<string>();
   const [startChat, setStartChat] = useState(false);
@@ -65,7 +69,7 @@ export default function TaskDetails() {
     }
 
     loadmessages();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskId, tasks]);
 
   const loadmessages = async () => {
@@ -82,7 +86,7 @@ export default function TaskDetails() {
       console.log(err);
     }
   };
-console.log(chats)
+
   const updatedChatsHandler = async (updatedChats: any) => {
     if (updatedChats?._id) {
       const existingChat = chats.find(
@@ -186,6 +190,23 @@ console.log(chats)
     "day"
   );
 
+  const assignUsers = async (user: any) => {
+    try {
+      const payload = {
+        formdata: {
+          name: user.name,
+          profilePics: user.profilePics,
+        },
+        workspaceId: workspaceId,
+        taskId: tasks?.data._id,
+      };
+
+      await assignTask(payload).unwrap();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {tasks ? (
@@ -221,7 +242,7 @@ console.log(chats)
             </button>
             {isOpenMenu && (
               <Popup
-                className="right-0 top-10"
+                className="right-8 top-5"
                 items={[
                   {
                     title: (
@@ -293,22 +314,52 @@ console.log(chats)
               </div>
 
               <div className="relative md:w-[40%]">
-                <p className="font-semibold mb-2 text-sm">Assignees</p>
-                <button
-                  onClick={() => setAssign(true)}
-                  className="p-2 bg-gray/20 hover:bg-gray/30 rounded-md"
-                >
-                  <IoAdd className="text-xl font-bold" />
-                </button>
+                <div className="flex items-center gap-x-20">
+                  <p className="font-semibold mb-2 text-sm">Assign task</p>
+                  <IconButton handleClick={() => setAssign(true)}>
+                    <IoAdd
+                      size={25}
+                      className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
+                    />
+                  </IconButton>
+                </div>
 
+                {tasks.data.assignTo.map((list: any) => {
+                  return (
+                    <div
+                      key={list.name}
+                      className="py-1 font-bold text-[0.8rem] flex items-center gap-x-3"
+                    >
+                      {list.profilePics ? (
+                        <img
+                          className="w-6 h-6 rounded-full"
+                          src={list.profilePics}
+                          alt="profile pic"
+                        />
+                      ) : (
+                        <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                          {DefaultImage(list.name)}
+                        </span>
+                      )}
+                      <span className="font-medium">{list.name}</span>
+                    </div>
+                  );
+                })}
                 {isAssign && (
                   <Popup
-                    className="left-0 top-[65px]"
+                    className="left-0 top-[30px]"
                     handleClose={() => setAssign(false)}
                     items={workspace?.data.members.map((ele: any) => {
                       return {
                         title: (
                           <div className="py-1 px-4 font-bold text-[0.8rem] flex items-center gap-x-3">
+                            {tasks.data.assignTo.map((user: { name: string }) =>
+                              user.name === ele.name ? (
+                                <p className="absolute left-2" key={user.name}>
+                                  <RxCheck size={15} />
+                                </p>
+                              ) : null
+                            )}
                             {ele.profilePics ? (
                               <img
                                 className="w-6 h-6 rounded-full"
@@ -323,7 +374,9 @@ console.log(chats)
                             <span className="font-medium">{ele.name}</span>
                           </div>
                         ),
-                        handler: () => {},
+                        handler: () => {
+                          assignUsers(ele);
+                        },
                       };
                     })}
                   />

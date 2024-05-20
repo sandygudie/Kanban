@@ -6,17 +6,16 @@ const baseURL = import.meta.env.VITE_API_BASEURL;
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery({ baseUrl: baseURL }),
-  tagTypes: ["Workspace", "User","Board", "Column", "Task"],
+  tagTypes: ["Workspace", "User", "Board", "Column", "Task"],
 
   endpoints: (builder) => ({
-  
     UpdateUser: builder.mutation({
       query: (payload) => ({
         url: `/user/${payload.userId}`,
         method: "PATCH",
         data: payload.formData,
       }),
-      invalidatesTags: ["User","Workspace",],
+      invalidatesTags: ["User", "Workspace"],
     }),
     createWorkspace: builder.mutation({
       query: (payload) => ({
@@ -147,7 +146,7 @@ export const apiSlice = createApi({
         url: `/board/${payload.workspaceId}/${payload.boardId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Board","Workspace"],
+      invalidatesTags: ["Board", "Workspace"],
     }),
 
     createColumn: builder.mutation({
@@ -165,7 +164,7 @@ export const apiSlice = createApi({
         data: payload.formData,
         method: "PATCH",
       }),
-      invalidatesTags: ["Column","Board","Workspace"],
+      invalidatesTags: ["Column", "Board", "Workspace"],
     }),
 
     deleteColumn: builder.mutation({
@@ -173,9 +172,8 @@ export const apiSlice = createApi({
         url: `/column/${payload.workspaceId}/${payload.columnId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Column","Board","Workspace"],
+      invalidatesTags: ["Column", "Board", "Workspace"],
     }),
-
 
     createTask: builder.mutation({
       query: (payload: any) => ({
@@ -183,7 +181,7 @@ export const apiSlice = createApi({
         method: "POST",
         data: payload.formdata,
       }),
-      invalidatesTags: ["Task","Board","Workspace"],
+      invalidatesTags: ["Task", "Board", "Workspace"],
     }),
 
     getTask: builder.query({
@@ -208,9 +206,17 @@ export const apiSlice = createApi({
         url: `/task/${payload.workspaceId}/${payload.columnId}/${payload.taskId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Task","Board"],
+      invalidatesTags: ["Task", "Board"],
     }),
-    
+
+    assignTask: builder.mutation({
+      query: (payload) => ({
+        url: `/task/assign-task/${payload.workspaceId}/${payload.taskId}`,
+        method: "POST",
+        data: payload.formdata,
+      }),
+      invalidatesTags: ["Task", "Board"],
+    }),
   }),
 });
 
@@ -238,5 +244,6 @@ export const {
   useDeleteWorkspaceMutation,
   useRemovePendingMemberMutation,
   useUpdateMemberRoleMutation,
-  useUpdateSocialLinksMutation
+  useUpdateSocialLinksMutation,
+  useAssignTaskMutation
 } = apiSlice;

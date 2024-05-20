@@ -15,7 +15,6 @@ import { MdClose } from "react-icons/md";
 import EmojiPicker from "emoji-picker-react";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsEmojiSmile } from "react-icons/bs";
-import { IoText } from "react-icons/io5";
 import { Tooltip } from "antd";
 
 interface Props {
@@ -138,7 +137,7 @@ export default function Index({
     const editValue: IChat | any = { ...editPost, message: e.target.value };
     setEditPost(editValue);
   };
-  
+
   const deletePostHandler = (postId: string) => {
     // if (socket && postEmoji) {
     socket.emit("delete_post", postId);
@@ -149,7 +148,7 @@ export default function Index({
     <div className="mt-16 text-center pt-6 border-t-[1px] border-gray/10">
       {chats.length > 0 ? (
         <div className="relative">
-          <h2 className="text-gray/50">
+          <h2 className="text-gray/80">
             {chats[0].createdBy.name} started this conversation!
           </h2>
           {chats?.map((ele: IChat, i: number, array: any) => {
@@ -227,17 +226,17 @@ export default function Index({
                   </div>
 
                   <div
-                    className={`-right-8 hidden group-hover:flex rounded-lg shadow-3xl gap-x-2 bg-secondary -top-5 px-2 py-3 absolute`}
+                    className={`-right-8 hidden group-hover:flex rounded-lg shadow-3xl gap-x-3 bg-secondary -top-5 px-2 py-3 absolute`}
                   >
                     <IconButton
                       handleClick={() => {
                         setReply(ele), inputRef.current?.focus();
                       }}
                     >
-                      <Tooltip title="reply">
+                      <Tooltip color={"#2b2929"} title="reply">
                         {" "}
                         <div>
-                          <CgMailReply />
+                          <CgMailReply size={20} />
                         </div>
                       </Tooltip>
                     </IconButton>
@@ -249,7 +248,7 @@ export default function Index({
                         }))
                       }
                     >
-                      <Tooltip title="emoji">
+                      <Tooltip color={"#2b2929"} title="emoji">
                         <div>
                           <BsEmojiSmile />
                         </div>
@@ -257,7 +256,7 @@ export default function Index({
                     </IconButton>
                     {ele.createdBy?.id === user.id && (
                       <IconButton handleClick={() => editPostHandler(ele)}>
-                        <Tooltip title="edit">
+                        <Tooltip color={"#2b2929"} title="edit">
                           <div>
                             <CiEdit />
                           </div>
@@ -268,7 +267,7 @@ export default function Index({
                       <IconButton
                         handleClick={() => deletePostHandler(ele._id)}
                       >
-                        <Tooltip title="delete">
+                        <Tooltip color={"#2b2929"} title="delete">
                           <div>
                             <MdDelete className="text-error" />
                           </div>
@@ -304,13 +303,13 @@ export default function Index({
                       <div className="flex items-center gap-x-2 mt-3">
                         <button
                           onClick={() => setEditPost(undefined)}
-                          className="py-2 w-20 border-gray/40 text-xs border-[1px] hover:bg-gray/20 font-medium rounded-md"
+                          className="py-2 w-20 border-gray/40 text-xs hover:bg-gray/20 font-semibold rounded-md"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={() => updateEditHandler()}
-                          className="py-2 w-20 text-xs font-medium bg-success/80 hover:bg-success rounded-md"
+                          className="py-2 w-20 text-xs font-semibold bg-success/80 hover:bg-success rounded-md"
                         >
                           Update
                         </button>
@@ -377,7 +376,7 @@ export default function Index({
                           }))
                         }
                       >
-                        <Tooltip title="emoji">
+                        <Tooltip color={"#2b2929"} title="emoji">
                           <div>
                             <BsEmojiSmile />
                           </div>
@@ -443,13 +442,27 @@ export default function Index({
             />
 
             <div className="flex gap-x-3 items-center absolute right-20">
-              <IoText size={20} />
+    
               <IconButton handleClick={() => setInputEmoji(true)}>
-                <BsEmojiSmile size={20} />
+                <Tooltip color={"#2b2929"} title="emoji">
+                  <div>
+                    <BsEmojiSmile
+                      className="text-gray/80 hover:text-gray"
+                      size={16}
+                    />
+                  </div>
+                </Tooltip>
               </IconButton>
 
-              <IconButton handleClick={() => setInputEmoji(true)}>
-                <AiOutlineUpload size={20} />
+              <IconButton handleClick={() => ""}>
+                <Tooltip title="upload" color={"#2b2929"}>
+                  <div>
+                    <AiOutlineUpload
+                      className="text-gray/80 hover:text-gray"
+                      size={16}
+                    />
+                  </div>
+                </Tooltip>
               </IconButton>
             </div>
 
