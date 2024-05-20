@@ -90,7 +90,7 @@ export default function Index({
     } = { emoji: "", users: [] };
     let temp = [...post.emojiReactions];
     const updateEmoji: any = temp.find((ele) => ele.emoji === emojiData.emoji);
-    console.log(updateEmoji);
+
     if (updateEmoji !== undefined) {
       if (updateEmoji.users.includes(user.name)) {
         updateEmoji.users = updateEmoji.users.filter(
@@ -112,7 +112,7 @@ export default function Index({
     postEmojiHandler(post._id, temp);
   };
 
-  // console.log(chats)
+
   const postEmojiHandler = (postId: string, temp: any) => {
     const updatedEmoji = {
       postId,
