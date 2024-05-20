@@ -5,7 +5,7 @@ export default function BoardSkeleton() {
   return (
     <div className="bg-secondary">
       <SkeletonTheme
-        height={12}
+        height={15}
         borderRadius={30}
         baseColor="#20212c"
         highlightColor="#2b2c36"
@@ -25,15 +25,15 @@ export default function BoardSkeleton() {
                 <Skeleton width={100} />
                 <div className="mt-3">
                   <div className="flex items-center gap-x-4">
-                    <Skeleton width={15} height={15} />
+                    <Skeleton width={20} height={20} />
+                    <Skeleton width={100} />
+                  </div>
+                  <div className="flex items-center my-3 gap-x-4">
+                    <Skeleton width={20} height={20} />
                     <Skeleton width={100} />
                   </div>
                   <div className="flex items-center gap-x-4">
-                    <Skeleton width={15} height={15} />
-                    <Skeleton width={100} />
-                  </div>
-                  <div className="flex items-center gap-x-4">
-                    <Skeleton width={15} height={15} />
+                    <Skeleton width={20} height={20} />
                     <Skeleton width={100} />
                   </div>
                 </div>
@@ -43,7 +43,7 @@ export default function BoardSkeleton() {
           <div className="w-10/12 pt-20 px-8 ">
             <div className="md:flex gap-x-24 bg-secondary">
               <SkeletonTheme
-                height={12}
+                height={15}
                 borderRadius={30}
                 baseColor="#2b2c36"
                 highlightColor="#20212c"

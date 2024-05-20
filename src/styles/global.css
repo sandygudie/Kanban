@@ -244,7 +244,7 @@
 }
 
 .react-loading-skeleton {
-  background-color: hsla(216, 15%, 57%, 0.1);
+  background-color: hsla(215, 16%, 65%, 0.15);
 }
 
 .react-loading-skeleton::after {
