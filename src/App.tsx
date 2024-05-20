@@ -16,7 +16,7 @@ const NewWorkspace = lazy(() => import("page/workspace/newWorkspace"));
 const AvailableWorkspace = lazy(() => import("page/workspace"));
 const Settings = lazy(() => import("page/workspace/settings"));
 const User = lazy(() => import("page/user"));
-const Task = lazy(() => import("page/task"));
+import Task from "page/task";
 
 function App() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;

@@ -1,10 +1,12 @@
 import { FiMoreVertical } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import io from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import Popup from "components/Popup";
 import { useDispatch } from "react-redux";
 import SelectBox from "components/SelectBox";
 import {
+  useAssignTaskMutation,
   useEditTaskMutation,
   useGetBoardQuery,
   useGetTaskQuery,
@@ -27,12 +29,20 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { DefaultImage } from "utilis";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import IconButton from "components/IconButton";
+import Chat from "components/Chat";
+import { getTaskChat } from "services/api/chat";
+import { IChat } from "types/chat";
+import { RxCheck } from "react-icons/rx";
+
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
+  const serverURL = import.meta.env.VITE_CHAT_API;
+  const socket = io(serverURL);
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
   const dispatch = useDispatch();
+  const [chats, setChats] = useState<any>([]);
   const [isAssign, setAssign] = useState(false);
   const [currentTime, setTime] = useState<null | any>(null);
   const [isDate, setDate] = useState<null | any>(null);
@@ -47,15 +57,55 @@ export default function TaskDetails() {
     boardId,
   });
   const [editATask] = useEditTaskMutation();
+  const [assignTask] = useAssignTaskMutation();
   const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
   const [selectedColumn, setSelectedColumn] = useState<string>();
+  const [startChat, setStartChat] = useState(false);
 
   useEffect(() => {
     if (tasks?.data) {
       setSelectedColumn(tasks?.data.status);
       setCheckedState(tasks?.data.subtasks.map((o: ISubTask) => o.isCompleted));
     }
-  }, [tasks]);
+
+    loadmessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskId, tasks]);
+
+  const loadmessages = async () => {
+    try {
+      const res: any = await getTaskChat(taskId);
+      if (res.chats && res.chats.chats.length > 0) {
+        setChats(res.chats.chats);
+        setStartChat(true);
+      } else {
+        setChats([]);
+        setStartChat(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updatedChatsHandler = async (updatedChats: any) => {
+    if (updatedChats?._id) {
+      const existingChat = chats.find(
+        (chat: { _id: string }) => chat._id === updatedChats._id
+      );
+      setChats(
+        existingChat
+          ? chats.map((chat: IChat) =>
+              chat._id === updatedChats._id ? (chat = updatedChats) : chat
+            )
+          : [...chats, updatedChats]
+      );
+    } else {
+      await loadmessages();
+    }
+  };
+  const startChathandler = () => {
+    setStartChat(true);
+  };
 
   const handleSelectedColumn = (selectedColumn: string) => {
     setSelectedColumn(selectedColumn);
@@ -140,6 +190,23 @@ export default function TaskDetails() {
     "day"
   );
 
+  const assignUsers = async (user: any) => {
+    try {
+      const payload = {
+        formdata: {
+          name: user.name,
+          profilePics: user.profilePics,
+        },
+        workspaceId: workspaceId,
+        taskId: tasks?.data._id,
+      };
+
+      await assignTask(payload).unwrap();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {tasks ? (
@@ -175,7 +242,7 @@ export default function TaskDetails() {
             </button>
             {isOpenMenu && (
               <Popup
-                className="right-0 top-10"
+                className="right-8 top-5"
                 items={[
                   {
                     title: (
@@ -211,8 +278,8 @@ export default function TaskDetails() {
                   : "No description"}
               </p>
             </div>
-            <div className="my-10 flex flex-col md:flex-row gap-x-36 gap-y-8 md:items-start">
-              <div className="md:w-[40%]">
+            <div className="my-10 flex flex-col md:flex-row justify-between gap-x-36 gap-y-8 md:items-start">
+              <div className="md:w-[50%]">
                 <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
@@ -246,23 +313,53 @@ export default function TaskDetails() {
                 </div>
               </div>
 
-              <div className="relative md:w-[50%]">
-                <p className="font-semibold mb-2 text-sm">Assignees</p>
-                <button
-                  onClick={() => setAssign(true)}
-                  className="p-2 bg-gray/20 hover:bg-gray/30 rounded-md"
-                >
-                  <IoAdd className="text-xl font-bold" />
-                </button>
+              <div className="relative md:w-[40%]">
+                <div className="flex items-center gap-x-20">
+                  <p className="font-semibold mb-2 text-sm">Assign task</p>
+                  <IconButton handleClick={() => setAssign(true)}>
+                    <IoAdd
+                      size={25}
+                      className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
+                    />
+                  </IconButton>
+                </div>
 
+                {tasks.data.assignTo.map((list: any) => {
+                  return (
+                    <div
+                      key={list.name}
+                      className="py-1 font-bold text-[0.8rem] flex items-center gap-x-3"
+                    >
+                      {list.profilePics ? (
+                        <img
+                          className="w-6 h-6 rounded-full"
+                          src={list.profilePics}
+                          alt="profile pic"
+                        />
+                      ) : (
+                        <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                          {DefaultImage(list.name)}
+                        </span>
+                      )}
+                      <span className="font-medium">{list.name}</span>
+                    </div>
+                  );
+                })}
                 {isAssign && (
                   <Popup
-                    className="left-0 top-[65px]"
+                    className="left-0 top-[30px]"
                     handleClose={() => setAssign(false)}
                     items={workspace?.data.members.map((ele: any) => {
                       return {
                         title: (
                           <div className="py-1 px-4 font-bold text-[0.8rem] flex items-center gap-x-3">
+                            {tasks.data.assignTo.map((user: { name: string }) =>
+                              user.name === ele.name ? (
+                                <p className="absolute left-2" key={user.name}>
+                                  <RxCheck size={15} />
+                                </p>
+                              ) : null
+                            )}
                             {ele.profilePics ? (
                               <img
                                 className="w-6 h-6 rounded-full"
@@ -277,15 +374,17 @@ export default function TaskDetails() {
                             <span className="font-medium">{ele.name}</span>
                           </div>
                         ),
-                        handler: () => {},
+                        handler: () => {
+                          assignUsers(ele);
+                        },
                       };
                     })}
                   />
                 )}
               </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-x-36 gap-y-8 items-start mt-10">
-              <div className="md:pb-6 w-full md:w-[40%]">
+            <div className="flex flex-col md:flex-row gap-x-36 justify-between gap-y-8 items-start mt-10">
+              <div className="md:pb-6 w-full md:w-[50%]">
                 <p className="text-sm font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
@@ -296,7 +395,7 @@ export default function TaskDetails() {
                   workspaceId={workspaceId}
                 />
               </div>
-              <div className="md:w-[50%]">
+              <div className="md:w-[40%]">
                 <p className="text-sm font-semibold mb-4">Labels</p>
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
@@ -369,6 +468,14 @@ export default function TaskDetails() {
               </div>
             </div>
           </div>
+          <Chat
+            startChathandler={startChathandler}
+            updatedChatsHandler={updatedChatsHandler}
+            taskId={taskId}
+            chats={chats}
+            socket={socket}
+            startChat={startChat}
+          />
         </div>
       ) : isLoading || isLoadingActiveBoard || !tasks ? (
         <div className="flex-col items-center justify-center h-full flex">

@@ -11,15 +11,16 @@ interface LabelProps {
   label: string;
   subLabel?:string
 }
+
 interface OtherProps {
   index: number;
   arrayHelpers: FieldArrayRenderProps;
 }
+
 interface DisplayProps {
   label: string;
   value: string;
   style?:any
-
 }
 
 export const TextInput = ({

@@ -18,6 +18,7 @@ import { DefaultImage, TitleCase, saveloadWorkspaceData } from "utilis";
 import { IoIosAdd } from "react-icons/io";
 import { FaAnglesRight } from "react-icons/fa6";
 import AddBoard from "./Board/AddBoard";
+import { removeToken } from "utilis/token";
 
 export default function Header({ memberPics }: any) {
   const domRef = useRef<HTMLDivElement>(null);
@@ -183,7 +184,7 @@ export default function Header({ memberPics }: any) {
             <div className="flex items-center gap-x-8">
               <button
                 onClick={() => setIsOpenInvite(true)}
-                className="hidden text-white md:block bg-success/90 hover:bg-success px-3 py-1.5 font-semibold text-sm rounded-md "
+                className="hidden text-white md:block bg-success/90 hover:bg-success px-3 py-2 font-semibold text-sm rounded-md "
               >
                 Invite members{" "}
               </button>
@@ -191,7 +192,7 @@ export default function Header({ memberPics }: any) {
                 onClick={() =>
                   navigate("/workspace/settings?members", { state: "Members" })
                 }
-                className="hover:bg-gray-100 border-[1px] cursor-pointer border-solid border-gray-200 rounded-lg px-2 py-1 gap-x-4 items-center hidden md:flex"
+                className="hover:bg-gray-100 border-[1px] cursor-pointer border-solid border-gray-200 rounded-lg p-2  gap-x-4 items-center hidden md:flex"
               >
                 <div className="img_container">
                   {memberPics?.map(
@@ -284,6 +285,7 @@ export default function Header({ memberPics }: any) {
                           </p>
                         ),
                         handler: () => {
+                          removeToken();
                           navigate("/login"),
                             setWorkspaceMenu(false),
                             setOpenUser(false);

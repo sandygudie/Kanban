@@ -255,3 +255,7 @@
     var(--color-secondary)
   );
 }
+
+.epr-main{
+  height:400px !important
+}
