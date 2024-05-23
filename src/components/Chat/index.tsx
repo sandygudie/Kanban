@@ -398,7 +398,7 @@ export default function Index({
           </button>
         </div>
       ) : (
-        <Spinner />
+        null
       )}
       {startChat === "loading" ? <Spinner /> : null}
       {!startChat && (
