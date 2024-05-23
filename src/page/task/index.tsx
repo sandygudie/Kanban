@@ -194,10 +194,7 @@ export default function TaskDetails() {
   const assignUsers = async (user: any) => {
     try {
       const payload = {
-        formdata: {
-          name: user.name,
-          profilePics: user.profilePics,
-        },
+        userId: { userId: user.userId },
         workspaceId: workspaceId,
         taskId: tasks?.data._id,
       };

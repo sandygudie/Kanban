@@ -213,7 +213,7 @@ export const apiSlice = createApi({
       query: (payload) => ({
         url: `/task/assign-task/${payload.workspaceId}/${payload.taskId}`,
         method: "POST",
-        data: payload.formdata,
+        data: payload.userId,
       }),
       invalidatesTags: ["Task", "Board"],
     }),

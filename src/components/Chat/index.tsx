@@ -474,5 +474,3 @@ export default function Index({
   );
 }
 
-//separate out reply components
-// emojis
