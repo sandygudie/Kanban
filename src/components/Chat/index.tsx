@@ -16,6 +16,7 @@ import EmojiPicker from "emoji-picker-react";
 import { AiOutlineUpload } from "react-icons/ai";
 import { BsEmojiSmile } from "react-icons/bs";
 import { Tooltip } from "antd";
+import Spinner from "components/Spinner";
 
 interface Props {
   taskId: string;
@@ -59,7 +60,6 @@ export default function Index({
   }, []);
 
   useEffect(() => {
-    // socket.emit("messages", taskId);
     socket.on("messages", (data: any) => {
       updatedChatsHandler(data);
     });
@@ -139,13 +139,13 @@ export default function Index({
   };
 
   const deletePostHandler = (postId: string) => {
-    // if (socket && postEmoji) {
+
     socket.emit("delete_post", postId);
-    // }
+
   };
 
   return (
-    <div className="mt-16 text-center pt-6 border-t-[1px] border-gray/10">
+    <div className="mt-16 mb-12 md:mb-0 text-center pt-6 border-t-[1px] border-gray/10">
       {chats.length > 0 ? (
         <div className="relative">
           <h2 className="text-gray/80">
@@ -389,18 +389,18 @@ export default function Index({
             );
           })}
         </div>
-      ) : !startChat ? (
+      ) : !startChat || !chats.length? (
         <div className="pt-20 mx-auto w-full flex flex-col justify-center items-center text-center">
           <img className="w-24 opacity-40" src="/message.png" alt="user-pics" />
           <p className="text-gray font-normal text-lg">No messages yet!</p>
           <button
             onClick={() => startChathandler()}
-            className="font-medium bg-primary hover:bg-primary-dark mt-4 text-white px-20 py-3 text-lg rounded-lg"
+            className="font-medium bg-primary hover:bg-primary-dark mt-4 text-white px-20 py-3 md:text-lg rounded-lg"
           >
             Start a conversation
           </button>
         </div>
-      ) : null}
+      ) : <Spinner/>}
       {startChat && (
         <form onSubmit={(e) => sendMessage(e)} className="mt-36">
           {reply && (
@@ -465,7 +465,6 @@ export default function Index({
                 </Tooltip>
               </IconButton>
             </div>
-
             <button type="submit" className="bg-primary rounded-xl p-3">
               <IoIosSend className="text-white" />
             </button>
