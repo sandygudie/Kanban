@@ -397,9 +397,10 @@ export default function Index({
             Start a conversation
           </button>
         </div>
-      ) : startChat === "loading" ? (
+      ) : (
         <Spinner />
-      ) : null}
+      )}
+      {startChat === "loading" ? <Spinner /> : null}
       {!startChat && (
         <form onSubmit={(e) => sendMessage(e)} className="mt-36">
           {reply && (
