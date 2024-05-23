@@ -105,7 +105,7 @@ export default function TaskDetails() {
     }
   };
   const startChathandler = () => {
-    setStartChat(true);
+    setStartChat(false);
   };
 
   const handleSelectedColumn = (selectedColumn: string) => {

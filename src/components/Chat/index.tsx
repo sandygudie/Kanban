@@ -223,7 +223,7 @@ export default function Index({
                   </div>
 
                   <div
-                    className={`-right-8 hidden group-hover:flex rounded-lg shadow-3xl gap-x-3 bg-secondary -top-5 px-2 py-3 absolute`}
+                    className={`right-0 hidden group-hover:flex rounded-lg shadow-3xl gap-x-3 bg-secondary -top-5 px-2 py-3 absolute`}
                   >
                     <IconButton
                       handleClick={() => {
@@ -400,7 +400,7 @@ export default function Index({
       ) : startChat === "loading" ? (
         <Spinner />
       ) : null}
-      {startChat && (
+      {!startChat && (
         <form onSubmit={(e) => sendMessage(e)} className="mt-36">
           {reply && (
             <div className="text-left flex mb-2 relative">
