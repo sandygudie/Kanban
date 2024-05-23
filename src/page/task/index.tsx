@@ -60,7 +60,7 @@ export default function TaskDetails() {
   const [assignTask] = useAssignTaskMutation();
   const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
   const [selectedColumn, setSelectedColumn] = useState<string>();
-  const [startChat, setStartChat] = useState(false);
+  const [startChat, setStartChat] = useState<string | boolean>("loading");
 
   useEffect(() => {
     if (tasks?.data) {
@@ -74,13 +74,14 @@ export default function TaskDetails() {
 
   const loadmessages = async () => {
     try {
+      setStartChat("loading");
       const res: any = await getTaskChat(taskId);
       if (res.chats && res.chats.chats.length > 0) {
         setChats(res.chats.chats);
-        setStartChat(true);
+        setStartChat(false);
       } else {
         setChats([]);
-        setStartChat(false);
+        setStartChat(true);
       }
     } catch (err) {
       console.log(err);

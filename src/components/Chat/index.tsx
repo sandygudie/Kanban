@@ -24,7 +24,7 @@ interface Props {
   chats: IChat[];
   updatedChatsHandler: (chats: any) => void;
   startChathandler: () => void;
-  startChat: boolean;
+  startChat: boolean | string | undefined;
 }
 export default function Index({
   updatedChatsHandler,
@@ -112,7 +112,6 @@ export default function Index({
     postEmojiHandler(post._id, temp);
   };
 
-
   const postEmojiHandler = (postId: string, temp: any) => {
     const updatedEmoji = {
       postId,
@@ -139,9 +138,7 @@ export default function Index({
   };
 
   const deletePostHandler = (postId: string) => {
-
     socket.emit("delete_post", postId);
-
   };
 
   return (
@@ -389,7 +386,7 @@ export default function Index({
             );
           })}
         </div>
-      ) : !startChat || !chats.length? (
+      ) : startChat ? (
         <div className="pt-20 mx-auto w-full flex flex-col justify-center items-center text-center">
           <img className="w-24 opacity-40" src="/message.png" alt="user-pics" />
           <p className="text-gray font-normal text-lg">No messages yet!</p>
@@ -400,7 +397,9 @@ export default function Index({
             Start a conversation
           </button>
         </div>
-      ) : <Spinner/>}
+      ) : startChat === "loading" ? (
+        <Spinner />
+      ) : null}
       {startChat && (
         <form onSubmit={(e) => sendMessage(e)} className="mt-36">
           {reply && (
@@ -442,7 +441,6 @@ export default function Index({
             />
 
             <div className="flex gap-x-3 items-center absolute right-20">
-    
               <IconButton handleClick={() => setInputEmoji(true)}>
                 <Tooltip color={"#2b2929"} title="emoji">
                   <div>
