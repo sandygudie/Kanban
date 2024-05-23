@@ -135,14 +135,14 @@ export default function Index() {
                   className="text-white cursor-pointer relative h-full"
                   htmlFor="file_input"
                 >
-                  <div className="w-30 absolute top-0 bg-gray z-20 rounded-full flex flex-col items-center justify-center opacity-0 hover:opacity-90 font-bold text-xs h-full p-5 text-center">
+                  <div className="w-28 absolute top-0 bg-gray z-20 rounded-full flex flex-col items-center justify-center opacity-0 hover:opacity-90 font-bold text-xs h-full p-5 text-center">
                     Click to upload image
                   </div>
                   <div>
                     {user.profilePics || selectedImage ? (
-                      <div className="relative w-28 h-auto rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
+                      <div className="relative w-28 h-28 rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
                         <img
-                          className="w-28 h-auto"
+                          className="w-28 h-28"
                           src={
                             selectedImage
                               ? URL.createObjectURL(selectedImage[0])

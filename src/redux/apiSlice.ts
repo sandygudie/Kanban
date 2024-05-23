@@ -15,7 +15,7 @@ export const apiSlice = createApi({
         method: "PATCH",
         data: payload.formData,
       }),
-      invalidatesTags: ["User", "Workspace"],
+      invalidatesTags: ["User", "Workspace","Task"],
     }),
     createWorkspace: builder.mutation({
       query: (payload) => ({
