@@ -386,6 +386,12 @@ export default function Index({
             );
           })}
         </div>
+      ) : startChat === "loading" ? (
+        <div className="flex justify-center items-center flex-col">
+          {" "}
+          <Spinner />{" "}
+          <p className="text-sm italic text-gray/80">loading messages....</p>
+        </div>
       ) : startChat ? (
         <div className="pt-20 mx-auto w-full flex flex-col justify-center items-center text-center">
           <img className="w-24 opacity-40" src="/message.png" alt="user-pics" />
@@ -397,10 +403,8 @@ export default function Index({
             Start a conversation
           </button>
         </div>
-      ) : (
-        null
-      )}
-      {startChat === "loading" ? <Spinner /> : null}
+      ) : null}
+
       {!startChat && (
         <form onSubmit={(e) => sendMessage(e)} className="mt-36">
           {reply && (
@@ -473,4 +477,3 @@ export default function Index({
     </div>
   );
 }
-
