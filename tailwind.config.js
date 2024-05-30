@@ -4,8 +4,9 @@ module.exports = {
 
   theme: {
     colors: {
-      primary: "hsl(242.31deg 48.15% 57.65%)",
+      primary: "hsl(251.51deg 58.87% 51.37%)",
       "primary-dark": "#4946aa",
+      "primary-hover": "hsl(242.31deg 48.15% 57.65%)",
       gray: "hsla(216, 15%, 57%, 1)",
       success: "#44b774",
       white: "#ffffff",

@@ -79,7 +79,7 @@ export default function Index() {
           <div>
             <form
               onSubmit={handleSubmit}
-              className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
+              className="w-full flex items-center py-10 px-4 sm:px-12 flex-col gap-y-4 justify-center rounded-lg md:border md:bg-white border-gray/40"
             >
               <div className="w-full">
                 <GoogleLogin />
@@ -137,7 +137,7 @@ export default function Index() {
               </div>
               <div className="w-full mt-2">
                 <button
-                  className="bg-primary-dark hover:bg-primary flex justify-center items-center flex-col h-12 w-full font-medium rounded-md text-white p-3"
+                  className="bg-primary-dark hover:bg-primary flex justify-center items-center flex-col h-12 w-full font-medium rounded-lg text-white p-3"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Continue with email"}
@@ -147,7 +147,7 @@ export default function Index() {
                     className="text-xs text-gray underline  hover:text-gray"
                     to="/signup"
                   >
-                    Create account
+                    Create new account
                   </Link>
                   <Link
                     className="text-xs underline text-gray hover:text-gray"

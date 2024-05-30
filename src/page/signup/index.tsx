@@ -101,20 +101,26 @@ export default function Index() {
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
         <div className="w-9/12 md:w-[60rem] mx-auto">
-          <h1 className="font-semibold text-2xl md:mt-8 md:pb-12 text-center">
+          <h1 className="font-semibold text-2xl md:pb-6 text-center">
             Register your account
           </h1>
           <div className=" relative">
             <div className="flex gap-x-20 items-center">
               <form
                 onSubmit={(e) => handleSubmit(e)}
-                className="w-full md:w-[50%] relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
+                className="w-full md:w-[50%] mx-auto relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
               >
-                <div className="block md:hidden w-full">
+                <div className="w-full">
+                  <p className="pb-2 text-sm text-gray">With social account</p>
                   <GoogleLogin />
                 </div>
 
-                <p className="pb-4 md:hidden text-sm text-gray font-medium">OR</p>
+                <div className="overflow-hidden flex items-center justify-center  w-11/12">
+                  {" "}
+                  <hr className="border-r-[1px] border-gray/20 border-solid w-full" />{" "}
+                  <p className="text-sm text-gray font-medium w-36 text-center">OR</p>{" "}
+                  <hr className="border-r-[1px] border-gray/20 border-solid w-full" />
+                </div>
                 <input
                   type="text"
                   minLength={5}
@@ -222,12 +228,11 @@ export default function Index() {
                   </div>
                 </div>
               </form>
-              <hr className="border-r-[1px] border-gray/20 border-solid hidden md:block h-96" />
             </div>
-            <div className="hidden md:block absolute right-20 top-36">
+            {/* <div className="hidden md:block absolute right-20 top-36">
               <p className="pb-4 text-sm text-gray">With social account</p>
               <GoogleLogin />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
