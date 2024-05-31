@@ -128,7 +128,16 @@ export default function AddColumn({ handleClose }: Props) {
                 />
               </div>
 
+             
               <div className="mt-10 relative">
+              {error.length ? (
+                  <p className="text-error absolute -top-8  text-xs flex items-center mt-2 gap-x-2">
+                    <IoAlertCircleOutline />
+                    {error}
+                  </p>
+                ) : (
+                  ""
+                )}
                 <button
                   aria-label="Board"
                   className="text-white bg-primary-dark hover:bg-primary h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
@@ -136,14 +145,7 @@ export default function AddColumn({ handleClose }: Props) {
                 >
                   {isLoading ? <Loader /> : "Create Column(s)"}
                 </button>
-                {error.length ? (
-                  <p className="text-error absolute text-xs flex items-center mt-2 gap-x-2">
-                    <IoAlertCircleOutline />
-                    {error}
-                  </p>
-                ) : (
-                  ""
-                )}
+              
               </div>
             </Form>
           )}

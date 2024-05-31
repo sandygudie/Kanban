@@ -66,20 +66,6 @@ const boardSlice = createSlice({
       state.workspace;
     },
 
-    editBoard: (state, action) => {
-
-      const updatedBoard: IBoard[] = state.board.map((item: IBoard) =>
-        item._id === state.active._id ? { ...item, ...action.payload } : item
-      );
-      return {
-        ...state,
-        board: updatedBoard,
-        active: updatedBoard.find(
-          (item: IBoard) => item._id === action.payload._id
-        ),
-      };
-    },
-
     addTask: (state, action) => {
       state.board.find((item: IBoard) =>
         item._id === state.active._id
@@ -211,6 +197,7 @@ const boardSlice = createSlice({
 
   extraReducers: (builder) => {
     const currentWorkspace = loadWorkspaceData();
+
     builder.addMatcher(
       apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
@@ -223,7 +210,7 @@ const boardSlice = createSlice({
           profilePics,
           createdBy,
           description,
-          socialLinks
+          socialLinks,
         } = workspace;
         const {
           userid,
@@ -232,11 +219,14 @@ const boardSlice = createSlice({
           email,
         } = userDetails;
         state.board = boards;
-        state.active = currentWorkspace?.activeBoard
+        state.active = state.active?._id
+          ? state.board.find((item: IBoard) => item._id === state.active._id)
+          : currentWorkspace?.activeBoard
           ? state.board.find(
               (item: IBoard) => item._id === currentWorkspace?.activeBoard
             )
           : state.board.find((item: IBoard, index: number) => index === 0);
+
         state.workspace = {
           id: _id,
           name,
@@ -244,7 +234,7 @@ const boardSlice = createSlice({
           profilePics,
           createdBy,
           description,
-          socialLinks
+          socialLinks,
         };
 
         state.user = {
@@ -262,7 +252,6 @@ export const {
   activeItem,
   isCompletedToggle,
   deleteBoard,
-  editBoard,
   addBoard,
   editTask,
   addTask,

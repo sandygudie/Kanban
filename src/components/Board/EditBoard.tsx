@@ -3,8 +3,6 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { TextInput } from "components/InputField";
 import { Loader } from "components/Spinner";
-import { useDispatch } from "react-redux";
-import { editBoard } from "redux/boardSlice";
 import { useEditBoardMutation } from "redux/apiSlice";
 
 
@@ -27,7 +25,6 @@ export default function EditBoard({
 }: Props) {
   const [editABoard, { isLoading }] = useEditBoardMutation();
 
-  const dispatch = useDispatch();
 
   const nameSchema = Yup.object().shape({
     name: Yup.string()
@@ -56,7 +53,7 @@ export default function EditBoard({
             : { name: values.name },
       }).unwrap();
       if (response) {
-        dispatch(editBoard(values));
+
         handleClose();
       }
     } catch (error) {

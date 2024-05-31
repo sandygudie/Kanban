@@ -138,7 +138,7 @@ export const apiSlice = createApi({
         method: "PATCH",
         data: payload.formData,
       }),
-      invalidatesTags: ["Board"],
+      invalidatesTags: ["Board", "Workspace"],
     }),
 
     deleteBoard: builder.mutation({
