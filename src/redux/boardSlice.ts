@@ -67,6 +67,7 @@ const boardSlice = createSlice({
     },
 
     editBoard: (state, action) => {
+
       const updatedBoard: IBoard[] = state.board.map((item: IBoard) =>
         item._id === state.active._id ? { ...item, ...action.payload } : item
       );

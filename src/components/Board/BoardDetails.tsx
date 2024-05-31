@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { AppState } from "types";
 import { appData } from "redux/boardSlice";
 import Modal from "components/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditBoard from "./EditBoard";
 import DeleteItem from "components/DeleteItem";
 import { CiEdit } from "react-icons/ci";
@@ -19,6 +19,7 @@ export default function BoardDetails({ handleClose }: Props) {
   const { active, workspace } = data;
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState("");
+  const [newValue, setNewValue] = useState("");
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const [toggle, setToggle] = useState("About");
 
@@ -30,6 +31,21 @@ export default function BoardDetails({ handleClose }: Props) {
       },
     },
   ];
+
+  useEffect(() => {
+    setNewValue(
+      isEdit === "description"
+        ? active?.description||""
+        : isEdit === "name"
+        ? active.name
+        : ""
+    );
+  }, [active, isEdit,setNewValue]);
+
+  const handleValueChange = (value: string) => {
+    setNewValue(value);
+  };
+
 
   return (
     <>
@@ -135,15 +151,22 @@ export default function BoardDetails({ handleClose }: Props) {
       <Modal
         open={isOpenEdit || isOpenDelete}
         handleClose={() => {
-          setIsOpenEdit(false), setIsOpenDelete(false);
+          setIsOpenEdit(false),
+            setNewValue(""),
+            setIsEdit(""),
+            setIsOpenDelete(false);
         }}
       >
         {isOpenEdit ? (
           <EditBoard
+            handleValueChange={handleValueChange}
             activeBoard={active}
             workspaceId={workspace.id}
             isEdit={isEdit}
-            handleClose={() => setIsOpenEdit(false)}
+            handleClose={() => {
+              setIsOpenEdit(false), setIsEdit(""), setNewValue("");
+            }}
+            newValue={newValue}
           />
         ) : (
           <DeleteItem

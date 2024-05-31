@@ -1,17 +1,20 @@
 import { IBoard } from "types";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import { TextArea, TextInput } from "components/InputField";
+import { TextInput } from "components/InputField";
 import { Loader } from "components/Spinner";
 import { useDispatch } from "react-redux";
 import { editBoard } from "redux/boardSlice";
 import { useEditBoardMutation } from "redux/apiSlice";
 
+
 interface Props {
+  handleValueChange: (newValue: string) => void;
   handleClose: () => void;
   activeBoard: IBoard;
   workspaceId: string;
   isEdit: string;
+  newValue: string;
 }
 
 export default function EditBoard({
@@ -19,10 +22,13 @@ export default function EditBoard({
   activeBoard,
   workspaceId,
   isEdit,
+  newValue,
+  handleValueChange,
 }: Props) {
   const [editABoard, { isLoading }] = useEditBoardMutation();
+
   const dispatch = useDispatch();
-  
+
   const nameSchema = Yup.object().shape({
     name: Yup.string()
       .required("Required")
@@ -37,8 +43,9 @@ export default function EditBoard({
   const descriptionSchema = Yup.object().shape({
     description: Yup.string(),
   });
-  
+
   const editBoardHandler = async (values: any) => {
+
     try {
       const response = await editABoard({
         boardId: activeBoard._id,
@@ -61,8 +68,14 @@ export default function EditBoard({
       <Formik
         initialValues={
           isEdit === "description"
-            ? { _id: activeBoard._id, description: activeBoard.description }
-            : { _id: activeBoard._id, name: activeBoard.name }
+            ? {
+                _id: activeBoard._id,
+                description: activeBoard?.description,
+              }
+            : {
+                _id: activeBoard._id,
+                name: activeBoard.name,
+              }
         }
         validationSchema={
           isEdit === "description" ? descriptionSchema : nameSchema
@@ -71,46 +84,58 @@ export default function EditBoard({
         validateOnBlur={false}
         onSubmit={editBoardHandler}
       >
-        <Form>
-          {isEdit === "description" ? (
-            <div className="mb-6">
-              <h2 className="font-medium text-lg ">Board Description</h2>
-              <TextArea
-                label=""
-                name="description"
-                placeholder="Tell us more about the board."
-              />
-            </div>
-          ) : (
-            <div className="mb-6">
+        {({ setFieldValue }) => (
+          <Form>
+            {isEdit === "description" ? (
+              <div className="mb-6">
+                <h2 className="font-medium text-lg ">Board Description</h2>
+                <TextInput
+                  value={newValue}
+                  onChange={(e: { target: { value: string } }) => {
+                    setFieldValue("description", e.target.value),
+                      handleValueChange(e.target.value);
+                  }}
+                  label=""
+                  name="description"
+                  placeholder="Tell us more about the board."
+                />
+              </div>
+            ) : (
+              <div className="mb-6">
                 <h2 className="font-medium text-lg">Board Name</h2>
-              <TextInput
-                label=""
-                name="name"
-                type="text"
-                placeholder="E.g  Development, Marketing"
-              />
-            </div>
-          )}
+                <TextInput
+                  value={newValue}
+                  onChange={(e: { target: { value: string } }) => {
+                    setFieldValue("name", e.target.value),
+                      handleValueChange(e.target.value);
+                  }}
+                  label=""
+                  name="name"
+                  type="text"
+                  placeholder="E.g  Development, Marketing"
+                />
+              </div>
+            )}
 
-          <div className="mt-8 flex items-center justify-end gap-x-4">
-            <button
-              aria-label="Save"
-              className="p-2 text-sm w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/90 font-bold"
-              type="submit"
-            >
-              {isLoading ? <Loader /> : "Save"}
-            </button>
-            <button
-              aria-label="cancel"
-              onClick={handleClose}
-              className="p-2 text-sm w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
-              type="button"
-            >
-              Cancel
-            </button>
-          </div>
-        </Form>
+            <div className="mt-8 flex items-center justify-end gap-x-4">
+              <button
+                aria-label="Save"
+                className="p-2 text-sm w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-success rounded-md bg-success/90 font-bold"
+                type="submit"
+              >
+                {isLoading ? <Loader /> : "Save"}
+              </button>
+              <button
+                aria-label="cancel"
+                onClick={handleClose}
+                className="p-2 text-sm w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
+                type="button"
+              >
+                Cancel
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );
