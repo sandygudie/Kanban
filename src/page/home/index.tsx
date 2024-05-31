@@ -71,7 +71,7 @@ export default function Index() {
           </div>
         </header>
 
-        <main className="h-full overflow-auto pt-40 overflow-hidden pb-16 text-center">
+        <main className="h-full overflow-auto pt-40 overflow-hidden md:pb-16 text-center">
           <section className="px-4 sm:px-8 lg:px-16 relative">
             {" "}
             <img
@@ -79,7 +79,7 @@ export default function Index() {
               className=" w-[30rem] -top-40 -right-56 absolute"
             />
             <h1 className="font-bold text-[2.5rem] md:text-6xl">
-              <p className="title-left"> Effortlessly Manage </p>
+              <p className="title-left"> Effortlessly Manage</p>
               <p className="title-right">Your Projects.</p>
             </h1>
             <div className="description">
@@ -120,9 +120,9 @@ export default function Index() {
               alt="kanban board"
             />
           </section>
-          <section className="px-4 relative sm:px-8 lg:px-16 pt-36 pb-24 flex items-center justify-between lg:justify-center flex-wrap">
+          <section className="px-4 relative sm:px-8 lg:px-16 mt-12 md:pt-36 pb-24 flex items-center justify-between lg:justify-center flex-wrap">
             <img src="./2.png" className=" w-72 top-10 -left-20 absolute" />
-            <div className="mini:w-[40%] z-40 md:w-1/3 text-left">
+            <div className="mini:w-[40%] z-20 md:w-1/3 text-left">
               <h2 className="text-4xl pb-4 font-bold">
                 What is special about Kanban board?
               </h2>
@@ -131,7 +131,7 @@ export default function Index() {
                 Agile development framework.{" "}
               </p>
             </div>
-            <div className="mini:w-[60%] md:w-1/2">
+            <div className="mini:w-[60%] md:w-1/2 z-20">
               <div className="flex items-center rounded-t-lg gap-x-6 py-4 md:px-6">
                 <img src="./collaboration.png" className="w-10" />
                 <div className="text-left">
