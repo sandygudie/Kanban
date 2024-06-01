@@ -269,7 +269,7 @@ export default function TaskDetails() {
           </div>
           <div className="mt-8">
             <div className="my-8 md:mb-12">
-              <p className="font-semibold mb-2">Description</p>
+              <p className="font-semibold text-lg mb-2">Description</p>
               <p className="rounded-md mini:w-8/12">
                 {tasks.data.description
                   ? tasks.data.description
@@ -278,7 +278,7 @@ export default function TaskDetails() {
             </div>
             <div className="my-10 flex flex-col md:flex-row justify-between gap-x-36 gap-y-8 md:items-start">
               <div className="md:w-[50%]">
-                <p className="font-semibold text-sm">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
+                <p className="font-semibold">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
                     tasks.data.subtasks.length >= 4 && "h-[10rem] pr-4"
@@ -289,7 +289,7 @@ export default function TaskDetails() {
                       return (
                         <div
                           key={subtask._id}
-                          className="bg-gray/20 flex items-center gap-x-2 rounded-sm p-3 mt-2"
+                          className="bg-gray/20 flex items-center gap-x-2 rounded-md p-3 mt-2"
                         >
                           <input
                             type="checkbox"
@@ -313,10 +313,10 @@ export default function TaskDetails() {
 
               <div className="relative md:w-[40%]">
                 <div className="flex items-center gap-x-20">
-                  <p className="font-semibold mb-2 text-sm">Assign task</p>
+                  <p className="font-semibold mb-2">Assign task</p>
                   <IconButton handleClick={() => setAssign(true)}>
                     <IoAdd
-                      size={25}
+                      size={30}
                       className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
                     />
                   </IconButton>
@@ -383,7 +383,7 @@ export default function TaskDetails() {
             </div>
             <div className="flex flex-col md:flex-row gap-x-36 justify-between gap-y-8 items-start mt-10">
               <div className="md:pb-6 w-full md:w-[50%]">
-                <p className="text-sm font-semibold mb-2">Columns</p>
+                <p className="font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
                   active={active?.data}
@@ -394,7 +394,7 @@ export default function TaskDetails() {
                 />
               </div>
               <div className="md:w-[40%]">
-                <p className="text-sm font-semibold mb-4">Labels</p>
+                <p className="font-semibold mb-4">Labels</p>
                 <div className="flex items-start flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center relative gap-x-4">
@@ -427,7 +427,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="font-medium bg-gray/20 hover:bg-gray/30 py-2 px-4 text-sm rounded-md"
+                      className="font-medium bg-gray/20 hover:bg-gray-200 py-2 px-4 text-sm rounded-md"
                       onClick={() => {
                         setDate(true);
                       }}

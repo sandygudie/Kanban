@@ -114,7 +114,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <TbUsersPlus /> Invite members to workspace
+                        <TbUsersPlus  className="text-lg"/> Invite members to workspace
                       </p>
                     ),
                     handler: () => {
@@ -124,7 +124,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <IoSettingsOutline />
+                        <IoSettingsOutline  className="text-lg"/>
                         Settings
                       </p>
                     ),
@@ -135,7 +135,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <GoArrowSwitch /> Available workspace
+                        <GoArrowSwitch className="text-lg" /> Available workspace
                       </p>
                     ),
                     handler: () => {
@@ -145,7 +145,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <GrNewWindow /> New workspace
+                        <GrNewWindow  className="text-lg"/> New workspace
                       </p>
                     ),
                     handler: () => {

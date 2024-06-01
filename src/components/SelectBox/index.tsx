@@ -89,11 +89,11 @@ export default function Index({
           <BiChevronUp className={`icon ${isOpen && "open"}`} />
         )}
         {isOpen && (
-          <div className={`dropdown-body bg-gray`}>
+          <div className={`dropdown-body bg-secondary rounded-md shadow-3xl`}>
             {active?.columns.map((item: IColumn, i: number) => (
               <div
-                className={`dropdown-item text-sm px-4 py-2.5 hover:text-gray cursor-pointer ${
-                  i < 2 && "border-b-[1px] border-gray/10"
+                className={`dropdown-item font-semibold text-sm px-4 py-2.5 hover:bg-gray-200 hover:text-gray cursor-pointer ${
+                  i <active?.columns.length && "border-b-[1px] border-gray/10"
                 }`}
                 onClick={(e) =>
                   handleItemClick(
