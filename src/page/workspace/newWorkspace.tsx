@@ -68,7 +68,7 @@ const JoinWorkspaceForm = () => {
         <div className="my-8">
           <button
             aria-label="Board"
-            className="px-2 flex-col md:text-lg flex items-center justify-center text-white bg-primary h-12 font-bold py-4 w-full rounded-full"
+            className="px-2 flex-col md:text-lg flex items-center justify-center text-white bg-primary hover:bg-primary-hover h-12 font-bold py-4 w-full rounded-full"
             type="submit"
           >
             {isLoading ? <Loader /> : "Continue"}
@@ -132,7 +132,7 @@ export default function NewWorkspace() {
               <h1 className="text-xl sm:text-3xl font-bold">
                 Welcome to Kanban!
               </h1>
-              <p className="text-gray/70 font-medium mt-1 text-sm mb-5">
+              <p className="text-gray font-medium mt-1 text-sm mb-5">
                 Get started by creating or joining a workspace!
               </p>
             </div>

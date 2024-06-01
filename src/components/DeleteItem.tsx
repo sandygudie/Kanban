@@ -125,7 +125,7 @@ export default function Delete({
 
       <div className="text-center flex items-center justify-end gap-x-8 mt-8">
         <button
-          className="p-2 text-sm md:w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-error rounded-md bg-error/80 font-bold"
+          className="p-2 text-sm md:w-24 text-white h-10 flex justify-center items-center flex-col hover:bg-[#e60023] rounded-md bg-error font-bold"
           type="button"
           onClick={
             boardname
@@ -148,7 +148,7 @@ export default function Delete({
           )}
         </button>
         <button
-          className="p-2 text-sm md:w-24 font-bold border-[1px] border-gray/30 hover:bg-gray/10 h-10 duration-300  rounded-md"
+          className="p-2 text-sm md:w-24 font-bold border-[1px] border-gray/30 hover:bg-gray-200 h-10 duration-300 rounded-md"
           type="button"
           onClick={handleClose}
         >

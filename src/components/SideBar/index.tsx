@@ -16,10 +16,7 @@ interface Props {
   setShowSidebar?: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Index({
-  setShowSidebar,
-  showSidebar,
-}: Props) {
+export default function Index({ setShowSidebar, showSidebar }: Props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
@@ -42,68 +39,66 @@ export default function Index({
           >
             <div>
               {board.length > 0 && (
-                <p className="pl-4 pt-2 pb-4 font-medium text-xs">
+                <p className="pl-4 pt-2 pb-4 font-medium text-gray text-[12px]">
                   ALL BOARDS ({board.length})
                 </p>
               )}
 
-         
-                {board.length>0 && (
-                  <div className="pt-1 pb-4">
-                    {board.map((options: IBoard) => {
-                      return (
-                        <button
-                          key={options._id}
-                          className={`h-10 w-[13.5rem] px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${`${
-                            active?._id === options._id
-                              ? "bg-gray-300 rounded-r-full"
-                              : "rounded-r-full hover:bg-gray/10"
-                          } `} `}
-                          onClick={() => {
-                            navigate(`/workspace/${workspace.id}`);
-                            dispatch(activeItem(options));
-                            saveloadWorkspaceData({
-                              workspaceId: workspace.id,
-                              activeBoard: options._id,
-                            });
-                          }}
-                        >
-                          <div className="flex items-center gap-x-2 justify-between">
-                            <MdSpaceDashboard />
-                            <span
-                              className={`${
-                                options.name.length > 12
-                                  ? "truncate w-[130px] text-left"
-                                  : "w-auto"
-                              } block `}
-                            >
-                              {options.name}
-                            </span>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+              {board.length > 0 && (
+                <div className="pt-1 pb-4">
+                  {board.map((options: IBoard) => {
+                    return (
+                      <button
+                        key={options._id}
+                        className={`h-10 w-[13.5rem] px-4 relative rounded-r-full flex items-center group justify-between font-semibold cursor-pointer ${`${
+                          active?._id === options._id
+                            ? "bg-gray-300"
+                            : "hover:bg-gray/10"
+                        } `} `}
+                        onClick={() => {
+                          navigate(`/workspace/${workspace.id}`);
+                          dispatch(activeItem(options));
+                          saveloadWorkspaceData({
+                            workspaceId: workspace.id,
+                            activeBoard: options._id,
+                          });
+                        }}
+                      >
+                        <div className="flex items-center gap-x-2 justify-between">
+                          <MdSpaceDashboard className="text-xl" />
+                          <span
+                            className={`${
+                              options.name.length > 12
+                                ? "truncate w-[170px] text-left"
+                                : "w-auto"
+                            } block text-[15px]`}
+                          >
+                            {options.name}
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
-                {workspace.id ? (
-                  <button
-                    onClick={() => {
-                      setOpenBoard(true);
-                    }}
-                    className="pl-4 pt-1 font-bold cursor-pointer font-medium text-gray hover:text-typography px-3 text-sm"
-                  >
-                    <div className="flex items-center">
+              {workspace.id ? (
+                <button
+                  onClick={() => {
+                    setOpenBoard(true);
+                  }}
+                  className="pl-4 text-center mt-6 font-bold cursor-pointer hover:text-typography text-sm"
+                >
+                  <div className="flex items-center text-white pr-6 justify-center bg-primary hover:bg-primary-hover rounded-lg px-4 py-2.5">
+                    {" "}
+                    <span>
                       {" "}
-                      <span>
-                        {" "}
-                        <IoIosAdd size={20} />{" "}
-                      </span>{" "}
-                      <p> New Board</p>
-                    </div>
-                  </button>
-                ) : null}
-         
+                      <IoIosAdd size={20} />{" "}
+                    </span>{" "}
+                    <p> New Board</p>
+                  </div>
+                </button>
+              ) : null}
             </div>
 
             <div className="mb-4 absolute top-0 right-0 md:mb-0">

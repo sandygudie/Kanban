@@ -57,7 +57,6 @@ export default function Index() {
     profilePics: Yup.string(),
   });
 
-
   const UpdateWorkSpace = async (values: any) => {
     let res;
     if (values.profilePics) {
@@ -111,7 +110,7 @@ export default function Index() {
             <img
               src={workspace.profilePics}
               alt="image"
-              className=" border-solid object-contain h-12 md:h-20 w-12 md:w-20"
+              className="border-solid object-contain h-12 md:h-20 w-12 md:w-20"
             />
           </div>
           <div>
@@ -130,11 +129,11 @@ export default function Index() {
               {linkitems.map((ele: any) => {
                 return (
                   <button
-                    onClick={() => setToggle((ele.name))}
+                    onClick={() => setToggle(ele.name)}
                     key={ele.name}
                     className={`${
                       toggle.toLowerCase() === ele.name && "bg-gray-200"
-                    } border-none px-4 py-2 rounded-md text-sm font-medium w-full text-left`}
+                    } border-none px-4 py-2 md:text-base rounded-md font-semibold w-full text-left`}
                   >
                     {TitleCase(ele.name)}
                   </button>
@@ -164,25 +163,35 @@ export default function Index() {
                     }: FormikErrors<{ image?: File }> | any) => (
                       <Form className="rounded-md p-6 md:px-10 md:pt-8 md:pb-10 bg-secondary">
                         <div className="mb-10">
+                          <label className="font-semibold text-sm md:text-base">
+                            Workspace Name{" "}
+                            <p className="font-normal text-gray text-xs">
+                              ( Your organization or company name.)
+                            </p>
+                          </label>
                           <TextInput
-                            label="Workspace Name"
-                            subLabel="(Your organization or company name.)"
+                            label=""
                             name="name"
                             type="text"
                             placeholder="E.g Development, Marketing"
                           />
-                         
                         </div>
 
                         <div className="">
-                          <p className="mb-2 font-medium text-lg text-sm">Company logo</p>
+                          <label className="font-semibold text-sm md:text-base">
+                            Company logo{" "}
+                            <p className="font-normal text-gray text-xs">
+                              ( Upload an image that will show up in your
+                              sidebar and notifications. )
+                            </p>
+                          </label>
                           <div className="relative">
                             <label
                               className="text-white relative block w-fit cursor-pointer h-full"
                               htmlFor="file_input"
                             >
-                              <div className="relative w-24 h-auto">
-                                <div className="w-24 absolute top-0 bg-gray opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-4">
+                              <div className="relative mt-3 w-24 border-gray-100 border-[1px] h-auto">
+                                <div className="w-24 absolute top-0 bg-gray opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-3">
                                   Click to upload image
                                 </div>
                                 <img
@@ -233,19 +242,15 @@ export default function Index() {
                                   {errors.image || uploadError}
                                 </span>
                               ))}
-                            <span className="text-gray/70 text-xs">
-                              Upload an image that will show up in your sidebar
-                              and notifications.
-                            </span>
                           </div>
                         </div>
                         <div className="mt-6">
                           <div className="ml-auto md:w-20">
                             <button
-                              className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
+                              className="h-10 px-4 text-xs h-10 w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md  font-bold"
                               type="submit"
                             >
-                              {isLoading ? <Loader/> : "Update"}
+                              {isLoading ? <Loader /> : "Update"}
                             </button>
                           </div>
                         </div>
@@ -253,13 +258,16 @@ export default function Index() {
                     )}
                   </Formik>
                 </div>
-                <SocialLinks links={workspace.socialLinks} workspaceId={workspace.id}/>
-                <div className="rounded-md px-8 py-7 bg-secondary md:mb-12 mt-20">
+                <SocialLinks
+                  links={workspace.socialLinks}
+                  workspaceId={workspace.id}
+                />
+                <div className="rounded-md px-8 py-7  bg-secondary md:mb-12 mt-20">
                   <button
                     onClick={() => {
                       setIsOpenDelete(true);
                     }}
-                    className="text-error font-bold text-sm"
+                    className="bg-error p-3 rounded-lg hover:bg-[#e60023] text-white font-bold text-sm"
                   >
                     Delete Workspace
                   </button>

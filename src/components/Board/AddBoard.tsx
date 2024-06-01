@@ -26,11 +26,11 @@ function AddBoard({ handleClose }: Props) {
   const BoardSchema = Yup.object().shape({
     name: Yup.string()
       .required("Required")
-      .test("len", "At least 5 characters and not more than 15", (val) => {
+      .test("len", "At least 5 characters and not more than 25", (val) => {
         if (val == undefined) {
           return false;
         }
-        return val.length >= 5 && val.length <= 15;
+        return val.length >= 5 && val.length <= 25;
       }),
     columns: Yup.array()
       .of(
@@ -155,7 +155,7 @@ function AddBoard({ handleClose }: Props) {
               <div className="mt-10">
                 <button
                   aria-label="Board"
-                  className="px-2 text-white h-12 bg-primary-dark hover:bg-primary font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
+                  className="px-2 text-white h-12 bg-primary hover:hover:bg-primary-hover font-bold py-4 flex justify-center items-center flex-col w-full rounded-full"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Create Board"}

@@ -52,7 +52,7 @@ export default function Index() {
         </div>
 
         <button
-          className="mb-4 mt-12 bg-primary-dark hover:bg-primary flex justify-center items-center min-w-48 flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
+          className="mb-4 mt-12 bg-primary hover:bg-primary-hover flex justify-center items-center min-w-48 flex-col h-12 mini:w-3/5 mx-auto font-medium rounded-md text-white p-3"
           type="submit"
         >
           {isLoading ? <Loader /> : "Continue with email"}

@@ -204,7 +204,7 @@ export default function Index({
                     ele.message.length > 30 ? "py-4" : "pt-2"
                   }  bg-gray/20 w-fit max-w-lg px-3 text-sm relative group 
                   
-                  ${messageId === ele._id ? "bg-primary" : ""} `}
+                  ${messageId === ele._id ? "bg-gray/30" : ""} `}
                 >
                   <div
                     ref={emojiRef}
@@ -398,7 +398,7 @@ export default function Index({
           <p className="text-gray font-normal text-lg">No messages yet!</p>
           <button
             onClick={() => startChathandler()}
-            className="font-medium bg-primary hover:bg-primary-dark mt-4 text-white px-20 py-3 md:text-lg rounded-lg"
+            className="font-medium bg-primary hover:bg-primary-hover mt-4 text-white px-20 py-3 md:text-lg rounded-lg"
           >
             Start a conversation
           </button>

@@ -132,14 +132,14 @@ export default function BoardDetails({ handleClose }: Props) {
               >
                 <div className="justify-between flex items-center py-2 px-5">
                   <div className="text-left">
-                    <span className="text-gray/80 font-medium text-sm ">
+                    <span className="text-gray/80 font-medium text-sm">
                       {ele.label}
                     </span>
                     {ele.title}
                   </div>
                   {ele.label ? (
                     <span onClick={() => ele.handler()}>
-                      <CiEdit className="text-lg" />
+                      <CiEdit className="text-lg text-gray/60" />
                     </span>
                   ) : null}
                 </div>

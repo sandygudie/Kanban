@@ -43,7 +43,7 @@ export const TextInput = ({
         
         className={`${
           meta.error ? "border-error/70 border-solid" : null
-        } px-4 py-4 w-full mt-2 rounded-md outline-none placeholder:text-xs`}
+        } px-4 py-4 w-full mt-2 rounded-md outline-none placeholder:text-sm`}
       />
       {meta.error ? (
         <div className="absolute -bottom-3 text-error/70 text-xs flex items-center gap-x-1">
@@ -65,7 +65,7 @@ export const TextArea = (
         {props.label}
       </label>
       <textarea
-        className="py-2 px-4 w-full mt-2 rounded-md outline-none text-sm h-24 placeholder:text-xs"
+        className="py-2 px-4 w-full mt-2 rounded-md outline-none text-sm h-24 placeholder:text-sm"
         placeholder={props.placeholder}
         {...field}
       />
@@ -93,7 +93,7 @@ export const SubtaskInput = ({
           {...props}
           className={`${
             meta.error ? " border-error/70 border-solid" : null
-          } px-4 py-3 w-full text-sm placeholder:text-xs border-[1px] rounded-md outline-none`}
+          } px-4 py-3 w-full text-sm placeholder:text-sm border-[1px] rounded-md outline-none`}
         />
         <button type="button" onClick={() => arrayHelpers.remove(index)}>
           <MdClose className="text-lg hover:text-primary font-bold" />

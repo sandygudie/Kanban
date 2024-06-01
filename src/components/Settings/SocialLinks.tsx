@@ -42,7 +42,7 @@ export default function Index({ workspaceId, links }: Props) {
       <Formik
         initialValues={{
           socialLinks:
-           links.length > 0
+            links.length > 0
               ? links.map((ele) => {
                   return { name: ele };
                 })
@@ -56,7 +56,8 @@ export default function Index({ workspaceId, links }: Props) {
       >
         {({ values, errors }) => (
           <Form className="rounded-md p-6 md:p-10 bg-secondary h-full mt-20">
-            <label className="text-sm font-bold ">Social accounts</label>
+            <label className="font-semibold text-sm md:text-base">Social accounts</label>
+            
             <FieldArray
               name="socialLinks"
               render={(arrayHelpers) => (
@@ -80,7 +81,7 @@ export default function Index({ workspaceId, links }: Props) {
                     ))}
                   <button
                     aria-label="Add"
-                    className="bg-primary/40 text-primary dark:bg-white dark:text-secondary mt-3 font-bold text-sm py-2 px-3 w-max rounded-md"
+                    className="bg-gray-200 hover:bg-gray/30 mt-3 font-bold text-xs py-2.5 px-3 w-max rounded-md"
                     type="button"
                     onClick={() => {
                       arrayHelpers.push({
@@ -106,7 +107,7 @@ export default function Index({ workspaceId, links }: Props) {
 
             <div className="ml-auto mt-6 md:w-20">
               <button
-                className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col hover:bg-gray/20 border border-gray/30 rounded-md bg-main font-bold"
+                className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col bg-gray-300 hover:bg-gray/30 border border-gray/30 rounded-md font-bold"
                 type="submit"
               >
                 {isLoading ? <Loader /> : "Update"}

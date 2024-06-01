@@ -137,7 +137,7 @@ export default function Index() {
               </div>
               <div className="w-full mt-2">
                 <button
-                  className="bg-primary-dark hover:bg-primary flex justify-center items-center flex-col h-12 w-full font-medium rounded-lg text-white p-3"
+                  className="bg-primary hover:bg-primary-hover flex justify-center items-center flex-col h-12 w-full font-medium rounded-lg text-white p-3"
                   type="submit"
                 >
                   {isLoading ? <Loader /> : "Continue with email"}

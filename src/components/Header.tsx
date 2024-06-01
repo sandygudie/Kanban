@@ -56,7 +56,7 @@ export default function Header({ memberPics }: any) {
   return (
     <>
       <header className="fixed w-full z-40">
-        <div className="h-[50px] mini:h-[65px] flex items-center absolute w-full border-b-[1px] border-gray/20">
+        <div className="h-[50px] mini:h-[65px] flex items-center w-full border-b-[1px] border-gray/20">
           <div
             className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
           >
@@ -192,7 +192,7 @@ export default function Header({ memberPics }: any) {
                 onClick={() =>
                   navigate("/workspace/settings?members", { state: "Members" })
                 }
-                className="hover:bg-gray-100 border-[1px] cursor-pointer border-solid border-gray-200 rounded-lg p-2  gap-x-4 items-center hidden md:flex"
+                className="hover:bg-gray-300 bg-gray-200 border-[1px] cursor-pointer border-solid border-gray-200 rounded-lg p-2 gap-x-4 items-center hidden md:flex"
               >
                 <div className="img_container">
                   {memberPics?.map(
@@ -221,13 +221,11 @@ export default function Header({ memberPics }: any) {
                     )
                   )}
                 </div>
-                <p className="font-medium text-xs">
-                  {memberPics.length} members
-                </p>
+                <p className="font-semibold text-sm">{memberPics.length} members</p>
               </div>
               <button
                 onClick={() => toggleFullScreen()}
-                className="hidden mini:block font-bold text-gray/80 hover:text-gray text-xl"
+                className="hidden mini:block font-bold text-gray hover:text-primary text-xl"
               >
                 {isFullscreen ? <MdZoomInMap /> : <GoScreenFull />}
               </button>
@@ -239,7 +237,7 @@ export default function Header({ memberPics }: any) {
                     className="border-gray w-max flex flex-col justify-center items-center"
                   >
                     <img
-                      className="h-8 w-8 p-1 rounded-full overflow-hidden"
+                      className="h-8 w-8 rounded-full border-gray border-[1px] overflow-hidden"
                       src={user.profilePics}
                       alt="user profile"
                     />
@@ -263,7 +261,7 @@ export default function Header({ memberPics }: any) {
                             <p className="font-semibold mini:text-lg">
                               {user.name}
                             </p>
-                            <span className="text-gray/80 font-medium text-xs">
+                            <span className="text-gray font-medium text-xs">
                               {user.email}
                             </span>
                           </div>
@@ -299,17 +297,17 @@ export default function Header({ memberPics }: any) {
           </div>
         </div>
         {board.length > 0 && (
-          <div className="h-auto xs:h-[45px] bg-secondary absolute top-[50px] left-0 mini:hidden flex flex-col pr-4 items-start bg-gray-100 justify-center w-full">
-            <div className="relative">
+          <div className="h-auto bg-secondary mini:hidden py-2 bg-gray-100 w-full">
+            <div className="relative px-4">
               <button
                 onClick={() => setViewBoard(!viewBoard)}
-                className={`font-bold md:w-auto text-sm pl-4`}
+                className={`font-bold md:w-auto text-sm`}
               >
-                <div className="flex">
+                <div className="flex text-gray">
                   <span className="text-xs sm:inline">
                     ALL BOARDS ({board.length})
                   </span>
-                  <HiOutlineChevronDown className="mt-0.5 ml-1 text-sm inline " />
+                  <HiOutlineChevronDown className="mt-0.5 ml-1 text-sm inline" />
                 </div>
               </button>{" "}
               <span>
@@ -318,17 +316,17 @@ export default function Header({ memberPics }: any) {
               <button
                 onClick={() => setIsOpenBoardDetails(true)}
                 className={`${
-                  active?.name.length > 9 ? "truncate w-auto" : "w-auto"
-                } hidden xs:inline text-sm font-medium bg-gray/20 py-2 px-4 rounded`}
+                  active?.name.length > 12 ? "truncate w-[150px]" : "w-auto"
+                } hidden xs:inline text-sm font-medium bg-gray/20 py-2 px-2 rounded`}
               >
                 #{TitleCase(active?.name)}
               </button>
               {viewBoard && (
                 <div
                   ref={domRef}
-                  className={`bg-secondary absolute shadow-3xl rounded-br-lg left-0`}
+                  className={`bg-secondary top-[44px] absolute shadow-3xl rounded-br-lg left-0`}
                 >
-                  <div className="h-full py-4">
+                  <div className="h-full pb-4">
                     {board && (
                       <>
                         {board.map((options: IBoard) => {
@@ -337,8 +335,8 @@ export default function Header({ memberPics }: any) {
                               key={options._id}
                               className={`h-10 w-52 px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${
                                 active?._id === options._id
-                                  ? "bg-gray-100 rounded-r-full"
-                                  : "rounded-r-full hover:bg-primary/20"
+                                ? "bg-gray-300"
+                                : "hover:bg-gray/10"
                               }  `}
                               onClick={() => {
                                 navigate(`/workspace/${workspace.id}`);
@@ -355,7 +353,7 @@ export default function Header({ memberPics }: any) {
                                 <span
                                   className={`${
                                     options.name.length > 13
-                                      ? "truncate w-auto"
+                                      ? "truncate text-left w-[150px]"
                                       : "w-auto"
                                   } block text-sm`}
                                 >
@@ -371,9 +369,9 @@ export default function Header({ memberPics }: any) {
                     {workspace.id ? (
                       <button
                         onClick={() => setOpenBoard(true)}
-                        className="pl-4 mt-4 font-bold cursor-pointer text-gray hover:text-typography"
+                        className="pl-4 mt-4 font-bold cursor-pointer hover:text-typography"
                       >
-                        <div className="flex items-center text-sm mini:text-base mt-4">
+                        <div className="flex items-center text-sm mini:text-base mt-4 bg-primary hover:bg-primary-hover px-4 py-2.5 rounded-lg">
                           <span>
                             <IoIosAdd size={20} />
                           </span>

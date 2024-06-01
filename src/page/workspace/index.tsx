@@ -84,27 +84,27 @@ export default function Index() {
                           });
                           window.location.href = `workspace/${ele._id}`;
                         }}
-                        className="px-5 py-4 w-6/6 font-semibold rounded-md border-[1px] border-solid border-gray/20 bg-gray-100 hover:bg-gray/15 gap-x-4"
+                        className="px-5 py-4 w-6/6 font-semibold rounded-md border-[1px] border-solid border-gray/20 bg-gray-200 hover:bg-gray-300 gap-x-4"
                       >
                         <div className="flex items-center gap-x-2">
                           <img
                             src={ele.profilePics}
-                            className="w-8 h-auto"
+                            className="w-28 h-auto"
                             alt=""
                           />
                           <div>
-                            <h2 className="font-bold text-sm mini:text-base">
+                            <h2 className="font-bold text-lg mini:text-base">
                               {ele.name}
                             </h2>
                           </div>
                         </div>
-                        <div className="font-semibold text-sm mt-4 text-left">
-                          <p className="flex items-center gap-x-2">
-                            <MdSpaceDashboard /> {ele.boards.length}{" "}
+                        <div className="font-semibold mt-4 text-left">
+                          <p className="flex items-center gap-x-2 ">
+                            <MdSpaceDashboard  className="text-lg"/> {ele.boards.length}{" "}
                             {ele.boards.length > 1 ? "boards" : "board"}
                           </p>
                           <p className="flex gap-x-2 items-center">
-                            <BsPeople /> {ele.members.length}{" "}
+                            <BsPeople  className="text-lg"/> {ele.members.length}{" "}
                             {ele.members.length > 1 ? "members" : "member"}
                           </p>
                         </div>
@@ -122,7 +122,7 @@ export default function Index() {
           }`}
         >
           <Link
-            className="bg-gray-200 hover:bg-gray-300 flex-col flex items-center justify-center text-sm h-12 px-8 rounded-lg font-bold"
+            className="!text-white bg-primary hover:bg-primary-hover flex-col flex items-center justify-center text-sm h-12 px-8 rounded-lg font-bold"
             to="/workspace/new"
           >
             {" "}

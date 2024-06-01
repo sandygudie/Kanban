@@ -292,7 +292,7 @@ export default function AddTask({
               <div className="mt-10">
                 <button
                   aria-label="Create Task"
-                  className="text-white bg-primary-dark hover:bg-primary  h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
+                  className="text-white bg-primary hover:hover:bg-primary-hover h-12 px-2 py-3 w-full flex justify-center items-center flex-col font-bold dark:hover:text-white rounded-full"
                   type="submit"
                 >
                   {isLoading || isLoadingEdit ? (

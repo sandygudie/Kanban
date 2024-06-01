@@ -7,7 +7,7 @@ module.exports = {
       primary: "hsl(251.51deg 58.87% 51.37%)",
       "primary-dark": "#4946aa",
       "primary-hover": "hsl(242.31deg 48.15% 57.65%)",
-      gray: "hsla(216, 15%, 57%, 1)",
+      gray: "hsl(214.67deg 29.03% 69.61%)",
       success: "#44b774",
       white: "#ffffff",
       black: "hsla(0, 0% ,9.8%,1)",

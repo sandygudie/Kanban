@@ -114,7 +114,7 @@ export default function ActiveBoard() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="overflow-x-auto novisible-scroll overflow-y-auto">
+      <div className="overflow-x-auto  overflow-y-auto">
           <div className="z-10 h-full flex gap-x-10 w-full pt-12 mini:pt-8 px-8 mini:px-14">
             {active.columns?.map((item: IColumn, index: number) => {
               return (
@@ -169,8 +169,8 @@ export default function ActiveBoard() {
                             setOpenMenu(true), setSelectedColumn(item);
                           }}
                         >
-                          <div className="hover:bg-gray-200 mt-1.5 rounded-md">
-                            <PiDotsThreeBold className="text-2xl font-bold" />
+                          <div className="bg-gray-200 mt-1.5 p-1 rounded-md">
+                            <PiDotsThreeBold className="text-xl font-bold" />
                           </div>
                         </IconButton>
 
@@ -220,7 +220,7 @@ export default function ActiveBoard() {
                         className="h-full"
                       >
                         {item.tasks?.length > 0 ? (
-                          <div className="h-[75vh] pb-6 novisible-scroll overflow-y-auto">
+                          <div className="h-[75vh] novisible-scroll overflow-y-auto">
                             <button
                               onClick={() => {
                                 setSelectedColumn(item), setAddTask(true);

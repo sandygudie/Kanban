@@ -80,9 +80,9 @@ export default function Members({ workspaceId }: Props) {
     <>
       <div className="h-screen">
         <div className="flex items-center pb-2 justify-between border-b-[1px] border-gray/20">
-          <h1 className="font-semibold text-sm md:text-base">
+          <h3 className="font-semibold text-sm md:text-base">
             Workspace Members
-          </h1>
+          </h3>
           <button
             onClick={() => {
               setIsOpenInvite(true);
@@ -193,9 +193,9 @@ export default function Members({ workspaceId }: Props) {
             </div>
 
             <div className="mt-20">
-              <h1 className="font-semibold text-base border-b-[1px] border-gray/20 pb-2">
+              <h3 className="font-semibold text-sm md:text-base border-b-[1px] border-gray/20 pb-2">
                 Pending Members
-              </h1>
+              </h3>
               {workspace?.data.pendingMembers.length ? (
                 workspace?.data.pendingMembers.map(
                   (ele: string, index: number) => {

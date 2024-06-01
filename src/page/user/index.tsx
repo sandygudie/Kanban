@@ -89,8 +89,9 @@ export default function Index() {
           User Settings
         </h1>
         <div className="h-auto">
+          <p className="py-2 text-gray/80 text-xs">Click on fields to edit</p>
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray/80 font-medium md:w-64 text-sm ">
+            <label className="text-gray font-medium md:w-64 text-sm">
               Name
             </label>
             <input
@@ -103,13 +104,13 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${
-                isEdit === "name" ? "bg-gray/5" : "border-gray/0"
+              className={`font-semibold rounded-md w-full border-none bg-gray-200 px-4 py-3 ${
+                isEdit === "name" ? "bg-gray-300" : "border-gray/0"
               }`}
             />
           </div>
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray/80 font-medium text-sm md:w-64">
+            <label className="text-gray font-medium text-sm md:w-64">
               Email
             </label>
             <input
@@ -122,13 +123,13 @@ export default function Index() {
                 setEdit("");
               }}
               onChange={(e) => editUserProfile(e)}
-              className={`font-semibold rounded-md w-full border-none focus:bg-gray/5 px-4 py-3 ${
-                isEdit === "email" ? "bg-gray/5 " : "border-gray/0"
+              className={`font-semibold rounded-md w-full border-none bg-gray-200 px-4 py-3 ${
+                isEdit === "email" ? "bg-gray-300" : "border-gray/0"
               }`}
             />
           </div>
           <div className="flex items-start my-6">
-            <label className="text-gray/70 md:w-64 text-sm ">Avatar</label>
+            <label className="text-gray font-medium md:w-64 text-sm ">Avatar</label>
             <div className="w-fit">
               <div className="relative">
                 <label
@@ -176,12 +177,12 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="mt-12 md:mt-24 bg-secondary rounded-md py-4">
+        <div className="mt-12 md:mt-24 bg-gray-200 rounded-md py-4">
           <h2 className="border-b-[1px] border-gray/10 py-3 text-base font-bold px-4 md:px-8">
             Delete user
           </h2>
-          <div className="px-4 md:px-8 py-5">
-            <p className="text-gray/80 text-sm mb-4">
+          <div className="px-4 md:px-8 pt-2 pb-5">
+            <p className="text-gray text-sm mb-8">
               Once you delete your account, there is no going back.
             </p>
             <button className="text-white px-4 font-bold rounded-md text-sm bg-error py-2">
