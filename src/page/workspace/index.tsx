@@ -89,7 +89,7 @@ export default function Index() {
                         <div className="flex items-center gap-x-2">
                           <img
                             src={ele.profilePics}
-                            className="w-28 h-auto"
+                            className="w-24 h-auto"
                             alt=""
                           />
                           <div>

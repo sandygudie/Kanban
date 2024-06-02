@@ -35,17 +35,16 @@ export default function BoardDetails({ handleClose }: Props) {
   useEffect(() => {
     setNewValue(
       isEdit === "description"
-        ? active?.description||""
+        ? active?.description || ""
         : isEdit === "name"
         ? active.name
         : ""
     );
-  }, [active, isEdit,setNewValue]);
+  }, [active, isEdit, setNewValue]);
 
   const handleValueChange = (value: string) => {
     setNewValue(value);
   };
-
 
   return (
     <>
@@ -109,21 +108,21 @@ export default function BoardDetails({ handleClose }: Props) {
             },
 
             {
-              label: "",
               title: (
-                <p className="text-sm font-bold text-error py-4">
+                <button
+                  onClick={() => {
+                    setIsOpenDelete(true);
+                  }}
+                  className="text-error my-3 w-fit bg-error py-2 px-3 rounded-lg hover:bg-[#e60023] text-white font-semibold text-sm"
+                >
                   Delete Board
-                </p>
+                </button>
               ),
-              handler: () => {
-                setIsOpenDelete(true);
-              },
             },
           ].map((ele, index) => {
             return (
-              <button
+              <div
                 key={index}
-                onClick={() => (ele.label === "" ? ele.handler() : "")}
                 className={`${
                   index > 2
                     ? "border-none rounded-b-md"
@@ -138,12 +137,12 @@ export default function BoardDetails({ handleClose }: Props) {
                     {ele.title}
                   </div>
                   {ele.label ? (
-                    <span onClick={() => ele.handler()}>
+                    <button onClick={() => ele.handler()}>
                       <CiEdit className="text-lg text-gray/60" />
-                    </span>
+                    </button>
                   ) : null}
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>

@@ -76,22 +76,23 @@ export default function Index() {
   };
 
   return (
-    <div className="h-full px-6 md:px-24 pt-20 md:pt-14">
-      <div className="h-full novisible-scroll overflow-auto pb-28 pr-4">
-        <div className="absolute top-[50px] mini:top-[20px]">
+    <div className="h-screen px-6 md:px-20">
+      <div className="h-full overflow-auto novisible-scroll pb-24">
+        <div className="relative pt-12 mini:pt-6">
           {" "}
           <IconButton handleClick={() => navigate(-1)}>
             {" "}
             <HiOutlineChevronLeft />
           </IconButton>
+          <h1 className="sm:text-lg font-bold border-b-[1px] border-gray/10 pb-2">
+            User Settings
+          </h1>
         </div>
-        <h1 className="sm:text-lg font-bold border-b-[1px] border-gray/10 pb-2">
-          User Settings
-        </h1>
+
         <div className="h-auto">
           <p className="py-2 text-gray/80 text-xs">Click on fields to edit</p>
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray font-medium md:w-64 text-sm">
+            <label className="text-gray/80 font-medium md:w-64 text-sm">
               Name
             </label>
             <input
@@ -110,7 +111,7 @@ export default function Index() {
             />
           </div>
           <div className="md:flex items-center justify-between my-4">
-            <label className="text-gray font-medium text-sm md:w-64">
+            <label className="text-gray/80 font-medium text-sm md:w-64">
               Email
             </label>
             <input
@@ -129,7 +130,7 @@ export default function Index() {
             />
           </div>
           <div className="flex items-start my-6">
-            <label className="text-gray font-medium md:w-64 text-sm ">
+            <label className="text-gray/80 font-medium md:w-64 text-sm ">
               Avatar
             </label>
             <div className="w-fit">
@@ -184,7 +185,7 @@ export default function Index() {
             Delete user
           </h2>
           <div className="px-4 md:px-8 pt-2 pb-5">
-            <p className="text-gray text-sm mb-8">
+            <p className="text-gray/80 text-sm mb-8">
               Once you delete your account, there is no going back.
             </p>
             <button className="text-white px-4 font-bold rounded-md text-sm bg-error py-2">

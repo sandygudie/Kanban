@@ -91,75 +91,76 @@ export default function Header({ memberPics }: any) {
                   } absolute mt-1 text-sm`}
                 />
               </button>
-          
-            {isWorkspaceMenu && (
-              <Popup
-                description={
-                  <div className="flex gap-x-3 items-center border-b-[1px] border-gray/10 py-4 font-medium px-4 justify-start">
-                    <div className="w-8 h-auto overflow-hidden">
-                      <img
-                        src={workspace?.profilePics}
-                        className="w-10 h-auto object-contain"
-                        alt=""
-                      />
+
+              {isWorkspaceMenu && (
+                <Popup
+                  description={
+                    <div className="flex gap-x-3 items-center border-b-[1px] border-gray/10 py-4 font-medium px-4 justify-start">
+                      <div className="w-8 h-auto overflow-hidden">
+                        <img
+                          src={workspace?.profilePics}
+                          className="w-10 h-auto object-contain"
+                          alt=""
+                        />
+                      </div>
+                      <div className="">
+                        <h2 className="font-semibold text-base">
+                          {TitleCase(workspace?.name)} workspace
+                        </h2>
+                      </div>
                     </div>
-                    <div className="">
-                      <h2 className="font-semibold text-base">
-                        {TitleCase(workspace?.name)} workspace
-                      </h2>
-                    </div>
-                  </div>
-                }
-                className="top-8 md:top-12 left-0"
-                handleClose={() => setWorkspaceMenu(false)}
-                items={[
-                  {
-                    title: (
-                      <p className="flex gap-x-3 items-center">
-                        <TbUsersPlus className="text-lg" /> Invite members to
-                        workspace
-                      </p>
-                    ),
-                    handler: () => {
-                      setIsOpenInvite(true), setWorkspaceMenu(false);
+                  }
+                  className="top-8 md:top-12 left-0"
+                  handleClose={() => setWorkspaceMenu(false)}
+                  items={[
+                    {
+                      title: (
+                        <p className="flex gap-x-3 items-center">
+                          <TbUsersPlus className="text-lg" /> Invite members to
+                          workspace
+                        </p>
+                      ),
+                      handler: () => {
+                        setIsOpenInvite(true), setWorkspaceMenu(false);
+                      },
                     },
-                  },
-                  {
-                    title: (
-                      <p className="flex gap-x-3 items-center">
-                        <IoSettingsOutline className="text-lg" />
-                        Settings
-                      </p>
-                    ),
-                    handler: () => {
-                      navigate("/workspace/settings"), setWorkspaceMenu(false);
+                    {
+                      title: (
+                        <p className="flex gap-x-3 items-center">
+                          <IoSettingsOutline className="text-lg" />
+                          Settings
+                        </p>
+                      ),
+                      handler: () => {
+                        navigate("/workspace/settings"),
+                          setWorkspaceMenu(false);
+                      },
                     },
-                  },
-                  {
-                    title: (
-                      <p className="flex gap-x-3 items-center">
-                        <GoArrowSwitch className="text-lg" /> Available
-                        workspace
-                      </p>
-                    ),
-                    handler: () => {
-                      navigate("/workspaces"), setWorkspaceMenu(false);
+                    {
+                      title: (
+                        <p className="flex gap-x-3 items-center">
+                          <GoArrowSwitch className="text-lg" /> Available
+                          workspace
+                        </p>
+                      ),
+                      handler: () => {
+                        navigate("/workspaces"), setWorkspaceMenu(false);
+                      },
                     },
-                  },
-                  {
-                    title: (
-                      <p className="flex gap-x-3 items-center">
-                        <GrNewWindow className="text-lg" /> New workspace
-                      </p>
-                    ),
-                    handler: () => {
-                      navigate("/workspace/new");
+                    {
+                      title: (
+                        <p className="flex gap-x-3 items-center">
+                          <GrNewWindow className="text-lg" /> New workspace
+                        </p>
+                      ),
+                      handler: () => {
+                        navigate("/workspace/new");
+                      },
                     },
-                  },
-                ]}
-              />
-            )}
-          </div>
+                  ]}
+                />
+              )}
+            </div>
           </div>
           <div
             className={`w-full mini:w-[calc(100%_-_220px)] flex items-center gap-x-8 justify-end mini:justify-between px-4 md:px-6`}
@@ -302,8 +303,9 @@ export default function Header({ memberPics }: any) {
             </div>
           </div>
         </div>
-        {board.length > 0 && (
-          <div className="h-auto bg-secondary mini:hidden py-2 bg-gray-100 w-full">
+
+        <div className="h-auto bg-secondary mini:hidden py-2 bg-gray-100 w-full">
+          {board.length > 0 ? (
             <div className="relative px-4">
               <button
                 onClick={() => setViewBoard(!viewBoard)}
@@ -381,7 +383,7 @@ export default function Header({ memberPics }: any) {
                           <span>
                             <IoIosAdd size={20} />
                           </span>
-                          <p> New Board</p>
+                          <p> Add Board</p>
                         </div>
                       </button>
                     ) : null}
@@ -389,8 +391,10 @@ export default function Header({ memberPics }: any) {
                 </div>
               )}
             </div>
-          </div>
-        )}
+          ) : (
+            <p className="pl-4 py-1 font-bold"> Board</p>
+          )}
+        </div>
       </header>
 
       <Modal

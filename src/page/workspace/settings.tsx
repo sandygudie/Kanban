@@ -101,35 +101,33 @@ export default function Index() {
   };
 
   return (
-    <>
-      <div className="h-full novisible-scroll overflow-y-auto md:overflow-hidden relative pb-24 pt-20 px-6 md:px-20">
-        <div className="flex gap-x-4 items-center relative">
-          <div className="absolute -top-[30px] mini:-top-[35px]">
+    <div className="h-full px-6 md:px-20 overflow-auto">
+      <div className="h-full novisible-scroll overflow-auto">
+        <div className="relative pt-12 mini:pt-6">
+          <IconButton handleClick={() => navigate(-1)}>
             {" "}
-            <IconButton handleClick={() => navigate(-1)}>
-              {" "}
-              <HiOutlineChevronLeft />
-            </IconButton>
-          </div>
-          <div>
+            <HiOutlineChevronLeft />
+          </IconButton>
+
+          <div className="flex gap-x-4 items-center">
             <img
               src={workspace.profilePics}
               alt="image"
               className="border-solid object-contain h-12 md:h-20 w-12 md:w-20"
             />
-          </div>
-          <div>
-            <h1 className="font-bold sm:text-lg md:text-xl">
-              {workspace.name} Workspace
-            </h1>
-            <p className="text-gray/80 font-medium text-xs">
-              Created on {""}
-              {dayjs(workspace.createdAt).format(`MMMM Do, YYYY`)}
-            </p>
+            <div>
+              <h1 className="font-bold sm:text-lg md:text-xl">
+                {workspace.name} Workspace
+              </h1>
+              <p className="text-gray/80 font-medium text-xs">
+                Created on {""}
+                {dayjs(workspace.createdAt).format(`MMMM Do, YYYY`)}
+              </p>
+            </div>
           </div>
         </div>
-        <div className="h-full mt-14 md:mt-16">
-          <div className="md:fixed my-6 md:my-0">
+        <div className="h-auto mt-14 md:mt-16 md:flex items-start">
+          <div className="my-6 md:my-0">
             <div className="flex md:flex-col w-40 md:w-36 items-start gap-y-3">
               {linkitems.map((ele: any) => {
                 return (
@@ -147,127 +145,123 @@ export default function Index() {
             </div>
           </div>
 
-          <div className="md:w-9/12 novisible-scroll overflow-y-auto h-full md:pr-4 pb-24 ml-auto">
+          <div className="md:w-9/12 novisible-scroll h-full md:pr-4 ml-auto">
             {toggle === "about" ? (
-              <div>
-                <div>
-                  <Formik
-                    initialValues={{
-                      name: workspace.name,
-                      image: File,
-                    }}
-                    validationSchema={aboutSchema}
-                    validateOnChange={false}
-                    validateOnBlur={false}
-                    onSubmit={UpdateWorkSpace}
-                    className="h-full"
-                  >
-                    {({
-                      setFieldValue,
-                      errors,
-                    }: FormikErrors<{ image?: File }> | any) => (
-                      <Form className="rounded-md p-6 md:px-10 md:pt-8 md:pb-10 bg-secondary">
-                        <div className="mb-10">
-                          <label className="font-semibold text-sm md:text-base">
-                            Workspace Name{" "}
-                            <p className="font-normal text-gray text-xs">
-                              ( Your organization or company name.)
-                            </p>
-                          </label>
-                          <TextInput
-                            label=""
-                            name="name"
-                            type="text"
-                            placeholder="E.g Development, Marketing"
-                          />
-                        </div>
+              <div className="pb-24">
+                <Formik
+                  initialValues={{
+                    name: workspace.name,
+                    image: File,
+                  }}
+                  validationSchema={aboutSchema}
+                  validateOnChange={false}
+                  validateOnBlur={false}
+                  onSubmit={UpdateWorkSpace}
+                  className="h-full"
+                >
+                  {({
+                    setFieldValue,
+                    errors,
+                  }: FormikErrors<{ image?: File }> | any) => (
+                    <Form className="rounded-md p-6 md:px-10 md:pt-8 md:pb-10 bg-secondary">
+                      <div className="mb-10">
+                        <label className="font-semibold text-sm md:text-base">
+                          Workspace Name{" "}
+                          <p className="font-normal text-gray text-xs">
+                            ( Your organization or company name.)
+                          </p>
+                        </label>
+                        <TextInput
+                          label=""
+                          name="name"
+                          type="text"
+                          placeholder="E.g Development, Marketing"
+                        />
+                      </div>
 
-                        <div className="">
-                          <label className="font-semibold text-sm md:text-base">
-                            Company logo{" "}
-                            <p className="font-normal text-gray text-xs">
-                              ( Upload an image that will show up in your
-                              sidebar and notifications. )
-                            </p>
-                          </label>
-                          <div className="relative">
-                            <label
-                              className="text-white relative block w-fit cursor-pointer h-full"
-                              htmlFor="file_input"
-                            >
-                              <div className="relative mt-3 w-24 border-gray-100 border-[1px] h-auto">
-                                <div className="w-24 absolute top-0 bg-gray opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-3">
-                                  Click to upload image
-                                </div>
-                                <img
-                                  className="w-30 h-auto object-contain"
-                                  src={
-                                    selectedImage
-                                      ? selectedImage
-                                      : workspace.profilePics
-                                  }
-                                />
+                      <div className="">
+                        <label className="font-semibold text-sm md:text-base">
+                          Company logo{" "}
+                          <p className="font-normal text-gray text-xs">
+                            ( Upload an image that will show up in your sidebar
+                            and notifications. )
+                          </p>
+                        </label>
+                        <div className="relative">
+                          <label
+                            className="text-white relative block w-fit cursor-pointer h-full"
+                            htmlFor="file_input"
+                          >
+                            <div className="relative mt-3 w-24 border-gray-100 border-[1px] h-auto">
+                              <div className="w-24 absolute top-0 bg-gray opacity-0 hover:opacity-90 text-center font-bold text-xs h-full p-3">
+                                Click to upload image
                               </div>
-
-                              <input
-                                type="file"
-                                id="file_input"
-                                className="absolute top-20 text-sm invisible w-48"
-                                name="profilePics"
-                                accept=".jpg, .jpeg, .png"
-                                onChange={(e) => {
-                                  setUploadError("");
-                                  if (e.currentTarget.files) {
-                                    if (
-                                      e.currentTarget.files[0].size > 100000
-                                    ) {
-                                      setUploadError("Image too large");
-                                    } else {
-                                      setFieldValue(
-                                        "profilePics",
-                                        e.currentTarget.files[0]
-                                      );
-                                      setSelectedImage(
-                                        URL.createObjectURL(
-                                          e.currentTarget.files[0]
-                                        )
-                                      );
-                                    }
-                                  }
-                                }}
+                              <img
+                                className="w-30 h-auto object-contain"
+                                src={
+                                  selectedImage
+                                    ? selectedImage
+                                    : workspace.profilePics
+                                }
                               />
-                            </label>
-                            {errors.image ||
-                              (uploadError && (
-                                <span
-                                  className="text-xs text-error absolute -bottom-5 flex items-center gap-x-2"
-                                  id="error"
-                                >
-                                  <IoAlertCircleOutline size={16} />{" "}
-                                  {errors.image || uploadError}
-                                </span>
-                              ))}
-                          </div>
+                            </div>
+
+                            <input
+                              type="file"
+                              id="file_input"
+                              className="absolute top-20 text-sm invisible w-48"
+                              name="profilePics"
+                              accept=".jpg, .jpeg, .png"
+                              onChange={(e) => {
+                                setUploadError("");
+                                if (e.currentTarget.files) {
+                                  if (e.currentTarget.files[0].size > 100000) {
+                                    setUploadError("Image too large");
+                                  } else {
+                                    setFieldValue(
+                                      "profilePics",
+                                      e.currentTarget.files[0]
+                                    );
+                                    setSelectedImage(
+                                      URL.createObjectURL(
+                                        e.currentTarget.files[0]
+                                      )
+                                    );
+                                  }
+                                }
+                              }}
+                            />
+                          </label>
+                          {errors.image ||
+                            (uploadError && (
+                              <span
+                                className="text-xs text-error absolute -bottom-5 flex items-center gap-x-2"
+                                id="error"
+                              >
+                                <IoAlertCircleOutline size={16} />{" "}
+                                {errors.image || uploadError}
+                              </span>
+                            ))}
                         </div>
-                  
-                          <div className="mt-6 ml-auto w-20">
-                            <button
-                              className="h-10 px-4 text-xs h-10 w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md  font-bold"
-                              type="submit"
-                            >
-                              {isLoading ? <Loader /> : "Update"}
-                            </button>
-                          </div>
-              
-                      </Form>
-                    )}
-                  </Formik>
-                </div>
+                      </div>
+
+                      <div className="mt-6 ml-auto w-20">
+                        <button
+                          className="h-10 px-4 text-xs h-10 w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md  font-bold"
+                          type="submit"
+                        >
+                          {isLoading ? <Loader /> : "Update"}
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+
                 <SocialLinks
                   links={workspace.socialLinks}
                   workspaceId={workspace.id}
                 />
-                <div className="rounded-md px-8 py-7  bg-secondary md:mb-12 mt-20">
+                <div className="rounded-md px-8 py-7  bg-secondary md:mb-12 mt-12">
                   <button
                     onClick={() => {
                       setIsOpenDelete(true);
@@ -294,6 +288,6 @@ export default function Index() {
       >
         <DeleteItem handleClose={() => setIsOpenDelete(false)} />
       </Modal>
-    </>
+    </div>
   );
 }

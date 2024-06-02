@@ -95,7 +95,7 @@ export default function Index({ setShowSidebar, showSidebar }: Props) {
                       {" "}
                       <IoIosAdd size={20} />{" "}
                     </span>{" "}
-                    <p> New Board</p>
+                    <p> Add Board</p>
                   </div>
                 </button>
               ) : null}

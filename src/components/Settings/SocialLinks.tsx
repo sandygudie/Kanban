@@ -55,7 +55,7 @@ export default function Index({ workspaceId, links }: Props) {
         className=""
       >
         {({ values, errors }) => (
-          <Form className="rounded-md p-6 md:p-10 bg-secondary h-full mt-20">
+          <Form className="rounded-md p-6 md:p-10 bg-secondary h-full mt-12">
             <label className="font-semibold text-sm md:text-base">Social accounts</label>
             
             <FieldArray

@@ -192,7 +192,7 @@ export default function Members({ workspaceId }: Props) {
               })}
             </div>
 
-            <div className="mt-20">
+            <div className="mt-12">
               <h3 className="font-semibold text-sm md:text-base border-b-[1px] border-gray/20 pb-2">
                 Pending Members
               </h3>
