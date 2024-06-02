@@ -81,6 +81,7 @@ export default function ActiveBoard() {
         title: sourceTask.title,
         description: sourceTask.description,
         subtasks: updatedSubstasks,
+        assignTo:sourceTask.assignTo,
         position,
       },
       workspaceId: workspace.id,
@@ -114,7 +115,7 @@ export default function ActiveBoard() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-      <div className="overflow-x-auto  overflow-y-auto">
+      <div className="overflow-x-auto  overflow-y-hidden h-full">
           <div className="z-10 h-full flex gap-x-10 w-full pt-12 mini:pt-8 px-8 mini:px-14">
             {active.columns?.map((item: IColumn, index: number) => {
               return (
@@ -220,7 +221,7 @@ export default function ActiveBoard() {
                         className="h-full"
                       >
                         {item.tasks?.length > 0 ? (
-                          <div className="h-[75vh] novisible-scroll overflow-y-auto">
+                          <div className="h-[80%] novisible-scroll overflow-y-auto">
                             <button
                               onClick={() => {
                                 setSelectedColumn(item), setAddTask(true);
@@ -252,7 +253,7 @@ export default function ActiveBoard() {
                           </div>
                         ) : (
                           <div className="w-[250px] shrink-0 h-full">
-                            <div className="h-[75vh] border-dashed border-[1px] border-gray-300 rounded-md">
+                            <div className="h-[80%] border-dashed border-[1px] border-gray-300 rounded-md">
                               <button
                                 onClick={() => {
                                   setSelectedColumn(item), setAddTask(true);
@@ -278,7 +279,7 @@ export default function ActiveBoard() {
               );
             })}
 
-            <div className="mt-14 h-[75vh] w-[260px] pr-8 shrink-0">
+            <div className="mt-14 h-[80%] w-[260px] pr-8 shrink-0">
               <button
                 onClick={() => setAddColumn(true)}
                 className="h-full w-full bg-gray-100 hover:bg-gray-200 cursor-pointer flex items-center flex-col justify-center text-center rounded-md"

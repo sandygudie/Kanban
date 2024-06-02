@@ -20,7 +20,7 @@ export interface ITask {
   subtasks: ISubTask[];
   columnId: string;
   createdAt: Date;
-  assignTo: string;
+  assignTo: [];
   dueDate: string[];
   createdBy:string 
 }

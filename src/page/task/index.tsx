@@ -325,7 +325,7 @@ export default function TaskDetails() {
                 {tasks.data.assignTo.map((list: any) => {
                   return (
                     <div
-                      key={list.name}
+                      key={list._id}
                       className="py-1 font-bold text-[0.8rem] flex items-center gap-x-3"
                     >
                       {list.profilePics ? (
@@ -351,9 +351,9 @@ export default function TaskDetails() {
                       return {
                         title: (
                           <div className="py-1 px-4 font-bold text-[0.8rem] flex items-center gap-x-3">
-                            {tasks.data.assignTo.map((user: { name: string }) =>
-                              user.name === ele.name ? (
-                                <p className="absolute left-2" key={user.name}>
+                            {tasks.data.assignTo.map((user: { _id: string }) =>
+                              user._id == ele.userId ? (
+                                <p className="absolute left-2" key={user._id}>
                                   <RxCheck size={15} />
                                 </p>
                               ) : null

@@ -43,9 +43,11 @@ export default function Index({
       });
       const payload = {
         formdata: {
+          taskId: tasks?._id,
           title: tasks?.title,
           description: tasks?.description,
           subtasks: updatedSubstasks,
+          assignTo:tasks?.assignTo,
         },
         workspaceId: workspaceId,
         columnId: columnId,

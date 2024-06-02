@@ -71,6 +71,7 @@ export default function Index({
 
   const sendMessage = (event: any) => {
     event.preventDefault();
+
     if (socket && message.length > 0) {
       socket.emit("send_message", {
         createdBy: user,
@@ -439,8 +440,9 @@ export default function Index({
 
             <input
               ref={inputRef}
-              className={`rounded-lg p-3 w-full placeholder:text-sm`}
-              placeholder="Start a conversation"
+              // required
+              className={`rounded-lg py-5 px-3 w-full placeholder:text-sm`}
+              placeholder="Write a message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />

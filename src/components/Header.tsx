@@ -19,6 +19,7 @@ import { IoIosAdd } from "react-icons/io";
 import { FaAnglesRight } from "react-icons/fa6";
 import AddBoard from "./Board/AddBoard";
 import { removeToken } from "utilis/token";
+import { Tooltip } from "antd";
 
 export default function Header({ memberPics }: any) {
   const domRef = useRef<HTMLDivElement>(null);
@@ -202,26 +203,28 @@ export default function Header({ memberPics }: any) {
                 <div className="img_container">
                   {memberPics?.map(
                     (
-                      ele: { name: string; profilePics: string },
+                      ele: { userId: string; name: string; profilePics: string },
                       index: number
                     ) => (
                       <button
                         className="avatar w-auto h-auto w-max"
-                        key={index}
+                        key={ele.userId}
                       >
-                        {index <= 4 ? (
-                          ele.profilePics == null ? (
-                            <p className="w-8 p-0.5 text-xs h-8 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold">
-                              {" "}
-                              {DefaultImage(ele.name)}
-                            </p>
-                          ) : (
-                            <img
-                              className="w-6 h-6 rounded-full img"
-                              src={ele.profilePics}
-                            />
-                          )
-                        ) : null}
+                        <Tooltip color={"#2b2929"} title={ele.name}>
+                          {index <= 4 ? (
+                            ele.profilePics == null ? (
+                              <p className="w-8 p-0.5 text-xs h-8 rounded-full border border-gray/50 flex flex-col justify-center items-center font-bold">
+                                {" "}
+                                {DefaultImage(ele.name)}
+                              </p>
+                            ) : (
+                              <img
+                                className="w-6 h-6 rounded-full img"
+                                src={ele.profilePics}
+                              />
+                            )
+                          ) : null}
+                        </Tooltip>
                       </button>
                     )
                   )}

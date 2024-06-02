@@ -36,8 +36,8 @@ export default function Index() {
   } = useGetWorkspaceBoardsQuery(Id);
 
   const memberPics = workspaceDetails?.data.workspace.members.map(
-    (ele: { name: string; profilePics: string }) => {
-      return { name: ele.name, profilePics: ele.profilePics };
+    (ele: { userId:string,name: string; profilePics: string }) => {
+      return { userId:ele.userId,name: ele.name, profilePics: ele.profilePics };
     }
   );
 
