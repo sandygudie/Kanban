@@ -1,4 +1,5 @@
 import { Formik, Form, FormikErrors } from "formik";
+import { App as AntDesign } from "antd";
 import * as Yup from "yup";
 import { TextInput } from "components/InputField";
 import SocialLinks from "components/Settings/SocialLinks";
@@ -23,6 +24,7 @@ export default function Index() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { message } = AntDesign.useApp();
   const data: AppState = useSelector(appData);
   const [uploadError, setUploadError] = useState<any>();
   const { workspace } = data;
@@ -86,18 +88,21 @@ export default function Index() {
             : { name: values.name, profilePics: res?.url },
       };
 
-      const result = await editWorkspaceProfile(payload);
+      const result = await editWorkspaceProfile(payload).unwrap();
       if (result) {
         dispatch(updateWorkspace({ name: values.name }));
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      message.error({
+        content: error.message,
+        className: "text-error",
+      });
     }
   };
 
   return (
     <>
-      <div className="h-full novisible-scroll overflow-y-auto md:overflow-hidden relative pb-24 pt-16 px-6 md:px-20">
+      <div className="h-full novisible-scroll overflow-y-auto md:overflow-hidden relative pb-24 pt-20 px-6 md:px-20">
         <div className="flex gap-x-4 items-center relative">
           <div className="absolute -top-[30px] mini:-top-[35px]">
             {" "}
@@ -244,8 +249,8 @@ export default function Index() {
                               ))}
                           </div>
                         </div>
-                        <div className="mt-6">
-                          <div className="ml-auto md:w-20">
+                  
+                          <div className="mt-6 ml-auto w-20">
                             <button
                               className="h-10 px-4 text-xs h-10 w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md  font-bold"
                               type="submit"
@@ -253,7 +258,7 @@ export default function Index() {
                               {isLoading ? <Loader /> : "Update"}
                             </button>
                           </div>
-                        </div>
+              
                       </Form>
                     )}
                   </Formik>

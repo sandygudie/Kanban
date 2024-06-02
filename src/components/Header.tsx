@@ -58,9 +58,9 @@ export default function Header({ memberPics }: any) {
       <header className="fixed w-full z-40">
         <div className="h-[50px] mini:h-[65px] flex items-center w-full border-b-[1px] border-gray/20">
           <div
-            className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center px-4 cursor-pointer flex`}
+            className={`relative mini:border-r-[1px] w-[220px] border-gray/20 h-[65px] items-start flex-col justify-center cursor-pointer flex`}
           >
-            <div className="flex gap-x-2 items-center justify-center">
+            <div className="flex gap-x-2 items-center justify-center relative pl-3">
               <div className="hidden mini:block w-10 h-10 overflow-hidden">
                 <img
                   src={workspace?.profilePics}
@@ -76,8 +76,8 @@ export default function Header({ memberPics }: any) {
               >
                 <h3
                   className={`${
-                    workspace?.name.length >= 10
-                      ? "truncate overflow-hidden w-[8ch]"
+                    workspace?.name.length >= 15
+                      ? "truncate overflow-hidden md:w-[130px]"
                       : "w-fit"
                   } font-semibold text-left sm:text-base md:text-lg`}
                 >
@@ -85,11 +85,13 @@ export default function Header({ memberPics }: any) {
                 </h3>{" "}
                 <HiOutlineChevronDown
                   className={`${
-                    workspace?.name.length >= 10 ? "-right-1" : "-right-4"
-                  } absolute  mt-1 text-sm`}
+                    workspace?.name.length >= 15
+                      ? "-right-4 md:-right-2"
+                      : "-right-4"
+                  } absolute mt-1 text-sm`}
                 />
               </button>
-            </div>
+          
             {isWorkspaceMenu && (
               <Popup
                 description={
@@ -108,13 +110,14 @@ export default function Header({ memberPics }: any) {
                     </div>
                   </div>
                 }
-                className="top-[55px] -right-[10rem] mini:-right-[6rem]"
+                className="top-8 md:top-12 left-0"
                 handleClose={() => setWorkspaceMenu(false)}
                 items={[
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <TbUsersPlus  className="text-lg"/> Invite members to workspace
+                        <TbUsersPlus className="text-lg" /> Invite members to
+                        workspace
                       </p>
                     ),
                     handler: () => {
@@ -124,7 +127,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <IoSettingsOutline  className="text-lg"/>
+                        <IoSettingsOutline className="text-lg" />
                         Settings
                       </p>
                     ),
@@ -135,7 +138,8 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <GoArrowSwitch className="text-lg" /> Available workspace
+                        <GoArrowSwitch className="text-lg" /> Available
+                        workspace
                       </p>
                     ),
                     handler: () => {
@@ -145,7 +149,7 @@ export default function Header({ memberPics }: any) {
                   {
                     title: (
                       <p className="flex gap-x-3 items-center">
-                        <GrNewWindow  className="text-lg"/> New workspace
+                        <GrNewWindow className="text-lg" /> New workspace
                       </p>
                     ),
                     handler: () => {
@@ -156,7 +160,7 @@ export default function Header({ memberPics }: any) {
               />
             )}
           </div>
-
+          </div>
           <div
             className={`w-full mini:w-[calc(100%_-_220px)] flex items-center gap-x-8 justify-end mini:justify-between px-4 md:px-6`}
           >
@@ -221,7 +225,9 @@ export default function Header({ memberPics }: any) {
                     )
                   )}
                 </div>
-                <p className="font-semibold text-sm">{memberPics.length} members</p>
+                <p className="font-semibold text-sm">
+                  {memberPics.length} members
+                </p>
               </div>
               <button
                 onClick={() => toggleFullScreen()}
@@ -303,7 +309,7 @@ export default function Header({ memberPics }: any) {
                 onClick={() => setViewBoard(!viewBoard)}
                 className={`font-bold md:w-auto text-sm`}
               >
-                <div className="flex text-gray">
+                <div className="flex">
                   <span className="text-xs sm:inline">
                     ALL BOARDS ({board.length})
                   </span>
@@ -335,8 +341,8 @@ export default function Header({ memberPics }: any) {
                               key={options._id}
                               className={`h-10 w-52 px-4 relative flex items-center group justify-between font-semibold cursor-pointer ${
                                 active?._id === options._id
-                                ? "bg-gray-300"
-                                : "hover:bg-gray/10"
+                                  ? "bg-gray-300"
+                                  : "hover:bg-gray/10"
                               }  `}
                               onClick={() => {
                                 navigate(`/workspace/${workspace.id}`);

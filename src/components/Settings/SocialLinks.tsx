@@ -105,7 +105,7 @@ export default function Index({ workspaceId, links }: Props) {
               )}
             />
 
-            <div className="ml-auto mt-6 md:w-20">
+            <div className="ml-auto mt-6 w-20">
               <button
                 className="h-10 px-4 text-xs h-10 w-20 flex justify-center items-center flex-col bg-gray-300 hover:bg-gray/30 border border-gray/30 rounded-md font-bold"
                 type="submit"

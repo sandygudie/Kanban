@@ -39,7 +39,7 @@ export default function Index({ setShowSidebar, showSidebar }: Props) {
           >
             <div>
               {board.length > 0 && (
-                <p className="pl-4 pt-2 pb-4 font-medium text-gray text-[12px]">
+                <p className="pl-4 pt-2 pb-4 font-medium text-[12px]">
                   ALL BOARDS ({board.length})
                 </p>
               )}

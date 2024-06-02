@@ -76,9 +76,9 @@ export default function Index() {
   };
 
   return (
-    <div className="h-full px-6 md:px-24 pt-16 md:pt-14">
+    <div className="h-full px-6 md:px-24 pt-20 md:pt-14">
       <div className="h-full novisible-scroll overflow-auto pb-28 pr-4">
-        <div className="absolute top-[35px] mini:top-[20px]">
+        <div className="absolute top-[50px] mini:top-[20px]">
           {" "}
           <IconButton handleClick={() => navigate(-1)}>
             {" "}
@@ -129,7 +129,9 @@ export default function Index() {
             />
           </div>
           <div className="flex items-start my-6">
-            <label className="text-gray font-medium md:w-64 text-sm ">Avatar</label>
+            <label className="text-gray font-medium md:w-64 text-sm ">
+              Avatar
+            </label>
             <div className="w-fit">
               <div className="relative">
                 <label
