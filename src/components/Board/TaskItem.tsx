@@ -29,8 +29,6 @@ export default function TaskItem({
   const pendingDays = tasks?.dueDate?.length
     ? dayjs(tasks.dueDate[1]).diff(dayjs(tasks.dueDate[0]), "days")
     : null;
-
-    console.log(tasks)
   return (
     <>
       <Draggable key={tasks._id} draggableId={tasks._id} index={index}>

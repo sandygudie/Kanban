@@ -101,7 +101,7 @@ export default function Index() {
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
         <div className="w-9/12 md:w-[60rem] mx-auto">
-          <h1 className="font-semibold text-2xl md:pb-6 text-center">
+          <h1 className="font-semibold text-2xl md:pb-4 text-center">
             Register your account
           </h1>
           <div className=" relative">

@@ -72,7 +72,9 @@ export default function BoardDetails({ handleClose }: Props) {
           {[
             {
               title: (
-                <p className="text-base py-4 font-medium">{active.name}</p>
+                <p className="text-base font-normal text-white/60">
+                  {active.name}
+                </p>
               ),
               label: `Name`,
               handler: () => {
@@ -84,9 +86,11 @@ export default function BoardDetails({ handleClose }: Props) {
               title: (
                 <>
                   {active?.description ? (
-                    <p className=" font-medium py-4">{active?.description}</p>
+                    <p className="text-base text-white/60 font-normal">
+                      {active?.description}
+                    </p>
                   ) : (
-                    <p className="text-sm py-4 text-gray/80">
+                    <p className="text-sm text-white/60">
                       ** A brief details about the board.
                     </p>
                   )}
@@ -100,11 +104,12 @@ export default function BoardDetails({ handleClose }: Props) {
             },
             {
               title: (
-                <p className="text-gray/90 text-sm py-5">
-                  Created by {workspace.createdBy} on{" "}
+                <p className="text-base text-white/60 font-normal">
+                  {workspace.createdBy} on{" "}
                   {dayjs(active.createdAt).format("MMMM Do, YYYY")}
                 </p>
               ),
+              label: `Created by`,
             },
 
             {
@@ -113,7 +118,7 @@ export default function BoardDetails({ handleClose }: Props) {
                   onClick={() => {
                     setIsOpenDelete(true);
                   }}
-                  className="text-error my-3 w-fit bg-error py-2 px-3 rounded-lg hover:bg-[#e60023] text-white font-semibold text-sm"
+                  className="text-error w-fit py-2 px-3 font-bold text-base"
                 >
                   Delete Board
                 </button>
@@ -129,14 +134,14 @@ export default function BoardDetails({ handleClose }: Props) {
                     : `border-b border-gray/15 ${index === 0 && "rounded-t-md"}`
                 } w-full border-x-0 border-t-0 hover:bg-gray-100`}
               >
-                <div className="justify-between flex items-center py-2 px-5">
+                <div className="justify-between flex items-center py-4 px-5">
                   <div className="text-left">
-                    <span className="text-gray/80 font-medium text-sm">
+                    <span className="text-white/90 font-semibold">
                       {ele.label}
                     </span>
                     {ele.title}
                   </div>
-                  {ele.label ? (
+                  {ele.label && ele.handler ? (
                     <button onClick={() => ele.handler()}>
                       <CiEdit className="text-lg text-gray/60" />
                     </button>

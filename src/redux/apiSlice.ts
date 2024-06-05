@@ -215,7 +215,7 @@ export const apiSlice = createApi({
         method: "POST",
         data: payload.userId,
       }),
-      invalidatesTags: ["Task", "Board"],
+      invalidatesTags: ["Task", "Board","Workspace"],
     }),
   }),
 });

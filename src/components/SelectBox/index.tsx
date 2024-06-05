@@ -47,7 +47,7 @@ export default function Index({
           title: tasks?.title,
           description: tasks?.description,
           subtasks: updatedSubstasks,
-          assignTo:tasks?.assignTo,
+          // assignTo:tasks?.assignTo,
         },
         workspaceId: workspaceId,
         columnId: columnId,

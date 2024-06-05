@@ -44,7 +44,7 @@ export default function Index() {
   return (
     <div className="bg-no-repeat bg-cover w-full novisible-scroll h-screen text-black overflow-y-auto bg-white relative w-full">
       <div ref={hero} className="">
-        <header className="header fixed z-40 w-full bg-white flex items-center shadow-xl bg-inherit justify-between px-4 lg:px-16 py-4">
+        <header className="header fixed z-40 w-full bg-white flex items-center shadow-xl bg-inherit justify-between px-4 lg:px-8 py-4">
           <Link className="inline-flex items-center gap-x-2" to="/">
             <img
               src="/track_black_logo.webp"
