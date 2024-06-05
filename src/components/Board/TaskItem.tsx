@@ -29,6 +29,7 @@ export default function TaskItem({
   const pendingDays = tasks?.dueDate?.length
     ? dayjs(tasks.dueDate[1]).diff(dayjs(tasks.dueDate[0]), "days")
     : null;
+
   return (
     <>
       <Draggable key={tasks._id} draggableId={tasks._id} index={index}>
@@ -77,8 +78,8 @@ export default function TaskItem({
                     </div>
                   </div>
 
-                  <div className="img_container">
-                    {tasks?.assignTo.map((list: any) => {
+                 {tasks.assignTo?.length >0 ? <div className="img_container">
+                    {tasks.assignTo.map((list: any) => {
                       return (
                         <div
                           key={list._id}
@@ -100,7 +101,7 @@ export default function TaskItem({
                         </div>
                       );
                     })}
-                  </div>
+                  </div>:null}
                 </div>
                 <div className="absolute bottom-2 left-4">
                   {tasks?.dueDate?.length > 0 &&

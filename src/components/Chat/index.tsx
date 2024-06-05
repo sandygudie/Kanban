@@ -440,7 +440,6 @@ export default function Index({
 
             <input
               ref={inputRef}
-              // required
               className={`rounded-lg py-5 px-3 w-full placeholder:text-sm`}
               placeholder="Write a message..."
               value={message}

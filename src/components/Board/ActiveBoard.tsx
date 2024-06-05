@@ -7,18 +7,14 @@ import { colorMarker } from "utilis";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, appData, deleteTask, editColumnName } from "redux/boardSlice";
 import Modal from "components/Modal";
-import { AppState, IColumn, ISubTask, ITask } from "types";
+import { AppState, IColumn, ITask } from "types";
 import DeleteItem from "components/DeleteItem";
 import IconButton from "components/IconButton";
 import AddColumn from "./AddColumn";
 import { PiDotsThreeBold } from "react-icons/pi";
 import Popup from "components/Popup";
 import { MdDelete } from "react-icons/md";
-import {
-  useCreateTaskMutation,
-  useDeleteTaskMutation,
-  useEditColumnMutation,
-} from "redux/apiSlice";
+import { useMoveTaskMutation, useEditColumnMutation } from "redux/apiSlice";
 import { IoIosAdd } from "react-icons/io";
 
 export default function ActiveBoard() {
@@ -31,9 +27,8 @@ export default function ActiveBoard() {
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isDeleteColumn, setDeleteColumn] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState<IColumn>();
-  const [createTask] = useCreateTaskMutation();
+  const [moveTask] = useMoveTaskMutation();
   const [editAColumn] = useEditColumnMutation();
-  const [deleteATask] = useDeleteTaskMutation();
   const data: AppState = useSelector(appData);
   const { active, workspace } = data;
 
@@ -53,41 +48,24 @@ export default function ActiveBoard() {
       (item: IColumn) => item.name === result.destination.droppableId
     )._id;
 
-    const updatedSubstasks = sourceTask.subtasks.map((ele: ISubTask) => {
-      return {
-        title: ele.title,
-        isCompleted: ele.isCompleted,
-      };
-    });
-
     dispatch(deleteTask(sourceTask));
 
     const updatedTasks = {
       ...sourceTask,
       status: result.destination.droppableId,
     };
+
     const position = result.destination.index;
     dispatch(addTask({ updatedTasks, position }));
-    
-    await deleteATask({
-      taskId: sourceTask?._id,
-      columnId: sourceTask?.columnId,
-      workspaceId: workspace.id,
-    }).unwrap();
 
     const payload = {
-      formdata: {
-        taskId: sourceTask._id,
-        title: sourceTask.title,
-        description: sourceTask.description,
-        subtasks: updatedSubstasks,
-        assignTo:sourceTask.assignTo,
-        position,
-      },
+      taskId: sourceTask._id,
       workspaceId: workspace.id,
       columnId: columnId,
+      position,
     };
-    await createTask(payload).unwrap();
+
+    await moveTask(payload).unwrap();
   };
 
   const editColumnChangeHandler = async (
@@ -115,7 +93,7 @@ export default function ActiveBoard() {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-      <div className="overflow-x-auto  overflow-y-hidden h-full">
+        <div className="overflow-x-auto  overflow-y-hidden h-full">
           <div className="z-10 h-full flex gap-x-10 w-full pt-12 mini:pt-8 px-8 mini:px-14">
             {active.columns?.map((item: IColumn, index: number) => {
               return (

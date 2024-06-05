@@ -8,7 +8,6 @@ import SelectBox from "components/SelectBox";
 import {
   useAssignTaskMutation,
   useEditTaskMutation,
-  useGetBoardQuery,
   useGetTaskQuery,
   useGetWorkspaceQuery,
 } from "redux/apiSlice";
@@ -49,13 +48,10 @@ export default function TaskDetails() {
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
-  const { workspaceId, boardId, taskId }: string | any = useParams();
+  const { workspaceId, taskId }: string | any = useParams();
   const { data: tasks, isLoading } = useGetTaskQuery({ workspaceId, taskId });
   const { data: workspace } = useGetWorkspaceQuery(workspaceId);
-  const { data: active, isLoading: isLoadingActiveBoard } = useGetBoardQuery({
-    workspaceId,
-    boardId,
-  });
+
   const [editATask] = useEditTaskMutation();
   const [assignTask] = useAssignTaskMutation();
   const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
@@ -70,7 +66,7 @@ export default function TaskDetails() {
 
     loadmessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [taskId, tasks]);
+  }, []);
 
   const loadmessages = async () => {
     try {
@@ -386,7 +382,6 @@ export default function TaskDetails() {
                 <p className="font-semibold mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
-                  active={active?.data}
                   handleSelectedColumn={handleSelectedColumn}
                   tasks={tasks?.data}
                   isOpenEdit={isOpenEdit}
@@ -475,7 +470,7 @@ export default function TaskDetails() {
             startChat={startChat}
           />
         </div>
-      ) : isLoading || isLoadingActiveBoard || !tasks ? (
+      ) : isLoading || !tasks ? (
         <div className="flex-col items-center justify-center h-full flex">
           <Spinner />
         </div>

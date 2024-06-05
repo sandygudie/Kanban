@@ -15,7 +15,7 @@ export const apiSlice = createApi({
         method: "PATCH",
         data: payload.formData,
       }),
-      invalidatesTags: ["User", "Workspace","Task"],
+      invalidatesTags: ["User", "Workspace", "Task"],
     }),
     createWorkspace: builder.mutation({
       query: (payload) => ({
@@ -215,7 +215,16 @@ export const apiSlice = createApi({
         method: "POST",
         data: payload.userId,
       }),
-      invalidatesTags: ["Task", "Board","Workspace"],
+      invalidatesTags: ["Task", "Board", "Workspace"],
+    }),
+
+    moveTask: builder.mutation({
+      query: (payload) => ({
+        url: `/task/movetask/${payload.workspaceId}`,
+        method: "PATCH",
+        data: payload,
+      }),
+      invalidatesTags: ["Task", "Board", "Workspace"],
     }),
   }),
 });
@@ -245,5 +254,6 @@ export const {
   useRemovePendingMemberMutation,
   useUpdateMemberRoleMutation,
   useUpdateSocialLinksMutation,
-  useAssignTaskMutation
+  useAssignTaskMutation,
+  useMoveTaskMutation,
 } = apiSlice;
