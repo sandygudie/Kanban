@@ -72,7 +72,7 @@ export default function BoardDetails({ handleClose }: Props) {
           {[
             {
               title: (
-                <p className="text-base font-normal text-white/60">
+                <p className="text-base font-normal text-white/70">
                   {active.name}
                 </p>
               ),
@@ -86,12 +86,12 @@ export default function BoardDetails({ handleClose }: Props) {
               title: (
                 <>
                   {active?.description ? (
-                    <p className="text-base text-white/60 font-normal">
+                    <p className="text-base text-white/70 font-normal">
                       {active?.description}
                     </p>
                   ) : (
-                    <p className="text-sm text-white/60">
-                      ** A brief details about the board.
+                    <p className="text-sm text-white/30">
+                      ** Add a brief details about the board **
                     </p>
                   )}
                 </>
@@ -104,7 +104,7 @@ export default function BoardDetails({ handleClose }: Props) {
             },
             {
               title: (
-                <p className="text-base text-white/60 font-normal">
+                <p className="text-base text-white/70 font-normal">
                   {workspace.createdBy} on{" "}
                   {dayjs(active.createdAt).format("MMMM Do, YYYY")}
                 </p>
