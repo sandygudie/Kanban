@@ -83,10 +83,11 @@ export default function Index() {
               <p className="title-right">Your Projects.</p>
             </h1>
             <div className="description">
-              <p className="md:px-8 lg:p-0 lg:w-[50ch] mx-auto text-[24px] my-4 mini:my-8 font-normal leading-[2.5rem]">
-                <span className="font-bold text-2xl">Kanban</span> offers a
-                visual view for teams to manage tasks, quickly shift priorities,
-                track project progress, and stay on top of deadlines.
+              <p className="mini:px-8 lg:p-0 lg:w-[50ch] mx-auto text-[24px] my-4 mini:my-8 font-normal text-gray-400 leading-[2.5rem]">
+                <span className="font-bold text-2xl text-black">Kanban</span>{" "}
+                offers a visual view for teams to manage tasks, quickly shift
+                priorities, track project progress, and stay on top of
+                deadlines.
               </p>
 
               <div className="w-auto md:w-fit mx-auto relative">
@@ -111,78 +112,136 @@ export default function Index() {
             </div>
           </section>
           <div className="mini:py-12">
-            <img src="./4.png" className="w-48 mini:w-64 mx-auto" />
+            <img src="./4.png" className="w-48 md:w-64 mx-auto" />
           </div>
-          <section className="sm:px-8 lg:px-16 ">
+          <section className="sm:px-8 lg:px-16">
             <img
               className="rounded-lg md:rounded-2xl"
               src="./boardview.png"
               alt="kanban board"
             />
           </section>
-          <section className="px-4 relative sm:px-8 lg:px-16 mt-12 md:pt-36 pb-24 flex items-center justify-between lg:justify-center flex-wrap">
-            <img src="./2.png" className=" w-72 top-10 -left-20 absolute" />
-            <div className="mini:w-[40%] z-20 md:w-1/3 text-left">
-              <h2 className="text-4xl pb-4 font-bold">
-                What is special about Kanban board?
-              </h2>
-              <p className="text-base md:w-4/5 text-gray">
-                Kanban offers all the features your team need to build in an
-                Agile development framework.{" "}
-              </p>
-            </div>
-            <div className="mini:w-[60%] md:w-1/2 z-20">
-              <div className="flex items-center rounded-t-lg gap-x-6 py-4 md:px-6">
-                <img src="./collaboration.png" className="w-10" />
-                <div className="text-left">
-                  {" "}
-                  <h3 className="text-lg pb-1 font-semibold ">
-                    Real time collaboration
-                  </h3>
-                  <p className="text-base text-gray">
-                    Enables team members to simultaneously update and manage
-                    tasks, ensuring everyone has the latest information.
+          <section className="relative">
+            <img
+              src="./2.png"
+              className="w-48 md:w-72 top-10 -left-20 absolute"
+            />
+
+            <div className="flex items-center justify-between p-8 mini:p-24 flex-col md:flex-row">
+              <img
+                src="./question_icon.png"
+                className="hidden md:block w-36 md:w-64"
+              />
+              <div className="text-left md:w-1/2 z-20">
+                <h3 className="text-[2.125rem] text-gray-500 pb-2 font-bold">
+                  Why Kanban Board?
+                </h3>
+                <div>
+                  <p className="text-gray-400 text-lg leading-loose">
+                    Kanban offers all the features your team need to build in an
+                    Agile development framework.
+                    <p>
+                      We helps your teams to{" "}
+                      <span className="font-bold text-[#7a72bd]">
+                        organize tasks
+                      </span>
+                      ,{" "}
+                      <span className="font-bold text-[#7a72bd]">
+                        streamline workflows
+                      </span>
+                      , and{" "}
+                      <span className="font-bold text-[#7a72bd]">
+                        improve efficiency
+                      </span>
+                      .
+                    </p>
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-x-6 py-4 md:px-6">
-                <img src="./chat.png" className="w-10" />
-                <div className="text-left">
-                  <h3 className="text-lg pb-1 font-semibold ">Chat</h3>
-                  <p className="text-base text-gray">
+            </div>
+            <div className="text-center text-3xl font-bold pl-8 py-12">
+              What you get
+            </div>
+            <div className="flex items-center text-center justify-center md:justify-between p-8 md:p-24 bg-[#f1efff66] flex-row-reverse flex-wrap">
+              <img
+                src="./real_time_collaboration.png"
+                className="w-20 md:w-64"
+              />
+              <div className="text-left md:w-1/2">
+                {" "}
+                <h3 className="text-2xl md:text-[2.125rem] text-gray-500 pb-4 font-bold">
+                  Real-Time Collaboration
+                </h3>
+                <p className="text-gray-400 text-lg leading-relaxed">
+                  Changes made by any team member are instantly visible to
+                  others, ensuring everyone is working with the most up-to-date
+                  information.
+                  <p className="pt-2 hidden md:block">
+                    Multiple users can edit tasks, add comments, and update
+                    status simultaneously without conflicts or delays.
+                  </p>
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center text-center justify-center md:justify-between p-8 md:p-24 flex-wrap">
+              <img src="./chat.png" className="w-20 md:w-64" />
+              <div className="text-left md:w-1/2">
+                <h3 className="text-2xl md:text-[2.125rem] text-gray-500 pb-4 font-bold">
+                  Real-Time Communication
+                </h3>
+                <p className="text-gray-400 text-lg leading-relaxed">
+                  Built-in chat functionalities for team members to discuss
+                  tasks, share ideas, and resolve issues in real-time. Team
+                  members can leave comments on tasks and use mentions to notify
+                  specific colleagues, making communication more
+                  context-specific and targeted.
+                  <p className="pt-2 hidden md:block">
+                    {" "}
                     Instant communication among team members, allowing for quick
                     discussions, decision-making and resolving issues in
                     real-time.
                   </p>
-                </div>
+                </p>
               </div>
-              <div className="flex items-center gap-x-6 py-4 md:px-6">
-                <img src="./layout.png" className="w-10" />
-                <div className="text-left">
-                  <h3 className="text-lg pb-1 font-semibold ">
-                    Customized view
-                  </h3>
-                  <p className="text-base text-gray">
-                    Tailor workspace to fit needs and preferences, include
-                    layout and theme selection.
+            </div>
+            <div className="flex items-center text-center justify-center md:justify-between p-8 md:p-24 bg-[#f1efff66] flex-row-reverse flex-wrap">
+              <img src="./layout.png" className="w-20 md:w-64" />
+              <div className="text-left md:w-1/2">
+                <h3 className="text-2xl md:text-[2.125rem] text-gray-500 pb-4 font-bold">
+                  Interactive Workspace Management
+                </h3>
+                <p className="text-gray-400 text-lg leading-relaxed">
+                  Tailor workspace to fit needs and preferences, include layout
+                  and theme selection.
+                  <p className="pt-2 hidden md:block">
+                    {" "}
+                    The Drag-and-drop features for tasks allow for quick
+                    reorganization and reassignment, reflecting changes
+                    instantly. Customizable Workflows allows for adjusting
+                    workflows on the fly to reflect changing project
+                    requirements and priorities.
                   </p>
-                </div>
+                </p>
               </div>
-              <div className="flex items-center rounded-b-lg gap-x-6 py-4 md:px-6">
-                <img src="simplified-board.png" className="w-10" />
-                <div className="text-left">
-                  <h3 className="text-lg pb-1 font-semibold">
-                    Simplified Board view
-                  </h3>
-                  <p className="text-base text-gray">
-                    Quick visual representation of tasks and their progress,
-                    through columns representing different stages.
+            </div>
+            <div className="flex items-center text-center justify-center md:justify-between p-8 md:p-24 flex-wrap">
+              <img src="simplified-board.png" className="w-20 md:w-64" />
+              <div className="text-left md:w-1/2">
+                <h3 className="text-2xl md:text-[2.125rem] text-gray-500 pb-4 font-bold">
+                  Simplified Board View
+                </h3>
+                <p className="text-gray-400  text-lg leading-relaxed">
+                  Quick visual representation of tasks and their progress,
+                  through columns representing different stages.
+                  <p className="pt-2 hidden md:block">
+                    Compact, easily accessible menu for navigation to different
+                    sections or views
                   </p>
-                </div>
+                </p>
               </div>
             </div>
           </section>
-          {/* <p>Track project of your work all in one place.</p> */}
+
           <section
             style={{ backgroundImage: `url("./2.svg")` }}
             className="bg-[#f1efff] py-64 cover bg-no-repeat bg-center relative text-white flex items-center justify-center flex-col"
@@ -197,7 +256,7 @@ export default function Index() {
                 href="/signup"
                 className="bg-primary hover:bg-primary-hover p-3 w-64 block rounded-lg mx-auto font-bold"
               >
-                Get Started
+                Sign Up for free
               </a>
             </div>
           </section>
