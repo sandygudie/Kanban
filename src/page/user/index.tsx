@@ -84,120 +84,117 @@ export default function Index() {
           validateOnChange={false}
           validateOnBlur={false}
           onSubmit={(values) => handleSubmit(values)}
-          className="h-auto"
         >
-          {({ values, touched, setFieldValue ,handleBlur}) => (
-                console.log(touched),
+          {({ values, touched, setFieldValue, handleBlur }) => (
             <Form>
-              <p className="py-2 text-gray/80 text-xs">
-                Click on fields to edit
-              </p>
-              <div className="md:flex items-center justify-between my-4">
-                <label className="text-gray/80 font-medium md:w-64 text-sm">
-                  Name
-                </label>
-                <input
-                  name="name"
-                  onBlur={handleBlur}
-                  value={values.name}
-                  type="text"
-                  onChange={(e) => setFieldValue("name", e.target.value)}
-                  className={`font-semibold rounded-md w-full border-none bg-gray-200 px-4 py-3 hover:bg-gray-300`}
-                />
-              </div>
-              <div className="md:flex items-center justify-between my-4">
-                <label className="text-gray/80 font-medium text-sm md:w-64">
-                  Email
-                </label>
-                <input
-                  name="email"
-                  value={values.email}
-                  type="email"
-                  onBlur={handleBlur}
-                  onChange={(e) => setFieldValue("email", e.target.value)}
-                  className={`font-semibold rounded-md w-full border-none bg-gray-200 px-4 py-3 hover:bg-gray-300`}
-                />
-              </div>
-              <div className="flex items-start my-6">
-                <label className="text-gray/80 font-medium md:w-64 text-sm ">
-                  Avatar
-                </label>
-                <div className="w-fit">
-                  <div className="relative">
-                    <label
-                      className="text-white cursor-pointer relative h-full"
-                      htmlFor="file_input"
-                    >
-                      <div className="w-28 absolute top-0 bg-gray z-20 rounded-full flex flex-col items-center justify-center opacity-0 hover:opacity-90 font-bold text-xs h-full p-5 text-center">
-                        Click to upload image
-                      </div>
-                      <div>
-                        {values.profilePics || selectedImage ? (
-                          <div className="relative w-28 h-28 rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
-                            <img
-                              className="w-28 h-28"
-                              src={
-                                selectedImage &&
-                                typeof selectedImage === "string"
-                                  ? selectedImage
-                                  : user.profilePics
+              <div className="h-auto">
+                <p className="py-2 text-gray/80 text-xs">
+                  Click on fields to edit
+                </p>
+                <div className="md:flex items-center justify-between my-4">
+                  <label className="text-gray/80 font-medium md:w-64 text-sm">
+                    Name
+                  </label>
+                  <input
+                    name="name"
+                    onBlur={handleBlur}
+                    value={values.name}
+                    type="text"
+                    onChange={(e) => setFieldValue("name", e.target.value)}
+                    className={`font-semibold rounded-md w-full border-none bg-gray-200 px-4 py-3 hover:bg-gray-300`}
+                  />
+                </div>
+                <div className="md:flex items-center justify-between my-4">
+                  <label className="text-gray/80 font-medium text-sm md:w-64">
+                    Email
+                  </label>
+                  <input
+                    name="email"
+                    value={values.email}
+                    type="email"
+                    onBlur={handleBlur}
+                    onChange={(e) => setFieldValue("email", e.target.value)}
+                    className={`font-semibold rounded-md w-full border-none bg-gray-200 px-4 py-3 hover:bg-gray-300`}
+                  />
+                </div>
+                <div className="flex items-start my-6">
+                  <label className="text-gray/80 font-medium md:w-64 text-sm ">
+                    Avatar
+                  </label>
+                  <div className="w-fit">
+                    <div className="relative">
+                      <label
+                        className="text-white cursor-pointer relative h-full"
+                        htmlFor="file_input"
+                      >
+                        <div className="w-28 absolute top-0 bg-gray z-20 rounded-full flex flex-col items-center justify-center opacity-0 hover:opacity-90 font-bold text-xs h-full p-5 text-center">
+                          Click to upload image
+                        </div>
+                        <div>
+                          {values.profilePics || selectedImage ? (
+                            <div className="relative w-28 h-28 rounded-full overflow-hidden border-[1px] border-solid border-gray/20 flex items-center justify-center flex-col">
+                              <img
+                                className="w-28 h-28"
+                                src={
+                                  selectedImage &&
+                                  typeof selectedImage === "string"
+                                    ? selectedImage
+                                    : user.profilePics
+                                }
+                              />
+                            </div>
+                          ) : (
+                            <span className="rounded-full h-24 w-24 border overflow-hidden flex items-center justify-center flex-col text-3xl font-bold">
+                              {DefaultImage(user.name)}
+                            </span>
+                          )}
+                        </div>
+
+                        <input
+                          type="file"
+                          size={100000}
+                          id="file_input"
+                          className="absolute top-20 text-sm invisible w-10"
+                          name="profilePics"
+                          accept=".jpg, .jpeg, .png"
+                          onChange={(e) => {
+                            if (e.currentTarget.files) {
+                              if (e.currentTarget.files[0].size > 100000) {
+                                message.error({
+                                  content: "image should be less than 100kb.",
+                                  className: "text-error",
+                                });
+
+                                return null;
+                              } else {
+                                setFieldValue(
+                                  "profilePics",
+                                  e.currentTarget.files[0]
+                                );
+                                setSelectedImage(
+                                  URL.createObjectURL(e.currentTarget.files[0])
+                                );
                               }
-                            />
-                          </div>
-                        ) : (
-                          <span className="rounded-full h-24 w-24 border overflow-hidden flex items-center justify-center flex-col text-3xl font-bold">
-                            {DefaultImage(user.name)}
-                          </span>
-                        )}
-                      </div>
-
-                      <input
-                        type="file"
-                        size={100000}
-                        id="file_input"
-         
-                        className="absolute top-20 text-sm invisible w-10"
-                        name="profilePics"
-                        accept=".jpg, .jpeg, .png"
-                        onChange={(e) => {
-                          if (e.currentTarget.files) {
-                            if (e.currentTarget.files[0].size > 100000) {
-                              message.error({
-                                content: "image should be less than 100kb.",
-                                className: "text-error",
-                              });
-
-                              return null;
-                            } else {
-                              setFieldValue(
-                                "profilePics",
-                                e.currentTarget.files[0]
-                              );
-                              setSelectedImage(
-                                URL.createObjectURL(e.currentTarget.files[0])
-                              );
                             }
-                          }
-                        }}
-                      />
-                    </label>
+                          }}
+                        />
+                      </label>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div>
-                <button
-                  disabled={
-                    !( touched.email || touched.name || selectedImage)
-                  }
-                  className={`${
-                    touched.email || touched.name || selectedImage
-                      ? "opacity-100"
-                      : "opacity-30"
-                  } h-10 px-4 text-xs h-10 ml-auto w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md font-bold`}
-                  type="submit"
-                >
-                  {isLoading ? <Loader /> : "Update"}
-                </button>
+                <div>
+                  <button
+                    disabled={!(touched.email || touched.name || selectedImage)}
+                    className={`${
+                      touched.email || touched.name || selectedImage
+                        ? "opacity-100"
+                        : "opacity-30"
+                    } h-10 px-4 text-xs h-10 ml-auto w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md font-bold`}
+                    type="submit"
+                  >
+                    {isLoading ? <Loader /> : "Update"}
+                  </button>
+                </div>
               </div>
             </Form>
           )}
