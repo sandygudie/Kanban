@@ -44,13 +44,6 @@ const boardSlice = createSlice({
       };
     },
 
-    updateUserProfile: (state, action) => {
-      return {
-        ...state,
-        user: { ...state.user, ...action.payload },
-      };
-    },
-
     updateWorkspace: (state, action) => {
       return {
         ...state,
@@ -261,7 +254,7 @@ export const {
   editColumnName,
   addColumn,
   updateWorkspace,
-  updateUserProfile,
+
 } = boardSlice.actions;
 export const appData = (state: RootState): AppState => state.boarddata;
 export default boardSlice.reducer;
