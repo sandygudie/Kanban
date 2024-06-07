@@ -35,7 +35,7 @@ export default function Index() {
     isError,
   } = useGetWorkspaceBoardsQuery(Id);
 
-  const memberPics = workspaceDetails?.data.workspace.members.map(
+  const memberPics = workspaceDetails?.workspace.members.map(
     (ele: { userId:string,name: string; profilePics: string }) => {
       return { userId:ele.userId,name: ele.name, profilePics: ele.profilePics };
     }
@@ -51,7 +51,7 @@ export default function Index() {
           <div className="w-full h-screen">
             <div
               className={`absolute top-[65px] ${
-                workspaceDetails.data.workspace.boards?.length
+                workspaceDetails.workspace.boards?.length
                   ? "h-screen"
                   : "h-full"
               }  w-full`}

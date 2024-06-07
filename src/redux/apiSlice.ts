@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import axiosBaseQuery from "services/api";
+import { IWorkspace } from "types/workspace";
 
 const baseURL = import.meta.env.VITE_API_BASEURL;
 
@@ -10,13 +11,17 @@ export const apiSlice = createApi({
 
   endpoints: (builder) => ({
     UpdateUser: builder.mutation({
-      query: (payload) => ({
+      query: (payload: {
+        userId: string;
+        userData: { name: string; email: string; profilePics: string };
+      }) => ({
         url: `/user/${payload.userId}`,
         method: "PATCH",
-        data: payload.formData,
+        data: payload.userData,
       }),
-      invalidatesTags: ["User", "Workspace", "Task"],
+      invalidatesTags: ["User", "Board", "Workspace", "Task"],
     }),
+
     createWorkspace: builder.mutation({
       query: (payload) => ({
         url: `/workspace`,
@@ -45,15 +50,16 @@ export const apiSlice = createApi({
     }),
 
     getAllWorkspaces: builder.query<any, void>({
-      query: () => ({ url: "/user", method: "get" }),
+      query: () => ({ url: "/user", method: "GET" }),
       providesTags: ["Workspace"],
     }),
 
     getWorkspaceBoards: builder.query({
-      query: (workspaceId) => ({
+      query: (workspaceId: string) => ({
         url: `/board/${workspaceId}`,
         method: "GET",
       }),
+      transformResponse: (response: { data: IWorkspace }) => response.data,
       providesTags: ["Workspace"],
     }),
 

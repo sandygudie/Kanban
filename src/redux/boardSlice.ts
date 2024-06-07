@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IBoard, IColumn, ISubTask, ITask } from "types";
+import { AppState, IBoard, IColumn, ISubTask, ITask } from "types";
 import { loadState, loadWorkspaceData } from "utilis";
 import type { RootState } from "./store";
 import { apiSlice } from "./apiSlice";
@@ -201,7 +201,7 @@ const boardSlice = createSlice({
     builder.addMatcher(
       apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
-        const { workspace, userDetails } = payload.data;
+        const { workspace, userDetails } = payload;
         const {
           boards,
           _id,
@@ -263,5 +263,5 @@ export const {
   updateWorkspace,
   updateUserProfile,
 } = boardSlice.actions;
-export const appData = (state: RootState) => state.boarddata;
+export const appData = (state: RootState): AppState => state.boarddata;
 export default boardSlice.reducer;

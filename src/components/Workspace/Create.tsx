@@ -22,7 +22,6 @@ export default function CreateWorkspace() {
   const [loading, setLoading] = useState(false);
   const [uploadError, setUploadError] = useState<any>();
   const [createWorkspace, { isLoading }] = useCreateWorkspaceMutation();
-  
 
   const createWorkspaceSchema = Yup.object().shape({
     workspaceName: Yup.string()
@@ -37,7 +36,7 @@ export default function CreateWorkspace() {
   });
 
   const createNewWorksapce = async (values: any) => {
-    setLoading(true)
+    setLoading(true);
     let res;
     const foundDuplicate = checkDuplicatedBoard(
       values.workspaceName,
@@ -53,7 +52,7 @@ export default function CreateWorkspace() {
       return null;
     }
     if (values) {
-     const form= new FormData();
+      const form = new FormData();
       form.append("file", values.profilePics);
       form.append("upload_preset", upload_preset);
       form.append("cloud_name", cloud_name);
@@ -79,7 +78,7 @@ export default function CreateWorkspace() {
         });
         navigate(`/workspace/${response.data.workspaceId}`);
       }
-      setLoading(false)
+      setLoading(false);
     } catch (error: any) {
       setUploadError(error.message);
     }
@@ -128,6 +127,7 @@ export default function CreateWorkspace() {
                 <input
                   type="file"
                   id="file_input"
+                  size={100000}
                   className="absolute top-20 text-sm invisible w-48"
                   name="profilePics"
                   accept=".jpg, .jpeg, .png"
@@ -169,7 +169,7 @@ export default function CreateWorkspace() {
               className="px-2 flex-col flex items-center justify-center md:text-lg text-white bg-primary hover:bg-primary-hover h-12 font-bold py-4 w-full rounded-full"
               type="submit"
             >
-              {isLoading ||loading? <Loader /> : "Continue"}
+              {isLoading || loading ? <Loader /> : "Continue"}
             </button>
           </div>
         </Form>
