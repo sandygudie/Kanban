@@ -49,7 +49,7 @@ export default function Index() {
             <img
               src="/track_black_logo.webp"
               className="w-6 h-auto"
-              alt="mutiple-projects-image"
+              alt="kanban logo"
             />
             <span className="hidden mini:block font-bold text-3xl">Kanban</span>
           </Link>
@@ -75,8 +75,9 @@ export default function Index() {
           <section className="px-4 sm:px-8 lg:px-16 relative">
             {" "}
             <img
-              src="./3.png"
+              src="./curve.png"
               className=" w-[30rem] -top-40 -right-56 absolute"
+              alt="curve shape"
             />
             <h1 className="font-bold text-[2.5rem] md:text-6xl">
               <p className="title-left"> Effortlessly Manage</p>
@@ -112,7 +113,11 @@ export default function Index() {
             </div>
           </section>
           <div className="mini:py-12">
-            <img src="./4.png" className="w-48 md:w-64 mx-auto" />
+            <img
+              src="./cirlce_flame.png"
+              className="w-48 md:w-64 mx-auto"
+              alt="cirlce flame"
+            />
           </div>
           <section className="sm:px-8 lg:px-16">
             <img
@@ -123,14 +128,16 @@ export default function Index() {
           </section>
           <section className="relative">
             <img
-              src="./2.png"
+              src="./dot_splash.png"
               className="w-48 md:w-72 top-10 -left-20 absolute"
+              alt="dot splash"
             />
 
             <div className="flex items-center justify-between p-8 mini:p-24 flex-col md:flex-row">
               <img
                 src="./question_icon.png"
                 className="hidden md:block w-36 md:w-64"
+                alt="question mark"
               />
               <div className="text-left md:w-1/2 z-20">
                 <h3 className="text-[2.125rem] text-gray-500 pb-2 font-bold">
@@ -166,6 +173,7 @@ export default function Index() {
               <img
                 src="./real_time_collaboration.png"
                 className="w-20 md:w-64"
+                alt="people sitting around the clock"
               />
               <div className="text-left md:w-1/2">
                 {" "}
@@ -184,7 +192,11 @@ export default function Index() {
               </div>
             </div>
             <div className="flex items-center text-center justify-center md:justify-between p-8 md:p-24 flex-wrap">
-              <img src="./chat.png" className="w-20 md:w-64" />
+              <img
+                src="./chat.png"
+                className="w-20 md:w-64"
+                alt="messaging box"
+              />
               <div className="text-left md:w-1/2">
                 <h3 className="text-2xl md:text-[2.125rem] text-gray-500 pb-4 font-bold">
                   Real-Time Communication
@@ -205,7 +217,7 @@ export default function Index() {
               </div>
             </div>
             <div className="flex items-center text-center justify-center md:justify-between p-8 md:p-24 bg-[#f1efff66] flex-row-reverse flex-wrap">
-              <img src="./layout.png" className="w-20 md:w-64" />
+              <img src="./layout.png" className="w-20 md:w-64" alt="layout" />
               <div className="text-left md:w-1/2">
                 <h3 className="text-2xl md:text-[2.125rem] text-gray-500 pb-4 font-bold">
                   Interactive Workspace Management
@@ -225,7 +237,11 @@ export default function Index() {
               </div>
             </div>
             <div className="flex items-center text-center justify-center md:justify-between p-8 md:p-24 flex-wrap">
-              <img src="simplified-board.png" className="w-20 md:w-64" />
+              <img
+                src="simplified-board.png"
+                className="w-20 md:w-64"
+                alt="Ipad view"
+              />
               <div className="text-left md:w-1/2">
                 <h3 className="text-2xl md:text-[2.125rem] text-gray-500 pb-4 font-bold">
                   Simplified Board View
@@ -243,7 +259,7 @@ export default function Index() {
           </section>
 
           <section
-            style={{ backgroundImage: `url("./2.svg")` }}
+            style={{ backgroundImage: `url("./puple_bg_curved.svg")` }}
             className="bg-[#f1efff] py-64 cover bg-no-repeat bg-center relative text-white flex items-center justify-center flex-col"
           >
             <div className="z-40 text-center">
