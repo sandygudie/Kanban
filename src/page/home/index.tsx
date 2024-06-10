@@ -121,7 +121,7 @@ export default function Index() {
           </div>
           <section className="sm:px-8 lg:px-16">
             <img
-              className="rounded-lg md:rounded-2xl"
+              className="rounded-lg md:rounded-2xl w-auto h-auto"
               src="./boardview.png"
               alt="kanban board"
             />
@@ -140,9 +140,9 @@ export default function Index() {
                 alt="question mark"
               />
               <div className="text-left md:w-1/2 z-20">
-                <h3 className="text-[2.125rem] text-gray-500 pb-2 font-bold">
+                <h2 className="text-[2.125rem] text-gray-500 pb-2 font-bold">
                   Why Kanban Board?
-                </h3>
+                </h2>
                 <div>
                   <p className="text-gray-400 text-lg leading-loose">
                     Kanban offers all the features your team need to build in an
@@ -264,7 +264,7 @@ export default function Index() {
           >
             <div className="z-40 text-center">
               {" "}
-              <h2 className="text-3xl font-bold">Start working smarter.</h2>
+              <h3 className="text-3xl font-bold">Start working smarter.</h3>
               <p className="mb-4 text-base">
                 Try it for free. No credit card required.
               </p>
