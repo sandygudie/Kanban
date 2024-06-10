@@ -77,9 +77,10 @@ export default function Delete({
       const response = await deleteAWorkspace({
         workspaceId: workspace.id,
       }).unwrap();
-      if (response) {
+      if (response.data.workspaceLeft > 0) {
         navigate(`/workspaces`);
-        window.location.href = `/workspaces`;
+      } else {
+        navigate(`/workspace/new`);
       }
     } catch (error: any) {
       message.error({

@@ -32,10 +32,10 @@ export default function GoogleLogin() {
         } else if (workspace.length && !currentWorkspace) {
           navigate("/workspaces");
         } else {
-          const exisitngWorkspace = workspace.includes(
+          const exisitingWorkspace = workspace.includes(
             currentWorkspace.workspaceId
           );
-          if (exisitngWorkspace) {
+          if (exisitingWorkspace) {
             navigate(`/workspace/${currentWorkspace.workspaceId}`);
           } else {
             localStorage.removeItem("currentWorkspace");

@@ -74,7 +74,7 @@ export default function CreateWorkspace() {
       }).unwrap();
       if (response) {
         saveloadWorkspaceData({
-          workspaceId: response.data.workspaceId,
+          workspaceId: response.data.workspaceId
         });
         navigate(`/workspace/${response.data.workspaceId}`);
       }
