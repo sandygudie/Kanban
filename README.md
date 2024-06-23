@@ -71,10 +71,12 @@ yarn run test
 docker pull sandy8169/kanban:latest
 ```
 
-
+## Run as fullstack application with docker-compose
+```
+docker compose up
+```
 
 ## Deployment pipeline(CI/CD) 🚀
 - From GitHub Actions to Vercel.
-- From Github to Render.
 - From GitHub Actions to Dockerhub.
 
