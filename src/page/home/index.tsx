@@ -146,7 +146,7 @@ export default function Index() {
                 <div>
                   <p className="text-gray-400 text-lg leading-loose">
                     Kanban offers all the features your team need to build in an
-                    Agile development framework.
+                    Agile development framework. </p>
                     <p>
                       We helps your teams to{" "}
                       <span className="font-bold text-[#7a72bd]">
@@ -162,7 +162,7 @@ export default function Index() {
                       </span>
                       .
                     </p>
-                  </p>
+                 
                 </div>
               </div>
             </div>
