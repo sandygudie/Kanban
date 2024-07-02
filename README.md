@@ -15,6 +15,7 @@ The application features a user-friendly interface with drag-and-drop functional
 The application is built using several technologies and tools
 * **Frontend** : Vite ReactJS, TypeScript, TailwindCSS, Redux RTK, Ant Design, GSAP, Formik
 * **[Backend](https://github.com/sandygudie/kanban-api)** : NodeJs ExpressJS, MongoDB, Nodemon, BycrptJs, JWT, Cors, EJS, Nodemailer 
+* **[Chat Microservices](https://github.com/sandygudie/chat-microservice)** : NodeJs ExpressJS, MongoDB, Nodemon, Websocket
 * **Formatting and code syntax** : ESlint, Prettier
 * **Testing** : Cypress
 * **Deployment** : Vercel, Render
@@ -41,6 +42,7 @@ The application is built using several technologies and tools
 - Invite members and join existing workspace for collaboration.
 - Track task and project progress.
 - Drag and drop tasks to change their status and re-order them in a column.
+- Real time messaging and communication.
   
 <br/>
 
@@ -71,10 +73,12 @@ yarn run test
 docker pull sandy8169/kanban:latest
 ```
 
-
+## Run as fullstack application with docker-compose
+```
+docker compose up
+```
 
 ## Deployment pipeline(CI/CD) 🚀
 - From GitHub Actions to Vercel.
-- From Github to Render.
 - From GitHub Actions to Dockerhub.
 
