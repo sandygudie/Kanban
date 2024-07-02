@@ -37,6 +37,11 @@ export default function CreateWorkspace() {
 
   const createNewWorksapce = async (values: any) => {
     setLoading(true);
+    if (!selectedImage) {
+      setUploadError("Workspace logo is required")
+      setLoading(false);
+      return;
+    }
     let res;
     const foundDuplicate = checkDuplicatedBoard(
       values.workspaceName,
@@ -74,7 +79,7 @@ export default function CreateWorkspace() {
       }).unwrap();
       if (response) {
         saveloadWorkspaceData({
-          workspaceId: response.data.workspaceId
+          workspaceId: response.data.workspaceId,
         });
         navigate(`/workspace/${response.data.workspaceId}`);
       }

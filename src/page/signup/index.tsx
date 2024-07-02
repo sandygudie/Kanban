@@ -26,7 +26,6 @@ export default function Index() {
   const upperCaseCheck = /[A-Z]/;
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSignupError("");
-    setSignupSuccess("");
 
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -37,7 +36,7 @@ export default function Index() {
 
   const handleChange = (e: any) => {
     setSignupError("");
-    setSignupSuccess("");
+
     const tempPassword = e.target.value;
 
     if (tempPassword.length > 5) {
@@ -100,141 +99,154 @@ export default function Index() {
   return (
     <main className="h-full">
       <div className="h-full flex items-center flex-col">
-        <div className="w-9/12 md:w-[60rem] mx-auto">
-          <h1 className="font-semibold text-2xl md:pb-4 text-center">
-            Register your account
-          </h1>
-          <div className=" relative">
-            <div className="flex gap-x-20 items-center">
-              <form
-                onSubmit={(e) => handleSubmit(e)}
-                className="w-full md:w-[50%] mx-auto relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
-              >
-                <div className="w-full">
-                  <p className="pb-2 text-sm text-gray">With social account</p>
-                  <GoogleLogin />
-                </div>
+        {signupSuccess.length > 0 ? (
+          <div className="font-medium px-6 text-center">
+            <div className="bg-gray/20 rounded-full h-64 m-auto w-64 flex flex-col items-center justify-center mb-16">
+              <img
+                src="./verifymail.png"
+                alt="verification_email"
+                className="w-32"
+              />
+            </div>
+            <p className="text-lg pb-2 text-success md:text-3xl">{signupSuccess}</p>
+            <p className="md:text-lg">{`Check your email for verification link.`}</p>
+          </div>
+        ) : (
+          <div className="w-9/12 md:w-[60rem] mx-auto">
+            <h1 className="font-semibold text-2xl md:pb-4 text-center">
+              Register your account
+            </h1>
+            <div className=" relative">
+              <div className="flex gap-x-20 items-center">
+                <form
+                  onSubmit={(e) => handleSubmit(e)}
+                  className="w-full md:w-[50%] mx-auto relative flex items-center py-10 mini:p-12 flex-col gap-y-4 justify-center rounded-[10px] md:border md:bg-white border-gray/40"
+                >
+                  <div className="w-full">
+                    <p className="pb-2 text-sm text-gray">
+                      With social account
+                    </p>
+                    <GoogleLogin />
+                  </div>
 
-                <div className="overflow-hidden flex items-center justify-center  w-11/12">
-                  {" "}
-                  <hr className="border-r-[1px] border-gray/20 border-solid w-full" />{" "}
-                  <p className="text-sm text-gray font-medium w-36 text-center">OR</p>{" "}
-                  <hr className="border-r-[1px] border-gray/20 border-solid w-full" />
-                </div>
-                <input
-                  type="text"
-                  minLength={5}
-                  autoComplete="off"
-                  required
-                  name="name"
-                  value={formData.name}
-                  className="py-3 px-4 rounded-lg w-full"
-                  placeholder="What should we call you?"
-                  onChange={(e) => handleInputChange(e)}
-                />
-                <input
-                  required
-                  type="email"
-                  value={formData.email}
-                  name="email"
-                  className="py-3 px-4 rounded-lg w-full"
-                  placeholder="Email Address"
-                  onChange={(e) => handleInputChange(e)}
-                />
-                <div className="relative w-full">
+                  <div className="overflow-hidden flex items-center justify-center  w-11/12">
+                    {" "}
+                    <hr className="border-r-[1px] border-gray/20 border-solid w-full" />{" "}
+                    <p className="text-sm text-gray font-medium w-36 text-center">
+                      OR
+                    </p>{" "}
+                    <hr className="border-r-[1px] border-gray/20 border-solid w-full" />
+                  </div>
+                  <input
+                    type="text"
+                    minLength={5}
+                    autoComplete="off"
+                    required
+                    name="name"
+                    value={formData.name}
+                    className="py-3 px-4 rounded-lg w-full"
+                    placeholder="What should we call you?"
+                    onChange={(e) => handleInputChange(e)}
+                  />
                   <input
                     required
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    className={`${
-                      error ? "border-error" : "border"
-                    } border-[1px] py-3 px-4 rounded-lg w-full`}
-                    placeholder="Password"
-                    onChange={(e) => handleChange(e)}
+                    type="email"
+                    value={formData.email}
+                    name="email"
+                    className="py-3 px-4 rounded-lg w-full"
+                    placeholder="Email Address"
+                    onChange={(e) => handleInputChange(e)}
                   />
-                  <button type="button" className="absolute top-4 right-5">
-                    {showPassword ? (
-                      <AiOutlineEye
-                        className="text-xl text-gray/80"
-                        onClick={() => setShowPassword(false)}
-                      />
-                    ) : (
-                      <AiOutlineEyeInvisible
-                        className="text-xl text-gray/80"
-                        onClick={() => setShowPassword(true)}
-                      />
-                    )}
-                  </button>
-                  <div className="mt-2 text-[13px] absolute">
-                    {signupSuccess.length > 0 ? (
-                      <p className="text-success text-center">
-                        {signupSuccess}
-                        <span> Check your inbox for verification link.</span>
-                      </p>
-                    ) : signupError?.length > 0 ? (
-                      <p className="text-error flex items-center gap-x-2">
-                        {" "}
-                        <IoAlertCircleOutline size={16} /> {signupError}
-                      </p>
-                    ) : (
-                      <>
-                        {password.length
-                          ? passwordValidation.map((ele, index) => (
-                              <p key={index}>
-                                <span
-                                  className={` ${
-                                    validatePassword.includes(ele)
-                                      ? "text-success"
-                                      : "text-error"
-                                  } text-[13px] flex items-center gap-x-2`}
-                                >
-                                  {validatePassword.includes(ele) ? (
-                                    <IoCheckmarkCircleOutline size={16} />
-                                  ) : (
-                                    <IoAlertCircleOutline size={16} />
-                                  )}
-                                  {ele}
-                                </span>
-                              </p>
-                            ))
-                          : null}
-                        {validatePassword.includes("No space") ? (
-                          <p className="text-error text-[13px] flex items-center gap-x-2">
-                            {" "}
-                            <IoAlertCircleOutline size={16} />
-                            No spaces
-                          </p>
-                        ) : null}
-                      </>
-                    )}
+                  <div className="relative w-full">
+                    <input
+                      required
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      className={`${
+                        error ? "border-error" : "border"
+                      } border-[1px] py-3 px-4 rounded-lg w-full`}
+                      placeholder="Password"
+                      onChange={(e) => handleChange(e)}
+                    />
+                    <button type="button" className="absolute top-4 right-5">
+                      {showPassword ? (
+                        <AiOutlineEye
+                          className="text-xl text-gray/80"
+                          onClick={() => setShowPassword(false)}
+                        />
+                      ) : (
+                        <AiOutlineEyeInvisible
+                          className="text-xl text-gray/80"
+                          onClick={() => setShowPassword(true)}
+                        />
+                      )}
+                    </button>
+                    <div className="mt-2 text-[13px] absolute">
+                      {signupError?.length > 0 ? (
+                        <p className="text-error flex items-center gap-x-2">
+                          {" "}
+                          <IoAlertCircleOutline size={16} /> {signupError}
+                        </p>
+                      ) : (
+                        <>
+                          {password.length
+                            ? passwordValidation.map((ele, index) => (
+                                <p key={index}>
+                                  <span
+                                    className={` ${
+                                      validatePassword.includes(ele)
+                                        ? "text-success"
+                                        : "text-error"
+                                    } text-[13px] flex items-center gap-x-2`}
+                                  >
+                                    {validatePassword.includes(ele) ? (
+                                      <IoCheckmarkCircleOutline size={16} />
+                                    ) : (
+                                      <IoAlertCircleOutline size={16} />
+                                    )}
+                                    {ele}
+                                  </span>
+                                </p>
+                              ))
+                            : null}
+                          {validatePassword.includes("No space") ? (
+                            <p className="text-error text-[13px] flex items-center gap-x-2">
+                              {" "}
+                              <IoAlertCircleOutline size={16} />
+                              No spaces
+                            </p>
+                          ) : null}
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="w-full mt-10">
-                  <button
-                    className="bg-primary hover:bg-primary-hover flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
-                    type="submit"
-                  >
-                    {isLoading ? <Loader /> : "Continue with Email"}
-                  </button>
-                  <div className="text-right pt-2">
-                    {" "}
-                    <Link
-                      className="text-xs underline text-gray hover:text-gray"
-                      to="/login"
+                  <div className="w-full mt-10">
+                    <button
+                      className="bg-primary hover:bg-primary-hover flex justify-center items-center flex-col w-full h-12 font-medium rounded-md text-white p-3"
+                      type="submit"
                     >
-                      You have an account? Login
-                    </Link>
+                      {isLoading ? <Loader /> : "Continue with Email"}
+                    </button>
+                    <div className="text-right pt-2">
+                      {" "}
+                      <Link
+                        className="text-xs underline text-gray hover:text-gray"
+                        to="/login"
+                      >
+                        You have an account? Login
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </form>
-            </div>
-            {/* <div className="hidden md:block absolute right-20 top-36">
+                </form>
+              </div>
+              {/* <div className="hidden md:block absolute right-20 top-36">
               <p className="pb-4 text-sm text-gray">With social account</p>
               <GoogleLogin />
             </div> */}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   );
