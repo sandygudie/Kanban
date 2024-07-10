@@ -24,6 +24,7 @@ export interface IWorkspace {
     boards: IBoard[];
     createdAt: Date;
     createdBy: string;
+    labels: {name:string, color:string}[];
     inviteCode: string | null;
     members: [];
     pendingMembers: [];

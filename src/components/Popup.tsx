@@ -28,9 +28,9 @@ function Popup({ items, className, handleClose, description }: Props) {
     <div
       ref={domRef}
       className={`${className} z-10 absolute bg-secondary rounded-md shadow-3xl
-      w-fit`}
+     `}
     >
-      <div className={`${description ? "w-[280px]" : "w-max"}`}>
+      <div className={`${description ? "w-[280px]" : "w-full"}`}>
         {description ? description : null}
 
         {items?.map((list, i) => {

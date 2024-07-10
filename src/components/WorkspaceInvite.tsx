@@ -65,7 +65,7 @@ export default function WorkspaceInvite({ handleClose, workspaceId }: Props) {
             <TextArea
               label="Add Note (optional)"
               name="inviteNote"
-              placeholder="Send invite note"
+              placeholder="Invite note"
             />
             {error && (
               <p className="text-error text-xs absolute -bottom-12 flex items-center gap-x-1">

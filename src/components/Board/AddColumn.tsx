@@ -35,7 +35,7 @@ export default function AddColumn({ handleClose }: Props) {
       .min(1, "Add a column."),
   });
 
-  const addColumnHandler = async (values: any,{resetForm}:any) => {
+  const addColumnHandler = async (values: any, { resetForm }: any) => {
     const foundDuplicate = checkDuplicatedColumn(
       values.columns,
       active.columns
@@ -49,10 +49,9 @@ export default function AddColumn({ handleClose }: Props) {
         const payload = {
           boardId: active._id,
           workspaceId: workspace.id,
-         formData: { column: columnArray },
+          formData: { column: columnArray },
         };
         const response = await createColumn(payload).unwrap();
-
         if (response) {
           dispatch(addColumn(response.data));
         }
@@ -60,8 +59,8 @@ export default function AddColumn({ handleClose }: Props) {
       } catch (error: any) {
         console.log(error);
         setError(error.message);
-      }finally{
-        resetForm()
+      } finally {
+        resetForm();
       }
     } else {
       setError("Duplicated column name");
@@ -77,14 +76,11 @@ export default function AddColumn({ handleClose }: Props) {
           validationSchema={ColumnSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={
-            addColumnHandler}
-         
+          onSubmit={addColumnHandler}
         >
-          {({ values, errors, }) => (
+          {({ values, errors }) => (
             <Form>
               <div className="mb-6">
- 
                 <FieldArray
                   name="columns"
                   render={(arrayHelpers) => (
@@ -101,7 +97,7 @@ export default function AddColumn({ handleClose }: Props) {
                         ))}
                       <button
                         aria-label="Add Column"
-                        className="bg-gray/30 hover:bg-gray/50 px mt-3 font-medium text-sm py-3 w-full rounded-full flex items-center justify-center"
+                        className="bg-gray-200 hover:bg-gray/30 mt-3 font-bold text-xs py-2.5 px-4 w-max rounded-md flex items-center justify-center"
                         type="button"
                         onClick={() => {
                           arrayHelpers.push({
@@ -111,7 +107,7 @@ export default function AddColumn({ handleClose }: Props) {
                           });
                         }}
                       >
-                        <IoIosAdd  className="font-bold" size={20} />{" "} Add Column
+                        <IoIosAdd className="font-bold" size={20} /> Add Column
                       </button>
 
                       {values.columns.length >= 0 ? (
@@ -128,9 +124,8 @@ export default function AddColumn({ handleClose }: Props) {
                 />
               </div>
 
-             
               <div className="mt-10 relative">
-              {error.length ? (
+                {error.length ? (
                   <p className="text-error absolute -top-8  text-xs flex items-center mt-2 gap-x-2">
                     <IoAlertCircleOutline />
                     {error}
@@ -145,7 +140,6 @@ export default function AddColumn({ handleClose }: Props) {
                 >
                   {isLoading ? <Loader /> : "Create Column(s)"}
                 </button>
-              
               </div>
             </Form>
           )}

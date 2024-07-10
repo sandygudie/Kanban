@@ -13,7 +13,7 @@ export const loadState = () => {
       profilePics: "",
       createdBy: "",
       description: "",
-      socialLinks:[]
+      socialLinks: [],
     },
     user: {
       id: "",
@@ -74,6 +74,18 @@ export const checkDuplicatedTask = (values: ITask, active: IBoard) => {
       : null
   );
   return foundTask !== undefined ? true : false;
+};
+
+
+export const checkDuplicatedTag = (tags:{name:string, color:string}[], taskTags: {name:string, color:string}[]) => {
+  const mergedArray = taskTags.concat(tags);
+  const updatedArr = mergedArray.map((ele) => {
+    return ele.name.toUpperCase();
+  });
+
+  return  updatedArr.some(
+    (ele: string, index: number) => updatedArr.indexOf(ele) !== index
+  );
 };
 
 export function TitleCase(str: string) {

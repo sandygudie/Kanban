@@ -391,7 +391,7 @@ export default function Index({
         <div className="flex justify-center items-center flex-col">
           {" "}
           <Spinner />{" "}
-          <p className="text-sm italic text-gray/80">loading messages....</p>
+          <p className="text-sm text-gray/80">Loading messages....</p>
         </div>
       ) : startChat ? (
         <div className="pt-20 mx-auto w-full flex flex-col justify-center items-center text-center">

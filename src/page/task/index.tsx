@@ -32,7 +32,10 @@ import Chat from "components/Chat";
 import { getTaskChat } from "services/api/chat";
 import { IChat } from "types/chat";
 import { RxCheck } from "react-icons/rx";
-
+import { IoPricetagSharp } from "react-icons/io5";
+import { IoTimerOutline } from "react-icons/io5";
+import AddTaskTag from "components/AddTaskTag";
+import { MdOutlineAssignmentInd } from "react-icons/md";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
@@ -54,9 +57,11 @@ export default function TaskDetails() {
 
   const [editATask] = useEditTaskMutation();
   const [assignTask] = useAssignTaskMutation();
+
   const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
   const [selectedColumn, setSelectedColumn] = useState<string>();
   const [startChat, setStartChat] = useState<string | boolean>("loading");
+  const [isAddLabel, setAddLabel] = useState<boolean>(false);
 
   useEffect(() => {
     if (tasks?.data) {
@@ -65,7 +70,6 @@ export default function TaskDetails() {
     }
 
     loadmessages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadmessages = async () => {
@@ -263,17 +267,18 @@ export default function TaskDetails() {
               />
             )}{" "}
           </div>
-          <div className="mt-8">
-            <div className="my-8 md:mb-12">
-              <p className="font-semibold text-lg mb-2">Description</p>
-              <p className="rounded-md mini:w-8/12">
-                {tasks.data.description
-                  ? tasks.data.description
-                  : "No description"}
-              </p>
-            </div>
-            <div className="my-10 flex flex-col md:flex-row justify-between gap-x-36 gap-y-8 md:items-start">
-              <div className="md:w-[50%]">
+          <div className="mt-8 flex flex-col md:flex-row md:gap-x-36 justify-between gap-y-12 items-start mt-10">
+            <div className="w-full">
+              <div>
+                <p className="font-semibold text-lg mb-2">Description</p>
+                <p>
+                  {tasks.data.description
+                    ? tasks.data.description
+                    : "No description"}
+                </p>
+              </div>
+
+              <div className="my-10">
                 <p className="font-semibold">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
@@ -307,41 +312,60 @@ export default function TaskDetails() {
                 </div>
               </div>
 
-              <div className="relative md:w-[40%]">
+              <div className="md:pb-6 w-full">
+                <p className="font-semibold mb-2">Columns</p>
+                <SelectBox
+                  selectedColumn={selectedColumn}
+                  handleSelectedColumn={handleSelectedColumn}
+                  tasks={tasks?.data}
+                  isOpenEdit={isOpenEdit}
+                  workspaceId={workspaceId}
+                />
+              </div>
+            </div>
+
+            <div className="w-full">
+              <div className="relative">
                 <div className="flex items-center gap-x-20">
-                  <p className="font-semibold mb-2">Assign task</p>
+                  <p className="font-semibold mb-2 w-full md:w-[45%] flex items-center gap-x-2">
+                   <MdOutlineAssignmentInd/> Assignees
+                  </p>
                   <IconButton handleClick={() => setAssign(true)}>
                     <IoAdd
-                      size={30}
+                      size={28}
                       className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
                     />
                   </IconButton>
                 </div>
 
-                {tasks.data.assignTo.map((list: any) => {
-                  return (
-                    <div
-                      key={list._id}
-                      className="py-1 font-bold text-[0.8rem] flex items-center gap-x-3"
-                    >
-                      {list.profilePics ? (
-                        <img
-                          className="w-6 h-6 rounded-full"
-                          src={list.profilePics}
-                          alt="profile pic"
-                        />
-                      ) : (
-                        <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
-                          {DefaultImage(list.name)}
-                        </span>
-                      )}
-                      <span className="font-medium">{list.name}</span>
-                    </div>
-                  );
-                })}
+                {tasks.data.assignTo.length ? (
+                  tasks.data.assignTo.map((list: any) => {
+                    return (
+                      <div
+                        key={list._id}
+                        className="py-1 font-bold text-[0.8rem] h-32 flex items-start gap-x-3"
+                      >
+                        {list.profilePics ? (
+                          <img
+                            className="w-6 h-6 rounded-full"
+                            src={list.profilePics}
+                            alt="profile pic"
+                          />
+                        ) : (
+                          <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                            {DefaultImage(list.name)}
+                          </span>
+                        )}
+                        <span className="font-semibold">{list.name}</span>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-gray/50 h-16 text-xs">None yet</p>
+                )}
                 {isAssign && (
                   <Popup
-                    className="left-0 top-[30px]"
+                    className="left-0 w-72 top-[30px]"
                     handleClose={() => setAssign(false)}
                     items={workspace?.data.members.map((ele: any) => {
                       return {
@@ -376,34 +400,64 @@ export default function TaskDetails() {
                   />
                 )}
               </div>
-            </div>
-            <div className="flex flex-col md:flex-row gap-x-36 justify-between gap-y-8 items-start mt-10">
-              <div className="md:pb-6 w-full md:w-[50%]">
-                <p className="font-semibold mb-2">Columns</p>
-                <SelectBox
-                  selectedColumn={selectedColumn}
-                  handleSelectedColumn={handleSelectedColumn}
-                  tasks={tasks?.data}
-                  isOpenEdit={isOpenEdit}
-                  workspaceId={workspaceId}
-                />
+
+              <div className="relative">
+                <div className="flex items-center gap-x-20">
+                  <p className="font-semibold mb-2 w-full md:w-[45%] flex items-center gap-x-2">
+                    {" "}
+                    <IoPricetagSharp />
+                    Tags
+                  </p>
+                  <IconButton
+                    handleClick={() => {
+                      setAddLabel(true);
+                    }}
+                  >
+                    <IoAdd
+                      size={28}
+                      className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
+                    />
+                  </IconButton>
+                </div>
+
+                {tasks.data.tags.length ? (
+                  <div className="mt-4 mb-10 flex items-center gap-2 flex-wrap">
+                    {tasks.data.tags.map(
+                      (list: { name: string; color: string }, index:number) => {
+                        return index<10 &&(
+                          <p
+                            style={{ backgroundColor: list.color }}
+                            key={list.name}
+                            className="px-3 py-1 w-fit text-xs font-bold rounded-full flex items-center gap-x-3"
+                          >
+                            {list.name}
+                          </p>
+                        );
+                      }
+                    )}
+                    {tasks.data.tags.length>10 && <button onClick={() => {
+                      setAddLabel(true);
+                    }} className="inline underline font-bold"> + {tasks.data.tags.length -10} more</button>}
+                  </div>
+                ) : (
+                  <p className="text-gray/50 h-16 text-xs">None yet</p>
+                )}
               </div>
-              <div className="md:w-[40%]">
-                <p className="font-semibold mb-4">Labels</p>
-                <div className="flex items-start flex-col gap-y-2">
+
+              <div className="relative">
+                <p className="font-semibold mb-4 flex items-center gap-x-2"> <span>< IoTimerOutline className="font-bold"/></span>Deadline</p>
+                <div className="flex items-start text-white/50 flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center relative gap-x-4">
-                      <p className="text-xs md:text-sm font-medium mb-2 w-16">
-                        Due Date
-                      </p>
+                      <p className="text-xs font-medium mb-2 w-16">Due Date</p>
                       <div className="">
                         {tasks?.data.dueDate.length > 0 && (
                           <p
                             className={`${
                               pendingDate > 1 ? "text-success" : "text-error"
-                            } font-bold absolute -top-7 text-xs my-2`}
+                            } font-bold absolute left-24 -top-7 text-xs absolute -top-[2.2rem]`}
                           >
-                            {pendingDate} days left
+                           ( {pendingDate} days left)
                           </p>
                         )}
                         <RangePicker
@@ -422,7 +476,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="font-medium bg-gray/20 hover:bg-gray-200 py-2 px-4 text-sm rounded-md"
+                      className="font-medium bg-gray/20 hover:bg-gray-200 py-2 px-4 text-xs rounded-md"
                       onClick={() => {
                         setDate(true);
                       }}
@@ -449,7 +503,7 @@ export default function TaskDetails() {
                     </div>
                   ) : (
                     <button
-                      className="bg-gray/20 hover:bg-gray/30 text-sm font-medium py-2 mt-2 px-4 rounded-md"
+                      className="bg-gray/20 hover:bg-gray/30 text-xs font-medium py-2 mt-2 px-4 rounded-md"
                       onClick={() => {
                         setTime(true);
                       }}
@@ -477,12 +531,19 @@ export default function TaskDetails() {
       ) : null}
 
       <Modal
-        open={isOpenEdit || isOpenDelete}
+        open={isOpenEdit || isOpenDelete || isAddLabel}
         handleClose={() => {
           setIsOpenEdit(false), setIsOpenDelete(false);
+          setAddLabel(false);
         }}
       >
-        {isOpenEdit ? (
+        {isAddLabel ? (
+          <AddTaskTag
+            taskTags={tasks?.data.tags}
+            taskId={taskId}
+            handleClose={() => setAddLabel(false)}
+          />
+        ) : isOpenEdit ? (
           <AddTask
             selectedColumn={selectedColumn}
             handleSelectedColumn={handleSelectedColumn}

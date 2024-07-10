@@ -10,6 +10,7 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 interface LabelProps {
   label: string;
   subLabel?:string
+  // className?:any
 }
 
 interface OtherProps {
@@ -26,13 +27,14 @@ interface DisplayProps {
 export const TextInput = ({
   label,
   subLabel,
+  className,
   ...props
 }: LabelProps & FieldHookConfig<string>) => {
   const [field, meta] = useField(props);
   return (
-    <div className="relative py-1">
+    <div className="relative py-1 w-full">
       <label
-        className="font-medium text-[15px]"
+        className="font-medium block text-[15px]"
         htmlFor={props.id || props.name}
       >
         {label} <span className="text-gray/70 text-xs">{ subLabel}</span>
@@ -43,7 +45,7 @@ export const TextInput = ({
         
         className={`${
           meta.error ? "border-error/70 border-solid" : null
-        } px-4 py-4 w-full mt-2 rounded-md outline-none placeholder:text-sm`}
+        }  ${className || `py-4`} w-full  px-4 mt-2 rounded-md outline-none placeholder:text-sm`}
       />
       {meta.error ? (
         <div className="absolute -bottom-3 text-error/70 text-xs flex items-center gap-x-1">
