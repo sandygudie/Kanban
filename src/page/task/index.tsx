@@ -68,7 +68,6 @@ export default function TaskDetails() {
       setSelectedColumn(tasks?.data.status);
       setCheckedState(tasks?.data.subtasks.map((o: ISubTask) => o.isCompleted));
     }
-
     loadmessages();
   }, []);
 

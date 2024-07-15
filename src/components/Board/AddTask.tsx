@@ -3,26 +3,19 @@ import * as Yup from "yup";
 import { TextInput, TextArea, SubtaskInput } from "../InputField";
 import {
   AppState,
-  IBoard,
   IColumn,
   ISubTask,
   ITask,
-  IUser,
-  IWorkspaceProfile,
 } from "types";
-import { appData, addTask, editTask, deleteTask } from "redux/boardSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { appData } from "redux/boardSlice";
+import { useSelector } from "react-redux";
 import { checkDuplicatedTask } from "utilis";
 import { App as AntDesign } from "antd";
 import { v4 as uuidv4 } from "uuid";
-import {
-  useCreateTaskMutation,
-  useDeleteTaskMutation,
-  useEditTaskMutation,
-} from "redux/apiSlice";
+import { useCreateTaskMutation, useEditTaskMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
 import { IoIosAdd } from "react-icons/io";
-import { notification } from "utilis/notification";
+// import { notificationfeed } from "utilis/notification";
 
 interface Props {
   handleClose: () => void;
@@ -41,15 +34,10 @@ export default function AddTask({
 }: Props) {
   const { message } = AntDesign.useApp();
   const [createTask, { isLoading }] = useCreateTaskMutation();
-  const [deleteATask] = useDeleteTaskMutation();
   const [editATask, { isLoading: isLoadingEdit }] = useEditTaskMutation();
-  const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
-  const active: IBoard = data.active;
-  const workspace: IWorkspaceProfile = data.workspace;
-  const user: IUser = data.user;
+  const { active, workspace} = data;
 
-  /// refactor and remove dispatch
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string(),
@@ -83,22 +71,17 @@ export default function AddTask({
           workspaceId: workspace.id,
           columnId: activeColumn?._id,
         };
-        const response = await createTask(payload).unwrap();
-   
-        if (response) {
-          console.log(user)
-          await notification(
-            user,
-            "created a new task",
-            `/workspace/${workspace.id}/${active._id}/${response.data.taskId}`,
-            workspace.members
-          );
-        }
+        await createTask(payload).unwrap();
+        handleClose();
+        // await notificationfeed(
+        //   user,
+        //   workspace.members,
+        //   "created new task",
+        //   `/workspace/${workspace.id}/${active._id}/${response.data.taskId}`
+        // );
       } catch (error) {
         console.log(error);
-      } finally {
-        handleClose();
-      }
+      } 
     } else {
       message.error({
         content: "Task name already exist.",
@@ -124,57 +107,18 @@ export default function AddTask({
           };
         });
 
-        if (values.status !== selectedColumn) {
-          const columnId = active.columns.find(
-            (ele) => ele.name === selectedColumn
-          )?._id;
-
-          const payload = {
-            formdata: {
-              title: values.title,
-              description: values.description,
-              subtasks: updatedSubstasks,
-            },
-            workspaceId: workspace.id,
-            columnId: columnId,
-          };
-          const response = await createTask(payload).unwrap();
-          const result = await deleteATask({
-            taskId: tasks?._id,
-            columnId: tasks?.columnId,
-            workspaceId: workspace.id,
-          }).unwrap();
-          if (response && result) {
-            dispatch(
-              addTask({
-                updatedTasks: {
-                  ...values,
-                  _id: response.data.taskId,
-                  status: selectedColumn,
-                },
-                position: 0,
-              })
-            );
-            dispatch(deleteTask(tasks));
-          }
-        } else {
-          const payload = {
-            formdata: {
-              title: values.title,
-              description: values.description,
-              subtasks: updatedSubstasks,
-              status: selectedColumn,
-            },
-            workspaceId: workspace.id,
-            columnId: tasks?.columnId,
-            taskId: tasks?._id,
-          };
-
-          const response = await editATask(payload).unwrap();
-          if (response) {
-            dispatch(editTask({ values, tasks }));
-          }
-        }
+        const payload = {
+          formdata: {
+            title: values.title,
+            description: values.description,
+            subtasks: updatedSubstasks,
+            status: selectedColumn,
+          },
+          workspaceId: workspace.id,
+          columnId: tasks?.columnId,
+          taskId: tasks?._id,
+        };
+        await editATask(payload).unwrap();
       } catch (error: any) {
         console.log(error);
       }

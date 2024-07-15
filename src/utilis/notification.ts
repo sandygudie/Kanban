@@ -2,11 +2,12 @@ import { Knock } from "@knocklabs/node";
 import { IUser } from "types";
 const knockCLient = new Knock(import.meta.env.VITE_KNOCK_API_KEY);
 
-export const notification = async (
+export const notificationfeed = async (
   user: IUser,
+  workspacerecipients: [],
   action: string,
-  url: string,
-  workspacerecipients: []
+  url: string
+
 ) => {
   const recipients = workspacerecipients?.map(
     (ele: { userId: string; name: string; profilePics: string }) => {
