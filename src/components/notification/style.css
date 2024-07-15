@@ -1,0 +1,63 @@
+.rnf-notification-cell__inner {
+  align-items: center;
+  position: relative;
+
+}
+
+.rnf-notification-cell__unread-dot {
+  border-color: hsl(251.51deg 58.87% 51.37%);
+  background-color: hsl(251.51deg 58.87% 51.37%);
+  position: relative !important;
+  left:0 !important
+}
+
+.rnf-notification-feed-popover {
+width:auto !important
+}
+.rnf-notification-cell__timestamp {
+  font-size: 13px !important;
+  color: #666 !important;
+}
+
+.rnf-notification-cell:hover , .rnf-notification-cell:focus, .rnf-notification-cell:active{
+  background-color: #292a2d !important;
+}
+
+.rnf-notification-feed__header {
+  border-bottom: 1px solid hsla(216, 21%, 86%, 0.15);
+  color: white !important;
+  
+}
+
+.rnf-notification-feed__type {
+  color: white !important;
+}
+
+.rnf-notification-feed {
+  background-color: #202020 !important;
+  color: white !important;
+  font-family: "Plus Jakarta Sans" !important;
+}
+
+.rnf-empty-feed__header{
+    color: #a5acb8 !important;
+}
+.rnf-notification-cell__content {
+  color: white !important;
+  font-size: 13px !important;
+}
+
+.rnf-notification-feed__knock-branding a {
+  display: none !important;
+}
+
+.rnf-notification-feed-popover {
+  transform: translate3d(-80px, 60px, 0px) !important;
+}
+
+.rnf-notification-cell{
+    border-bottom: 1px solid hsla(218, 18%, 33%, 0.15) !important;
+}
+.rnf-notification-feed-popover__inner {
+  width: 350px !important;
+}

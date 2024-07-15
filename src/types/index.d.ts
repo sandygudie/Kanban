@@ -40,6 +40,7 @@ export interface IWorkspaceProfile {
   createdBy:string
   description:string
   socialLinks:string[]
+  members:[]
 }
 
 export interface IUser {

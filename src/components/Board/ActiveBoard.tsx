@@ -159,7 +159,7 @@ export default function ActiveBoard() {
                             items={[
                               {
                                 title: (
-                                  <p className="flex py-1 items-center text-xs gap-x-2">
+                                  <p className="flex py-1 items-center w-24 text-xs gap-x-2">
                                     <IoIosAdd size={20} /> Add Card
                                   </p>
                                 ),

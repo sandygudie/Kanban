@@ -20,6 +20,7 @@ import { FaAnglesRight } from "react-icons/fa6";
 import AddBoard from "./Board/AddBoard";
 import { removeToken } from "utilis/token";
 import { Tooltip } from "antd";
+import NotificationFeed from "./notification/NotificationFeed";
 
 export default function Header({ memberPics }: any) {
   const domRef = useRef<HTMLDivElement>(null);
@@ -111,7 +112,7 @@ export default function Header({ memberPics }: any) {
                       </div>
                     </div>
                   }
-                  className="top-8 md:top-12 left-0"
+                  className="top-8 md:top-12 left-2"
                   handleClose={() => setWorkspaceMenu(false)}
                   items={[
                     {
@@ -239,7 +240,7 @@ export default function Header({ memberPics }: any) {
               >
                 {isFullscreen ? <MdZoomInMap /> : <GoScreenFull />}
               </button>
-
+<NotificationFeed/>
               <div className="relative">
                 {user.profilePics ? (
                   <button

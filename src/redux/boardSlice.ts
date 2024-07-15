@@ -204,6 +204,7 @@ const boardSlice = createSlice({
           createdBy,
           description,
           socialLinks,
+          members
         } = workspace;
         const {
           userid,
@@ -228,6 +229,7 @@ const boardSlice = createSlice({
           createdBy,
           description,
           socialLinks,
+          members
         };
 
         state.user = {

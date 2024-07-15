@@ -7,6 +7,7 @@ import {
   IColumn,
   ISubTask,
   ITask,
+  IUser,
   IWorkspaceProfile,
 } from "types";
 import { appData, addTask, editTask, deleteTask } from "redux/boardSlice";
@@ -21,6 +22,7 @@ import {
 } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
 import { IoIosAdd } from "react-icons/io";
+import { notification } from "utilis/notification";
 
 interface Props {
   handleClose: () => void;
@@ -45,7 +47,9 @@ export default function AddTask({
   const data: AppState = useSelector(appData);
   const active: IBoard = data.active;
   const workspace: IWorkspaceProfile = data.workspace;
+  const user: IUser = data.user;
 
+  /// refactor and remove dispatch
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
     description: Yup.string(),
@@ -60,7 +64,7 @@ export default function AddTask({
       .min(1, "Add a substask."),
   });
 
-  const addTaskHandler = async (values: ITask | any, {resetForm}: any) => {
+  const addTaskHandler = async (values: ITask | any, { resetForm }: any) => {
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === false) {
       try {
@@ -80,17 +84,14 @@ export default function AddTask({
           columnId: activeColumn?._id,
         };
         const response = await createTask(payload).unwrap();
-
+   
         if (response) {
-          dispatch(
-            addTask({
-              updatedTasks: {
-                _id: response.data.taskId,
-                columnId: response.data.columnId,
-                ...values,
-              },
-              position: 0,
-            })
+          console.log(user)
+          await notification(
+            user,
+            "created a new task",
+            `/workspace/${workspace.id}/${active._id}/${response.data.taskId}`,
+            workspace.members
           );
         }
       } catch (error) {
@@ -107,7 +108,7 @@ export default function AddTask({
     resetForm();
   };
 
-  const editTaskHandler = async (values: ITask | any, {resetForm}: any) => {
+  const editTaskHandler = async (values: ITask | any, { resetForm }: any) => {
     const foundDuplicate = checkDuplicatedTask(values, active);
     if (foundDuplicate === true && values._id !== tasks?._id) {
       message.error({
@@ -219,11 +220,7 @@ export default function AddTask({
           validationSchema={TaskSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={
-            tasks
-              ? editTaskHandler
-              : addTaskHandler
-          }
+          onSubmit={tasks ? editTaskHandler : addTaskHandler}
         >
           {({ values, errors }) => (
             <Form className="pb-4">
@@ -271,7 +268,7 @@ export default function AddTask({
                           });
                         }}
                       >
-                           <IoIosAdd  className="font-bold" size={20} />{" "} Add
+                        <IoIosAdd className="font-bold" size={20} /> Add
                         Subtasks
                       </button>
 
