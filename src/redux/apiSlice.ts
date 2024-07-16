@@ -127,7 +127,7 @@ export const apiSlice = createApi({
         method: "POST",
         data: payload.formData,
       }),
-      invalidatesTags: ["Board"],
+      invalidatesTags: ["Board", "Workspace"],
     }),
 
     getBoard: builder.query({
@@ -161,7 +161,7 @@ export const apiSlice = createApi({
         method: "POST",
         data: payload.formData,
       }),
-      invalidatesTags: ["Column"],
+      invalidatesTags: ["Column", "Board", "Workspace"],
     }),
 
     editColumn: builder.mutation({
@@ -212,7 +212,7 @@ export const apiSlice = createApi({
         url: `/task/${payload.workspaceId}/${payload.columnId}/${payload.taskId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Task", "Board"],
+      invalidatesTags: ["Task", "Board","Workspace","Column"],
     }),
 
     assignTask: builder.mutation({

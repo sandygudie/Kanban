@@ -1,7 +1,7 @@
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { SubtaskInput, TextInput } from "components/InputField";
-import { AppState, IBoard, IColumn, IWorkspaceProfile } from "types";
+import { AppState, IBoard, IColumn } from "types";
 import { appData, addBoard } from "redux/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { checkDuplicatedBoard, saveloadWorkspaceData } from "utilis";
@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { IoIosAdd } from "react-icons/io";
 import { useCreateBoardMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
+import { notificationfeed } from "utilis/notification";
 
 interface Props {
   handleClose: () => void;
@@ -20,8 +21,7 @@ function AddBoard({ handleClose }: Props) {
   const [createBoard, { isLoading }] = useCreateBoardMutation();
   const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
-  const board: IBoard[] = data.board;
-  const workspace: IWorkspaceProfile = data.workspace;
+  const { workspace, board, user } = data;
 
   const BoardSchema = Yup.object().shape({
     name: Yup.string()
@@ -53,10 +53,15 @@ function AddBoard({ handleClose }: Props) {
           formData: { name, column },
         };
         const response = await createBoard(payload).unwrap();
-
         if (response) {
           dispatch(
             addBoard({ _id: response.data.boardId, ...response.data.values })
+          );
+          await notificationfeed(
+            user,
+            workspace,
+            `Board: ${values.name}`,
+            `/workspace/${workspace.id}`
           );
           saveloadWorkspaceData({
             workspaceId: workspace.id,

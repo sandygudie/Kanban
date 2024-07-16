@@ -1,27 +1,30 @@
-import { IBoard } from "types";
+import { IBoard, IUser, IWorkspaceProfile } from "types";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { TextInput } from "components/InputField";
 import { Loader } from "components/Spinner";
 import { useEditBoardMutation } from "redux/apiSlice";
+import { notificationfeed } from "utilis/notification";
 
 
 interface Props {
   handleValueChange: (newValue: string) => void;
   handleClose: () => void;
   activeBoard: IBoard;
-  workspaceId: string;
   isEdit: string;
   newValue: string;
+  user:IUser,
+  workspace:IWorkspaceProfile
 }
 
 export default function EditBoard({
   handleClose,
   activeBoard,
-  workspaceId,
+  workspace,
   isEdit,
   newValue,
   handleValueChange,
+  user
 }: Props) {
   const [editABoard, { isLoading }] = useEditBoardMutation();
 
@@ -44,18 +47,23 @@ export default function EditBoard({
   const editBoardHandler = async (values: any) => {
 
     try {
-      const response = await editABoard({
+    await editABoard({
         boardId: activeBoard._id,
-        workspaceId: workspaceId,
+        workspaceId: workspace.id,
         formData:
           isEdit === "description"
             ? { description: values.description }
             : { name: values.name },
       }).unwrap();
-      if (response) {
+      handleClose();
+      await notificationfeed(
+        user,
+        workspace,
+        `Board: ${values.name}`,
+        `/`,
+        "updated"
 
-        handleClose();
-      }
+      );
     } catch (error) {
       console.log(error);
     }

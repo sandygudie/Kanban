@@ -2,15 +2,16 @@ import { useState } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { SubtaskInput } from "components/InputField";
-import { AppState, IBoard, IColumn, IWorkspaceProfile } from "types";
-import { addColumn, appData } from "redux/boardSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { AppState, IColumn } from "types";
+import { appData } from "redux/boardSlice";
+import { useSelector } from "react-redux";
 import { checkDuplicatedColumn } from "utilis";
 import { v4 as uuidv4 } from "uuid";
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { Loader } from "components/Spinner/index";
 import { useCreateColumnMutation } from "redux/apiSlice";
 import { IoIosAdd } from "react-icons/io";
+import { notificationfeed } from "utilis/notification";
 
 interface Props {
   handleClose: () => void;
@@ -19,10 +20,9 @@ interface Props {
 export default function AddColumn({ handleClose }: Props) {
   const [createColumn, { isLoading }] = useCreateColumnMutation();
   const [error, setError] = useState("");
-  const dispatch = useDispatch();
   const data: AppState = useSelector(appData);
-  const workspace: IWorkspaceProfile = data.workspace;
-  const active: IBoard = data.active;
+
+  const { workspace, active, user } = data;
 
   const ColumnSchema = Yup.object().shape({
     columns: Yup.array()
@@ -51,11 +51,14 @@ export default function AddColumn({ handleClose }: Props) {
           workspaceId: workspace.id,
           formData: { column: columnArray },
         };
-        const response = await createColumn(payload).unwrap();
-        if (response) {
-          dispatch(addColumn(response.data));
-        }
+        await createColumn(payload).unwrap();
         handleClose();
+        await notificationfeed(
+          user,
+          workspace,
+          `Columns`,
+          `/workspace/${workspace.id}`
+        );
       } catch (error: any) {
         console.log(error);
         setError(error.message);

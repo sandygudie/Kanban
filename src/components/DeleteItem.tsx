@@ -1,15 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   useDeleteBoardMutation,
   useDeleteColumnMutation,
   useDeleteTaskMutation,
   useDeleteWorkspaceMutation,
 } from "redux/apiSlice";
-import { appData, deleteBoard, deleteTask } from "redux/boardSlice";
+import { appData } from "redux/boardSlice";
 import { AppState, IColumn, ITask } from "types";
 import { Loader } from "./Spinner";
 import { useNavigate } from "react-router-dom";
 import { App as AntDesign } from "antd";
+import { notificationfeed } from "utilis/notification";
 
 interface Props {
   handleClose: () => void;
@@ -33,42 +34,83 @@ export default function Delete({
     useDeleteWorkspaceMutation();
   const [deleteABoard, { isLoading: isDeletingBoard }] =
     useDeleteBoardMutation();
-  const dispatch = useDispatch();
+
   const data: AppState = useSelector(appData);
-  const { active, workspace } = data;
+  const { active, workspace, user } = data;
 
   const deleteBoardHandler = async () => {
-    const response = await deleteABoard({
-      boardId: active._id,
-      workspaceId: workspace.id,
-    }).unwrap();
-    if (response) {
-      dispatch(deleteBoard(active));
-      handleClose();
+    try {
+      const response = await deleteABoard({
+        boardId: active._id,
+        workspaceId: workspace.id,
+      }).unwrap();
+      if (response) {
+        handleClose();
+        await notificationfeed(
+          user,
+          workspace,
+          `Board: ${active?.name}`,
+          ``,
+          "removed"
+        );
+      }
+    } catch (err: any) {
+      console.log(err);
+      message.error({
+        content: err.message || "Request failed",
+        className: "text-error",
+      });
     }
   };
 
   const deleteTaskHandler = async () => {
-    const response = await deleteATask({
-      taskId: tasks?._id,
-      columnId: tasks?.columnId,
-      workspaceId: workspace.id,
-    }).unwrap();
-    if (response) {
-      dispatch(deleteTask(tasks));
-      handleClose();
-      navigate(`/workspace/${workspace.id}`);
+    try {
+      const response = await deleteATask({
+        taskId: tasks?._id,
+        columnId: tasks?.columnId,
+        workspaceId: workspace.id,
+      }).unwrap();
+      if (response) {
+        handleClose();
+        await notificationfeed(
+          user,
+          workspace,
+          `Task: ${tasks?.title}`,
+          ``,
+          "removed"
+        );
+        navigate(`/workspace/${workspace.id}`);
+      }
+    } catch (err: any) {
+      message.error({
+        content: err.message || "Request failed",
+        className: "text-error",
+      });
     }
   };
 
   const deleteColumnHandler = async () => {
-    const response = await deleteAColumn({
-      columnId: selectedColumn?._id,
-      workspaceId: workspace.id,
-    }).unwrap();
-    if (response) {
-      navigate(`/workspace/${workspace.id}`);
-      handleClose();
+    try {
+      const response = await deleteAColumn({
+        columnId: selectedColumn?._id,
+        workspaceId: workspace.id,
+      }).unwrap();
+      if (response) {
+        handleClose();
+        await notificationfeed(
+          user,
+          workspace,
+          `Column: ${selectedColumn?.name}`,
+          ``,
+          "removed"
+        );
+        navigate(`/workspace/${workspace.id}`);
+      }
+    } catch (err: any) {
+      message.error({
+        content: err.message || "Request failed",
+        className: "text-error",
+      });
     }
   };
 
@@ -82,9 +124,9 @@ export default function Delete({
       } else {
         navigate(`/workspace/new`);
       }
-    } catch (error: any) {
+    } catch (err: any) {
       message.error({
-        content: "error",
+        content: err.message || "Request failed",
         className: "text-error",
       });
     }

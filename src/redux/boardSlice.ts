@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AppState, IBoard, IColumn, ISubTask, ITask } from "types";
+import { AppState, IBoard, IColumn, ITask } from "types";
 import { loadState, loadWorkspaceData } from "utilis";
 import type { RootState } from "./store";
 import { apiSlice } from "./apiSlice";
@@ -78,48 +78,6 @@ const boardSlice = createSlice({
       );
     },
 
-    addColumn: (state, action) => {
-      state.board.find((ele: IBoard) =>
-        ele._id === state.active._id
-          ? (ele.columns = ele.columns.concat(action.payload))
-          : null
-      );
-      state.active = state.board.find(
-        (item: IBoard) => item._id === state.active._id
-      );
-    },
-
-    editColumnName: (state, action) => {
-      state.board.find((ele: IBoard) =>
-        ele._id === state.active._id
-          ? ele.columns.find((o: IColumn) =>
-              o._id === action.payload.selectedColumn._id
-                ? (o.name = action.payload.name)
-                : null
-            )
-          : null
-      );
-      state.active = state.board.find(
-        (item: IBoard) => item._id === state.active._id
-      );
-    },
-
-    deleteColumn: (state, action) => {
-      state.board.find((ele: IBoard) =>
-        ele._id === state.active._id
-          ? ele.columns.find((o: IColumn) =>
-              o._id === action.payload._id
-                ? (ele.columns = ele.columns.filter(
-                    (s) => s._id !== action.payload._id
-                  ))
-                : null
-            )
-          : null
-      );
-      state.active = state.board.find(
-        (item: IBoard) => item._id === state.active._id
-      );
-    },
 
     deleteTask: (state, action) => {
       state.board.find((item: IBoard) =>
@@ -155,33 +113,6 @@ const boardSlice = createSlice({
             )
           : null
       );
-      state.active = state.board.find(
-        (item: IBoard) => item._id === state.active._id
-      );
-    },
-
-    isCompletedToggle: (state, action) => {
-      state.board.find((item: IBoard) =>
-        item.name === state.active.name
-          ? item.columns.find((o: IColumn) =>
-              o.name === action.payload.tasks.status
-                ? o.tasks.map((s: ITask) =>
-                    s._id === action.payload.tasks._id
-                      ? s.subtasks.map((t: ISubTask, i: number) =>
-                          i === action.payload.id
-                            ? (t.isCompleted =
-                                action.payload.updatedCheckedState[
-                                  action.payload.id
-                                ])
-                            : t
-                        )
-                      : s
-                  )
-                : null
-            )
-          : null
-      );
-
       state.active = state.board.find(
         (item: IBoard) => item._id === state.active._id
       );
@@ -246,16 +177,12 @@ const boardSlice = createSlice({
 
 export const {
   activeItem,
-  isCompletedToggle,
   deleteBoard,
   addBoard,
   editTask,
   addTask,
   deleteTask,
   addWorkspace,
-  deleteColumn,
-  editColumnName,
-  addColumn,
   updateWorkspace,
 
 } = boardSlice.actions;

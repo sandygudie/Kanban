@@ -5,7 +5,7 @@ import TaskItem from "./TaskItem";
 import { Droppable, DragDropContext } from "@hello-pangea/dnd";
 import { colorMarker } from "utilis";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, appData, deleteTask, editColumnName } from "redux/boardSlice";
+import { addTask, appData, deleteTask } from "redux/boardSlice";
 import Modal from "components/Modal";
 import { AppState, IColumn, ITask } from "types";
 import DeleteItem from "components/DeleteItem";
@@ -76,14 +76,11 @@ export default function ActiveBoard() {
     const name = e.target.value;
     setSearchString(e.target.value);
     try {
-      const response = await editAColumn({
+      await editAColumn({
         columnId: item?._id,
         workspaceId: workspace.id,
         formData: { name },
       }).unwrap();
-      if (response) {
-        dispatch(editColumnName({ name, selectedColumn: item }));
-      }
       setSearchString("");
     } catch (error) {
       console.log(error);

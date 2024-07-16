@@ -19,7 +19,7 @@ export const notificationfeed = async (
       data: {
         name: ` <span class="notification_feed_img"> ![Alt text](${user.profilePics} "a title") ${user.name}</span>`,
         action: `${
-          action ? action : "created a new"
+          action ? action : "created new"
         } <strong style="text-decoration:underline;margin-left:3px"> ${item}</strong>`,
         url,
       },

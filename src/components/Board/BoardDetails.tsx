@@ -16,7 +16,7 @@ interface Props {
 
 export default function BoardDetails({ handleClose }: Props) {
   const data: AppState = useSelector(appData);
-  const { active, workspace } = data;
+  const { active, workspace ,user} = data;
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState("");
   const [newValue, setNewValue] = useState("");
@@ -163,9 +163,10 @@ export default function BoardDetails({ handleClose }: Props) {
       >
         {isOpenEdit ? (
           <EditBoard
+          user={user}
             handleValueChange={handleValueChange}
             activeBoard={active}
-            workspaceId={workspace.id}
+            workspace={workspace}
             isEdit={isEdit}
             handleClose={() => {
               setIsOpenEdit(false), setIsEdit(""), setNewValue("");
