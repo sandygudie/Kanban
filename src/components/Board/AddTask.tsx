@@ -71,7 +71,7 @@ export default function AddTask({
         await notificationfeed(
           user,
           workspace,
-          `Task: ${ response.data.title}`,
+          `Task: ${values.title}`,
           `/workspace/${workspace.id}/${active._id}/${response.data.taskId}`
         );
       } catch (error) {
