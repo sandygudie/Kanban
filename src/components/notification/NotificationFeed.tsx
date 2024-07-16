@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import './style.css'
+import "./style.css";
 import {
   KnockProvider,
   KnockFeedProvider,
@@ -13,7 +13,7 @@ import { appData } from "redux/boardSlice";
 
 const NotificationFeed = () => {
   const data: AppState = useSelector(appData);
-  const { user } = data;
+  const { user, workspace } = data;
   const [isVisible, setIsVisible] = useState(false);
   const notifButtonRef = useRef(null);
 
@@ -24,7 +24,10 @@ const NotificationFeed = () => {
       apiKey={String(import.meta.env.VITE_PUBLIC_KNOCK_API_KEY)}
       userId={user.id}
     >
-      <KnockFeedProvider feedId={String(import.meta.env.VITE_PUBLIC_KNOCK_FEED_ID)}>
+      <KnockFeedProvider
+        feedId={String(import.meta.env.VITE_PUBLIC_KNOCK_FEED_ID)}
+        defaultFeedOptions={{ tenant: workspace.id }}
+      >
         <>
           <NotificationIconButton
             ref={notifButtonRef}

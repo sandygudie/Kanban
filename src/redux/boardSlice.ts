@@ -195,6 +195,7 @@ const boardSlice = createSlice({
       apiSlice.endpoints.getWorkspaceBoards.matchFulfilled,
       (state, { payload }) => {
         const { workspace, userDetails } = payload;
+
         const {
           boards,
           _id,

@@ -1,12 +1,7 @@
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { TextInput, TextArea, SubtaskInput } from "../InputField";
-import {
-  AppState,
-  IColumn,
-  ISubTask,
-  ITask,
-} from "types";
+import { AppState, IColumn, ISubTask, ITask } from "types";
 import { appData } from "redux/boardSlice";
 import { useSelector } from "react-redux";
 import { checkDuplicatedTask } from "utilis";
@@ -15,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useCreateTaskMutation, useEditTaskMutation } from "redux/apiSlice";
 import { Loader } from "components/Spinner";
 import { IoIosAdd } from "react-icons/io";
-// import { notificationfeed } from "utilis/notification";
+import { notificationfeed } from "utilis/notification";
 
 interface Props {
   handleClose: () => void;
@@ -36,7 +31,7 @@ export default function AddTask({
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const [editATask, { isLoading: isLoadingEdit }] = useEditTaskMutation();
   const data: AppState = useSelector(appData);
-  const { active, workspace} = data;
+  const { active, workspace, user } = data;
 
   const TaskSchema = Yup.object().shape({
     title: Yup.string().required("Required"),
@@ -71,17 +66,17 @@ export default function AddTask({
           workspaceId: workspace.id,
           columnId: activeColumn?._id,
         };
-        await createTask(payload).unwrap();
+        const response = await createTask(payload).unwrap();
         handleClose();
-        // await notificationfeed(
-        //   user,
-        //   workspace.members,
-        //   "created new task",
-        //   `/workspace/${workspace.id}/${active._id}/${response.data.taskId}`
-        // );
+        await notificationfeed(
+          user,
+          workspace,
+          `Task: ${ response.data.title}`,
+          `/workspace/${workspace.id}/${active._id}/${response.data.taskId}`
+        );
       } catch (error) {
         console.log(error);
-      } 
+      }
     } else {
       message.error({
         content: "Task name already exist.",
@@ -119,6 +114,13 @@ export default function AddTask({
           taskId: tasks?._id,
         };
         await editATask(payload).unwrap();
+        await notificationfeed(
+          user,
+          workspace,
+          `Task: ${tasks?.title}`,
+          `/workspace/${workspace.id}/${active._id}/${tasks?._id}`,
+          "updated"
+        );
       } catch (error: any) {
         console.log(error);
       }

@@ -3,17 +3,14 @@ import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import Popup from "components/Popup";
-import { useDispatch } from "react-redux";
 import SelectBox from "components/SelectBox";
 import {
   useAssignTaskMutation,
   useEditTaskMutation,
   useGetTaskQuery,
-  useGetWorkspaceQuery,
 } from "redux/apiSlice";
 import Spinner from "components/Spinner";
-import { ISubTask } from "types";
-import { isCompletedToggle } from "redux/boardSlice";
+import { AppState, ISubTask } from "types";
 import { MdDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import Modal from "components/Modal";
@@ -36,6 +33,9 @@ import { IoPricetagSharp } from "react-icons/io5";
 import { IoTimerOutline } from "react-icons/io5";
 import AddTaskTag from "components/AddTaskTag";
 import { MdOutlineAssignmentInd } from "react-icons/md";
+import { notificationfeed } from "utilis/notification";
+import { useSelector } from "react-redux";
+import { appData } from "redux/boardSlice";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
@@ -43,7 +43,6 @@ export default function TaskDetails() {
   const socket = io(serverURL);
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
-  const dispatch = useDispatch();
   const [chats, setChats] = useState<any>([]);
   const [isAssign, setAssign] = useState(false);
   const [currentTime, setTime] = useState<null | any>(null);
@@ -51,14 +50,16 @@ export default function TaskDetails() {
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
-  const { workspaceId, taskId }: string | any = useParams();
+  const { workspaceId,  taskId }: string | any = useParams();
   const { data: tasks, isLoading } = useGetTaskQuery({ workspaceId, taskId });
-  const { data: workspace } = useGetWorkspaceQuery(workspaceId);
+
+
+  const data: AppState = useSelector(appData);
+  const { active, workspace, user } = data;
 
   const [editATask] = useEditTaskMutation();
   const [assignTask] = useAssignTaskMutation();
 
-  const [checkedState, setCheckedState] = useState<boolean[] | any>([]);
   const [selectedColumn, setSelectedColumn] = useState<string>();
   const [startChat, setStartChat] = useState<string | boolean>("loading");
   const [isAddLabel, setAddLabel] = useState<boolean>(false);
@@ -66,7 +67,6 @@ export default function TaskDetails() {
   useEffect(() => {
     if (tasks?.data) {
       setSelectedColumn(tasks?.data.status);
-      setCheckedState(tasks?.data.subtasks.map((o: ISubTask) => o.isCompleted));
     }
     loadmessages();
   }, []);
@@ -112,19 +112,16 @@ export default function TaskDetails() {
   };
 
   const handleOnChange = async (id: number) => {
-    const updatedCheckedState = checkedState.map((item: any, index: number) =>
-      index === id ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
     const updatedSubstasks = tasks.data.subtasks.map(
       (ele: ISubTask, index: number) => {
         index === id;
         return {
           title: ele.title,
-          isCompleted: updatedCheckedState[index],
+          isCompleted: !ele.isCompleted,
         };
       }
     );
+
     try {
       const payload = {
         formdata: {
@@ -134,12 +131,14 @@ export default function TaskDetails() {
         columnId: tasks?.data.columnId,
         taskId: tasks?.data._id,
       };
-      const response = await editATask(payload).unwrap();
-      if (response) {
-        dispatch(
-          isCompletedToggle({ updatedCheckedState, id, tasks: tasks?.data })
-        );
-      }
+      await editATask(payload).unwrap();
+      await notificationfeed(
+        user,
+        workspace,
+        `Task: ${ tasks?.data.title}`,
+        `/workspace/${workspace.id}/${active._id}/${taskId}`,
+        "updated substask for"
+      );
     } catch (error: any) {
       console.log(error);
     }
@@ -161,6 +160,13 @@ export default function TaskDetails() {
         taskId: tasks?.data._id,
       };
       await editATask(payload).unwrap();
+      await notificationfeed(
+        user,
+        workspace,
+        `Task: ${ tasks?.data.title}`,
+        `/workspace/${workspace.id}/${active._id}/${taskId}`,
+        "updated timeline for"
+      );
     } catch (error: any) {
       console.log(error);
     }
@@ -180,6 +186,13 @@ export default function TaskDetails() {
         taskId: tasks?.data._id,
       };
       await editATask(payload).unwrap();
+      await notificationfeed(
+        user,
+        workspace,
+        `Task: ${ tasks?.data.title}`,
+        `/workspace/${workspace.id}/${active._id}/${taskId}`,
+        "updated deadline for"
+      );
     } catch (error: any) {
       console.log(error);
     }
@@ -190,15 +203,22 @@ export default function TaskDetails() {
     "day"
   );
 
-  const assignUsers = async (user: any) => {
+  const assignUsers = async (ele: any) => {
     try {
       const payload = {
-        userId: { userId: user.userId },
+        userId: { userId: ele.userId },
         workspaceId: workspaceId,
         taskId: tasks?.data._id,
       };
 
       await assignTask(payload).unwrap();
+      await notificationfeed(
+        user,
+        workspace,
+        `Task: ${ tasks?.data.title}`,
+        `/workspace/${workspace.id}/${active._id}/${taskId}`,
+        "updated assignees for"
+      );
     } catch (error: any) {
       console.log(error);
     }
@@ -294,12 +314,12 @@ export default function TaskDetails() {
                           <input
                             type="checkbox"
                             value={subtask.title}
-                            checked={checkedState[index]! || false}
+                            checked={subtask.isCompleted}
                             onChange={() => handleOnChange(index)}
                           />
                           <p
                             className={`${
-                              checkedState[index]! && "line-through opacity-50"
+                              subtask.isCompleted && "line-through opacity-50"
                             } text-sm font-medium`}
                           >
                             {subtask.title}
@@ -327,7 +347,7 @@ export default function TaskDetails() {
               <div className="relative">
                 <div className="flex items-center gap-x-20">
                   <p className="font-semibold mb-2 w-full md:w-[45%] flex items-center gap-x-2">
-                   <MdOutlineAssignmentInd/> Assignees
+                    <MdOutlineAssignmentInd /> Assignees
                   </p>
                   <IconButton handleClick={() => setAssign(true)}>
                     <IoAdd
@@ -366,7 +386,7 @@ export default function TaskDetails() {
                   <Popup
                     className="left-0 w-72 top-[30px]"
                     handleClose={() => setAssign(false)}
-                    items={workspace?.data.members.map((ele: any) => {
+                    items={workspace?.members.map((ele: any) => {
                       return {
                         title: (
                           <div className="py-1 px-4 font-bold text-[0.8rem] flex items-center gap-x-3">
@@ -422,21 +442,34 @@ export default function TaskDetails() {
                 {tasks.data.tags.length ? (
                   <div className="mt-4 mb-10 flex items-center gap-2 flex-wrap">
                     {tasks.data.tags.map(
-                      (list: { name: string; color: string }, index:number) => {
-                        return index<10 &&(
-                          <p
-                            style={{ backgroundColor: list.color }}
-                            key={list.name}
-                            className="px-3 py-1 w-fit text-xs font-bold rounded-full flex items-center gap-x-3"
-                          >
-                            {list.name}
-                          </p>
+                      (
+                        list: { name: string; color: string },
+                        index: number
+                      ) => {
+                        return (
+                          index < 10 && (
+                            <p
+                              style={{ backgroundColor: list.color }}
+                              key={list.name}
+                              className="px-3 py-1 w-fit text-xs font-bold rounded-full flex items-center gap-x-3"
+                            >
+                              {list.name}
+                            </p>
+                          )
                         );
                       }
                     )}
-                    {tasks.data.tags.length>10 && <button onClick={() => {
-                      setAddLabel(true);
-                    }} className="inline underline font-bold"> + {tasks.data.tags.length -10} more</button>}
+                    {tasks.data.tags.length > 10 && (
+                      <button
+                        onClick={() => {
+                          setAddLabel(true);
+                        }}
+                        className="inline underline font-bold"
+                      >
+                        {" "}
+                        + {tasks.data.tags.length - 10} more
+                      </button>
+                    )}
                   </div>
                 ) : (
                   <p className="text-gray/50 h-16 text-xs">None yet</p>
@@ -444,7 +477,13 @@ export default function TaskDetails() {
               </div>
 
               <div className="relative">
-                <p className="font-semibold mb-4 flex items-center gap-x-2"> <span>< IoTimerOutline className="font-bold"/></span>Deadline</p>
+                <p className="font-semibold mb-4 flex items-center gap-x-2">
+                  {" "}
+                  <span>
+                    <IoTimerOutline className="font-bold" />
+                  </span>
+                  Deadline
+                </p>
                 <div className="flex items-start text-white/50 flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center relative gap-x-4">
@@ -456,7 +495,7 @@ export default function TaskDetails() {
                               pendingDate > 1 ? "text-success" : "text-error"
                             } font-bold absolute left-24 -top-7 text-xs absolute -top-[2.2rem]`}
                           >
-                           ( {pendingDate} days left)
+                            ( {pendingDate} days left)
                           </p>
                         )}
                         <RangePicker

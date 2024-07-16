@@ -45,6 +45,7 @@ width:auto !important
 .rnf-notification-cell__content {
   color: white !important;
   font-size: 13px !important;
+  display: flex !important;
 }
 
 .rnf-notification-feed__knock-branding a {
@@ -59,5 +60,13 @@ width:auto !important
     border-bottom: 1px solid hsla(218, 18%, 33%, 0.15) !important;
 }
 .rnf-notification-feed-popover__inner {
-  width: 350px !important;
+  width: 400px !important;
 }
+
+.notification_feed_img img{
+  border-radius: 100%;
+  width:20px;
+  margin-right: 10px;
+  display: inline;
+}
+
