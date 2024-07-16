@@ -9,6 +9,7 @@ export const loadState = () => {
     workspace: {
       id: "",
       name: "",
+      members:[],
       createdAt: null,
       profilePics: "",
       createdBy: "",
