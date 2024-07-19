@@ -28,8 +28,9 @@ const NotificationFeed = () => {
         feedId={String(import.meta.env.VITE_PUBLIC_KNOCK_FEED_ID)}
         defaultFeedOptions={{ tenant: workspace.id }}
       >
-        <>
+        <div className="hidden md:block">
           <NotificationIconButton
+      
             ref={notifButtonRef}
             onClick={() => setIsVisible(!isVisible)}
           />
@@ -38,7 +39,7 @@ const NotificationFeed = () => {
             isVisible={isVisible}
             onClose={() => setIsVisible(false)}
           />
-        </>
+        </div>
       </KnockFeedProvider>
     </KnockProvider>
   );
