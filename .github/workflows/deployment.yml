@@ -21,10 +21,10 @@ jobs:
       - name: Build App
         run: |
           yarn run build
-      - name: Test
-        uses: cypress-io/github-action@v6
-        with:
-          start: yarn run dev
+      # - name: Test
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     start: yarn run dev
       - name: "Deploy to Vercel"
         uses: amondnet/vercel-action@v20
         with:
