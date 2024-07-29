@@ -31,7 +31,6 @@ export default function Index() {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
     if (formData.email === "" && formData.password === "") {
       setInputError("error");
     } else if (formData.email === "") {
