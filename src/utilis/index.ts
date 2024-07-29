@@ -58,7 +58,6 @@ export const checkDuplicatedColumn = (
   const columns = mergedArray.map((ele) => {
     return ele.name.toUpperCase();
   });
-
   return columns.some(
     (ele: string, index: number) => columns.indexOf(ele) !== index
   );
@@ -140,7 +139,6 @@ export const taskColorMarker = [
   "#95bf74",
   "#e68996",
   "#ed8936",
-
   "#3b61ff",
   "#ed8936",
 ];
