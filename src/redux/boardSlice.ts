@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AppState, IBoard, IColumn, ITask } from "types";
-import { loadState, loadWorkspaceData } from "utilis";
+import { initialState, loadWorkspaceData } from "utilis";
 import type { RootState } from "./store";
 import { apiSlice } from "./apiSlice";
 
-const workspaceData = loadState();
-const { board, active, workspace, user } = workspaceData;
+
+const { board, active, workspace, user } = initialState
 
 const boardSlice = createSlice({
   name: "boarddata",

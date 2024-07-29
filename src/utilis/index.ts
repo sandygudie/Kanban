@@ -2,8 +2,8 @@ import Bowser from "bowser";
 import { AppState, IBoard, IColumn, ITask } from "types";
 const data: IBoard[] = [];
 
-export const loadState = () => {
-  const initialState: AppState = {
+
+  export const initialState: AppState = {
     board: data,
     active: data.find((item: IBoard, index: number) => index === 0)!,
     workspace: {
@@ -23,8 +23,7 @@ export const loadState = () => {
       email: "",
     },
   };
-  return initialState;
-};
+
 
 export const loadWorkspaceData = () => {
   try {
