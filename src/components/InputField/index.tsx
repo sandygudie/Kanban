@@ -10,7 +10,6 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 interface LabelProps {
   label: string;
   subLabel?:string
-  // className?:any
 }
 
 interface OtherProps {
