@@ -2,26 +2,23 @@ import { useState } from "react";
 import "./style.css";
 import { BiChevronUp, BiChevronDown } from "react-icons/bi";
 import { AppState, IColumn, ITask } from "types";
-
 import { useMoveTaskMutation } from "redux/apiSlice";
 import { useSelector } from "react-redux";
 import { appData } from "redux/boardSlice";
 
 interface Props {
   selectedColumn: string | any;
-  handleSelectedColumn: (selectedColumn: string) => void;
   tasks?: ITask;
-
-  handleClose?: () => void;
   isOpenEdit: boolean;
   workspaceId?: string;
+  handleSelectedColumn: (selectedColumn: string) => void;
+  handleClose?: () => void;
 }
 
 export default function Index({
   selectedColumn,
   handleSelectedColumn,
   tasks,
-
   isOpenEdit,
   workspaceId,
 }: Props) {
@@ -40,7 +37,6 @@ export default function Index({
         columnId: columnId,
         taskId: tasks?._id,
       };
-
       await moveTask(payload).unwrap();
     }
   };
