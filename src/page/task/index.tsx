@@ -1,6 +1,6 @@
 import { FiMoreVertical } from "react-icons/fi";
 import { useEffect, useState } from "react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import Popup from "components/Popup";
 import SelectBox from "components/SelectBox";
@@ -40,7 +40,9 @@ dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
   const serverURL = import.meta.env.VITE_CHAT_API;
-  const socket = io(serverURL);
+  const socket = io(serverURL, {
+    withCredentials: true,
+  });
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
   const [chats, setChats] = useState<any>([]);
@@ -50,9 +52,8 @@ export default function TaskDetails() {
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
-  const { workspaceId,  taskId }: string | any = useParams();
+  const { workspaceId, taskId }: string | any = useParams();
   const { data: tasks, isLoading } = useGetTaskQuery({ workspaceId, taskId });
-
 
   const data: AppState = useSelector(appData);
   const { active, workspace, user } = data;
@@ -135,7 +136,7 @@ export default function TaskDetails() {
       await notificationfeed(
         user,
         workspace,
-        `Task: ${ tasks?.data.title}`,
+        `Task: ${tasks?.data.title}`,
         `/workspace/${workspace.id}/${active._id}/${taskId}`,
         "updated substask for"
       );
@@ -163,7 +164,7 @@ export default function TaskDetails() {
       await notificationfeed(
         user,
         workspace,
-        `Task: ${ tasks?.data.title}`,
+        `Task: ${tasks?.data.title}`,
         `/workspace/${workspace.id}/${active._id}/${taskId}`,
         "updated timeline for"
       );
@@ -189,7 +190,7 @@ export default function TaskDetails() {
       await notificationfeed(
         user,
         workspace,
-        `Task: ${ tasks?.data.title}`,
+        `Task: ${tasks?.data.title}`,
         `/workspace/${workspace.id}/${active._id}/${taskId}`,
         "updated deadline for"
       );
@@ -215,7 +216,7 @@ export default function TaskDetails() {
       await notificationfeed(
         user,
         workspace,
-        `Task: ${ tasks?.data.title}`,
+        `Task: ${tasks?.data.title}`,
         `/workspace/${workspace.id}/${active._id}/${taskId}`,
         "updated assignees for"
       );
