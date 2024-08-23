@@ -16,13 +16,17 @@ import Popup from "components/Popup";
 import { MdDelete } from "react-icons/md";
 import { useMoveTaskMutation, useEditColumnMutation } from "redux/apiSlice";
 import { IoIosAdd } from "react-icons/io";
+import { BiCheck } from "react-icons/bi";
+import { App as AntDesign } from "antd";
 
 export default function ActiveBoard() {
   const dispatch = useDispatch();
+  const { message } = AntDesign.useApp();
   const [isAddTask, setAddTask] = useState(false);
   const [isAddColumn, setAddColumn] = useState(false);
-  const [searchString, setSearchString] = useState<any>("");
+  const [columnName, setColumnName] = useState<any>("");
   const [isEditColumn, setEditColumn] = useState<string | null>("");
+  const [isEditing, setEditing] = useState(false);
   const [inputError, setInputError] = useState(false);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isDeleteColumn, setDeleteColumn] = useState(false);
@@ -49,7 +53,6 @@ export default function ActiveBoard() {
     )._id;
 
     dispatch(deleteTask(sourceTask));
-
     const updatedTasks = {
       ...sourceTask,
       status: result.destination.droppableId,
@@ -57,7 +60,6 @@ export default function ActiveBoard() {
 
     const position = result.destination.index;
     dispatch(addTask({ updatedTasks, position }));
-
     const payload = {
       taskId: sourceTask._id,
       workspaceId: workspace.id,
@@ -68,22 +70,42 @@ export default function ActiveBoard() {
     await moveTask(payload).unwrap();
   };
 
-  const editColumnChangeHandler = async (
-    e: ChangeEvent<HTMLInputElement>,
-    item: any
-  ) => {
+  const editColumnChangeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    setEditing(true);
     setInputError(false);
-    const name = e.target.value;
-    setSearchString(e.target.value);
-    try {
-      await editAColumn({
-        columnId: item?._id,
-        workspaceId: workspace.id,
-        formData: { name },
-      }).unwrap();
-      setSearchString("");
-    } catch (error) {
-      console.log(error);
+    setColumnName(e.target.value);
+  };
+
+  const editColumnNameHandler = async (column: IColumn) => {
+    if (columnName === "") {
+      setEditColumn("");
+    } else {
+      const foundDuplicate = active.columns.find(
+        (ele: IColumn) => ele.name === columnName
+      );
+      if (!foundDuplicate) {
+        const name = columnName.length ? columnName : column.name;
+        try {
+          await editAColumn({
+            columnId: column._id,
+            workspaceId: workspace.id,
+            formData: { name },
+          }).unwrap();
+
+          setColumnName("");
+        } catch (error) {
+          setInputError(true);
+          console.log(error);
+        }
+        setEditing(false);
+        setEditColumn("");
+      } else {
+        setInputError(true);
+        message.error({
+          content: "Column name already exist.",
+          className: "text-error",
+        });
+      }
     }
   };
 
@@ -92,15 +114,15 @@ export default function ActiveBoard() {
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="overflow-x-auto overflow-y-hidden h-full">
           <div className="z-10 h-full flex gap-x-10 w-full pt-12 mini:pt-8 px-8 mini:px-14">
-            {active.columns?.map((item: IColumn, index: number) => {
+            {active.columns?.map((column: IColumn, index: number) => {
               return (
                 <div
-                  key={item._id}
+                  key={column._id}
                   className="w-[240px] cursor-pointer shrink-0"
                 >
                   <div className="flex h-10 mb-3 justify-between relative items-center">
-                    <div className="flex gap-x-1 items-center justify-between w-10/12 uppercase text-xs tracking-widest">
-                      <div className="flex items-center gap-x-1">
+                    <div className="flex gap-x-1 items-center justify-between w-10/12 text-xs tracking-widest">
+                      <div className="flex items-center gap-x-1 relative">
                         <BsCircleFill
                           style={{
                             fill:
@@ -109,32 +131,58 @@ export default function ActiveBoard() {
                                 : "",
                           }}
                         />
-                        <input
-                          onMouseOver={() => {
-                            setEditColumn(item._id);
-                          }}
-                          onMouseOut={() => {
-                            setEditColumn("");
-                          }}
-                          type="text"
-                          value={
-                            isEditColumn === item._id && searchString.length > 0
-                              ? searchString
-                              : item.name
-                          }
-                          onChange={(e) => editColumnChangeHandler(e, item)}
-                          className={`${
-                            inputError && "border-error"
-                          } w-28 px-2 h-8 font-medium border-none text-[14px] rounded-md ${
-                            isEditColumn === item._id
-                              ? "bg-gray-100"
-                              : "border-none"
-                          }`}
-                        />
+                        {isEditColumn === column._id ? (
+                          <div
+                            onMouseLeave={() => {
+                              setEditColumn(""),
+                                setColumnName(""),
+                                setEditing(false),
+                                setInputError(false);
+                            }}
+                            className={`bg-secondary rounded-md px-3 h-10 flex items-center w-full justify-between`}
+                          >
+                            <input
+                              type="text"
+                              // value={
+                              //   isEditColumn === column._id &&
+                              //   columnName.length > 0
+                              //     ? columnName
+                              //     : column.name
+                              // }
+
+                              defaultValue={columnName || column.name}
+                              onChange={(e) => editColumnChangeHandler(e)}
+                              className={`font-medium text-[14px] p-2 w-full rounded-md cursor-pointer ${
+                                inputError
+                                  ? "border-error border"
+                                  : "border-none"
+                              } `}
+                            />
+                            {isEditing && (
+                              <IconButton
+                                handleClick={() => {
+                                  editColumnNameHandler(column);
+                                }}
+                              >
+                                <BiCheck className="fill-success font-bold text-lg" />
+                              </IconButton>
+                            )}
+                          </div>
+                        ) : (
+                          <span
+                            onClick={() => {
+                              setEditColumn(column._id);
+                            }}
+                            className="font-medium text-[12px] rounded-md cursor-pointer p-2 hover:bg-gray-100"
+                          >
+                            {" "}
+                            {column.name}
+                          </span>
+                        )}
                       </div>
-                      {item.tasks.length > 0 && (
+                      {column.tasks.length > 0 && (
                         <p className="text-[14px] font-medium">
-                          ({item.tasks.length})
+                          ({column.tasks.length})
                         </p>
                       )}
                     </div>
@@ -142,15 +190,15 @@ export default function ActiveBoard() {
                       <div className="flex flex-col">
                         <IconButton
                           handleClick={() => {
-                            setOpenMenu(true), setSelectedColumn(item);
+                            setOpenMenu(true), setSelectedColumn(column);
                           }}
                         >
-                          <div className="bg-gray-200 mt-1.5 p-1 rounded-md">
+                          <div className="bg-gray-200 p-1 rounded-md">
                             <PiDotsThreeBold className="text-xl font-bold" />
                           </div>
                         </IconButton>
 
-                        {isOpenMenu && selectedColumn?._id === item._id && (
+                        {isOpenMenu && selectedColumn?._id === column._id && (
                           <Popup
                             className="right-0 top-7"
                             items={[
@@ -188,18 +236,18 @@ export default function ActiveBoard() {
                     </div>
                   </div>
 
-                  <Droppable droppableId={`${item.name}`}>
+                  <Droppable droppableId={`${column.name}`}>
                     {(provided) => (
                       <div
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                         className="h-full"
                       >
-                        {item.tasks?.length > 0 ? (
+                        {column.tasks?.length > 0 ? (
                           <div className="h-[80%] novisible-scroll overflow-y-auto">
                             <button
                               onClick={() => {
-                                setSelectedColumn(item), setAddTask(true);
+                                setSelectedColumn(column), setAddTask(true);
                               }}
                               className="flex font-medium items-center justify-center w-full my-3 mx-auto text-center text-xs py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                             >
@@ -210,7 +258,7 @@ export default function ActiveBoard() {
                               </span>{" "}
                               Add Card
                             </button>
-                            {item.tasks.map((tasks: ITask, index: number) => {
+                            {column.tasks.map((tasks: ITask, index: number) => {
                               const filtered = tasks.subtasks.filter(
                                 (item) => item.isCompleted === true
                               );
@@ -231,7 +279,7 @@ export default function ActiveBoard() {
                             <div className="h-[80%] border-dashed border-[1px] border-gray-300 rounded-md">
                               <button
                                 onClick={() => {
-                                  setSelectedColumn(item), setAddTask(true);
+                                  setSelectedColumn(column), setAddTask(true);
                                 }}
                                 className="flex items-center justify-center w-[90%] font-medium mx-auto mt-3 text-center px-3 text-xs py-2 rounded-md bg-gray-200 hover:bg-gray-300"
                               >

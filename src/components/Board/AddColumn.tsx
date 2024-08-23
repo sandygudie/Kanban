@@ -56,13 +56,14 @@ export default function AddColumn({ handleClose }: Props) {
         await notificationfeed(
           user,
           workspace,
-          `Columns`,
+          `Column: ${columnArray.toString("")}`,
           `/workspace/${workspace.id}`
         );
       } catch (error: any) {
         console.log(error);
         setError(error.message);
       } finally {
+        setError("")
         resetForm();
       }
     } else {
@@ -107,7 +108,8 @@ export default function AddColumn({ handleClose }: Props) {
                             _id: uuidv4(),
                             name: "",
                             tasks: [],
-                          });
+                          }),
+                          setError("")
                         }}
                       >
                         <IoIosAdd className="font-bold" size={20} /> Add Column
