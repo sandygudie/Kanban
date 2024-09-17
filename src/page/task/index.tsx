@@ -16,7 +16,7 @@ import { CiEdit } from "react-icons/ci";
 import Modal from "components/Modal";
 import DeleteItem from "components/DeleteItem";
 import AddTask from "components/Board/AddTask";
-import { DatePicker, DatePickerProps, TimePicker } from "antd";
+import { DatePicker, DatePickerProps, TimePicker, Tooltip } from "antd";
 import { IoAdd } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import { RangePickerProps } from "antd/es/date-picker";
@@ -33,7 +33,6 @@ import { IoPricetagSharp } from "react-icons/io5";
 import { IoTimerOutline } from "react-icons/io5";
 import AddTaskTag from "components/AddTaskTag";
 import { MdOutlineAssignmentInd } from "react-icons/md";
-import { notificationfeed } from "utilis/notification";
 import { useSelector } from "react-redux";
 import { appData } from "redux/boardSlice";
 dayjs.extend(relativeTime);
@@ -56,7 +55,7 @@ export default function TaskDetails() {
   const { data: tasks, isLoading } = useGetTaskQuery({ workspaceId, taskId });
 
   const data: AppState = useSelector(appData);
-  const { active, workspace, user } = data;
+  const { workspace } = data;
 
   const [editATask] = useEditTaskMutation();
   const [assignTask] = useAssignTaskMutation();
@@ -133,13 +132,6 @@ export default function TaskDetails() {
         taskId: tasks?.data._id,
       };
       await editATask(payload).unwrap();
-      await notificationfeed(
-        user,
-        workspace,
-        `Task: ${tasks?.data.title}`,
-        `/workspace/${workspace.id}/${active._id}/${taskId}`,
-        "updated substask for"
-      );
     } catch (error: any) {
       console.log(error);
     }
@@ -161,13 +153,6 @@ export default function TaskDetails() {
         taskId: tasks?.data._id,
       };
       await editATask(payload).unwrap();
-      await notificationfeed(
-        user,
-        workspace,
-        `Task: ${tasks?.data.title}`,
-        `/workspace/${workspace.id}/${active._id}/${taskId}`,
-        "updated timeline for"
-      );
     } catch (error: any) {
       console.log(error);
     }
@@ -187,13 +172,6 @@ export default function TaskDetails() {
         taskId: tasks?.data._id,
       };
       await editATask(payload).unwrap();
-      await notificationfeed(
-        user,
-        workspace,
-        `Task: ${tasks?.data.title}`,
-        `/workspace/${workspace.id}/${active._id}/${taskId}`,
-        "updated deadline for"
-      );
     } catch (error: any) {
       console.log(error);
     }
@@ -213,13 +191,6 @@ export default function TaskDetails() {
       };
 
       await assignTask(payload).unwrap();
-      await notificationfeed(
-        user,
-        workspace,
-        `Task: ${tasks?.data.title}`,
-        `/workspace/${workspace.id}/${active._id}/${taskId}`,
-        "updated assignees for"
-      );
     } catch (error: any) {
       console.log(error);
     }
@@ -254,7 +225,7 @@ export default function TaskDetails() {
             </div>
             <button
               onClick={() => setOpenMenu(!isOpenMenu)}
-              className="mini:text-2xl mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2"
+              className="mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2"
             >
               <FiMoreVertical />
             </button>
@@ -287,7 +258,7 @@ export default function TaskDetails() {
               />
             )}{" "}
           </div>
-          <div className="mt-8 flex flex-col md:flex-row md:gap-x-36 justify-between gap-y-12 items-start mt-10">
+          <div className="mt-8 flex flex-col md:flex-row md:gap-x-36 justify-between gap-y-12 items-start">
             <div className="w-full">
               <div>
                 <p className="font-semibold text-lg mb-2">Description</p>
@@ -345,7 +316,7 @@ export default function TaskDetails() {
             </div>
 
             <div className="w-full">
-              <div className="relative">
+              <div className="relative mb-8">
                 <div className="flex items-center gap-x-20">
                   <p className="font-semibold mb-2 w-full md:w-[45%] flex items-center gap-x-2">
                     <MdOutlineAssignmentInd /> Assignees
@@ -359,27 +330,59 @@ export default function TaskDetails() {
                 </div>
 
                 {tasks.data.assignTo.length ? (
-                  tasks.data.assignTo.map((list: any) => {
-                    return (
-                      <div
-                        key={list._id}
-                        className="py-1 font-bold text-[0.8rem] h-32 flex items-start gap-x-3"
-                      >
-                        {list.profilePics ? (
-                          <img
-                            className="w-6 h-6 rounded-full"
-                            src={list.profilePics}
-                            alt="profile pic"
-                          />
-                        ) : (
-                          <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
-                            {DefaultImage(list.name)}
-                          </span>
-                        )}
-                        <span className="font-semibold">{list.name}</span>
+                  <div>
+                    {tasks.data.assignTo.slice(0, 2).map((list: any) => {
+                      return (
+                        <div
+                          key={list._id}
+                          className="py-1 font-bold text-[0.8rem] flex items-start gap-x-3"
+                        >
+                          {list.profilePics ? (
+                            <img
+                              className="w-6 h-6 rounded-full"
+                              src={list.profilePics}
+                              alt="profile pic"
+                            />
+                          ) : (
+                            <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                              {DefaultImage(list.name)}
+                            </span>
+                          )}
+                          <span className="font-semibold">{list.name}</span>
+                        </div>
+                      );
+                    })}
+                    {tasks.data.assignTo.length > 2 && (
+                      <div className="ml-2 flex items-center gap-x-2 font-bold mt-2">
+                        {" "}
+                        <span>
+                          <IoAdd />
+                        </span>
+                        {tasks.data.assignTo.slice(2).map((list: any) => {
+                          return (
+                            <button
+                              key={list._id}
+                              className="avatar w-auto h-auto"
+                            >
+                              <Tooltip color={"#2b2929"} title={list.name}>
+                                {list.profilePics ? (
+                                  <img
+                                    className="w-6 h-6 rounded-full"
+                                    src={list.profilePics}
+                                    alt="profile pic"
+                                  />
+                                ) : (
+                                  <span className="h-[30px] w-[30px] text-sm p-1 overflow-hidden rounded-full border-[1px] hover:border-primary flex items-center justify-center flex-col font-bold">
+                                    {DefaultImage(list.name)}
+                                  </span>
+                                )}
+                              </Tooltip>
+                            </button>
+                          );
+                        })}
                       </div>
-                    );
-                  })
+                    )}
+                  </div>
                 ) : (
                   <p className="text-gray/50 h-16 text-xs">None yet</p>
                 )}
@@ -494,7 +497,7 @@ export default function TaskDetails() {
                           <p
                             className={`${
                               pendingDate > 1 ? "text-success" : "text-error"
-                            } font-bold absolute left-24 -top-7 text-xs absolute -top-[2.2rem]`}
+                            } font-bold absolute left-24 text-xs -top-[2.2rem]`}
                           >
                             ( {pendingDate} days left)
                           </p>

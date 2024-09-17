@@ -171,7 +171,7 @@ export default function Header({ memberPics }: any) {
               {active ? (
                 <button
                   onClick={() => setIsOpenBoardDetails(true)}
-                  className="rounded-sm items-center py-2 px-4 rounded-md hover:bg-gray-300 bg-gray-200 flex"
+                  className="rounded-sm items-center py-2 px-4 hover:bg-gray-300 bg-gray-200 flex"
                 >
                   <span className={`font-bold md:w-auto`}>
                     #{TitleCase(active?.name)}{" "}
@@ -208,7 +208,7 @@ export default function Header({ memberPics }: any) {
                       index: number
                     ) => (
                       <button
-                        className="avatar w-auto h-auto w-max"
+                        className="avatar w-auto h-auto"
                         key={ele.userId}
                       >
                         <Tooltip color={"#2b2929"} title={ele.name}>
@@ -308,7 +308,7 @@ export default function Header({ memberPics }: any) {
           </div>
         </div>
 
-        <div className="h-auto bg-secondary mini:hidden py-2 bg-gray-100 w-full">
+        <div className="h-auto bg-secondary mini:hidden py-2 w-full">
           {board.length > 0 ? (
             <div className="relative px-4">
               <button
