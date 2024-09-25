@@ -72,7 +72,7 @@ export default function TaskItem({
                           (filtered.length / tasks.subtasks.length) * 100
                         }
                         strokeColor="#44b774"
-                        trailColor="gray"
+                        trailColor="#ffffff80"
                         strokeWidth={5}
                       />
                     </div>
@@ -83,7 +83,7 @@ export default function TaskItem({
                       return (
                         <div
                           key={list._id}
-                          className="avatar w-auto h-auto w-max"
+                          className="avatar h-auto w-max"
                         >
                            <Tooltip color={"#2b2929"} title={list.name}>
                           {list.profilePics ? (

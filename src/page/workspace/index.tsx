@@ -93,7 +93,7 @@ export default function Index() {
                             alt=""
                           />
                           <div>
-                            <h2 className="font-bold text-lg mini:text-base">
+                            <h2 className="font-bold mini:text-base">
                               {ele.name}
                             </h2>
                           </div>

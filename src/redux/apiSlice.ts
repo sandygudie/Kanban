@@ -250,6 +250,23 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Workspace", "Task"],
     }),
+ 
+    addTaskAttachment: builder.mutation({
+      query: (payload) => ({
+        url: `/task/attachment/${payload.taskId}`,
+        method: "POST",
+        data: payload.data,
+      }),
+      invalidatesTags: ["Task"],
+    }),
+
+    deleteTaskAttachment: builder.mutation({
+      query: (payload) => ({
+        url: `/task/attachment/${payload.taskId}/${payload.attachmentId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Task"],
+    }),
   }),
 });
 
@@ -282,4 +299,6 @@ export const {
   useMoveTaskMutation,
   useAddTaskTagsMutation,
   useDeleteTaskTagsMutation,
+  useAddTaskAttachmentMutation,
+  useDeleteTaskAttachmentMutation
 } = apiSlice;

@@ -38,7 +38,7 @@ export default function CreateWorkspace() {
   const createNewWorksapce = async (values: any) => {
     setLoading(true);
     if (!selectedImage) {
-      setUploadError("Workspace logo is required")
+      setUploadError("Workspace logo is required");
       setLoading(false);
       return;
     }
@@ -118,7 +118,7 @@ export default function CreateWorkspace() {
                 className="text-white cursor-pointer h-full"
                 htmlFor="file_input"
               >
-                <div className="relative w-24 h-24 rounded-full overflow-hidden border-[1px] overflow-hidden border-solid border-gray">
+                <div className="relative w-24 h-24 rounded-full border-[1px] overflow-hidden border-solid border-gray">
                   <img
                     className="h-28 w-28"
                     src={

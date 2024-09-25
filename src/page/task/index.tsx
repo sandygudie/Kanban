@@ -4,20 +4,23 @@ import { io } from "socket.io-client";
 import { useNavigate, useParams } from "react-router-dom";
 import Popup from "components/Popup";
 import SelectBox from "components/SelectBox";
+import { App as AntDesign } from "antd";
 import {
+  useAddTaskAttachmentMutation,
   useAssignTaskMutation,
+  useDeleteTaskAttachmentMutation,
   useEditTaskMutation,
   useGetTaskQuery,
 } from "redux/apiSlice";
 import Spinner from "components/Spinner";
 import { AppState, ISubTask } from "types";
-import { MdDelete } from "react-icons/md";
-import { CiEdit } from "react-icons/ci";
+import { MdDelete, MdDeleteForever } from "react-icons/md";
+import { CiEdit, CiFileOn } from "react-icons/ci";
 import Modal from "components/Modal";
 import DeleteItem from "components/DeleteItem";
 import AddTask from "components/Board/AddTask";
 import { DatePicker, DatePickerProps, TimePicker, Tooltip } from "antd";
-import { IoAdd } from "react-icons/io5";
+import { IoAdd, IoCheckmarkSharp, IoClose } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
@@ -35,9 +38,13 @@ import AddTaskTag from "components/AddTaskTag";
 import { MdOutlineAssignmentInd } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { appData } from "redux/boardSlice";
+import { BsArrowsAngleExpand, BsFileEarmarkPdf } from "react-icons/bs";
+import { BiLink } from "react-icons/bi";
+import ViewAttachment from "components/Task/ViewAttachment";
 dayjs.extend(relativeTime);
 
 export default function TaskDetails() {
+  const { message } = AntDesign.useApp();
   const serverURL = import.meta.env.VITE_CHAT_API;
   const socket = io(serverURL, {
     withCredentials: true,
@@ -50,19 +57,25 @@ export default function TaskDetails() {
   const [isDate, setDate] = useState<null | any>(null);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
+  const [isAttachmentMenu, setAttachmentMenu] = useState<boolean>(false);
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const { workspaceId, taskId }: string | any = useParams();
   const { data: tasks, isLoading } = useGetTaskQuery({ workspaceId, taskId });
 
   const data: AppState = useSelector(appData);
   const { workspace } = data;
-
+  const [addAttachment, { isLoading: addAttachmentLoading }] =
+    useAddTaskAttachmentMutation();
   const [editATask] = useEditTaskMutation();
+  const [deleteTaskAttachment, { isLoading: deleteAttachmentLoading }] =
+    useDeleteTaskAttachmentMutation();
   const [assignTask] = useAssignTaskMutation();
-
+  const [newLink, setNewLink] = useState<string | boolean>(false);
+  const [deleteLink, setDeleteLink] = useState<string>("");
   const [selectedColumn, setSelectedColumn] = useState<string>();
   const [startChat, setStartChat] = useState<string | boolean>("loading");
   const [isAddLabel, setAddLabel] = useState<boolean>(false);
+  const [isViewAttachmentFile, setViewAttachmentFile] = useState<any>({});
 
   useEffect(() => {
     if (tasks?.data) {
@@ -87,6 +100,49 @@ export default function TaskDetails() {
     }
   };
 
+  const addAttachmentFile = async (file: File) => {
+    setAttachmentMenu(false);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const payload = {
+        taskId: taskId,
+        data: formData,
+      };
+      await addAttachment(payload).unwrap();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const addAttachmentLink = async () => {
+    try {
+      const payload = {
+        taskId: taskId,
+        data: { link: newLink },
+      };
+
+      await addAttachment(payload).unwrap();
+      setNewLink(false);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const deleteAttachmentHandler = async (attachmentId: string) => {
+    setDeleteLink(attachmentId);
+    try {
+      const payload = {
+        taskId: taskId,
+        attachmentId,
+      };
+
+      await deleteTaskAttachment(payload).unwrap();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
   const updatedChatsHandler = async (updatedChats: any) => {
     if (updatedChats?._id) {
       const existingChat = chats.find(
@@ -214,7 +270,7 @@ export default function TaskDetails() {
                 {" "}
                 {tasks?.data.title}
               </p>
-              <span className="text-gray/80 font-medium mt-1 text-xs mini:flex">
+              <span className="mt-1 text-xs md:flex mb-2 text-white/50">
                 Created by {tasks.data.createdBy} on{" "}
                 {dayjs(tasks.data.createdAt).format("MMM Do, YYYY")}
                 <span className="flex items-center">
@@ -225,7 +281,7 @@ export default function TaskDetails() {
             </div>
             <button
               onClick={() => setOpenMenu(!isOpenMenu)}
-              className="mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2"
+              className="text-sm mini:text-xl bg-gray/10 hover:bg-gray/30 rounded-md p-2"
             >
               <FiMoreVertical />
             </button>
@@ -258,10 +314,10 @@ export default function TaskDetails() {
               />
             )}{" "}
           </div>
-          <div className="mt-8 flex flex-col md:flex-row md:gap-x-36 justify-between gap-y-12 items-start">
-            <div className="w-full">
-              <div>
-                <p className="font-semibold text-lg mb-2">Description</p>
+          <div className="mt-16 flex flex-col md:flex-row md:gap-x-[20%] justify-between items-start gap-y-2">
+            <div className="w-full md:w-[50%]">
+              <div className="mb-14">
+                <p className="text-[16px] font-medium mb-2">Description</p>
                 <p>
                   {tasks.data.description
                     ? tasks.data.description
@@ -269,8 +325,8 @@ export default function TaskDetails() {
                 </p>
               </div>
 
-              <div className="my-10">
-                <p className="font-semibold">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
+              <div className="mb-14">
+                <p className="font-medium text-[16px]">{`Subtasks (${filtered?.length} of ${tasks.data.subtasks.length})`}</p>
                 <div
                   className={`overflow-y-auto ${
                     tasks.data.subtasks.length >= 4 && "h-[10rem] pr-4"
@@ -303,8 +359,8 @@ export default function TaskDetails() {
                 </div>
               </div>
 
-              <div className="md:pb-6 w-full">
-                <p className="font-semibold mb-2">Columns</p>
+              <div className="w-full mb-14">
+                <p className="font-medium text-[16px] mb-2">Columns</p>
                 <SelectBox
                   selectedColumn={selectedColumn}
                   handleSelectedColumn={handleSelectedColumn}
@@ -313,24 +369,222 @@ export default function TaskDetails() {
                   workspaceId={workspaceId}
                 />
               </div>
+
+              <div className="w-full mb-12">
+                <div>
+                  <div className="flex items-center justify-between mb-4 relative">
+                    <p className="font-medium text-[16px]">Attachments</p>
+                    {addAttachmentLoading ? (
+                      <Spinner />
+                    ) : (
+                      <IconButton handleClick={() => setAttachmentMenu(true)}>
+                        <IoAdd
+                          size={24}
+                          className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
+                        />
+                      </IconButton>
+                    )}
+                    {isAttachmentMenu && (
+                      <Popup
+                        className="right-4 top-5"
+                        items={[
+                          {
+                            title: (
+                              <label
+                                className="text-white cursor-pointer relative flex items-center gap-x-2 justify-between"
+                                htmlFor="file_input"
+                              >
+                                <CiFileOn className="text-sm" /> File
+                                <input
+                                  type="file"
+                                  size={100000}
+                                  id="file_input"
+                                  className="absolute top-20 text-sm invisible w-10"
+                                  name="profilePics"
+                                  accept=".pdf, .jpg, .jpeg, .png"
+                                  onChange={(e) => {
+                                    if (e.currentTarget.files) {
+                                      if (
+                                        e.currentTarget.files[0].size > 100000
+                                      ) {
+                                        message.error({
+                                          content:
+                                            "image should be less than 100kb.",
+                                          className: "text-error",
+                                        });
+                                        return null;
+                                      } else {
+                                        addAttachmentFile(
+                                          e.currentTarget.files[0]
+                                        );
+                                      }
+                                    }
+                                  }}
+                                />
+                              </label>
+                            ),
+                            handler: () => {},
+                          },
+
+                          {
+                            title: (
+                              <span className="flex items-center gap-x-2 justify-between">
+                                {" "}
+                                <BiLink className="text-sm" /> Link
+                              </span>
+                            ),
+                            handler: () => {
+                              setNewLink(true);
+                            },
+                          },
+                        ]}
+                        handleClose={() => setAttachmentMenu(false)}
+                      />
+                    )}{" "}
+                  </div>
+
+                  {tasks?.data.attachments.length ? (
+                    tasks?.data.attachments.map(
+                      (ele: {
+                        _id: string;
+                        url: string;
+                        name: string;
+                        addDate: string;
+                        type: string;
+                      }) => {
+                        return (
+                          <div
+                            key={ele._id}
+                            className="cursor-pointer my-2 flex items-center justify-between group"
+                          >
+                            <div className="flex items-center gap-x-4">
+                              {ele.type === "image" ? (
+                                <img
+                                  className="h-8 w-8 rounded-md"
+                                  src={ele.url}
+                                />
+                              ) : ele.type === "pdf" ? (
+                                <BsFileEarmarkPdf
+                                  size={30}
+                                  className="bg-secondary rounded-md p-2 font-bold"
+                                />
+                              ) : (
+                                <div className="">
+                                  <BiLink
+                                    size={30}
+                                    className="bg-secondary rounded-md p-2 font-bold"
+                                  />
+                                </div>
+                              )}
+                              <div>
+                                {ele.type === "image" || ele.type === "pdf" ? (
+                                  <p className="font-semibold text-sm">
+                                    {ele.name}
+                                  </p>
+                                ) : (
+                                  <a
+                                    target="_blank"
+                                    className="text-xs underline"
+                                    href={ele.url}
+                                    rel="noreferrer"
+                                  >
+                                    {ele.url}
+                                  </a>
+                                )}
+                                <p className="text-[10px] text-white/50">
+                                  {" "}
+                                  {dayjs(ele.addDate).format("MMM Do, YYYY")}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-x-3">
+                              {deleteLink === ele._id &&
+                              deleteAttachmentLoading ? (
+                                <Spinner />
+                              ) : (
+                                <button
+                                  onClick={() =>
+                                    deleteAttachmentHandler(ele._id)
+                                  }
+                                  className="opacity-0 group-hover:opacity-100"
+                                >
+                                  <MdDeleteForever
+                                    size={25}
+                                    className="text-error/80 p-1.5 font-bold"
+                                  />
+                                </button>
+                              )}
+                              {(ele.type === "image" || ele.type === "pdf") && (
+                                <IconButton
+                                  handleClick={() => setViewAttachmentFile(ele)}
+                                >
+                                  <BsArrowsAngleExpand
+                                    size={24}
+                                    className="p-1.5 text-white/50 hover:bg-gray/30 rounded-md font-bold"
+                                  />
+                                </IconButton>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      }
+                    )
+                  ) : (
+                    <p className="text-gray/50 h-16 text-xs">No Attachments</p>
+                  )}
+                  <div />
+                  {newLink ? (
+                    <div className="flex items-center gap-x-3">
+                      <BiLink
+                        size={25}
+                        className=" text-white/50 hover:bg-gray/30 rounded-md font-bold"
+                      />
+                      <input
+                        className="rounded-md p-1.5 w-full"
+                        type="url"
+                        onChange={(e) => setNewLink(e.target.value)}
+                      />
+                      {addAttachmentLoading ? (
+                        <Spinner />
+                      ) : (
+                        <>
+                          <IconButton handleClick={() => addAttachmentLink()}>
+                            <IoCheckmarkSharp
+                              className="bold hover:text-success text-success/80"
+                              size={18}
+                            />
+                          </IconButton>
+                          <IconButton handleClick={() => setNewLink(false)}>
+                            <IoClose
+                              size={18}
+                              className="bold text-error/80 hover:text-error"
+                            />
+                          </IconButton>
+                        </>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
             </div>
 
-            <div className="w-full">
-              <div className="relative mb-8">
-                <div className="flex items-center gap-x-20">
-                  <p className="font-semibold mb-2 w-full md:w-[45%] flex items-center gap-x-2">
-                    <MdOutlineAssignmentInd /> Assignees
+            <div className="w-full md:w-[40%]">
+              <div className="relative mb-14">
+                <div className="flex items-center justify-between">
+                  <p className="font-medium text-[16px] mb-2 w-full md:w-[45%] flex items-center gap-x-2">
+                    <MdOutlineAssignmentInd className="text-lg text-gray-300" />{" "}
+                    Assignees
                   </p>
                   <IconButton handleClick={() => setAssign(true)}>
                     <IoAdd
-                      size={28}
+                      size={24}
                       className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
                     />
                   </IconButton>
                 </div>
 
                 {tasks.data.assignTo.length ? (
-                  <div>
+                  <div className="md:ml-4">
                     {tasks.data.assignTo.slice(0, 2).map((list: any) => {
                       return (
                         <div
@@ -356,7 +610,7 @@ export default function TaskDetails() {
                       <div className="ml-2 flex items-center gap-x-2 font-bold mt-2">
                         {" "}
                         <span>
-                          <IoAdd />
+                          <IoAdd size={18} />
                         </span>
                         {tasks.data.assignTo.slice(2).map((list: any) => {
                           return (
@@ -384,7 +638,7 @@ export default function TaskDetails() {
                     )}
                   </div>
                 ) : (
-                  <p className="text-gray/50 h-16 text-xs">None yet</p>
+                  <p className="text-gray/50 h-16 text-xs">No Assignees</p>
                 )}
                 {isAssign && (
                   <Popup
@@ -424,11 +678,11 @@ export default function TaskDetails() {
                 )}
               </div>
 
-              <div className="relative">
-                <div className="flex items-center gap-x-20">
-                  <p className="font-semibold mb-2 w-full md:w-[45%] flex items-center gap-x-2">
+              <div className="relative my-10 md:my-14">
+                <div className="flex items-center justify-between">
+                  <p className="font-medium text-[16px] mb-2 w-full md:w-[45%] flex items-center gap-x-2">
                     {" "}
-                    <IoPricetagSharp />
+                    <IoPricetagSharp className="text-gray-300 text-lg" />
                     Tags
                   </p>
                   <IconButton
@@ -437,14 +691,14 @@ export default function TaskDetails() {
                     }}
                   >
                     <IoAdd
-                      size={28}
+                      size={24}
                       className="p-1.5 bg-gray/20 hover:bg-gray/30 rounded-md font-bold"
                     />
                   </IconButton>
                 </div>
 
                 {tasks.data.tags.length ? (
-                  <div className="mt-4 mb-10 flex items-center gap-2 flex-wrap">
+                  <div className="mt-4 md:ml-4 mb-10 flex items-center gap-2 flex-wrap">
                     {tasks.data.tags.map(
                       (
                         list: { name: string; color: string },
@@ -476,22 +730,24 @@ export default function TaskDetails() {
                     )}
                   </div>
                 ) : (
-                  <p className="text-gray/50 h-16 text-xs">None yet</p>
+                  <p className="text-gray/50 h-16 text-xs">No Tags</p>
                 )}
               </div>
 
-              <div className="relative">
-                <p className="font-semibold mb-4 flex items-center gap-x-2">
+              <div className="relative mb-14">
+                <p className="font-medium text-[16px] mb-4 flex items-center gap-x-2">
                   {" "}
                   <span>
-                    <IoTimerOutline className="font-bold" />
+                    <IoTimerOutline className="text-gray-300 text-lg" />
                   </span>
                   Deadline
                 </p>
                 <div className="flex items-start text-white/50 flex-col gap-y-2">
                   {tasks?.data.dueDate.length > 0 || isDate ? (
                     <div className="flex items-center relative gap-x-4">
-                      <p className="text-xs font-medium mb-2 w-16">Due Date</p>
+                      <p className="text-xs mb-2 w-16 text-white/50">
+                        Due Date
+                      </p>
                       <div className="">
                         {tasks?.data.dueDate.length > 0 && (
                           <p
@@ -512,7 +768,7 @@ export default function TaskDetails() {
                                 ]
                               : [dayjs(), dayjs()]
                           }
-                          className="px-3 py-[10px] hover:!bg-gray/30 focus:!gray/30 outline-none border-none hover:border-none bg-gray"
+                          className="px-3 py-[10px] !rounded-md hover:!bg-gray/30 focus:!gray/30 outline-none border-none hover:border-none bg-gray"
                         />
                       </div>
                     </div>
@@ -527,8 +783,8 @@ export default function TaskDetails() {
                     </button>
                   )}
                   {tasks?.data.dueTime || currentTime ? (
-                    <div className="flex items-center gap-x-2 md:gap-x-4 mt-2">
-                      <p className="text-xs md:text-sm font-medium mb-2 w-16">
+                    <div className="flex items-center gap-x-2 md:gap-x-4 mt-2 ">
+                      <p className="text-xs md:text-sm mb-2 w-16 text-white/50">
                         Time
                       </p>
                       <TimePicker
@@ -539,7 +795,7 @@ export default function TaskDetails() {
                         }
                         use12Hours
                         format="h:mm a"
-                        className="px-5 py-[10px] hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
+                        className="px-5 py-[10px] !rounded-md hover:!bg-secondary/30 focus:!bg-secondary/30 outline-none border-none hover:border-none bg-secondary"
                         onChange={onChangeTime}
                       />
                     </div>
@@ -573,10 +829,13 @@ export default function TaskDetails() {
       ) : null}
 
       <Modal
-        open={isOpenEdit || isOpenDelete || isAddLabel}
+        open={
+          isOpenEdit || isOpenDelete || isAddLabel || isViewAttachmentFile._id
+        }
         handleClose={() => {
           setIsOpenEdit(false), setIsOpenDelete(false);
           setAddLabel(false);
+          setViewAttachmentFile("");
         }}
       >
         {isAddLabel ? (
@@ -592,6 +851,8 @@ export default function TaskDetails() {
             tasks={tasks?.data}
             handleClose={() => setIsOpenEdit(false)}
           />
+        ) : isViewAttachmentFile ? (
+          <ViewAttachment ele={isViewAttachmentFile} />
         ) : (
           <DeleteItem
             handleClose={() => setIsOpenDelete(false)}

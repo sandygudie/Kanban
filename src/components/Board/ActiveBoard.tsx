@@ -143,13 +143,6 @@ export default function ActiveBoard() {
                           >
                             <input
                               type="text"
-                              // value={
-                              //   isEditColumn === column._id &&
-                              //   columnName.length > 0
-                              //     ? columnName
-                              //     : column.name
-                              // }
-
                               defaultValue={columnName || column.name}
                               onChange={(e) => editColumnChangeHandler(e)}
                               className={`font-medium text-[14px] p-2 w-full rounded-md cursor-pointer ${
@@ -307,7 +300,7 @@ export default function ActiveBoard() {
                 onClick={() => setAddColumn(true)}
                 className="h-full w-full bg-gray-100 hover:bg-gray-200 cursor-pointer flex items-center flex-col justify-center text-center rounded-md"
               >
-                <p className="font-bold flex text-gray items-center">
+                <p className="font-bold flex text-white/50 items-center">
                   {" "}
                   <IoIosAdd size={20} /> Add Column
                 </p>

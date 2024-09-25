@@ -247,7 +247,7 @@ export default function Index() {
 
                       <div className="mt-6 ml-auto w-20">
                         <button
-                          className="h-10 px-4 text-xs h-10 w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md  font-bold"
+                          className="h-10 px-4 text-xs w-20 flex bg-gray-300 justify-center items-center flex-col hover:bg-gray/40 border border-gray/30 rounded-md  font-bold"
                           type="submit"
                         >
                           {isLoading ? <Loader /> : "Update"}
